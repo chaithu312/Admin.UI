@@ -1,8 +1,9 @@
 ﻿(function () {
-    alert("angular app")
-    angular.module('NavigationApp', ['NavigationServices']);
-    var app = angular.module("mainApp", []);
-    alert("angular app1")
+
+    'use strict';
+
+    var app = angular.module("mainApp", ['navsServices']);
+
     app.directive('toggleSidebar', function () {
         return {
             restrict: 'E',
@@ -43,4 +44,24 @@
                         <!-- /section:basics/sidebar.layout.minimize -->'
         }
     })
+
+})();
+
+(function () {
+    'use strict';
+    angular.module('mainApp').controller('navsController', navsController)
+    navsController.$inject = ['$scope', 'Navs'];
+    function navsController($scope, Navs) {
+        $scope.navs = Navs.query();
+    }
+})();
+
+(function () {
+    'use strict';
+    var navsServices = angular.module('navsServices', ['ngResource']);
+    navsServices.factory('Navs', ['$resource', function ($resource) {
+        return $resource('/api/Navigation/', {}, {
+            query: { method: 'GET', params: {}, isArray: true }
+        });
+    }]);
 })();

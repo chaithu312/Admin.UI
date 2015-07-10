@@ -6,13 +6,14 @@
     grunt.loadNpmTasks('grunt-contrib-clean');
 
     grunt.initConfig({
-        clean: ['wwwroot/assets/css', 'wwwroot/assets/js', 'wwwroot/assets/fonts', , 'wwwroot/assets/avatars'],
+        clean: ['wwwroot/assets/'],
 
         uglify: {
             global: {
                 files: {
                     'wwwroot/assets/js/global.min.js': [
                         'Assets/js/angular.js',
+                        'Assets/js/angular-resource.js',
                         'Assets/js/angular-app.js',
                         'Assets/ace/js/bootstrap.js',
                         'Assets/ace/js/ace-extra.js',
@@ -68,13 +69,6 @@
                         'Assets/ace/js/jquery.mobile.custom.js'
                     ]
                 }
-            },
-            Angular_JS: {
-                files: {
-                    'wwwroot/assets/Angular_js/app.js':'app/app.js',
-                    'wwwroot/assets/Angular_js/controller/NavigationController.js': 'app/controller/NavigationController.js',
-                    'wwwroot/assets/Angular_js/services/NavigationServices.js': 'app/services/NavigationServices.js'
-                }
             }
         },
 
@@ -109,6 +103,7 @@
                 ],
             },
         },
+
         watch: {
             scripts: {
                 files: ['Assets/ace/js/*.js', 'Assets/ace/js/ace/*.js', 'Assets/js/*.js'],
