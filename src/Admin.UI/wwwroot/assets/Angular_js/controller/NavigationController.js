@@ -1,0 +1,1 @@
+!function(){"use strict";function a(a,b){a.Navigation=b.query()}angular.module("NavigationApp").controller("NavigationController",a),a.$inject=["$location","Navigation"],alert("controller")}();

@@ -37,7 +37,7 @@
                 <span class="menu-text"> Dashboard </span>
             </a>
 
-            <b class="arrow"></b> 
+            <b class="arrow"></b>
         </li>
 
         <li class="">
@@ -73,3 +73,20 @@
     </ul>
     <sidebar-minimize></sidebar-minimize>
 </div>
+<div style="clear:both">
+
+</div>
+Manoj
+<body ng-cloak>
+    <div ng-controller="NavigationController">
+        <table>
+            <tr ng-repeat="nav in Navigation">
+                <td>{{Nav.Title}}</td>
+
+            </tr>
+        </table>
+    </div>
+
+</body>
+<script src="~/assets/Angular_js/controller/NavigationController.js"></script>
+<script src="~/assets/Angular_js/services/NavigationServices.js"></script>

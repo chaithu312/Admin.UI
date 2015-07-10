@@ -38,7 +38,7 @@
                         'Assets/ace/js/ace/ace.widget-on-reload.js',
                         'Assets/ace/js/ace/ace.searchbox-autocomplete.js',
                         'Assets/js/ace-settings.js'
-                        ]
+                       ]
                 }
             },
             ie8: {
@@ -67,6 +67,13 @@
                     'wwwroot/assets/js/jquery.mobile.custom.min.js': [
                         'Assets/ace/js/jquery.mobile.custom.js'
                     ]
+                }
+            },
+            Angular_JS: {
+                files: {
+                    'wwwroot/assets/Angular_js/app.js':'app/app.js',
+                    'wwwroot/assets/Angular_js/controller/NavigationController.js': 'app/controller/NavigationController.js',
+                    'wwwroot/assets/Angular_js/services/NavigationServices.js': 'app/services/NavigationServices.js'
                 }
             }
         },
