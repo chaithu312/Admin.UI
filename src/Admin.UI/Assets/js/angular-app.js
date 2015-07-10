@@ -1,7 +1,8 @@
 ﻿(function () {
-
+    alert("angular app")
+    angular.module('NavigationApp', ['NavigationServices']);
     var app = angular.module("mainApp", []);
-
+    alert("angular app1")
     app.directive('toggleSidebar', function () {
         return {
             restrict: 'E',
