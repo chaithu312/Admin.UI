@@ -30,57 +30,36 @@
         </div>
     </div>
 
-    <ul class="nav nav-list">
-        <li class="">
-            <a href="index.html">
-                <i class="menu-icon fa fa-tachometer"></i>
-                <span class="menu-text"> Dashboard </span>
-            </a>
+    <ul class="nav nav-list" ng-controller="navsController">
 
-            <b class="arrow"></b>
-        </li>
 
-        <li class="">
-            <a href="#" class="dropdown-toggle">
+        <li class="" data-ng-if="nav.ParentId == 0" ng-repeat="nav in navs">
+            <a href="{{nav.NavURL}}" class="dropdown-toggle">
                 <i class="menu-icon fa fa-desktop fa-"></i>
-                <span class="menu-text"> UI Elements </span>
+                <span class="menu-text"> {{nav.Title}} </span>
 
                 <b class="arrow fa fa-angle-down"></b>
             </a>
+           
 
-            <b class="arrow"></b>
-
-            <ul class="submenu">
+            <ul class="submenu" data-ng-repeat="child in navs" data-ng-if="child.ParentId == nav.Id">
                 <li class="">
-                    <a href="elements.html">
+                    <a href="{{child.NavURL}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Elements
+                        {{child.Title}}
                     </a>
 
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="buttons.html">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Buttons &amp; Icons
-                    </a>
 
-                    <b class="arrow"></b>
-                </li>
             </ul>
         </li>
     </ul>
+
+
     <sidebar-minimize></sidebar-minimize>
 </div>
-<div style="clear:both">
 
-</div>
 
-<div ng-controller="navsController">
-    <table>
-        <tr ng-repeat="nav in navs">
-            <td>{{nav.Title}}</td>
-        </tr>
-    </table>
-</div>
+

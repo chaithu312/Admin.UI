@@ -12,5 +12,6 @@ namespace Admin.UI.Models
         public string Title { get; set; }
         public int ParentId { get; set; }
         public string Type { get; set; }
+        public string NavURL { get; set; }
     }
 }
