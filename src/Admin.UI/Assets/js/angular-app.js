@@ -66,30 +66,24 @@
     }]);
 })();
 
-//--userController
-(function () {
-    angular.module('myApp', [])
-       .controller('Usercontroller', ['$scope', function ($scope) {
-      $scope.formInfo = {};
-      $scope.saveData = function () {
-          alert("SaveData");
-          $scope.nameRequired = '';
-          $scope.emailRequired = '';
-          $scope.passwordRequired = '';
+//--UserController for registration
 
-          if (!$scope.formInfo.Email) {
-              $scope.nameRequired = 'Name Required';
-          }
+var app = angular.module("myApp", []);
+app.controller("userCntrl", function ($scope, $http) {
+    alert("hi");
+    if (!Valid) {
+        alert("Invalid form");
+        return;
+    } else {
+        alert("It's Great. Form Submitted");
+    }
 
-          if (!$scope.formInfo.Email) {
-              $scope.emailRequired = 'Email Required';
-          }
-
-          if (!$scope.formInfo.Password) {
-              $scope.passwordRequired = 'Password Required';
-          }
-      };
-  }])
- 
-})();
-
+    $scope.Save = function (Valid) {
+        if (!Valid) {
+            alert("Invalid form");
+            return;
+        } else {
+            alert("It's Great. Form Submitted");
+        }
+    }
+});
