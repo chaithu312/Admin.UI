@@ -8,6 +8,7 @@ namespace Admin.UI.Controllers
 {
     public class HomeController : Controller
     {
+        [Area("myarea")]
         public IActionResult Index()
         {
             return View();

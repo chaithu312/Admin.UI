@@ -46,7 +46,7 @@
     })
 
 })();
-
+//-- Navigation Controller
 (function () {
     'use strict';
     angular.module('mainApp').controller('navsController', navsController)
@@ -55,7 +55,7 @@
         $scope.navs = Navs.query();
     }
 })();
-
+//-- Navigation Services
 (function () {
     'use strict';
     var navsServices = angular.module('navsServices', ['ngResource']);
@@ -65,3 +65,31 @@
         });
     }]);
 })();
+
+//--userController
+(function () {
+    angular.module('myApp', [])
+       .controller('Usercontroller', ['$scope', function ($scope) {
+      $scope.formInfo = {};
+      $scope.saveData = function () {
+          alert("SaveData");
+          $scope.nameRequired = '';
+          $scope.emailRequired = '';
+          $scope.passwordRequired = '';
+
+          if (!$scope.formInfo.Email) {
+              $scope.nameRequired = 'Name Required';
+          }
+
+          if (!$scope.formInfo.Email) {
+              $scope.emailRequired = 'Email Required';
+          }
+
+          if (!$scope.formInfo.Password) {
+              $scope.passwordRequired = 'Password Required';
+          }
+      };
+  }])
+ 
+})();
+

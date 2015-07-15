@@ -14,7 +14,6 @@
                     'wwwroot/assets/js/global.min.js': [
                         'Assets/js/angular.js',
                         'Assets/js/angular-resource.js',
-                        'Assets/js/angular-app.js',
                         'Assets/ace/js/bootstrap.js',
                         'Assets/ace/js/ace-extra.js',
                         'Assets/ace/js/ace/elements.scroller.js',
@@ -39,7 +38,9 @@
                         'Assets/ace/js/ace/ace.widget-on-reload.js',
                         'Assets/ace/js/ace/ace.searchbox-autocomplete.js',
                         'Assets/js/ace-settings.js'
-                       ]
+                    ],
+                    'wwwroot/assets/js/angular-app.js': 'Assets/js/angular-app.js',
+                    'wwwroot/assets/js/UserController.js': 'Areas/UserArea/Assets/JS/UserController.js'
                 }
             },
             ie8: {

@@ -29,7 +29,7 @@
             @await Html.PartialAsync("_SidebarPartial")
             @RenderBody()
         </div>
-
+        @*<script src="/assets/js/angular.js"></script>*@
         <!--[if !IE]> -->
             <script type="text/javascript">
 			    window.jQuery || document.write("<script src='/assets/js/jquery.min.js'>"+"<"+"/script>");
@@ -43,10 +43,11 @@
         <script type="text/javascript">
             if ('ontouchstart' in document.documentElement) document.write("<script src='/assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
         </script>
+   
         <script src="/assets/js/global.min.js"></script>
+     
+        <script src="/assets/js/angular-app.js"></script>
 
-       
-
-        @RenderSection("js_inline", required: false)
+          @RenderSection("js_inline", required: false)
     </body>
 </html>
