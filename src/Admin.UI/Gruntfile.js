@@ -37,10 +37,13 @@
                         'Assets/ace/js/ace/ace.settings-skin.js',
                         'Assets/ace/js/ace/ace.widget-on-reload.js',
                         'Assets/ace/js/ace/ace.searchbox-autocomplete.js',
-                        'Assets/js/ace-settings.js'
+                        'Assets/ace/js/ace-settings.js',
+                        'Assets/ace/js/dataTables/jquery.dataTables.js',
+                        'Assets/ace/js/dataTables/extensions/TableTools/js/dataTables.tableTools.js',
+                        'Assets/ace/js/dataTables/extensions/ColVis/js/dataTables.colVis.js'
                     ],
-                    'wwwroot/assets/js/angular-app.js': 'Assets/js/angular-app.js',
-                    'wwwroot/assets/js/UserController.js': 'Areas/UserArea/Assets/JS/UserController.js'
+                    'wwwroot/assets/js/angular-app.js':[ 'Assets/js/angular-app.js',
+                     'Areas/UserArea/Assets/JS/Usercontroller.js']
                 }
             },
             ie8: {

@@ -22,6 +22,12 @@ namespace Admin.UI.UserArea
         {
             return View();
         }
+
+
+        public IActionResult List()
+        {
+            return View();
+        }
     }
 
 
