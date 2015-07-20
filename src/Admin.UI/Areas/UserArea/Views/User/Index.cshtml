@@ -3,97 +3,100 @@
 
     Layout = "~/Views/shared/_layout.cshtml";
 }
-<div class="col-sm-7" ng-controller="userCntrl">
-    <div class="widget-box">
-        <div class="widget-header">
-            <h4 class="widget-title">Your Login Information</h4>
-        </div>
-        <div class="widget-body">
-            <div class="widget-main">
-                <form class="form-inline" name="registerForm" novalidate>
-                    @Html.AntiForgeryToken()
-                    <div>
-                        <label for="form-field-mask-1" class="col-sm-3">
-                            @Html.LabelFor(model => model.Username)
-                        </label>
-                        <!-- #section:plugins/input.masked-input -->
-                        <div class="input-group col-sm-8">
-                            <input type="text" id="form-field-mask-1" class="form-control ng-pristine ng-valid" placeholder="UserName" ng-model="userName" name="userName" ng-required="true">
-                            <p ng-show="registerForm.userName.$error.required && !registerForm.userName.$pristine" class=" error">User Name Required</p>
+
+    <div class="col-sm-7" ng-controller="userCntrl">
+        <div class="widget-box">
+            <div class="widget-header">
+                <h4 class="widget-title">Your Login Information</h4>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <form class="form-inline" name="registerForm" novalidate ng-submit="Save(registerForm.$valid)">
+                        @Html.AntiForgeryToken()
+                        <div>
+                            <label for="form-field-mask-1" class="col-sm-3">
+                                @Html.LabelFor(model => model.Username)
+                            </label>
+                            <!-- #section:plugins/input.masked-input -->
+                            <div class="input-group col-sm-8">
+                                <input type="text" id="form-field-mask-1" class="form-control ng-pristine ng-valid" placeholder="UserName" ng-model="userName" name="userName" ng-required="true">
+                                <p ng-show="registerForm.userName.$error.required && !registerForm.userName.$pristine" class=" error">User Name Required</p>
+                            </div>
                         </div>
-                    </div>
-                    <hr />
-                    <div>
-                        <label for="form-field-mask-1" class="col-sm-3">
-                            @Html.LabelFor(model => model.Password)
-                        </label>
-                        <!-- #section:plugins/input.masked-input -->
-                        <div class="input-group col-sm-8">
-                            <input type="password" id="form-field-mask-1" class="form-control ng-pristine ng-valid" placeholder="Password" data-ng-model="formInfo.Password">
+                        <hr />
+                        <div>
+                            <label for="form-field-mask-1" class="col-sm-3">
+                                @Html.LabelFor(model => model.Password)
+                            </label>
+                            <!-- #section:plugins/input.masked-input -->
+                            <div class="input-group col-sm-8">
+                                <input type="password" id="form-field-mask-1" class="form-control ng-pristine ng-valid" placeholder="Password" data-ng-model="formInfo.Password">
+
+                            </div>
+                        </div>
+                        <hr />
+                        <div>
+                            <label for="form-field-mask-1" class="col-sm-3">
+                                @Html.LabelFor(model => model.Password)
+                            </label>
+                            <!-- #section:plugins/input.masked-input -->
+                            <div class="input-group col-sm-8">
+                                <input type="password" id="form-field-mask-1" class="form-control ng-pristine ng-valid" placeholder=" Re-Enter Password" ng-model="password" name="password">
+
+                            </div>
+                        </div>
+                        <hr />
+                        <div>
+                            <label for="form-field-mask-1" class="col-sm-3">
+                                @Html.LabelFor(model => model.SecurityQuestion)
+                            </label>
+                            <!-- #section:plugins/input.masked-input -->
+                            <div class="input-group col-sm-8">
+                                <select id="form-field-select-1" class="form-control" ng-model="SecurityQuestion" name="SecurityQuestion" ng-required="true">
+                                    <option value="" selected="selected">Please select a Security Question...</option>
+                                    <option value="What is your mother's first name?">What is your mother's first name?</option>
+                                    <option value="What is your place of birth?">What is your place of birth?</option>
+                                    <option value="What is the name of a school you attended?">What is the name of a school you attended?</option>
+                                    <option value="What is your father's middle name?">What is your father's middle name?</option>
+                                    <option value="What is your pet's name?">What is your pet's name?</option>
+                                    <option value="What is your favorite sports team?">What is your favorite sports team?</option>
+                                </select>
+                                <p ng-show="registerForm.SecurityQuestion.$error.required && !registerForm.SecurityQuestion.$pristine" class="error">Security Question Required</p>
+                            </div>
 
                         </div>
-                    </div>
-                    <hr />
-                    <div>
-                        <label for="form-field-mask-1" class="col-sm-3">
-                            @Html.LabelFor(model => model.Password)
-                        </label>
-                        <!-- #section:plugins/input.masked-input -->
-                        <div class="input-group col-sm-8">
-                            <input type="password" id="form-field-mask-1" class="form-control ng-pristine ng-valid" placeholder=" Re-Enter Password" ng-model="password" name="password">
+                        <hr />
+                        <div>
+                            <label for="form-field-mask-1" class="col-sm-3">
+                                @Html.LabelFor(model => model.SecurityAnswer)
+                            </label>
+                            <!-- #section:plugins/input.masked-input -->
+                            <div class="input-group col-sm-8">
+                                <input type="text" id="form-field-mask-1" class="form-control" placeholder="Answer" ng-model="SecurityAnswer" name="SecurityAnswer" ng-required="true">
+                                <p ng-show="registerForm.SecurityAnswer.$error.required && !registerForm.SecurityAnswer.$pristine" class="error">Security Answer Required</p>
+                            </div>
 
                         </div>
-                    </div>
-                    <hr />
-                    <div>
-                        <label for="form-field-mask-1" class="col-sm-3">
-                            @Html.LabelFor(model => model.SecurityQuestion)
-                        </label>
-                        <!-- #section:plugins/input.masked-input -->
-                        <div class="input-group col-sm-8">
-                            <select id="form-field-select-1" class="form-control" ng-model="SecurityQuestion" name="SecurityQuestion" ng-required="true">
-                                <option value="" selected="selected">Please select a Security Question...</option>
-                                <option value="What is your mother's first name?">What is your mother's first name?</option>
-                                <option value="What is your place of birth?">What is your place of birth?</option>
-                                <option value="What is the name of a school you attended?">What is the name of a school you attended?</option>
-                                <option value="What is your father's middle name?">What is your father's middle name?</option>
-                                <option value="What is your pet's name?">What is your pet's name?</option>
-                                <option value="What is your favorite sports team?">What is your favorite sports team?</option>
-                            </select>
-                            <p ng-show="registerForm.SecurityQuestion.$error.required && !registerForm.SecurityQuestion.$pristine" class="error">Security Question Required</p>
-                        </div>
 
-                    </div>
-                    <hr />
-                    <div>
-                        <label for="form-field-mask-1" class="col-sm-3">
-                            @Html.LabelFor(model => model.SecurityAnswer)
-                        </label>
-                        <!-- #section:plugins/input.masked-input -->
-                        <div class="input-group col-sm-8">
-                            <input type="text" id="form-field-mask-1" class="form-control" placeholder="Answer" ng-model="SecurityAnswer" name="SecurityAnswer" ng-required="true">
-                            <p ng-show="registerForm.SecurityAnswer.$error.required && !registerForm.SecurityAnswer.$pristine" class="error">Security Answer Required</p>
+                        <div class="clearfix form-actions" style="margin-bottom:0px;">
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-info">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    Save
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="reset" class="btn">
+                                    <i class="ace-icon fa fa-undo bigger-110"></i>
+                                    Save & New
+                                </button>
+                            </div>
                         </div>
-
-                    </div>
-
-                    <div class="clearfix form-actions" style="margin-bottom:0px;">
-                        <div class="text-right">
-                            <button type="submit" class="btn btn-info" >
-                                <i class="ace-icon fa fa-check bigger-110"></i>
-                                Save
-                            </button>
-                            &nbsp; &nbsp; &nbsp;
-                            <button type="reset" class="btn">
-                                <i class="ace-icon fa fa-undo bigger-110"></i>
-                                Save & New
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+
 
 
