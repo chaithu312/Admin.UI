@@ -30,9 +30,10 @@ namespace Admin.UI.Controllers
                     new Navigation {Id=7, Title="Tracking",ParentId=2, Type="",NavURL="#" } ,
 
 
-                     new Navigation {Id=8, Title="Create User", ParentId=3, Type="",NavURL="~/userarea/user/index" },
-                    new Navigation {Id=9, Title="View User ", ParentId=3, Type="",NavURL="~/userarea/user/list" },
-                    new Navigation {Id=10, Title="Test",ParentId=3, Type="",NavURL="~/userarea/user/test" } ,
+                    new Navigation {Id=8, Title="Create User", ParentId=3, Type="",NavURL="userarea/user/index" },
+                    new Navigation {Id=9, Title="View User ", ParentId=3, Type="",NavURL="userarea/user/list" },
+                    new Navigation {Id=10, Title="Test",ParentId=3, Type="",NavURL="userarea/user/test" } ,
+
 
                 };
         }

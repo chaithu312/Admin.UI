@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-angular.module('myApp', [])
+var app = angular.module('myApp', [])
   .controller('Usercontroller', ['$scope', function ($scope) {
       $scope.formInfo = {};
       $scope.saveData = function () {
@@ -27,6 +27,17 @@ angular.module('myApp', [])
   .controller('MyCtrl2', [function () {
 
   }]);
+
+app.controller("userCntrl", function ($scope, $http) {
+    $scope.Save = function (Valid) {
+        if (!Valid) {
+            alert("Invalid form");
+            return;
+        } else {
+            alert("It's Great. Form Submitted");
+        }
+    }
+});
 
 jQuery(function ($) {
     //initiate dataTables plugin
