@@ -33,24 +33,22 @@ namespace Admin.UI
 
         public void Configure(IApplicationBuilder app)
         {
-
-
-
             //app.UseStaticFiles();
-
-
+            
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
-                 name: "default",
-                 template: "{controller}/{action}/{id?}",
-                 defaults: new { controller = "Home", action = "Index" });
-
                 routes.MapRoute(name: "areaRoute",
-                template: "{area:exists}/{controller}/{action}",
-                defaults: new { controller = "Home", action = "Index" });
+                    template: "{area:exists}/{controller}/{action}",
+                    defaults: new { controller = "Home", action = "Index" });
 
-             
+                routes.MapRoute(name: "areaRouteForHome",
+                    template: "{area:exists}/{action}",
+                    defaults: new { controller = "Home", action = "Index" });
+
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action}/{id?}",
+                    defaults: new { controller = "Home", action = "Index" });
             });
         }
     }

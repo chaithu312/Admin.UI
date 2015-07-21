@@ -14,6 +14,7 @@
         <!--[if lte IE 8]>
             <script src="/assets/js/ie8.min.js"></script>
         <![endif]-->
+        <base href="/">
     </head>
     <body class="no-skin" ng-cloak>
 
@@ -48,10 +49,7 @@
      
         <script src="/assets/js/angular-app.js"></script>
 
-       
-
-          @RenderSection("js_inline", required: false)
-
+        @RenderSection("js_inline", required: false)
       
     </body>
 </html>

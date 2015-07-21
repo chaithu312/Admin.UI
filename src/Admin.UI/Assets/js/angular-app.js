@@ -2,7 +2,11 @@
 
     'use strict';
 
-    var app = angular.module("mainApp", ['navsServices']);
+    var app = angular
+        .module("mainApp", ['navsServices'])
+        .config(function ($locationProvider) {
+            $locationProvider.html5Mode(true);
+        });
 
     app.directive('toggleSidebar', function () {
         return {
@@ -45,9 +49,35 @@
         }
     })
 
+    //the module we are demonstrating:
+    app.directive('autoActive', ['$location', '$timeout', function ($location, $timeout) {
+        return {
+            restrict: 'A',
+            link: function (scope, element) {
+                function setActive() {
+                    var path = $location.path();
+                    if (path) {
+                        angular.forEach(element.find('li'), function (li) {
+                            console.log(li)
+                            var anchor = li.querySelector('a');
+                            if (anchor.href.match(path + '(?=\\?|$)')) {
+                                angular.element(li).addClass('active');
+                            } else {
+                                angular.element(li).removeClass('active');
+                            }
+                        });
+                    }
+                }
+                $timeout(setActive());
+                scope.$on('$locationChangeSuccess', setActive);
+            }
+        }
+    }]);
 })();
+
 //-- Navigation Controller
 (function () {
+    
     'use strict';
     angular.module('mainApp').controller('navsController', navsController)
     navsController.$inject = ['$scope', 'Navs'];
@@ -57,41 +87,13 @@
         }
     }
 
-    window.location.hash = '#/'; //All hash paths need to start with a /, it happens automaticaly with ngResource and the like...
+    //window.location.hash = '#/'; //All hash paths need to start with a /, it happens automaticaly with ngResource and the like...
 
-    //the module we are demonstrating:
-    (function () {
-        angular.module('autoActive', [])
-            .directive('autoActive', ['$location', function ($location) {
-                return {
-                    restrict: 'A',
-                    scope: false,
-                    link: function (scope, element) {
-                        function setActive() {
-                            var path = $location.path();
-                            if (path) {
-                                angular.forEach(element.find('li'), function (li) {
-                                    var anchor = li.querySelector('a');
-                                    if (anchor.href.match('#' + path + '(?=\\?|$)')) {
-                                        angular.element(li).addClass('active');
-                                    } else {
-                                        angular.element(li).removeClass('active');
-                                    }
-                                });
-                            }
-                        }
-
-                        setActive();
-
-                        scope.$on('$locationChangeSuccess', setActive);
-                    }
-                }
-            }]);
-    }());
 
     // in controller
  
 })();
+
 //-- Navigation Services
 (function () {
     'use strict';
@@ -103,3 +105,24 @@
     }]);
 })();
 
+//--UserController for registration
+
+//var app = angular.module("myApp", []);
+//app.controller("userCntrl", function ($scope, $http) {
+//    alert("hi");
+//    if (!Valid) {
+//        alert("Invalid form");
+//        return;
+//    } else {
+//        alert("It's Great. Form Submitted");
+//    }
+
+//    $scope.Save = function (Valid) {
+//        if (!Valid) {
+//            alert("Invalid form");
+//            return;
+//        } else {
+//            alert("It's Great. Form Submitted");
+//        }
+//    }
+//});

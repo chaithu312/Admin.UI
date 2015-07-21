@@ -1,4 +1,4 @@
-﻿<div id="sidebar" class="sidebar responsive" autoactive>
+﻿<div id="sidebar" class="sidebar responsive" auto-active="">
     <div class="sidebar-shortcuts" id="sidebar-shortcuts">
         <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
             <a class="btn btn-success" asp-controller="Home" asp-action="Index2">
@@ -31,17 +31,12 @@
     </div>
     <div auto-active>
         <ul class="nav nav-list" ng-controller="navsController" ng-init="init()">
-
-
             <li class="" data-ng-if="nav.ParentId == 0" ng-repeat="nav in navs">
                 <a href="{{nav.NavURL}}" class="dropdown-toggle">
                     <i class="menu-icon fa fa-list"></i>
                     <span class="menu-text"> {{nav.Title}} </span>
-
                     <b class="arrow fa fa-angle-down" ng-if=""></b>
                 </a>
-
-
                 <ul class="submenu">
                     <li class="" data-ng-repeat="child in navs" data-ng-if="child.ParentId == nav.Id" >
                         <a href="{{child.NavURL}}">
@@ -51,8 +46,6 @@
 
                         <b class="arrow"></b>
                     </li>
-
-
                 </ul>
             </li>
         </ul>
