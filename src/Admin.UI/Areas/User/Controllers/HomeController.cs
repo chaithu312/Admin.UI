@@ -10,11 +10,6 @@ namespace Admin.UI.UserArea
             return View();
         }
 
-        public IActionResult Test()
-        {
-            return View();
-        }
-
         public IActionResult List()
         {
             return View();
