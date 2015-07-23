@@ -1,50 +1,22 @@
-﻿'use strict';
-
-/* Controllers */
-
-
-
-angular.module('mainApp').controller("userCntrl", function ($scope, $http) {
-    $scope.Save = function (Valid) {
-        if (!Valid) {
-            alert("Invalid form");
-            return;
-        } else {
-            alert("It's Great. Form Submitted");
-        }
+﻿angular.module('mainApp').controller("UserController", function ($scope) {
+    $scope.Save = function () {
+        $scope.formInfo = '';
     }
 });
 
 jQuery(function ($) {
-    //initiate dataTables plugin
     var oTable1 =
     $('#dynamic-table')
-    //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
-    .dataTable({
-        bAutoWidth: false,
-        "aoColumns": [
-          { "bSortable": false },
-          null, null, null, null, null,
-          { "bSortable": false }
-        ],
-        "aaSorting": [],
+        .dataTable({
+            bAutoWidth: false,
+            "aoColumns": [
+              { "bSortable": false },
+              null, null, null, null, null,
+              { "bSortable": false }
+            ],
+            "aaSorting": [],
+        });
 
-        //,
-        //"sScrollY": "200px",
-        //"bPaginate": false,
-
-        //"sScrollX": "100%",
-        //"sScrollXInner": "120%",
-        //"bScrollCollapse": true,
-        //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
-        //you may want to wrap the table inside a "div.dataTables_borderWrap" element
-
-        //"iDisplayLength": 50
-    });
-    //oTable1.fnAdjustColumnSizing();
-
-
-    //TableTools settings
     TableTools.classes.container = "btn-group btn-overlap";
     TableTools.classes.print = {
         "body": "DTTT_Print",
@@ -128,8 +100,6 @@ jQuery(function ($) {
         });
     }, 200);
 
-
-
     //ColVis extension
     var colvis = new $.fn.dataTable.ColVis(oTable1, {
         "buttonText": "<i class='fa fa-search'></i>",
@@ -140,7 +110,6 @@ jQuery(function ($) {
         "fnLabel": function (i, title, th) {
             return $(th).text();//remove icons, etc
         }
-
     });
 
     //style it
@@ -156,8 +125,6 @@ jQuery(function ($) {
     .addClass('dropdown-menu dropdown-light dropdown-caret dropdown-caret-right')
     .find('li').wrapInner('<a href="javascript:void(0)" />') //'A' tag is required for better styling
     .find('input[type=checkbox]').addClass('ace').next().addClass('lbl padding-8');
-
-
 
     /////////////////////////////////
     //table checkboxes
@@ -181,15 +148,11 @@ jQuery(function ($) {
         else tableTools_obj.fnDeselect($(this).closest('tr').get(0));
     });
 
-
-
-
     $(document).on('click', '#dynamic-table .dropdown-toggle', function (e) {
         e.stopImmediatePropagation();
         e.stopPropagation();
         e.preventDefault();
     });
-
 
     //And for the first simple table, which doesn't have TableTools or dataTables
     //select/deselect all rows according to table header checkbox
@@ -211,8 +174,6 @@ jQuery(function ($) {
         else $row.removeClass(active_class);
     });
 
-
-
     /********************************/
     //add tooltip for small view action buttons in dropdown menu
     $('[data-rel="tooltip"]').tooltip({ placement: tooltip_placement });
@@ -230,5 +191,4 @@ jQuery(function ($) {
         if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
         return 'left';
     }
-
 })
