@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNet.Mvc;
 
-namespace Admin.UI.Controllers
+namespace Admin.UI.UserArea
 {
+    [Area("User")]
     public class HomeController : Controller
     {
         public IActionResult Index()
@@ -9,7 +10,12 @@ namespace Admin.UI.Controllers
             return View();
         }
 
-        public IActionResult Index2()
+        public IActionResult Test()
+        {
+            return View();
+        }
+
+        public IActionResult List()
         {
             return View();
         }

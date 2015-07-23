@@ -1,0 +1,1 @@
+!function(){"use strict";var a=angular.module("NavigationServices",["ngResource"]);a.factory("Navigation",["$resource",function(a){return a("/api/Navigation/",{},{query:{method:"GET",params:{},isArray:!0}})}]),alert("services")}();

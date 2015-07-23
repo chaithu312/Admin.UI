@@ -5,21 +5,21 @@ try { ace.settings.check('sidebar', 'collapsed'); if (ace.settings.is('sidebar',
 
 try { ace.settings.check('navbar', 'fixed') } catch (e) { console.log(e); }
 
-$(document).on('settings.ace', function(event, name, status) {
+$(document).on('settings.ace', function (event, name, status) {
     //name is one of the following
     //navbar_fixed
     //sidebar_fixed
     //breadcrumbs_fixed
     //main_container_fixed
     //sidebar_collapsed
-	
+
     //status is either true or false
-	
-    if(name == 'sidebar_collapsed') {
+
+    if (name == 'sidebar_collapsed') {
         //sidebar was collapsed by user, do something
     }
 
-    if(name == 'sidebar_fixed' && status == false) {
+    if (name == 'sidebar_fixed' && status == false) {
         //sidebar was unfixed by user, do something
     }
 });
