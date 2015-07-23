@@ -8,7 +8,7 @@ using Microsoft.AspNet.Mvc;
 
 namespace Admin.UI.UserArea
 {
-    [Area("UserArea")]
+    [Area("Users")]
     public class UserController : Controller
     {
         // GET: /<controller>/
