@@ -4,11 +4,12 @@
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-concat');
 
     grunt.initConfig({
         clean: ['wwwroot/assets/'],
 
-        uglify: {
+        concat: {
             global: {
                 files: {
                     'wwwroot/assets/js/global.min.js': [
@@ -42,8 +43,9 @@
                         'Assets/ace/js/dataTables/extensions/TableTools/js/dataTables.tableTools.js',
                         'Assets/ace/js/dataTables/extensions/ColVis/js/dataTables.colVis.js'
                     ],
-                    'wwwroot/assets/js/angular-app.js':[ 'Assets/js/angular-app.js',
-                     'Areas/UserArea/Assets/JS/Usercontroller.js']
+                    'wwwroot/assets/js/app.js': [
+                        'Assets/js/app.js',
+                        'Areas/User/Assets/js/UserController.js']
                 }
             },
             ie8: {
@@ -83,7 +85,7 @@
                         'Assets/ace/css/bootstrap.css',
                         'Assets/ace/css/font-awesome.css',
                         'Assets/ace/css/ace-fonts.css',
-                        'Assets/ace/css/ace.css' ]
+                        'Assets/ace/css/ace.css']
                 }
             },
             ie9: {
@@ -110,9 +112,9 @@
 
         watch: {
             scripts: {
-                files: ['Assets/ace/js/*.js', 'Assets/ace/js/ace/*.js', 'Assets/js/*.js'],
-                tasks: ['uglify']
-            }, 
+                files: ['Assets/ace/js/*.js', 'Assets/ace/js/ace/*.js', 'Assets/js/*.js', 'Areas/*/Assets/js/*'],
+                tasks: ['concat']
+            },
             styles: {
                 files: ['Assets/ace/css/*.css'],
                 tasks: ['cssmin']

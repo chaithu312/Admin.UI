@@ -1,5 +1,4 @@
 ﻿(function () {
-
     'use strict';
 
     var app = angular.module("mainApp", ['navsServices']);
@@ -44,9 +43,18 @@
                         <!-- /section:basics/sidebar.layout.minimize -->'
         }
     })
-
 })();
-//-- Navigation Controller
+
+angular.module('mainApp').controller('navsController', ['$scope', function ($scope, $location) {
+    alert($location.path())
+    $scope.isActive = function (destination) {
+        return destination === $location.path();
+    }
+}
+
+]);
+
+//-- Navigation Controller for left navigation
 (function () {
     'use strict';
     angular.module('mainApp').controller('navsController', navsController)
@@ -57,42 +65,9 @@
         }
     }
 
-    window.location.hash = '#/'; //All hash paths need to start with a /, it happens automaticaly with ngResource and the like...
-
-    //the module we are demonstrating:
-    (function () {
-        angular.module('autoActive', [])
-            .directive('autoActive', ['$location', function ($location) {
-                return {
-                    restrict: 'A',
-                    scope: false,
-                    link: function (scope, element) {
-                        function setActive() {
-                            var path = $location.path();
-                            if (path) {
-                                angular.forEach(element.find('li'), function (li) {
-                                    var anchor = li.querySelector('a');
-                                    if (anchor.href.match('#' + path + '(?=\\?|$)')) {
-                                        angular.element(li).addClass('active');
-                                    } else {
-                                        angular.element(li).removeClass('active');
-                                    }
-                                });
-                            }
-                        }
-
-                        setActive();
-
-                        scope.$on('$locationChangeSuccess', setActive);
-                    }
-                }
-            }]);
-    }());
-
     // in controller
- 
 })();
-//-- Navigation Services
+//-- Navigation Services for left navigation
 (function () {
     'use strict';
     var navsServices = angular.module('navsServices', ['ngResource']);
@@ -102,4 +77,3 @@
         });
     }]);
 })();
-

@@ -1,19 +1,102 @@
-﻿'use strict';
+(function () {
 
-/* Controllers */
+    'use strict';
 
+    var app = angular.module("mainApp", ['navsServices']);
 
+    app.directive('toggleSidebar', function () {
+        return {
+            restrict: 'E',
+            template: '<!-- #section:basics/sidebar.mobile.toggle --> \
+                       <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar"> \
+                        <span class="sr-only">Toggle sidebar</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> \
+                       </button> \
+                       <!-- /section:basics/sidebar.mobile.toggle -->'
+        }
+    })
 
-angular.module('mainApp').controller("userCntrl", function ($scope, $http) {
-    $scope.Save = function (Valid) {
-        if (!Valid) {
-            alert("Invalid form");
-            return;
-        } else {
-            alert("It's Great. Form Submitted");
+    app.directive('navbarHeader', function () {
+        return {
+            restrict: 'E',
+            scope: {
+                caption: '@caption'
+            },
+            template: ' <div class="navbar-header pull-left"> \
+                            <!-- #section:basics/navbar.layout.brand --> \
+                            <a href="#" class="navbar-brand"> \
+                                <small> \
+                                    <i class="fa fa-leaf"></i> \
+                                    {{caption}} \
+                                </small> \
+                            </a> \
+                            <!-- /section:basics/navbar.layout.brand --> \
+                        </div>'
+        }
+    })
+
+    app.directive('sidebarMinimize', function () {
+        return {
+            restrict: 'E',
+            template: ' <!-- #section:basics/sidebar.layout.minimize --> \
+                        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse"> \
+                            <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i> \
+                        </div> \
+                        <!-- /section:basics/sidebar.layout.minimize -->'
+        }
+    })
+
+    
+
+})();
+
+angular.module('mainApp').controller('navsController', ['$scope',function ($scope, $location) {
+        alert($location.path())
+        $scope.isActive = function (destination) {
+                        return destination === $location.path();
         }
     }
+
+]);
+    
+
+    //-- Navigation Controller for left navigation 
+    (function () {
+        'use strict';
+        angular.module('mainApp').controller('navsController', navsController)
+        navsController.$inject = ['$scope', 'Navs'];
+        function navsController($scope, Navs) {
+            $scope.init = function () {
+                $scope.navs = Navs.query();
+            }
+        }
+
+
+        // in controller
+ 
+    })();
+    //-- Navigation Services for left navigation 
+    (function () {
+        'use strict';
+        var navsServices = angular.module('navsServices', ['ngResource']);
+        navsServices.factory('Navs', ['$resource', function ($resource) {
+            return $resource('/api/Navigation/', {}, {
+                query: { method: 'GET', params: {}, isArray: true }
+            });
+        }]);
+    })();
+
+
+
+
+angular.module('mainApp').controller("UserController", function ($scope) {
+    $scope.Save = function () {
+        $scope.formInfo = '';
+    }
 });
+
+
+
+
 
 jQuery(function ($) {
     //initiate dataTables plugin
