@@ -1,4 +1,4 @@
-﻿{
+{
   "webroot": "wwwroot",
   "version": "1.0.0-*",
 
@@ -7,7 +7,8 @@
     "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-beta4",
     "Microsoft.AspNet.Server.IIS": "1.0.0-beta4",
     "Microsoft.AspNet.Tooling.Razor": "1.0.0-beta4",
-    "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta4"
+    "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta4",
+    "Grunt": "0.1.13"
   },
 
   "commands": { },
