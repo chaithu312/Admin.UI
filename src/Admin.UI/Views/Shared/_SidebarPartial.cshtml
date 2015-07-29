@@ -31,7 +31,7 @@
 
     <ul class="nav nav-list" ng-controller="navsController" ng-init="init()">
 
-        <li data-ng-if="nav.ParentId == 0" ng-repeat="nav in navs" ng-class="{'active':isActive('{{nav.NavURL}}')}">
+        <li data-ng-if="nav.ParentId == 0" ng-repeat="nav in navs" ng-class="{'open':isOpen('{{nav.NavURL}}')}">
             <a href="{{nav.NavURL}}" class="dropdown-toggle">
                 <i class="menu-icon fa fa-list"></i>
                 <span class="menu-text"> {{nav.Title}} </span>

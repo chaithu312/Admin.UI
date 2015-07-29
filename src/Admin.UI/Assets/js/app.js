@@ -45,15 +45,6 @@
     })
 })();
 
-angular.module('mainApp').controller('navsController', ['$scope', function ($scope, $location) {
-    alert($location.path())
-    $scope.isActive = function (destination) {
-        return destination === $location.path();
-    }
-}
-
-]);
-
 //-- Navigation Controller for left navigation
 (function () {
     'use strict';
@@ -62,6 +53,14 @@ angular.module('mainApp').controller('navsController', ['$scope', function ($sco
     function navsController($scope, Navs) {
         $scope.init = function () {
             $scope.navs = Navs.query();
+        },
+        $scope.isActive = function (destination) {
+            console.log(window.location.pathname);
+            return destination == window.location.pathname;
+        }
+        $scope.isOpen = function (destination) {
+            console.log(window.location.pathname);
+            return destination == '/'+window.location.pathname.split('/')[1];
         }
     }
 
