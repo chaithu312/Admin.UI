@@ -43,7 +43,9 @@
                     ],
                     'wwwroot/assets/js/app.js': [
                         'Assets/js/app.js',
-                        'Areas/User/Assets/js/UserController.js'],
+                        'Areas/User/Assets/js/UserController.js',
+
+                    ],
                     'wwwroot/assets/js/DataTable.js': ['Assets/ace/js/dataTables/jquery.dataTables.js',
                         'Assets/ace/js/dataTables/extensions/TableTools/js/dataTables.tableTools.js',
                         'Assets/ace/js/dataTables/extensions/ColVis/js/dataTables.colVis.js']

@@ -1,0 +1,55 @@
+﻿@model Admin.UI.UserArea.Model.User
+@{
+
+    Layout = "~/Views/shared/_layout.cshtml";
+}
+<div class="col-sm-7" ng-controller="UserController">
+    <div class="widget-box">
+        <div class="widget-header">
+            <h4 class="widget-title">Your Login Information</h4>
+        </div>
+        <div class="widget-body">
+            <div class="widget-main">
+
+                @using (Html.BeginForm("Login", "User", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div>
+                        <label for="form-field-mask-1" class="col-sm-3">
+                            @Html.LabelFor(model => model.userName, " Username ")
+                        </label>
+                        <!-- #section:plugins/input.masked-input -->
+                        <div class="input-group col-sm-8">
+                            <input type="text" id="form-field-mask-1" class="form-control" placeholder="UserName" name="userName" required>
+                        </div>
+                    </div>
+                    <hr />
+                    <div>
+                        <label for="form-field-mask-1" class="col-sm-3">
+                            @Html.LabelFor(model => model.password, "Password")
+                        </label>
+                        <!-- #section:plugins/input.masked-input -->
+                        <div class="input-group col-sm-8">
+                            <input type="password" id="form-field-mask-1" class="form-control " placeholder="Password" name="password" required>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="clearfix form-actions" style="margin-bottom:0px;">
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-info">
+                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                Login
+                            </button>
+                        </div>
+                    </div>
+
+                    <div data-ng-hide="message == ''" class="alert alert-danger">
+                        @Html.ValidationSummary(true)
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

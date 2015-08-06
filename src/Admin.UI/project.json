@@ -8,14 +8,17 @@
     "Microsoft.AspNet.Server.IIS": "1.0.0-beta4",
     "Microsoft.AspNet.Tooling.Razor": "1.0.0-beta4",
     "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta4",
-    "Grunt": "0.1.13"
+    "Grunt": "0.1.13",
+    "System.IdentityModel.Tokens.Jwt": "4.0.0",
+    "Owin": "1.0",
+    "Microsoft.AspNet.WebApi.Owin": "5.2.3",
+    "Thinktecture.IdentityModel.Client": "4.0.1"
   },
 
   "commands": { },
 
   "frameworks": {
-    "dnx451": { },
-    "dnxcore50": { }
+    "dnx451": { }
   },
 
   "publishExclude": [
