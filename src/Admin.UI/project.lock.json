@@ -12,11 +12,45 @@
       "System.IdentityModel.Tokens.Jwt >= 4.0.0",
       "Owin >= 1.0",
       "Microsoft.AspNet.WebApi.Owin >= 5.2.3",
-      "Thinktecture.IdentityModel.Client >= 4.0.1"
+      "Thinktecture.IdentityModel.Client >= 4.0.1",
+      "System.Data.SqlClient >= 4.0.0-beta-22816",
+      "Dapper >= 1.42.0"
     ],
     "DNX,Version=v4.5.1": []
   },
   "libraries": {
+    "Dapper/1.42": {
+      "serviceable": false,
+      "sha": "HBNIulHq5DWD1K60iVABe4oW4HoWmraR20yy9jLrw9tgTbMY2eolYk2UgXFI43lSUMTdhUjPvlHci0TnsfoiXw==",
+      "frameworks": {
+        "DNX,Version=v4.5.1": {
+          "dependencies": {},
+          "frameworkAssemblies": [
+            "Microsoft.CSharp"
+          ],
+          "runtimeAssemblies": [
+            "lib/net45/Dapper.dll"
+          ],
+          "compileAssemblies": [
+            "lib/net45/Dapper.dll"
+          ]
+        }
+      },
+      "files": [
+        "Dapper.1.42.nupkg",
+        "Dapper.1.42.nupkg.sha512",
+        "Dapper.nuspec",
+        "lib/net35/Dapper.dll",
+        "lib/net35/Dapper.pdb",
+        "lib/net35/Dapper.xml",
+        "lib/net40/Dapper.dll",
+        "lib/net40/Dapper.pdb",
+        "lib/net40/Dapper.xml",
+        "lib/net45/Dapper.dll",
+        "lib/net45/Dapper.pdb",
+        "lib/net45/Dapper.xml"
+      ]
+    },
     "Grunt/0.1.13": {
       "serviceable": false,
       "sha": "3cEntbUZukLRwGIUtloGcUtdRfufSXuIWLW62eLarIQwzIS4i6A9cSOnaOw862sXKAeEZ5LlaDkczCuMK/zX0w==",
@@ -2795,6 +2829,107 @@
         "lib/portable-net45+win8+wp8+wpa81/System.Collections.Immutable.xml"
       ]
     },
+    "System.Data.Common/4.0.0-beta-22816": {
+      "serviceable": false,
+      "sha": "S529QASzN//8c99JoII7mB3/HXDiEFghpdI0BX2l6wi+pl+tWszDEvLG3fTzitZiE9x5/TsaC9+PqffajhfGIg==",
+      "frameworks": {
+        "DNX,Version=v4.5.1": {
+          "dependencies": {
+            "System.IO": "4.0.10-beta-22816",
+            "System.Runtime": "4.0.20-beta-22816",
+            "System.Threading.Tasks": "4.0.10-beta-22816"
+          },
+          "frameworkAssemblies": [
+            "mscorlib",
+            "System.Data"
+          ],
+          "runtimeAssemblies": [
+            "lib/net45/System.Data.Common.dll"
+          ],
+          "compileAssemblies": [
+            "lib/net45/System.Data.Common.dll"
+          ]
+        }
+      },
+      "files": [
+        "License.rtf",
+        "System.Data.Common.4.0.0-beta-22816.nupkg",
+        "System.Data.Common.4.0.0-beta-22816.nupkg.sha512",
+        "System.Data.Common.nuspec",
+        "lib/aspnetcore50/System.Data.Common.dll",
+        "lib/contract/System.Data.Common.dll",
+        "lib/net45/System.Data.Common.dll",
+        "lib/portable-wpa81+wp80+win80+net45+aspnetcore50/System.Data.Common.dll"
+      ]
+    },
+    "System.Data.SqlClient/4.0.0-beta-22816": {
+      "serviceable": false,
+      "sha": "HyCUhHjJ5iqsO9GtIqoulzPaJL7w9UeYMaazDhMbUQP1Yz2zalNQaFIV3ssFFEPmCVZwjeV+1zagDfoM0KahZQ==",
+      "frameworks": {
+        "DNX,Version=v4.5.1": {
+          "dependencies": {
+            "System.Data.Common": "4.0.0-beta-22816",
+            "System.Globalization": "4.0.10-beta-22816",
+            "System.IO": "4.0.10-beta-22816",
+            "System.Runtime": "4.0.20-beta-22816",
+            "System.Threading.Tasks": "4.0.10-beta-22816",
+            "System.Xml.ReaderWriter": "4.0.10-beta-22816"
+          },
+          "frameworkAssemblies": [
+            "mscorlib",
+            "System.Data"
+          ],
+          "runtimeAssemblies": [
+            "lib/net45/System.Data.SqlClient.dll"
+          ],
+          "compileAssemblies": [
+            "lib/net45/System.Data.SqlClient.dll"
+          ]
+        }
+      },
+      "files": [
+        "License.rtf",
+        "System.Data.SqlClient.4.0.0-beta-22816.nupkg",
+        "System.Data.SqlClient.4.0.0-beta-22816.nupkg.sha512",
+        "System.Data.SqlClient.nuspec",
+        "lib/aspnetcore50/System.Data.SqlClient.dll",
+        "lib/contract/System.Data.SqlClient.dll",
+        "lib/net45/System.Data.SqlClient.dll",
+        "lib/portable-wpa81+wp80+win80+net45+aspnetcore50/System.Data.SqlClient.dll",
+        "native/win7/x64/sni.dll",
+        "native/win7/x86/sni.dll"
+      ]
+    },
+    "System.Globalization/4.0.10-beta-22816": {
+      "serviceable": false,
+      "sha": "Eq2937cdQH2G3qij5gZIJ47785OwLK/+AVjyHfJKnWyhAFWoaLnQOVtaXfMVkfvp4AW7eDVkqIv0fSoS6N2q0A==",
+      "frameworks": {
+        "DNX,Version=v4.5.1": {
+          "dependencies": {
+            "System.Runtime": "4.0.20-beta-22816"
+          },
+          "frameworkAssemblies": [
+            "mscorlib"
+          ],
+          "runtimeAssemblies": [
+            "lib/net45/System.Globalization.dll"
+          ],
+          "compileAssemblies": [
+            "lib/net45/System.Globalization.dll"
+          ]
+        }
+      },
+      "files": [
+        "License.rtf",
+        "System.Globalization.4.0.10-beta-22816.nupkg",
+        "System.Globalization.4.0.10-beta-22816.nupkg.sha512",
+        "System.Globalization.nuspec",
+        "lib/aspnetcore50/System.Globalization.dll",
+        "lib/contract/System.Globalization.dll",
+        "lib/net45/System.Globalization.dll",
+        "lib/portable-wpa81+wp80+win80+net45+aspnetcore50/System.Globalization.dll"
+      ]
+    },
     "System.IdentityModel.Tokens.Jwt/4.0.0": {
       "serviceable": true,
       "sha": "gBq/+SI1aCgPoY397FTLtMRUhaZciIGIadzKf1hcxDixxsQPZAbs/VmcucU24b9umdw9unIkQV9efn3AeHxTHg==",
@@ -3029,6 +3164,40 @@
         "lib/contract/System.Threading.Tasks.dll",
         "lib/net45/System.Threading.Tasks.dll",
         "lib/portable-wpa81+wp80+win80+net45+aspnetcore50/System.Threading.Tasks.dll"
+      ]
+    },
+    "System.Xml.ReaderWriter/4.0.10-beta-22816": {
+      "serviceable": false,
+      "sha": "G0aLPtC/phTfiJPwe0VA3tB3x8YFQ1dHFuE1xaHNr9eQm/AfBp4Pk+fn3s7ABJDus/T89EtIHQ9C+O6VmqXIQQ==",
+      "frameworks": {
+        "DNX,Version=v4.5.1": {
+          "dependencies": {
+            "System.IO": "4.0.10-beta-22816",
+            "System.Runtime": "4.0.20-beta-22816",
+            "System.Text.Encoding": "4.0.10-beta-22816",
+            "System.Threading.Tasks": "4.0.10-beta-22816"
+          },
+          "frameworkAssemblies": [
+            "mscorlib",
+            "System.Xml"
+          ],
+          "runtimeAssemblies": [
+            "lib/net45/System.Xml.ReaderWriter.dll"
+          ],
+          "compileAssemblies": [
+            "lib/net45/System.Xml.ReaderWriter.dll"
+          ]
+        }
+      },
+      "files": [
+        "License.rtf",
+        "System.Xml.ReaderWriter.4.0.10-beta-22816.nupkg",
+        "System.Xml.ReaderWriter.4.0.10-beta-22816.nupkg.sha512",
+        "System.Xml.ReaderWriter.nuspec",
+        "lib/aspnetcore50/System.Xml.ReaderWriter.dll",
+        "lib/contract/System.Xml.ReaderWriter.dll",
+        "lib/net45/System.Xml.ReaderWriter.dll",
+        "lib/portable-wpa81+wp80+win80+net45+aspnetcore50/System.Xml.ReaderWriter.dll"
       ]
     },
     "Thinktecture.IdentityModel.Client/4.0.1": {

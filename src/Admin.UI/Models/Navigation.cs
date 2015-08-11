@@ -1,4 +1,6 @@
-﻿namespace Admin.UI.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Admin.UI.Models
 {
     public class Navigation
     {
