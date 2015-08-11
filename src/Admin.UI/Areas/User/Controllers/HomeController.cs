@@ -79,30 +79,16 @@ namespace Admin.UI.UserArea
         {
             //if (ModelState.IsValid)
             //{
-            if (user.userName.ToString().Contains("\\") == true)
-            {
-                string[] strUserDomain = user.userName.Split('\\');
-                string strDomainName = strUserDomain[0].ToString();
-                string strUserName = strUserDomain[1].ToString();
-
-                string sqlQuery = string.Empty;
-
-                sqlQuery = "DECLARE @ID uniqueidentifier; INSERT INTO[dbo].[Domain]([DomainKey],[RealmId],[Tag],[Name],[Detail],[Created],[Status])VALUES('" + Guid.NewGuid() + "','','','" + strUserDomain[0].ToString() + "','','" + DateTime.Today + "',1); " +
-                            "Select @ID = [DomainKey] from Domain where name='" + strUserDomain[0].ToString() + "';" +
-                            "SELECT @ID";
-
-                var id = _dbM.Query<string>(sqlQuery);
-
-                string strSalt = Admin.UI.Utility.Cryptography.CreateSalt();
-                sqlQuery = "INSERT INTO [dbo].[Login]([DomainKey],[EMail],[EMailToken],[EMailConfirmed],[PasswordHash],[PasswordSalt],[LockoutMax],[LockoutFailCount],[LockoutEnds],[Detail],[Created],[Status]) VALUES('" + Guid.NewGuid() + "','" + user.userName + "','" + Guid.NewGuid() + "','','" + Admin.UI.Utility.Cryptography.CreatePasswordHash(user.password, strSalt) + "','" + strSalt + "',0,0,'01/01/1900',' Security Question : " + user.securityQuestion + " & Security Answer : " + user.securityAnswer + " ','" + DateTime.Today + "','')";
-                _db.Query(sqlQuery);
-                return View("login");
-            }
+            string strSalt = Admin.UI.Utility.Cryptography.CreateSalt();
+            string sqlQuery = "INSERT INTO [dbo].[Login]([DomainKey],[EMail],[EMailToken],[EMailConfirmed],[PasswordHash],[PasswordSalt],[LockoutMax],[LockoutFailCount],[LockoutEnds],[Detail],[Created],[Status]) VALUES('" + Guid.NewGuid() + "','" + user.userName + "','" + Guid.NewGuid() + "','','" + Admin.UI.Utility.Cryptography.CreatePasswordHash(user.password, strSalt) + "','" + strSalt + "',0,0,'01/01/1900',' Security Question : " + user.securityQuestion + " & Security Answer : " + user.securityAnswer + " ','" + DateTime.Today + "','')";
+            _db.Query(sqlQuery);
+            return View("login");
+            // }
             //}
-            else
-            {
-                return View();
-            }
+            //else
+            //{
+            //    return View();
+            //}
         }
     }
 }
