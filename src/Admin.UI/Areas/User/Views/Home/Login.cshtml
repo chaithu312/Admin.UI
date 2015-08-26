@@ -1,54 +1,52 @@
-﻿@model Admin.UI.UserArea.Model.User
+﻿@model Admin.UI.UserArea.Model.Login
 @{
 
     Layout = "~/Views/shared/_layout.cshtml";
 }
-<div class="col-sm-7" ng-controller="UserController">
+<div class="col-sm-7" ng-controller="LoginController">
     <div class="widget-box">
         <div class="widget-header">
             <h4 class="widget-title">Your Login Information</h4>
         </div>
         <div class="widget-body">
             <div class="widget-main">
-
-                @using (Html.BeginForm("Login", "User", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
+                <form novalidate name="frmLogin">
+                    <div style="color:red">{{message}}</div>
 
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
-                            @Html.LabelFor(model => model.userName, " Username ")
+                            @Html.LabelFor(model => model.UserName, " UserName ")
                         </label>
-                        <!-- #section:plugins/input.masked-input -->
+
                         <div class="input-group col-sm-8">
-                            <input type="text" id="form-field-mask-1" class="form-control" placeholder="UserName" name="userName" required>
+                            @Html.TextBoxFor(model => model.UserName, "UserName", new { type = "email", id = "UserName", @class = "form-control", @placeholder = "User Name", ng_model = "User.UserName", @name = "UserName", ng_class = "submitted?'ng-dirty':''" })
+                            <validated-input name="UserName" display="User Name" ng-model="User.UserName" required>
+                                <span class="error" ng-show="(frmLogin.UserName.$dirty || submitted) && frmLogin.UserName.$error.required && frmLogin.UserName.$invalid">Username required! and should be valid email!</span>
                         </div>
                     </div>
                     <hr />
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
-                            @Html.LabelFor(model => model.password, "Password")
+                            @Html.LabelFor(model => model.Password, "Password")
                         </label>
-                        <!-- #section:plugins/input.masked-input -->
+
                         <div class="input-group col-sm-8">
-                            <input type="password" id="form-field-mask-1" class="form-control " placeholder="Password" name="password" required>
+                            @Html.TextBoxFor(model => model.Password, "Password", new { type = "password", id = "Password", @class = "form-control ", @placeholder = "Password", ng_model = "User.Password", @name = "Password", ng_minlength = "8", ng_class = "submitted?'ng-dirty':''" })
+                            <validated-input name="Password" display="Password" ng-model="User.Password" required>
+                                <span class="error" ng-show="(frmLogin.Password.$dirty || submitted) && frmLogin.Password.$error.required && frmLogin.Password.$error.minlength">Password required! and should be min 8 character</span>
                         </div>
+                        @Html.HiddenFor(x => x.DomainKey, new { ng_value = Model.DomainKey, ng_model = "User.DomainKey", })
                     </div>
-                    <hr />
 
                     <div class="clearfix form-actions" style="margin-bottom:0px;">
                         <div class="text-right">
-                            <button type="submit" class="btn btn-info">
+                            <button type="button" class="btn btn-info" ng-click="LoginData(User)">
                                 <i class="ace-icon fa fa-check bigger-110"></i>
                                 Login
                             </button>
                         </div>
                     </div>
-
-                    <div data-ng-hide="message == ''" class="alert alert-danger">
-                        @Html.ValidationSummary(true)
-                    </div>
-                }
+                </form>
             </div>
         </div>
     </div>

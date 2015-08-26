@@ -6,7 +6,10 @@ namespace Admin.UI.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+                return View();
+            else
+                return RedirectToAction("Index", "Home", new { area="User"});
         }
 
         public IActionResult Index2()

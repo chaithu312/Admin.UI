@@ -38,12 +38,12 @@
                         'Assets/ace/js/ace/ace.settings-skin.js',
                         'Assets/ace/js/ace/ace.widget-on-reload.js',
                         'Assets/ace/js/ace/ace.searchbox-autocomplete.js',
-                        'Assets/ace/js/ace-settings.js',
+                        'Assets/ace/js/ace-settings.js'
 
                     ],
                     'wwwroot/assets/js/app.js': [
                         'Assets/js/app.js',
-                        'Areas/User/Assets/js/UserController.js',
+                        'Areas/User/Assets/js/UserController.js'
 
                     ],
                     'wwwroot/assets/js/DataTable.js': ['Assets/ace/js/dataTables/jquery.dataTables.js',
