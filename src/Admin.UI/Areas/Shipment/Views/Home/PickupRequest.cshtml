@@ -9,19 +9,22 @@
         </div>
         <div class="widget-body">
             <div class="widget-main">
-                <form class="form-inline">
+                <form class="form-inline" name="PickupForm" data-ng-submit="sendForm()" data-ng-controller="PickupRequestController" novalidate>
+                    <div id="errorMessages" class="error">{{message}}</div>
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
                             Account No
                         </label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-9">
-                            <input type="text" id="form-field-mask-1" class="form-control">
+                            <input name="accountNumber" id="accountNumber" type="text" class="form-control" data-ng-model="PickupRequest.AccountNumber" required>
+                            <span class="error" data-ng-show="PickupForm.accountNumber.$error.required">Account No is required</span>
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-sm btn-default">
                                     <i class="ace-icon fa fa-arrow-circle-right bigger-110"></i>
                                 </button>
                             </span>
+                            
                         </div>
                     </div>
                     <hr />
@@ -31,9 +34,8 @@
                         </label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-8">
-                            <select id="form-field-select-1" class="form-control">
-                                <option value=""></option>
-                            </select>
+                            <select id="form-field-select-1" class="form-control" data-ng-model="Contacts.selectedOption"
+                                    data-ng-options="contact.Name for contact in Contacts.Data track by contact.Id"></select>
                         </div>
                     </div>
                     <hr />
@@ -43,7 +45,8 @@
                         </label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-8">
-                            <input type="text" class="form-control" placeholder="" id="">
+                            <input type="text" class="form-control" id="contactName" name="contactName" data-ng-model="PickupRequest.ContactName" required>
+                            <span class="error" data-ng-show="PickupForm.contactName.$error.required">Contact Name is required</span>
                         </div>
                     </div>
                     <hr />
@@ -53,7 +56,7 @@
                         </label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-8">
-                            <input type="text" class="form-control" placeholder="" id="">
+                            <input type="text" class="form-control" placeholder="" id="phone" name="phone" data-ng-model="PickupRequest.Phone">
                         </div>
                     </div>
                     <hr />
@@ -63,8 +66,8 @@
                         </label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-8">
-                            <select id="form-field-select-1" class="form-control">
-                                <option value=""></option>
+                            <select id="form-field-select-1" class="form-control"  data-ng-model="Addresses.selectedOption" 
+                                    data-ng-options="address.Name for address in Addresses.Data track by address.Id">
                             </select>
                         </div>
                     </div>
@@ -75,9 +78,10 @@
                         </label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-8">
-                            <input type="text" class="form-control" placeholder="" id=""><br />
-                            &nbsp;
-                            <input type="text" class="form-control" placeholder="" id="">
+                            <input type="text" class="form-control" placeholder="" id="address" name="address" data-ng-model="PickupRequest.Address" required>
+                            <span class="error" data-ng-show="PickupForm.address.$error.required">Address is required</span>
+                            <br /><br />
+                            <input type="text" class="form-control" placeholder="" id="address1" name="address1" data-ng-model="Addresses.Address1">
                         </div>
                     </div>
                     <hr />
@@ -87,7 +91,8 @@
                         </label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-8">
-                            <input type="text" class="form-control" placeholder="" id="">
+                            <input type="text" class="form-control" placeholder="" id="city" name="city" data-ng-model="PickupRequest.City" required>
+                            <span class="error" data-ng-show="PickupForm.city.$error.required">City is required</span>
                         </div>
                     </div>
                     <hr />
@@ -97,9 +102,10 @@
                         </label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-8">
-                            <select id="form-field-select-1" class="form-control">
-                                <option value=""></option>
+                            <select id="ddlState" class="form-control" data-ng-model="States.selectedOption" name="ddlState"
+                                    data-ng-options="state.Name for state in States.Data track by state.Id" required>
                             </select>
+                            <span class="error" data-ng-show="PickupForm.ddlState.$error.required">State is required</span>
                         </div>
                     </div>
                     <hr />
@@ -109,7 +115,8 @@
                         </label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-8">
-                            <input type="text" class="form-control" placeholder="" id="">
+                            <input type="text" class="form-control" placeholder="" id="zipCode" name="zipCode" data-ng-model="PickupRequest.ZipCode" required>
+                            <span class="error" data-ng-show="PickupForm.zipCode.$error.required">Zip Code is required</span>
                         </div>
                     </div>
                     <hr />
@@ -129,7 +136,11 @@
                         </label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-8">
-                            <input type="checkbox" style="float:left;"> <span style="padding-left:4px; padding-right:10px; float:left;">Document &nbsp; Estimated Weight:</span> <input type="text" class="form-control" style="display:inline-block; width:auto;">
+                            <input type="checkbox" style="float:left;" id="packageProperties" name="packageProperties" data-ng-model="PickupRequest.PackageProperties"> 
+                            <span style="padding-left:4px; padding-right:10px; float:left;">Document &nbsp; Estimated Weight:</span> 
+                            <input type="text" class="form-control" style="display:inline-block; width:auto;" id="estimatedWeight" name="estimatedWeight" data-ng-model="PickupRequest.EstimatedWeight" required>
+                            &nbsp;
+                            <span class="error" data-ng-show="PickupForm.estimatedWeight.$error.required">Estimated Weight is required</span>
                         </div>
                     </div>
                     <hr />
@@ -139,8 +150,9 @@
                         </label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-8">
-                            <select id="form-field-select-1" class="form-control">
-                                <option value=""></option>
+                            <select id="form-field-select-1" class="form-control" data-ng-model="Pieces.selectedOption"
+                                    data-ng-options="pieces.Name for pieces in Pieces.Data track by pieces.Id">
+                                
                             </select>
                         </div>
                     </div>
@@ -191,8 +203,9 @@
                         </label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-8">
-                            <select id="form-field-select-1" class="form-control">
-                                <option value=""></option>
+                            <select id="form-field-select-1" class="form-control" data-ng-model="Destination.selectedOption"
+                                    data-ng-options="destination.Name for destination in Destination.Data track by destination.Id">
+                               
                             </select>
                         </div>
                     </div>
@@ -203,8 +216,9 @@
                         </label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-8">
-                            <select id="form-field-select-1" class="form-control">
-                                <option value=""></option>
+                            <select id="form-field-select-1" class="form-control" ng-model="PickupAgent.selectedOption"
+                                    data-ng-options="pickupAgent.Name for pickupAgent in PickupAgent.Data track by pickupAgent.Id">
+                                
                             </select>
                         </div>
                     </div>
@@ -215,8 +229,9 @@
                         </label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-8">
-                            <select id="form-field-select-1" class="form-control">
-                                <option value=""></option>
+                            <select id="form-field-select-1" class="form-control" ng-model="PickupType.selectedOption"
+                                    data-ng-options="pickupType.Name for pickupType in PickupType.Data track by pickupType.Id">
+                                
                             </select>
                         </div>
                     </div>
@@ -227,17 +242,17 @@
                         </label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-8">
-                            <textarea placeholder="Default Text" id="form-field-8" class="form-control"></textarea>
+                            <textarea placeholder="Default Text" id="form-field-8" class="form-control" data-ng-model="PickupRequest.AccountNumber"></textarea>
                         </div>
                     </div>
                     <div class="clearfix form-actions" style="margin-bottom:0px;">
                         <div class="text-right">
-                            <button type="button" class="btn btn-info">
+                            <button type="submit" class="btn btn-info" data-ng-disabled="PickupForm.$invalid">
                                 <i class="ace-icon fa fa-check bigger-110"></i>
                                 Save
                             </button>
                             &nbsp; &nbsp; &nbsp;
-                            <button type="reset" class="btn">
+                            <button type="reset" class="btn" >
                                 <i class="ace-icon fa fa-undo bigger-110"></i>
                                 Save & New
                             </button>

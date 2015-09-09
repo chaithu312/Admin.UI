@@ -6,11 +6,11 @@ using System.Collections.Generic;
 namespace Admin.UI.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+  
     public class NavigationController : Controller
     {
         [HttpGet]
-        [Authorize]
+       
         public IEnumerable<Navigation> Get()
         {
             return new List<Navigation>
