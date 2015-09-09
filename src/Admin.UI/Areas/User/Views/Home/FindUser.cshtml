@@ -1,0 +1,41 @@
+﻿@model Admin.UI.Areas.User.Models.FindUser
+@{
+
+    Layout = "~/Views/shared/_layout.cshtml";
+}
+
+<div class="col-sm-7" ng-controller="UserController">
+    <div class="widget-box">
+        <div class="widget-header">
+            <h4 class="widget-title">Find User</h4>
+        </div>
+        <div class="widget-body">
+            <div class="widget-main">
+                <form novalidate name="frmLogin">
+                    <div style="color:red">{{message}}</div>
+
+                    <div>
+                        <label for="form-field-mask-1" class="col-sm-3">
+                            @Html.LabelFor(model => model.UserName, " UserName ")
+                        </label>
+
+                        <div class="input-group col-sm-8">
+                            @Html.TextBoxFor(model => model.UserName, "UserName", new { type = "email", id = "UserName", @class = "form-control", @placeholder = "User Name", ng_model = "User.UserName", @name = "UserName", ng_class = "submitted?'ng-dirty':''" })
+                            <validated-input name="UserName" display="User Name" ng-model="User.UserName" required>
+                                <span class="error" ng-show="(frmLogin.UserName.$dirty || submitted) && frmLogin.UserName.$error.required && frmLogin.UserName.$invalid">Username required! and should be valid email!</span>
+                        </div>
+                    </div>
+
+                    <div class="clearfix form-actions" style="margin-bottom:0px;">
+                        <div class="text-right">
+                            <button type="button" class="btn btn-info" ng-click="LoginData(User)">
+                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                Find User
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
