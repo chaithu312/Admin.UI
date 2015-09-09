@@ -1,72 +1,64 @@
-﻿@model Admin.UI.UserArea.Model.Register
-@{
+﻿@{
 
     Layout = "~/Views/shared/_layout.cshtml";
 }
 
-<div class="col-sm-7" ng-controller="UserController">
+<div class="col-sm-7">
     <div class="widget-box">
         <div class="widget-header">
             <h4 class="widget-title">First attempt please Register yourself</h4>
         </div>
         <div class="widget-body">
             <div class="widget-main">
-                <form novalidate name="frmRegistration">
-                    <div style="color:red">{{message}}</div>
-
+                <form name="mainForm" data-ng-submit="sendForm()" data-ng-controller="SignUpController" novalidate>
+                    <div id="errorMessages" class="error">{{message}}</div>
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
-                            @Html.LabelFor(model => model.UserName, " UserName ")
+                            <label for="userName">User Name</label>
                         </label>
 
                         <div class="input-group col-sm-8">
-                            @Html.TextBoxFor(model => model.UserName, "UserName", new { type = "email", id = "UserName", @class = "form-control", @placeholder = "User Name", ng_model = "User.UserName", @name = "UserName", ng_class = "submitted?'ng-dirty':''" })
-                                <validated-input name="UserName" display="User Name" ng-model="User.UserName" required>
-                                <span class="error" ng-show="(frmRegistration.UserName.$dirty || submitted) && frmRegistration.UserName.$error.required">Username required!</span>
-                                <span class="error" ng-show="(frmRegistration.UserName.$dirty || submitted) && frmRegistration.UserName.$invalid">Username should be valid email!</span>
-</div>
+                            <input id="userName" class="form-control" name="userName" type="email" data-ng-model="person.userName" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required ng-unique />
+                            <span class="error" data-ng-show="mainForm.userName.$error.required">Username is required</span>
+                            <span class="error" data-ng-show="mainForm.userName.$error.email">Invalid user name. it should be a valid email</span>
+                            <span class="error" data-ng-show="mainForm.userName.$error.pattern">Invalid email.</span>
+                            <span class="error" data-ng-show="mainForm.userName.$error.unique">Username already exists.</span>
+                        </div>
                     </div>
                     <hr />
+
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
-                            @Html.LabelFor(model => model.Password, "Password")
+                            <label for="password">Password</label>
                         </label>
 
                         <div class="input-group col-sm-8">
-                            @Html.TextBoxFor(model => model.Password, "Password", new { type = "password", id = "Password", @class = "form-control ", @placeholder = "Password", ng_model = "User.Password", @name = "Password", ng_minlength= "8" ,ng_class = "submitted?'ng-dirty':''" })
-                            <validated-input name="Password" display="Password" ng-model="User.Password" required >
-                                <span class="error" ng-show="frmRegistration.Password.$error.minlength">
-                                    Password Should Contain Atleast 8 Characters
-                                </span>
-                                 <span class="error" ng-show="(frmRegistration.Password.$dirty || submitted) && frmRegistration.Password.$error.required">Password required!</span>
-
-                               
-</div>
+                            <input id="password" name="password" class="form-control" type="password" data-ng-model="person.Password" data-ng-minlength="8" required />
+                            <span class="error" data-ng-show="mainForm.password.$error.required">Password is required</span>
+                            <span class="error" data-ng-show="mainForm.password.$error.minlength">Minimum 8 characters are required.</span>
+                        </div>
                     </div>
                     <hr />
 
-                    <hr />
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
-                            @Html.LabelFor(model => model.ConfirmPassword, "ConfirmPassword")
+                            <label for="confirmPassword">Confirm Password</label>
                         </label>
 
                         <div class="input-group col-sm-8">
-                            @Html.TextBoxFor(model => model.ConfirmPassword, "ConfirmPassword", new { type = "password", id = "ConfirmPassword", @class = "form-control ", @placeholder = "Confirm Password", ng_model = "User.ConfirmPassword", @name = "ConfirmPassword", ng_minlength = "8", ng_class = "submitted?'ng-dirty':''" })
-                            <validated-input name="ConfirmPassword" display="ConfirmPassword" ng-model="User.ConfirmPassword" required>
-                                <span class="error" ng-show="frmRegistration.ConfirmPassword.$error.minlength">
-                                    Confirm Password Should Contain Atleast 8 Characters
-                                </span>
-                                <span class="error" ng-show="(frmRegistration.ConfirmPassword.$dirty || submitted) && frmRegistration.ConfirmPassword.$error.required">Confirm Password required!</span>
-                                
-                                @Html.HiddenFor(x => x.DomainKey, new { ng_value = Model.DomainKey, ng_model = "User.DomainKey", })
-</div>
+                            <input id="confirmPassword" class="form-control" name="confirmPassword" type="password" data-ng-model="person.confirmPassword" required />
+                            <span class="error" data-ng-show="mainForm.password.$error.required">Confirm Password is required</span>
+                            <span class="error" data-ng-show="(mainForm.password.$dirty && mainForm.confirmPassword.$dirty) && (person.Password != person.confirmPassword)">Password mismatched</span>
+                        </div>
                     </div>
-                    <hr />
+
+                    <div>
+                        <input id="domainKey" class="form-control" name="domainKey" data-ng-model="person.domainKey" type="hidden" required value="B171F61C-8914-4C5D-AF88-C3B776D80916" />
+                    </div>
 
                     <div class="clearfix form-actions" style="margin-bottom:0px;">
                         <div class="text-right">
-                            <button type="button" class="btn btn-info" ng-click="SaveData(User)">
+                            <button type="submit" class="btn btn-info" data-ng-disabled="mainForm.$invalid">
                                 <i class="ace-icon fa fa-check bigger-110"></i>
                                 Register
                             </button>
@@ -77,4 +69,3 @@
         </div>
     </div>
 </div>
-

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Admin.UI.UserArea.Model
+namespace Admin.UI.Areas.User.Models
 {
     public class Register
     {
         [Required(ErrorMessage = "DomainKey is required")]
-       // [StringLength(32, ErrorMessage = "Must be unique GUID", MinimumLength = 32)]
+        // [StringLength(32, ErrorMessage = "Must be unique GUID", MinimumLength = 32)]
         public string DomainKey { get; set; }
 
         [Required(ErrorMessage = "UserName is required")]

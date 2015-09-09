@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Admin.UI.UserArea.Model
+namespace Admin.UI.Areas.User.Models
 {
     public class Login
     {

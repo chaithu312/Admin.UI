@@ -1,4 +1,4 @@
-﻿@model Admin.UI.UserArea.Model.Login
+﻿@model Admin.UI.Areas.User.Models.Login
 @{
 
     Layout = "~/Views/shared/_layout.cshtml";
@@ -33,11 +33,11 @@
                         <div class="input-group col-sm-8">
                             @Html.TextBoxFor(model => model.Password, "Password", new { type = "password", id = "Password", @class = "form-control ", @placeholder = "Password", ng_model = "User.Password", @name = "Password", ng_minlength = "8", ng_class = "submitted?'ng-dirty':''" })
                             <validated-input name="Password" display="Password" ng-model="User.Password" required>
+                                <span class="error" ng-show="(frmLogin.Password.$dirty || submitted) && frmLogin.Password.$error.required"> Password required!</span>
                                 <span class="error" ng-show="(frmLogin.Password.$dirty || submitted) && frmLogin.Password.$error.required && frmLogin.Password.$error.minlength">Password required! and should be min 8 character</span>
                         </div>
-                        @Html.HiddenFor(x => x.DomainKey, new { ng_value = Model.DomainKey, ng_model = "User.DomainKey", })
                     </div>
-
+                    @Html.HiddenFor(x => x.DomainKey, new { @value = Model.DomainKey, ng_model = "User.DomainKey", })
                     <div class="clearfix form-actions" style="margin-bottom:0px;">
                         <div class="text-right">
                             <button type="button" class="btn btn-info" ng-click="LoginData(User)">
