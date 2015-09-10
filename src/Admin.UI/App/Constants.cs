@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Admin.UI.App
+﻿namespace Admin.UI.App
 {
     public static class Constants
     {

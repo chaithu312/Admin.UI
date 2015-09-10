@@ -14,7 +14,8 @@
       "Microsoft.AspNet.WebApi.Owin >= 5.2.3",
       "Thinktecture.IdentityModel.Client >= 4.0.1",
       "System.Data.SqlClient >= 4.0.0-beta-22816",
-      "Dapper >= 1.42.0"
+      "Dapper >= 1.42.0",
+      "Microsoft.NetFX20 >= 1.0.3"
     ],
     "DNX,Version=v4.5.1": []
   },
@@ -1992,6 +1993,28 @@
         "lib/dnxcore50/Microsoft.Net.Http.Headers.xml",
         "lib/net45/Microsoft.Net.Http.Headers.dll",
         "lib/net45/Microsoft.Net.Http.Headers.xml"
+      ]
+    },
+    "Microsoft.NetFX20/1.0.3": {
+      "serviceable": false,
+      "sha": "7hPxu4q65ap1yiAuniskpMIJyTwviBIRItCYXozm/6Ikt03Uw3NNQNNzf7mjOEYYi9CG9VIv1KYwBGEa3FWAcg==",
+      "frameworks": {
+        "DNX,Version=v4.5.1": {
+          "dependencies": {},
+          "frameworkAssemblies": [],
+          "runtimeAssemblies": [
+            "lib/net20/mscorlib.dll"
+          ],
+          "compileAssemblies": [
+            "lib/net20/mscorlib.dll"
+          ]
+        }
+      },
+      "files": [
+        "Microsoft.NetFX20.1.0.3.nupkg",
+        "Microsoft.NetFX20.1.0.3.nupkg.sha512",
+        "Microsoft.NetFX20.nuspec",
+        "lib/net20/mscorlib.dll"
       ]
     },
     "Microsoft.Owin/2.0.2": {

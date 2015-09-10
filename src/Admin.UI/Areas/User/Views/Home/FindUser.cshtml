@@ -1,12 +1,13 @@
-﻿@model Admin.UI.Areas.User.Models.Login
+﻿@model Admin.UI.Areas.User.Models.FindUser
 @{
 
     Layout = "~/Views/shared/_layout.cshtml";
 }
-<div class="col-sm-7" ng-controller="LoginController">
+
+<div class="col-sm-7" ng-controller="UserController">
     <div class="widget-box">
         <div class="widget-header">
-            <h4 class="widget-title">Your Login Information</h4>
+            <h4 class="widget-title">Find User</h4>
         </div>
         <div class="widget-body">
             <div class="widget-main">
@@ -24,25 +25,12 @@
                                 <span class="error" ng-show="(frmLogin.UserName.$dirty || submitted) && frmLogin.UserName.$error.required && frmLogin.UserName.$invalid">Username required! and should be valid email!</span>
                         </div>
                     </div>
-                    <hr />
-                    <div>
-                        <label for="form-field-mask-1" class="col-sm-3">
-                            @Html.LabelFor(model => model.Password, "Password")
-                        </label>
 
-                        <div class="input-group col-sm-8">
-                            @Html.TextBoxFor(model => model.Password, "Password", new { type = "password", id = "Password", @class = "form-control ", @placeholder = "Password", ng_model = "User.Password", @name = "Password", ng_minlength = "8", ng_class = "submitted?'ng-dirty':''" })
-                            <validated-input name="Password" display="Password" ng-model="User.Password" required>
-                                <span class="error" ng-show="(frmLogin.Password.$dirty || submitted) && frmLogin.Password.$error.required"> Password required!</span>
-                                <span class="error" ng-show="(frmLogin.Password.$dirty || submitted) && frmLogin.Password.$error.required && frmLogin.Password.$error.minlength">Password required! and should be min 8 character</span>
-                        </div>
-                    </div>
-                    @Html.HiddenFor(x => x.DomainKey, new { @value = Model.DomainKey, ng_model = "User.DomainKey", })
                     <div class="clearfix form-actions" style="margin-bottom:0px;">
                         <div class="text-right">
                             <button type="button" class="btn btn-info" ng-click="LoginData(User)">
                                 <i class="ace-icon fa fa-check bigger-110"></i>
-                                Login
+                                Find User
                             </button>
                         </div>
                     </div>
