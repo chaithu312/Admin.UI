@@ -1,6 +1,7 @@
 ﻿@inject IOptions<AppSettings> AppSettings
 <!DOCTYPE html>
 <html lang="en" ng-app="mainApp">
+<<<<<<< HEAD
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta charset="utf-8" />
@@ -16,6 +17,24 @@
     <![endif]-->
 </head>
 <body class="no-skin" ng-cloak>
+=======
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <title>@AppSettings.Options.SiteTitle</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <link rel="stylesheet" href="~/assets/css/global.min.css" class="main-stylesheet" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="/assets/css/ie9.min.css" class="main-stylesheet" />
+        <![endif]-->
+        @RenderSection("css_inline", required: false)
+        <!--[if lte IE 8]>
+            <script src="/assets/js/ie8.min.js"></script>
+        <![endif]-->
+        <base href="/">
+    </head>
+    <body class="no-skin" ng-cloak>
+>>>>>>> 2e58373c1d71618c4684d77f735a0df0f488a0a4
 
     <div id="navbar" class="navbar navbar-default">
         <div class="navbar-container" id="navbar-container">
@@ -36,6 +55,7 @@
     </script>
     <!-- <![endif]-->
 
+<<<<<<< HEAD
     <script type="text/javascript">
         if ('ontouchstart' in document.documentElement) document.write("<script src='/assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
     </script>
@@ -45,4 +65,9 @@
 
     @RenderSection("js_inline", required: false)
 </body>
+=======
+        @RenderSection("js_inline", required: false)
+      
+    </body>
+>>>>>>> 2e58373c1d71618c4684d77f735a0df0f488a0a4
 </html>

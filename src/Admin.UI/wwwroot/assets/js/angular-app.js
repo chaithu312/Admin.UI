@@ -1,4 +1,5 @@
-﻿(function () {
+(function () {
+
     'use strict';
 
     var app = angular
@@ -47,11 +48,6 @@
                         <!-- /section:basics/sidebar.layout.minimize -->'
         }
     })
-<<<<<<< HEAD:src/Admin.UI/Assets/js/app.js
-})();
-
-//-- Navigation Controller for left navigation
-=======
 
     //the module we are demonstrating:
     app.directive('autoActive', ['$location', '$timeout', function ($location, $timeout) {
@@ -80,7 +76,6 @@
 })();
 
 //-- Navigation Controller
->>>>>>> 2e58373c1d71618c4684d77f735a0df0f488a0a4:src/Admin.UI/Assets/js/angular-app.js
 (function () {
     
     'use strict';
@@ -89,31 +84,17 @@
     function navsController($scope, Navs) {
         $scope.init = function () {
             $scope.navs = Navs.query();
-        },
-        $scope.isActive = function (destination) {
-            console.log(window.location.pathname);
-            return destination == window.location.pathname;
-        }
-        $scope.isOpen = function (destination) {
-            console.log(window.location.pathname);
-            return destination == '/'+window.location.pathname.split('/')[1];
         }
     }
 
-<<<<<<< HEAD:src/Admin.UI/Assets/js/app.js
-=======
     //window.location.hash = '#/'; //All hash paths need to start with a /, it happens automaticaly with ngResource and the like...
 
 
->>>>>>> 2e58373c1d71618c4684d77f735a0df0f488a0a4:src/Admin.UI/Assets/js/angular-app.js
     // in controller
+ 
 })();
-<<<<<<< HEAD:src/Admin.UI/Assets/js/app.js
-//-- Navigation Services for left navigation
-=======
 
 //-- Navigation Services
->>>>>>> 2e58373c1d71618c4684d77f735a0df0f488a0a4:src/Admin.UI/Assets/js/angular-app.js
 (function () {
     'use strict';
     var navsServices = angular.module('navsServices', ['ngResource']);
@@ -123,8 +104,6 @@
         });
     }]);
 })();
-<<<<<<< HEAD:src/Admin.UI/Assets/js/app.js
-=======
 
 //--UserController for registration
 
@@ -147,4 +126,3 @@
 //        }
 //    }
 //});
->>>>>>> 2e58373c1d71618c4684d77f735a0df0f488a0a4:src/Admin.UI/Assets/js/angular-app.js

@@ -46,89 +46,99 @@
                         'Areas/User/Assets/js/UserController.js',
 
                     ],
+<<<<<<< HEAD
                     'wwwroot/assets/js/DataTable.js': ['Assets/ace/js/dataTables/jquery.dataTables.js',
                         'Assets/ace/js/dataTables/extensions/TableTools/js/dataTables.tableTools.js',
                         'Assets/ace/js/dataTables/extensions/ColVis/js/dataTables.colVis.js']
-                }
-            },
-            ie8: {
-                files: {
-                    'wwwroot/assets/js/ie8.min.js': [
-                        'Assets/ace/js/html5shiv.js',
-                        'Assets/ace/js/respond.js']
-                }
-            },
-            jquery: {
-                files: {
-                    'wwwroot/assets/js/jquery.min.js': [
-                        'Assets/ace/js/jquery.js'
-                    ]
-                }
-            },
-            jquery_ie: {
-                files: {
-                    'wwwroot/assets/js/jquery1x.min.js': [
-                        'Assets/ace/js/jquery1x.js'
-                    ]
-                }
-            },
-            jquery_mobile: {
-                files: {
-                    'wwwroot/assets/js/jquery.mobile.custom.min.js': [
-                        'Assets/ace/js/jquery.mobile.custom.js'
-                    ]
-                }
-            }
-        },
-
-        cssmin: {
-            global: {
-                files: {
-                    'wwwroot/assets/css/global.min.css': [
-                        'Assets/ace/css/bootstrap.css',
-                        'Assets/ace/css/font-awesome.css',
-                        'Assets/ace/css/ace-fonts.css',
-                        'Assets/ace/css/ace.css']
-                }
-            },
-            ie9: {
-                files: {
-                    'wwwroot/assets/css/ie9.min.css': [
-                        'Assets/ace/css/ace-part2.css',
-                        'Assets/ace/css/ace-ie9.css']
-                }
-            }
-        },
-
-        copy: {
-            fonts: {
-                files: [
-                    { expand: true, cwd: 'Assets/ace/fonts/', src: ['**'], dest: 'wwwroot/assets/fonts/' }
-                ],
-            },
-            avatars: {
-                files: [
-                    { expand: true, cwd: 'Assets/ace/avatars/', src: ['**'], dest: 'wwwroot/assets/avatars/' }
-                ],
-            },
-        },
-
-        watch: {
-            scripts: {
-                files: ['Assets/ace/js/*.js', 'Assets/ace/js/ace/*.js', 'Assets/js/*.js', 'Areas/*/Assets/js/*'],
-                tasks: ['concat']
-            },
-            styles: {
-                files: ['Assets/ace/css/*.css'],
-                tasks: ['cssmin']
-            },
-            styles: {
-                files: ['Assets/ace/fonts/*.*'],
-                tasks: ['copy']
-            }
+=======
+                    'wwwroot/assets/js/angular-app.js': [
+                        'Assets/js/angular-app.js',
+                        'Areas/UserArea/Assets/JS/UserController.js']
+>>>>>>> 2e58373c1d71618c4684d77f735a0df0f488a0a4
+}
+},
+ie8: {
+        files: {
+            'wwwroot/assets/js/ie8.min.js': [
+                'Assets/ace/js/html5shiv.js',
+                'Assets/ace/js/respond.js']
         }
-    });
+},
+jquery: {
+        files: {
+            'wwwroot/assets/js/jquery.min.js': [
+                'Assets/ace/js/jquery.js'
+            ]
+        }
+},
+jquery_ie: {
+        files: {
+            'wwwroot/assets/js/jquery1x.min.js': [
+                'Assets/ace/js/jquery1x.js'
+            ]
+        }
+},
+jquery_mobile: {
+        files: {
+            'wwwroot/assets/js/jquery.mobile.custom.min.js': [
+                'Assets/ace/js/jquery.mobile.custom.js'
+            ]
+        }
+}
+},
 
-    grunt.registerTask('default', ['clean', 'uglify', 'cssmin', 'copy', 'watch']);
-    grunt.registerTask('doAll', ['uglify', 'cssmin', 'copy']);
+cssmin: {
+        global: {
+            files: {
+                'wwwroot/assets/css/global.min.css': [
+                    'Assets/ace/css/bootstrap.css',
+                    'Assets/ace/css/font-awesome.css',
+                    'Assets/ace/css/ace-fonts.css',
+                    'Assets/ace/css/ace.css']
+            }
+        },
+    ie9: {
+            files: {
+                'wwwroot/assets/css/ie9.min.css': [
+                    'Assets/ace/css/ace-part2.css',
+                    'Assets/ace/css/ace-ie9.css']
+            }
+    }
+},
+
+copy: {
+        fonts: {
+            files: [
+                { expand: true, cwd: 'Assets/ace/fonts/', src: ['**'], dest: 'wwwroot/assets/fonts/' }
+            ],
+            },
+    avatars: {
+            files: [
+                { expand: true, cwd: 'Assets/ace/avatars/', src: ['**'], dest: 'wwwroot/assets/avatars/' }
+            ],
+            },
+        },
+
+watch: {
+        scripts: {
+            files: ['Assets/ace/js/*.js', 'Assets/ace/js/ace/*.js', 'Assets/js/*.js', 'Areas/*/Assets/js/*'],
+            tasks: ['concat']
+<<<<<<< HEAD
+        },
+    =======
+    },
+>>>>>>> 2e58373c1d71618c4684d77f735a0df0f488a0a4
+styles: {
+        files: ['Assets/ace/css/*.css'],
+        tasks: ['cssmin']
+},
+styles: {
+        files: ['Assets/ace/fonts/*.*'],
+        tasks: ['copy']
+}
+}
+});
+
+grunt.registerTask('default', ['clean', 'uglify', 'cssmin', 'copy', 'watch']);
+grunt.registerTask('doAll', ['uglify', 'cssmin', 'copy']);
 };
