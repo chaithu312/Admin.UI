@@ -45,6 +45,7 @@
     })
 })();
 
+//-- Navigation Controller for left navigation
 (function () {
     'use strict';
     angular.module('mainApp').controller('navsController', navsController)
@@ -65,7 +66,7 @@
 
     // in controller
 })();
-
+//-- Navigation Services for left navigation
 (function () {
     'use strict';
     var navsServices = angular.module('navsServices', ['ngResource']);
@@ -76,129 +77,184 @@
     }]);
 })();
 
-(function () {
-    var app = angular.module('mainApp')
-    app.controller('SignUpController', function ($scope, $http) {
-        $scope.person = {};
-        $scope.sendForm = function () {
-            $http({
-                method: 'POST',
-                url: '/user/Index',
-                data: $scope.person,
-                headers: {
-                    'RequestVerificationToken': $scope.antiForgeryToken
-                }
-            }).success(function (data, status, headers, config) {
-                $scope.message = '';
-                if (data.success == false) {
-                    var str = '';
-                    for (var error in data.errors) {
-                        str += data.errors[error] + '\n';
-                    }
-                    $scope.message = str;
-                }
-                else {
-                    $scope.message = 'Saved Successfully';
-                    $scope.person = {};
-                }
-            }).error(function (data, status, headers, config) {
-                $scope.message = 'Unexpected Error';
-            });
-        };
+$('.date-picker').datepicker({
+    autoclose: true,
+    todayHighlight: true
+})
+
+$('#timepicker1').timepicker(
+    {
+        disableFocus: true,
+        showInputs: false,
+        showSeconds: true,
+        showMeridian: false,
+        defaultTime: false
+        //defaultValue: '12:45:30'
+    }
+ );
+
+
+$('#timepicker2').timepicker(
+    {
+        disableFocus: true,
+        showInputs: false,
+        showSeconds: true,
+        showMeridian: false,
+        defaultTime:false
+        //defaultValue: 'current'
+    }
+ );
+angular.module('mainApp')
+.controller('UserController', function ($scope, RegistrationService) {
+    $scope.submitText = "Register";
+    $scope.submitted = false;
+    $scope.message = '';
+    $scope.isFormValid = false;
+    $scope.User = {
+        UserName: '',
+        Password: '',
+        ConfirmPassword: '',
+        DomainKey: '',
+    };
+    //Check form Validation // here frmRegistration is our form name
+    $scope.$watch('frmRegistration.$valid', function (newValue) {
+        $scope.isFormValid = newValue;
     });
-    /* Directives */
-    app.directive('ngUnique', ['$http', function (async) {
-        return {
-            require: 'ngModel',
-            link: function (scope, elem, attrs, ctrl) {
-                elem.on('blur', function (evt) {
-                    scope.$apply(function () {
-                        var ajaxConfiguration = {
-                            method: 'GET', url: '/user/IsUserAvailable?userName=' + elem.val()
-                        };
-                        async(ajaxConfiguration)
-                            .success(function (data, status, headers, config) {
-                                ctrl.$setValidity('unique', data.result);
-                            });
-                    });
+    //Save Data
+    $scope.SaveData = function (data) {
+        if ($scope.submitText == 'Register') {
+
+            $scope.submitted = true;
+            $scope.message = '';
+
+            if ($scope.isFormValid) {
+                alert("valid");
+                //TODO Hidden field
+                $scope.User.DomainKey = $("#DomainKey").val();
+                $scope.submitText = 'Please Wait...';
+                $scope.User = data;
+                RegistrationService.SaveFormData($scope.User).then(function (d) {
+
+                    if (d == 'Success') {
+                        //have to clear form here
+                        ClearForm();
+                        $window.location.href = 'user/Thankyou';
+                    }
+                    $scope.submitText = "Register";
                 });
             }
-        }
-    }]);
-})();
-
-(function () {
-    angular.module('mainApp')
-    .controller('LoginController', function ($scope, LoginService) {
-        $scope.submitText = "Login";
-        $scope.submitted = false;
-        $scope.message = '';
-        $scope.isFormValid = false;
-        $scope.User = {
-            UserName: '',
-            Password: '',
-            DomainKey: '',
-        };
-        //Check form Validation // here frmRegistration is our form name
-        $scope.$watch('frmLogin.$valid', function (newValue) {
-            $scope.isFormValid = newValue;
-        });
-        //Save Data
-        $scope.LoginData = function (data) {
-            if ($scope.submitText == 'Login') {
-                $scope.submitted = true;
-                $scope.message = '';
-
-                if ($scope.isFormValid) {
-                    $scope.User.DomainKey = $("#DomainKey").val();
-                    $scope.submitText = 'Please Wait...';
-                    $scope.User = data;
-                    LoginService.LoginForUser($scope.User).then(function (d) {
-                        if (d == 'Success') {
-                            //have to clear form here
-                            ClearForm();
-                            $window.location.href = 'Home/Index';
-                        }
-                        $scope.message = 'Invalid User & Password';
-                        $scope.submitText = "Login";
-                    });
-                }
-                else {
-                    $scope.message = 'Please fill required fields value';
-                }
+            else {
+                $scope.message = 'Please fill required fields value';
             }
         }
-        //Clear Form (reset)
-        function ClearForm() {
-            $scope.User = {};
-            $scope.frmLogin.$setPristine();
-            $scope.submitted = false;
-        }
-    })
-    .factory('LoginService', function ($http, $q) {
-        var fac = {};
+    }
+    //Clear Form (reset)
+    function ClearForm() {
+        $scope.User = {};
+        $scope.frmRegistration.$setPristine();
+        $scope.submitted = false;
+    }
+})
 
-        fac.LoginForUser = function (data) {
-            var defer = $q.defer();
-            $http({
-                url: '/user/Login',
-                method: 'POST',
-                data: JSON.stringify(data),
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-            }).success(function (d) {
-                // Success callback
-                defer.resolve(d);
-            }).error(function (e) {
-                //Failed Callback
-                defer.reject(e);
-            });
-            return defer.promise;
-        }
-        return fac;
+
+   
+.factory('RegistrationService', function ($http, $q) {
+    var fac = {};
+
+    fac.SaveFormData = function (data) {
+        var defer = $q.defer();
+        $http({
+            url: '/user/Index',
+            method: 'POST',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+        }).success(function (d) {
+            // Success callback
+            defer.resolve(d);
+        }).error(function (e) {
+            //Failed Callback
+            defer.reject(e);
+        });
+        return defer.promise;
+    }
+    return fac;
+});
+
+
+
+angular.module('mainApp')
+.controller('LoginController', function ($scope, RegistrationService) {
+    $scope.submitText = "Login";
+    $scope.submitted = false;
+    $scope.message = '';
+    $scope.isFormValid = false;
+    $scope.User = {
+        UserName: '',
+        Password: '',
+           
+    };
+    //Check form Validation // here frmRegistration is our form name
+    $scope.$watch('frmLogin.$valid', function (newValue) {
+        $scope.isFormValid = newValue;
     });
-})();
+    //Save Data
+    $scope.LoginData = function (data) {
+        if ($scope.submitText == 'Login') {
 
+            $scope.submitted = true;
+            $scope.message = '';
+
+            if ($scope.isFormValid) {
+                alert("valid");
+                //TODO Hidden field
+                
+                $scope.submitText = 'Please Wait...';
+                $scope.User = data;
+                LoginService.LoginForUser($scope.User).then(function (d) {
+
+                    if (d == 'Success') {
+                        //have to clear form here
+                        ClearForm();
+                        $window.location.href = 'Home/Index';
+                    }
+                    $scope.submitText = "Login";
+                });
+            }
+            else {
+                $scope.message = 'Please fill required fields value';
+            }
+        }
+    }
+    //Clear Form (reset)
+    function ClearForm() {
+        $scope.User = {};
+        $scope.frmLogin.$setPristine();
+        $scope.submitted = false;
+    }
+})
+.factory('LoginService', function ($http, $q) {
+    var fac = {};
+
+    fac.LoginForUser = function (data) {
+        var defer = $q.defer();
+        $http({
+            url: '/user/Login',
+            method: 'POST',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+        }).success(function (d) {
+            // Success callback
+            defer.resolve(d);
+        }).error(function (e) {
+            //Failed Callback
+            defer.reject(e);
+        });
+        return defer.promise;
+    }
+    return fac;
+});
 (function () {
     var app = angular.module('mainApp')
       app.controller('PickupRequestController', function ($scope, $http) {
@@ -261,23 +317,4 @@
             });
         };
     });
-    /* Directives */
-    app.directive('ngUnique', ['$http', function (async) {
-        return {
-            require: 'ngModel',
-            link: function (scope, elem, attrs, ctrl) {
-                elem.on('blur', function (evt) {
-                    scope.$apply(function () {
-                        var ajaxConfiguration = {
-                            method: 'GET', url: '/user/IsUserAvailable?userName=' + elem.val()
-                        };
-                        async(ajaxConfiguration)
-                            .success(function (data, status, headers, config) {
-                                ctrl.$setValidity('unique', data.result);
-                            });
-                    });
-                });
-            }
-        }
-    }]);
 })();

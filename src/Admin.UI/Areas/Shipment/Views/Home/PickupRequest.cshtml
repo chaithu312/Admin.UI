@@ -8,26 +8,26 @@
             <h4 class="widget-title">Pickup Request Detail</h4>
         </div>
         <div class="widget-body">
-            <div class="widget-main">
+            <div class="widget-main pikupRequestDetail">
                 <form class="form-inline" name="PickupForm" data-ng-submit="sendForm()" data-ng-controller="PickupRequestController" novalidate>
                     <div id="errorMessages" class="error">{{message}}</div>
                     <div>
-                        <label for="form-field-mask-1" class="col-sm-3">
+                        <label for="form-field-mask-1" class="col-sm-3 marTopNone">
                             Account No
                         </label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-9">
-                            <input name="accountNumber" id="accountNumber" type="text" class="form-control" data-ng-model="PickupRequest.AccountNumber" required>
+                            <input name="accountNumber" id="accountNumber" type="text" class="form-control marTopNone" data-ng-model="PickupRequest.AccountNumber" required>
+                            <div style="clear:both;"></div>
                             <span class="error" data-ng-show="PickupForm.accountNumber.$error.required">Account No is required</span>
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-sm btn-default">
+                            <span class="input-group-btn" style="width:17%;">
+                                <button type="button" class="btn btn-sm btn-default" style="top:0; position:absolute;">
                                     <i class="ace-icon fa fa-arrow-circle-right bigger-110"></i>
                                 </button>
-                            </span>
-                            
+                            </span>                            
                         </div>
                     </div>
-                    <hr />
+                    <div class="sepratorupdated"></div>
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
                             Contact
@@ -37,8 +37,9 @@
                             <select id="form-field-select-1" class="form-control" data-ng-model="Contacts.selectedOption"
                                     data-ng-options="contact.Name for contact in Contacts.Data track by contact.Id"></select>
                         </div>
+                        
                     </div>
-                    <hr />
+                    <div class="sepratorupdated"></div>
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
                             Contact Name
@@ -49,7 +50,7 @@
                             <span class="error" data-ng-show="PickupForm.contactName.$error.required">Contact Name is required</span>
                         </div>
                     </div>
-                    <hr />
+                    <div class="sepratorupdated"></div>
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
                             Phone
@@ -59,7 +60,7 @@
                             <input type="text" class="form-control" placeholder="" id="phone" name="phone" data-ng-model="PickupRequest.Phone">
                         </div>
                     </div>
-                    <hr />
+                    <div class="sepratorupdated"></div>
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
                             Address
@@ -71,7 +72,7 @@
                             </select>
                         </div>
                     </div>
-                    <hr />
+                    <div class="sepratorupdated"></div>
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
                             Address
@@ -84,7 +85,7 @@
                             <input type="text" class="form-control" placeholder="" id="address1" name="address1" data-ng-model="Addresses.Address1">
                         </div>
                     </div>
-                    <hr />
+                    <div class="sepratorupdated"></div>
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
                             City
@@ -95,7 +96,7 @@
                             <span class="error" data-ng-show="PickupForm.city.$error.required">City is required</span>
                         </div>
                     </div>
-                    <hr />
+                    <div class="sepratorupdated"></div>
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
                             State
@@ -108,7 +109,7 @@
                             <span class="error" data-ng-show="PickupForm.ddlState.$error.required">State is required</span>
                         </div>
                     </div>
-                    <hr />
+                    <div class="sepratorupdated"></div>
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
                             Zip Code
@@ -119,7 +120,7 @@
                             <span class="error" data-ng-show="PickupForm.zipCode.$error.required">Zip Code is required</span>
                         </div>
                     </div>
-                    <hr />
+                    <div class="sepratorupdated"></div>
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
                             Pickup From
@@ -129,21 +130,21 @@
                             <input type="text" class="form-control" placeholder="" id="">
                         </div>
                     </div>
-                    <hr />
+                    <div class="sepratorupdated"></div> 
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
                             Package Properties
                         </label>
                         <!-- #section:plugins/input.masked-input -->
-                        <div class="input-group col-sm-8">
-                            <input type="checkbox" style="float:left;" id="packageProperties" name="packageProperties" data-ng-model="PickupRequest.PackageProperties"> 
+                        <div class="input-group col-sm-8" style="line-height:36px;">
+                            <input type="checkbox" style="float:left; margin-top:12px;" id="packageProperties" name="packageProperties" data-ng-model="PickupRequest.PackageProperties"> 
                             <span style="padding-left:4px; padding-right:10px; float:left;">Document &nbsp; Estimated Weight:</span> 
                             <input type="text" class="form-control" style="display:inline-block; width:auto;" id="estimatedWeight" name="estimatedWeight" data-ng-model="PickupRequest.EstimatedWeight" required>
                             &nbsp;
                             <span class="error" data-ng-show="PickupForm.estimatedWeight.$error.required">Estimated Weight is required</span>
                         </div>
                     </div>
-                    <hr />
+                    <div class="sepratorupdated"></div>
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
                             Total Pieces
@@ -156,11 +157,11 @@
                             </select>
                         </div>
                     </div>
-                    <hr />
+                    <div class="sepratorupdated"></div>
                     <div>
                         <label for="id-date-picker-1" class="col-sm-3">Date Picker</label>
                         <!-- #section:plugins/input.masked-input -->
-                        <div class="input-group col-sm-8">
+                        <div class="col-sm-8" style="padding:0px; margin-bottom:15px;">
                             <!-- #section:plugins/date-time.datepicker -->
                             <div class="input-group">
                                 <input type="text" data-date-format="dd-mm-yyyy" id="id-date-picker-1" class="form-control date-picker">
@@ -170,33 +171,34 @@
                             </div>
                         </div>
                     </div>
-                    <hr />
+                    
                     <div>
                         <label for="timepicker1" class="col-sm-3">Time Picker</label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-8">
-                            <div class="input-group bootstrap-timepicker">
+                            <div class="bootstrap-timepicker">
                                 <input type="text" class="form-control" id="timepicker1">
-                                <span class="input-group-addon">
+                                <span class="input-group-addon" style="padding:8px 12px 9px 12px;">
                                     <i class="fa fa-clock-o bigger-110"></i>
                                 </span>
                             </div>
                         </div>
                     </div>
-                    <hr />
+                    <div class="sepratorupdated"></div>
                     <div>
                         <label for="timepicker2" class="col-sm-3">Last Available Time</label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-8">
-                            <div class="input-group bootstrap-timepicker">
+                            <div class="bootstrap-timepicker">
                                 <input type="text" class="form-control" id="timepicker2">
-                                <span class="input-group-addon">
+                                <span class="input-group-addon" style="padding:8px 12px 9px 12px;">
                                     <i class="fa fa-clock-o bigger-110"></i>
                                 </span>
                             </div>
                         </div>
                     </div>
-                    <hr />
+                    <div class="sepratorupdated"></div>
+                     
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
                             Destination
@@ -209,7 +211,7 @@
                             </select>
                         </div>
                     </div>
-                    <hr />
+                    <div class="sepratorupdated"></div>
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
                             Pickup Agent
@@ -222,7 +224,7 @@
                             </select>
                         </div>
                     </div>
-                    <hr />
+                    <div class="sepratorupdated"></div>
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
                             Pickup Type
@@ -235,16 +237,17 @@
                             </select>
                         </div>
                     </div>
-                    <hr />
+                    <div class="sepratorupdated"></div>
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
                             Notes
                         </label>
                         <!-- #section:plugins/input.masked-input -->
                         <div class="input-group col-sm-8">
-                            <textarea placeholder="Default Text" id="form-field-8" class="form-control" data-ng-model="PickupRequest.AccountNumber"></textarea>
+                            <textarea placeholder="Default Text" id="form-field-8" class="form-control" data-ng-model="PickupRequest.Notes"></textarea>
                         </div>
                     </div>
+                    <div class="sepratorupdated"></div>
                     <div class="clearfix form-actions" style="margin-bottom:0px;">
                         <div class="text-right">
                             <button type="submit" class="btn btn-info" data-ng-disabled="PickupForm.$invalid">

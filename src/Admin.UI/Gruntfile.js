@@ -38,12 +38,20 @@
                         'Assets/ace/js/ace/ace.settings-skin.js',
                         'Assets/ace/js/ace/ace.widget-on-reload.js',
                         'Assets/ace/js/ace/ace.searchbox-autocomplete.js',
-                        'Assets/ace/js/ace-settings.js'
-
+                        'Assets/ace/js/ace-settings.js',
+                        'Assets/js/date-time/bootstrap-datepicker.js',
+                        'Assets/js/date-time/bootstrap-timepicker.js',
+                        'Assets/js/date-time/daterangepicker.js',
+                        'Assets/js/bootstrap.min.js',
+                        'Assets/js/date-time/moment.js',
+                        'Assets/js/date-time/bootstrap-datetimepicker.js'
                     ],
                     'wwwroot/assets/js/app.js': [
                         'Assets/js/app.js',
-                        'Areas/User/Assets/js/UserController.js'
+                        'Areas/User/Assets/js/UserController.js',
+                        'Areas/User/Assets/js/LoginController.js',
+                        'Areas/Shipment/Assets/js/PickupRequestController.js',
+                        'Areas/Shipment/Assets/js/datepickerevent.js'
 
                     ],
                     'wwwroot/assets/js/DataTable.js': ['Assets/ace/js/dataTables/jquery.dataTables.js',
@@ -86,6 +94,10 @@
                 files: {
                     'wwwroot/assets/css/global.min.css': [
                         'Assets/ace/css/bootstrap.css',
+                        'Assets/ace/css/datepicker.css',
+                        'Assets/ace/css/bootstrap-timepicker.css',
+                        'Assets/ace/css/daterangepicker.css',
+                        'Assets/ace/css/bootstrap-datetimepicker.css',
                         'Assets/ace/css/font-awesome.css',
                         'Assets/ace/css/ace-fonts.css',
                         'Assets/ace/css/ace.css']
