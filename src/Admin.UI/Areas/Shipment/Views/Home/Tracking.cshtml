@@ -26,78 +26,122 @@
                             <a data-toggle="tab" href="#manifest">By Manifest</a>
                         </li>
                         <li>
-                            <a data-toggle="tab" href="#Delete">Delete Tracking</a>
+                            <a data-toggle="tab" href="#delete">Delete Tracking</a>
                         </li>
                     </ul>
                 </div>
             </div>
-
-            <div class="widget-body">
-                <div class="widget-main padding-6">
-                    <div class="tab-content">
-                        <div id="awb" class="tab-pane in active">
-                            <div class="form-group">
-                                <label for="form-field-1" class="control-label no-padding-right pull-left">AWB/Ref Number</label>
-                                <div class="col-sm-2">
-                                    <input type="text" class="col-xs-12 col-sm-12" placeholder="AWB/Ref Number" id="form-field-1">
-                                </div>
-
-                                <button type="button" class="btn btn-sm btn-success">
-                                    Continue
-                                    <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div id="status" class="tab-pane">
-                            <div class="form-group">
-                                <label for="form-field-1" class="control-label no-padding-right pull-left">Status</label>
-                                <div class="input-group pull-left">
-                                    <select id="form-field-select-1" class="">
-                                        <option value="-10">All Non-Delivered</option>
-                                        <option value="1">Pending (No Trk Data)</option>
-                                        <option value="3">In Transit</option>
-                                        <option value="10">Delivered / Stopped</option>
-                                        <option value="4">Delivered</option>
-                                        <option value="6">Stopped</option>
-                                        <option value="5">Exception</option>
-                                    </select>
-                                </div>
-
-                                <label for="id-date-range-picker-1" class="control-label no-padding-right pull-left">Shipping Date</label>
-                                <div class="pull-left">
-                                    <div class="input-daterange input-group">
-                                        <input type="text" name="start" class="input-sm form-control">
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-exchange"></i>
-                                        </span>
-
-                                        <input type="text" name="end" class="input-sm form-control">
+            <form class="" name="TrackForm" data-ng-submit="sendForm()" data-ng-controller="TrackController" novalidate>
+                <div id="errorMessages" class="error">{{message}}</div>
+                <div class="widget-body">
+                    <div class="widget-main padding-6">
+                        <div class="tab-content">
+                            <div id="awb" class="tab-pane in active">
+                                <div class="form-group">
+                                    <label for="form-field-1" class="control-label no-padding-right pull-left">AWB/Ref Number</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="col-xs-12 col-sm-12" placeholder="AWB/Ref Number" id="awbRefNumber" name="awbRefNumber" data-ng-model="Track.AWBRefNumber" required>
                                     </div>
+
+                                    <button type="submit" class="btn btn-sm btn-success" data-ng-disabled="TrackForm.awbRefNumber.$invalid">
+                                        Continue
+                                        <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+                                    </button>
+                                    <span class="error" data-ng-show="TrackForm.awbRefNumber.$error.required">AWB/Ref Number is required</span>
                                 </div>
-
-                                <button type="button" class="btn btn-sm btn-success pull-left">
-                                    Continue
-                                    <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
-                                </button>
-                                <div style="clear:both;"></div>
                             </div>
-                        </div>
 
-                        <div id="pod" class="tab-pane">
-                            <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.</p>
-                        </div>
+                            <div id="status" class="tab-pane">
+                                <div class="form-group">
+                                    <label for="form-field-1" class="control-label no-padding-right pull-left">Status</label>
+                                    <div class="input-group pull-left">
+                                        <select id="form-field-select-1" class="" data-ng-model="Status.selectedOption"
+                                    data-ng-options="status.Name for status in Status.Data track by status.Id"></select>
+                                    </div>
 
-                        <div id="manifest" class="tab-pane">
-                            <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.</p>
-                        </div>
+                                    <label for="id-date-range-picker-1" class="control-label no-padding-right pull-left">Shipping Date</label>
+                                    <div class="pull-left">
+                                        <div class="input-daterange input-group">
+                                            <input type="text" name="start" class="input-sm form-control">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-exchange"></i>
+                                            </span>
 
-                        <div id="delete" class="tab-pane">
-                            <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.</p>
+                                            <input type="text" name="end" class="input-sm form-control">
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-sm btn-success pull-left">
+                                        Continue
+                                        <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+                                    </button>
+                                    <div style="clear:both;"></div>
+                                </div>
+                            </div>
+
+                            <div id="pod" class="tab-pane">
+                                @*<p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.</p>*@
+                                <table cellspacing="0" cellpadding="3" style="width: auto">
+                                    <tbody>
+                                        <tr style="height: 20px;">
+                                            <td>Enter AWB Numbers (enter one number per line)&nbsp;&nbsp;</td>
+                                            <td align="right">
+                                                <button type="submit" class="btn btn-sm btn-success pull-left" data-ng-disabled="TrackForm.filterBulk.$invalid">
+                                                    Continue
+                                                    <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr><td colspan="2">
+                                     <textarea name="filterBulk" rows="2" cols="20" id="filterBulk"  
+                                               style="height:auto;width:100%;" data-ng-model="Track.AWBNumbers" required></textarea></td></tr>
+                                    </tbody>
+                                    
+                                </table>
+                                <span class="error" data-ng-show="TrackForm.filterBulk.$error.required">AWBNumber is required</span>
+                            </div>
+
+                            <div id="manifest" class="tab-pane">
+                                @*<p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.</p>*@
+                                <table cellspacing="0" cellpadding="3" style="width: 790px">
+                                    <tbody>
+                                        <tr style="height: 20px;">
+                                            <td>Manifest&nbsp;&nbsp;</td>
+                                            <td>
+                                                <select name="drpFilterManifest" id="drpFilterManifest"  data-ng-model="Manifest.selectedOption"
+                                    data-ng-options="manifest.Name for manifest in Manifest.Data track by manifest.Id">
+                                                </select>&nbsp;&nbsp;
+
+                                            </td>
+                                            <td style="width: 100%" align="left">
+                                                <button type="submit" class="btn btn-sm btn-success pull-left">
+                                                    Continue
+                                                    <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+                                                </button>&nbsp;&nbsp;</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div id="delete" class="tab-pane">
+                                @*<p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.</p>*@
+                                <div class="form-group">
+                                    <label for="form-field-1" class="control-label no-padding-right pull-left">AWB/Ref Number</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="col-xs-12 col-sm-12" placeholder="AWB/Ref Number" id="deletedAWBRefNumber" name="deletedAWBRefNumber" data-ng-model="Track.DeletedAWBRefNumber" required>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-sm btn-success" data-ng-disabled="TrackForm.deletedAWBRefNumber.$invalid">
+                                        Continue
+                                        <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+                                    </button>
+                                    <span class="error" data-ng-show="TrackForm.deletedAWBRefNumber.$error.required">AWB/Ref Number is required</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
