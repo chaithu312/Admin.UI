@@ -51,7 +51,7 @@
                         'Areas/User/Assets/js/UserController.js',
                         'Areas/User/Assets/js/LoginController.js',
                         'Areas/Shipment/Assets/js/PickupRequestController.js',
-                        'Areas/Shipment/Assets/js/datepickerevent.js'
+                        'Areas/Shipment/Assets/js/TrackingRequestController.js'
 
                     ],
                     'wwwroot/assets/js/DataTable.js': ['Assets/ace/js/dataTables/jquery.dataTables.js',
