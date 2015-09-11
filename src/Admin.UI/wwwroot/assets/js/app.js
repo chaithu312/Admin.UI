@@ -77,33 +77,32 @@
     }]);
 })();
 
+//datepicker plugin
+//link
 $('.date-picker').datepicker({
     autoclose: true,
     todayHighlight: true
 })
+//show datepicker when clicking on the icon
+.next().on(ace.click_event, function () {
+    $(this).prev().focus();
+});
 
-$('#timepicker1').timepicker(
-    {
-        disableFocus: true,
-        showInputs: false,
-        showSeconds: true,
-        showMeridian: false,
-        defaultTime: false
-        //defaultValue: '12:45:30'
-    }
- );
+$('#timepicker1').timepicker({
+    minuteStep: 1,
+    showSeconds: true,
+    showMeridian: false
+}).next().on(ace.click_event, function () {
+    $(this).prev().focus();
+});
 
-
-$('#timepicker2').timepicker(
-    {
-        disableFocus: true,
-        showInputs: false,
-        showSeconds: true,
-        showMeridian: false,
-        defaultTime:false
-        //defaultValue: 'current'
-    }
- );
+$('#timepicker2').timepicker({
+    minuteStep: 1,
+    showSeconds: true,
+    showMeridian: false
+}).next().on(ace.click_event, function () {
+    $(this).prev().focus();
+});
 angular.module('mainApp')
 .controller('UserController', function ($scope, RegistrationService) {
     $scope.submitText = "Register";
