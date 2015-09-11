@@ -1,78 +1,56 @@
-﻿angular.module('mainApp')
-.controller('UserController', function ($scope, RegistrationService) {
-    $scope.submitText = "Register";
-    $scope.submitted = false;
-    $scope.message = '';
-    $scope.isFormValid = false;
-    $scope.User = {
-        UserName: '',
-        Password: '',
-        ConfirmPassword: '',
-        DomainKey: '',
-    };
-    //Check form Validation // here frmRegistration is our form name
-    $scope.$watch('frmRegistration.$valid', function (newValue) {
-        $scope.isFormValid = newValue;
-    });
-    //Save Data
-    $scope.SaveData = function (data) {
-        if ($scope.submitText == 'Register') {
+﻿(function () {
+    function SignUpController($scope) {
+        alert("a");
+        $scope.text = 'me@example.com';
+        $scope.pattern = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
+    }
 
-            $scope.submitted = true;
-            $scope.message = '';
-
-            if ($scope.isFormValid) {
-                alert("valid");
-                //TODO Hidden field
-                $scope.User.DomainKey = $("#DomainKey").val();
-                $scope.submitText = 'Please Wait...';
-                $scope.User = data;
-                RegistrationService.SaveFormData($scope.User).then(function (d) {
-
-                    if (d == 'Success') {
-                        //have to clear form here
-                        ClearForm();
-                        $window.location.href = 'user/Thankyou';
+    var app = angular.module('mainApp')
+    app.controller('SignUpController', function ($scope, $http) {
+        $scope.person = {};
+        $scope.sendForm = function () {
+            $http({
+                method: 'POST',
+                url: '/user/Index',
+                data: $scope.person,
+                headers: {
+                    'RequestVerificationToken': $scope.antiForgeryToken
+                }
+            }).success(function (data, status, headers, config) {
+                $scope.message = '';
+                if (data.success == false) {
+                    var str = '';
+                    for (var error in data.errors) {
+                        str += data.errors[error] + '\n';
                     }
-                    $scope.submitText = "Register";
+                    $scope.message = str;
+                }
+                else {
+                    $scope.message = 'Saved Successfully';
+                    $scope.person = {};
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.message = 'Unexpected Error';
+            });
+        };
+    });
+    /* Directives */
+    app.directive('ngUnique', ['$http', function (async) {
+        return {
+            require: 'ngModel',
+            link: function (scope, elem, attrs, ctrl) {
+                elem.on('blur', function (evt) {
+                    scope.$apply(function () {
+                        var ajaxConfiguration = {
+                            method: 'GET', url: '/user/IsUserAvailable?userName=' + elem.val()
+                        };
+                        async(ajaxConfiguration)
+                            .success(function (data, status, headers, config) {
+                                ctrl.$setValidity('unique', data.result);
+                            });
+                    });
                 });
             }
-            else {
-                $scope.message = 'Please fill required fields value';
-            }
         }
-    }
-    //Clear Form (reset)
-    function ClearForm() {
-        $scope.User = {};
-        $scope.frmRegistration.$setPristine();
-        $scope.submitted = false;
-    }
-})
-
-
-   
-.factory('RegistrationService', function ($http, $q) {
-    var fac = {};
-
-    fac.SaveFormData = function (data) {
-        var defer = $q.defer();
-        $http({
-            url: '/user/Index',
-            method: 'POST',
-            data: JSON.stringify(data),
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-        }).success(function (d) {
-            // Success callback
-            defer.resolve(d);
-        }).error(function (e) {
-            //Failed Callback
-            defer.reject(e);
-        });
-        return defer.promise;
-    }
-    return fac;
-});
-
-
+    }]);
+})();

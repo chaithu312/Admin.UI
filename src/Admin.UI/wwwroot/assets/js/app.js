@@ -43,6 +43,25 @@
                         <!-- /section:basics/sidebar.layout.minimize -->'
         }
     })
+
+    app.directive('validateEmail', function () {
+        var EMAIL_REGEXP = /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+        return {
+            require: 'ngModel',
+            link: function (scope, elm, attr, ctrl) {
+                elm.on("keyup", function () {
+                    var isMatchRegex = EMAIL_REGEXP.test(elm.val());
+                    if (isMatchRegex && elm.hasClass('warning') || elm.val() == '') {
+                        elm.removeClass('warning');
+                        ctrl.$setValidity('invalid', true);
+                    } else if (isMatchRegex == false && !elm.hasClass('warning')) {
+                        elm.addClass('warning');
+                        ctrl.$setValidity('invalid', false);
+                    }
+                });
+            }
+        }
+    });
 })();
 
 //-- Navigation Controller for left navigation
@@ -103,164 +122,100 @@ $('#timepicker2').timepicker({
 }).next().on(ace.click_event, function () {
     $(this).prev().focus();
 });
-angular.module('mainApp')
-.controller('UserController', function ($scope, RegistrationService) {
-    $scope.submitText = "Register";
-    $scope.submitted = false;
-    $scope.message = '';
-    $scope.isFormValid = false;
-    $scope.User = {
-        UserName: '',
-        Password: '',
-        ConfirmPassword: '',
-        DomainKey: '',
-    };
-    //Check form Validation // here frmRegistration is our form name
-    $scope.$watch('frmRegistration.$valid', function (newValue) {
-        $scope.isFormValid = newValue;
-    });
-    //Save Data
-    $scope.SaveData = function (data) {
-        if ($scope.submitText == 'Register') {
+(function () {
+    function SignUpController($scope) {
+        alert("a");
+        $scope.text = 'me@example.com';
+        $scope.pattern = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
+    }
 
-            $scope.submitted = true;
-            $scope.message = '';
-
-            if ($scope.isFormValid) {
-                alert("valid");
-                //TODO Hidden field
-                $scope.User.DomainKey = $("#DomainKey").val();
-                $scope.submitText = 'Please Wait...';
-                $scope.User = data;
-                RegistrationService.SaveFormData($scope.User).then(function (d) {
-
-                    if (d == 'Success') {
-                        //have to clear form here
-                        ClearForm();
-                        $window.location.href = 'user/Thankyou';
+    var app = angular.module('mainApp')
+    app.controller('SignUpController', function ($scope, $http) {
+        $scope.person = {};
+        $scope.sendForm = function () {
+            $http({
+                method: 'POST',
+                url: '/user/Index',
+                data: $scope.person,
+                headers: {
+                    'RequestVerificationToken': $scope.antiForgeryToken
+                }
+            }).success(function (data, status, headers, config) {
+                $scope.message = '';
+                if (data.success == false) {
+                    var str = '';
+                    for (var error in data.errors) {
+                        str += data.errors[error] + '\n';
                     }
-                    $scope.submitText = "Register";
+                    $scope.message = str;
+                }
+                else {
+                    $scope.message = 'Saved Successfully';
+                    $scope.person = {};
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.message = 'Unexpected Error';
+            });
+        };
+    });
+    /* Directives */
+    app.directive('ngUnique', ['$http', function (async) {
+        return {
+            require: 'ngModel',
+            link: function (scope, elem, attrs, ctrl) {
+                elem.on('blur', function (evt) {
+                    scope.$apply(function () {
+                        var ajaxConfiguration = {
+                            method: 'GET', url: '/user/IsUserAvailable?userName=' + elem.val()
+                        };
+                        async(ajaxConfiguration)
+                            .success(function (data, status, headers, config) {
+                                ctrl.$setValidity('unique', data.result);
+                            });
+                    });
                 });
             }
-            else {
-                $scope.message = 'Please fill required fields value';
-            }
         }
-    }
-    //Clear Form (reset)
-    function ClearForm() {
-        $scope.User = {};
-        $scope.frmRegistration.$setPristine();
-        $scope.submitted = false;
-    }
-})
-
-
-   
-.factory('RegistrationService', function ($http, $q) {
-    var fac = {};
-
-    fac.SaveFormData = function (data) {
-        var defer = $q.defer();
-        $http({
-            url: '/user/Index',
-            method: 'POST',
-            data: JSON.stringify(data),
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-        }).success(function (d) {
-            // Success callback
-            defer.resolve(d);
-        }).error(function (e) {
-            //Failed Callback
-            defer.reject(e);
-        });
-        return defer.promise;
-    }
-    return fac;
-});
-
-
-
-angular.module('mainApp')
-.controller('LoginController', function ($scope, RegistrationService) {
-    $scope.submitText = "Login";
-    $scope.submitted = false;
-    $scope.message = '';
-    $scope.isFormValid = false;
-    $scope.User = {
-        UserName: '',
-        Password: '',
-           
-    };
-    //Check form Validation // here frmRegistration is our form name
-    $scope.$watch('frmLogin.$valid', function (newValue) {
-        $scope.isFormValid = newValue;
-    });
-    //Save Data
-    $scope.LoginData = function (data) {
-        if ($scope.submitText == 'Login') {
-
-            $scope.submitted = true;
-            $scope.message = '';
-
-            if ($scope.isFormValid) {
-                alert("valid");
-                //TODO Hidden field
-                
-                $scope.submitText = 'Please Wait...';
-                $scope.User = data;
-                LoginService.LoginForUser($scope.User).then(function (d) {
-
-                    if (d == 'Success') {
-                        //have to clear form here
-                        ClearForm();
-                        $window.location.href = 'Home/Index';
-                    }
-                    $scope.submitText = "Login";
-                });
-            }
-            else {
-                $scope.message = 'Please fill required fields value';
-            }
-        }
-    }
-    //Clear Form (reset)
-    function ClearForm() {
-        $scope.User = {};
-        $scope.frmLogin.$setPristine();
-        $scope.submitted = false;
-    }
-})
-.factory('LoginService', function ($http, $q) {
-    var fac = {};
-
-    fac.LoginForUser = function (data) {
-        var defer = $q.defer();
-        $http({
-            url: '/user/Login',
-            method: 'POST',
-            data: JSON.stringify(data),
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-        }).success(function (d) {
-            // Success callback
-            defer.resolve(d);
-        }).error(function (e) {
-            //Failed Callback
-            defer.reject(e);
-        });
-        return defer.promise;
-    }
-    return fac;
-});
+    }]);
+})();
 (function () {
     var app = angular.module('mainApp')
-      app.controller('PickupRequestController', function ($scope, $http) {
+    app.controller('LoginController', function ($scope, $http) {
+        $scope.person = {};
+        $scope.sendForm = function () {
+            $http({
+                method: 'POST',
+                url: '/user/Login',
+                data: $scope.person,
+                headers: {
+                    'RequestVerificationToken': $scope.antiForgeryToken
+                }
+            }).success(function (data, status, headers, config) {
+                $scope.message = '';
+                if (data.success == false) {
+                    var str = '';
+                    for (var error in data.errors) {
+                        str += data.errors[error] + '\n';
+                    }
+                    $scope.message = str;
+                }
+                else {
+                    $scope.message = 'Login Successfully';
+                    $scope.person = {};
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.message = 'Unexpected Error';
+            });
+        };
+    });
+})();
+(function () {
+    var app = angular.module('mainApp')
+    app.controller('PickupRequestController', function ($scope, $http) {
         $scope.Contacts = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Account 1' }, { Id: 2, Name: 'Account 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
         $scope.Addresses = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
         $scope.States = { Data: [{ Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }] };
-       
+
         $scope.Pieces = {
             Data: [{ Id: 1, Name: '1' },
                 { Id: 2, Name: '2' },

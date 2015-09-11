@@ -43,6 +43,25 @@
                         <!-- /section:basics/sidebar.layout.minimize -->'
         }
     })
+
+    app.directive('validateEmail', function () {
+        var EMAIL_REGEXP = /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+        return {
+            require: 'ngModel',
+            link: function (scope, elm, attr, ctrl) {
+                elm.on("keyup", function () {
+                    var isMatchRegex = EMAIL_REGEXP.test(elm.val());
+                    if (isMatchRegex && elm.hasClass('warning') || elm.val() == '') {
+                        elm.removeClass('warning');
+                        ctrl.$setValidity('invalid', true);
+                    } else if (isMatchRegex == false && !elm.hasClass('warning')) {
+                        elm.addClass('warning');
+                        ctrl.$setValidity('invalid', false);
+                    }
+                });
+            }
+        }
+    });
 })();
 
 //-- Navigation Controller for left navigation

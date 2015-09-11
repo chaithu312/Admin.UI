@@ -124,39 +124,28 @@ namespace Admin.UI.UserArea
         {
             if (string.IsNullOrEmpty(userName))
             {
-                return Json(new { result = false });
+                return Json(new { result = true });
             }
             else
             {
                 try
                 {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Constants.strAPIURL + "IsUserAvailable");
-                    byte[] bytes;
-                    bytes = System.Text.Encoding.UTF8.GetBytes(userName);
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Constants.strAPIURL + "IsUserAvailable?Email=" + userName);
                     request.ContentType = "application/json";
-                    request.ContentLength = bytes.Length;
                     request.Method = "GET";
-                    Stream requestStream = request.GetRequestStream();
-                    requestStream.Write(bytes, 0, bytes.Length);
-                    requestStream.Close();
-                    HttpWebResponse response;
-                    response = (HttpWebResponse)request.GetResponse();
-
-                    if (response.StatusCode == HttpStatusCode.OK)
+                    using (WebResponse response = request.GetResponse())
                     {
                         Stream responseStream = response.GetResponseStream();
                         string responseString = new StreamReader(responseStream).ReadToEnd();
                         if (responseString.ToString().ToLower().Equals("true") == true)
-                            return Json(new { result = true });
-                        else
                             return Json(new { result = false });
+                        else
+                            return Json(new { result = true });
                     }
-                    else
-                        return Json(new { result = false });
                 }
-                catch
+                catch (Exception ex)
                 {
-                    return Json(new { result = false });
+                    return Json(new { result = true });
                 }
             }
         }

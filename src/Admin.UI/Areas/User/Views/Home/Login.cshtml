@@ -1,46 +1,49 @@
-﻿@model Admin.UI.Areas.User.Models.Login
-@{
+﻿@{
 
     Layout = "~/Views/shared/_layout.cshtml";
 }
-<div class="col-sm-7" ng-controller="LoginController">
+<div class="col-sm-7">
     <div class="widget-box">
         <div class="widget-header">
-            <h4 class="widget-title">Your Login Information</h4>
+            <h4 class="widget-title">Already Register, Login Here</h4>
         </div>
         <div class="widget-body">
             <div class="widget-main">
-                <form novalidate name="frmLogin">
-                    <div style="color:red">{{message}}</div>
-
+                <form name="mainForm" data-ng-submit="sendForm()" data-ng-controller="LoginController" novalidate>
+                    <div id="errorMessages" class="error">{{message}}</div>
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
-                            @Html.LabelFor(model => model.UserName, " UserName ")
+                            <label for="userName">User Name</label>
                         </label>
 
                         <div class="input-group col-sm-8">
-                            @Html.TextBoxFor(model => model.UserName, "UserName", new { type = "email", id = "UserName", @class = "form-control", @placeholder = "User Name", ng_model = "User.UserName", @name = "UserName", ng_class = "submitted?'ng-dirty':''" })
-                            <validated-input name="UserName" display="User Name" ng-model="User.UserName" required>
-                                <span class="error" ng-show="(frmLogin.UserName.$dirty || submitted) && frmLogin.UserName.$error.required && frmLogin.UserName.$invalid">Username required! and should be valid email!</span>
+                            <input id="userName" class="form-control" name="userName" type="email" data-ng-model="person.userName" required ng-unique validate-email />
+                            <span class="error" data-ng-show="mainForm.userName.$error.required"></span>
+                            <span class="error" data-ng-show="mainForm.userName.$error.invalid">Invalid! it should be a valid email</span>
                         </div>
                     </div>
                     <hr />
+
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
-                            @Html.LabelFor(model => model.Password, "Password")
+                            <label for="password">Password</label>
                         </label>
 
                         <div class="input-group col-sm-8">
-                            @Html.TextBoxFor(model => model.Password, "Password", new { type = "password", id = "Password", @class = "form-control ", @placeholder = "Password", ng_model = "User.Password", @name = "Password", ng_minlength = "8", ng_class = "submitted?'ng-dirty':''" })
-                            <validated-input name="Password" display="Password" ng-model="User.Password" required>
-                                <span class="error" ng-show="(frmLogin.Password.$dirty || submitted) && frmLogin.Password.$error.required"> Password required!</span>
-                                <span class="error" ng-show="(frmLogin.Password.$dirty || submitted) && frmLogin.Password.$error.required && frmLogin.Password.$error.minlength">Password required! and should be min 8 character</span>
+                            <input id="password" name="password" class="form-control" type="password" data-ng-model="person.Password" data-ng-minlength="8" required />
+                            <span class="error" data-ng-show="mainForm.password.$error.required"></span>
+                            <span class="error" data-ng-show="mainForm.password.$error.minlength">Minimum 8 characters are required.</span>
                         </div>
                     </div>
-                    @Html.HiddenFor(x => x.DomainKey, new { @value = Model.DomainKey, ng_model = "User.DomainKey", })
+                    <hr />
+
+                    <div>
+                        <input id="domainKey" class="form-control" name="domainKey" data-ng-model="person.domainKey" type="hidden" required value="B171F61C-8914-4C5D-AF88-C3B776D80916" />
+                    </div>
+
                     <div class="clearfix form-actions" style="margin-bottom:0px;">
                         <div class="text-right">
-                            <button type="button" class="btn btn-info" ng-click="LoginData(User)">
+                            <button type="submit" class="btn btn-info" data-ng-disabled="mainForm.$invalid">
                                 <i class="ace-icon fa fa-check bigger-110"></i>
                                 Login
                             </button>

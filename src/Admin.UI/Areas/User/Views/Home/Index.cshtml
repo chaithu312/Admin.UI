@@ -18,11 +18,10 @@
                         </label>
 
                         <div class="input-group col-sm-8">
-                            <input id="userName" class="form-control" name="userName" type="email" data-ng-model="person.userName" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required ng-unique />
-                            <span class="error" data-ng-show="mainForm.userName.$error.required">Username is required</span>
-                            <span class="error" data-ng-show="mainForm.userName.$error.email">Invalid user name. it should be a valid email</span>
-                            <span class="error" data-ng-show="mainForm.userName.$error.pattern">Invalid email.</span>
+                            <input id="userName" class="form-control" name="userName" type="email" data-ng-model="person.userName" required ng-unique validate-email />
+                            <span class="error" data-ng-show="mainForm.userName.$error.required"></span>
                             <span class="error" data-ng-show="mainForm.userName.$error.unique">Username already exists.</span>
+                            <span class="error" data-ng-show="mainForm.userName.$error.invalid">Invalid! it should be a valid email</span>
                         </div>
                     </div>
                     <hr />
@@ -34,7 +33,7 @@
 
                         <div class="input-group col-sm-8">
                             <input id="password" name="password" class="form-control" type="password" data-ng-model="person.Password" data-ng-minlength="8" required />
-                            <span class="error" data-ng-show="mainForm.password.$error.required">Password is required</span>
+                            <span class="error" data-ng-show="mainForm.password.$error.required"></span>
                             <span class="error" data-ng-show="mainForm.password.$error.minlength">Minimum 8 characters are required.</span>
                         </div>
                     </div>
@@ -47,7 +46,7 @@
 
                         <div class="input-group col-sm-8">
                             <input id="confirmPassword" class="form-control" name="confirmPassword" type="password" data-ng-model="person.confirmPassword" required />
-                            <span class="error" data-ng-show="mainForm.password.$error.required">Confirm Password is required</span>
+                            <span class="error" data-ng-show="mainForm.password.$error.required"></span>
                             <span class="error" data-ng-show="(mainForm.password.$dirty && mainForm.confirmPassword.$dirty) && (person.Password != person.confirmPassword)">Password mismatched</span>
                         </div>
                     </div>
