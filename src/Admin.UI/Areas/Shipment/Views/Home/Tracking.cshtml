@@ -59,7 +59,7 @@
                                     data-ng-options="status.Name for status in Status.Data track by status.Id"></select>
                                     </div>
 
-                                    <label for="id-date-range-picker-1" class="control-label no-padding-right pull-left">Shipping Date</label>
+                                    <label for="id-date-range-picker-1" class="control-label no-padding-right pull-left" style="margin-left:5px;">Shipping Date</label>
                                     <div class="pull-left">
                                         <div class="input-daterange input-group">
                                             <input type="text" name="start" class="input-sm form-control">
@@ -71,7 +71,7 @@
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-sm btn-success pull-left">
+                                    <button type="submit" class="btn btn-sm btn-success pull-left" style="margin-left:10px;">
                                         Continue
                                         <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
                                     </button>
@@ -86,7 +86,7 @@
                                         <tr style="height: 20px;">
                                             <td>Enter AWB Numbers (enter one number per line)&nbsp;&nbsp;</td>
                                             <td align="right">
-                                                <button type="submit" class="btn btn-sm btn-success pull-left" data-ng-disabled="TrackForm.filterBulk.$invalid">
+                                                <button type="submit" class="btn btn-sm btn-success pull-left" data-ng-disabled="TrackForm.filterBulk.$invalid" style="margin-bottom:5px;">
                                                     Continue
                                                     <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
                                                 </button>
@@ -109,11 +109,11 @@
                                             <td>Manifest&nbsp;&nbsp;</td>
                                             <td>
                                                 <select name="drpFilterManifest" id="drpFilterManifest"  data-ng-model="Manifest.selectedOption"
-                                    data-ng-options="manifest.Name for manifest in Manifest.Data track by manifest.Id">
+                                    data-ng-options="manifest.Name for manifest in Manifest.Data track by manifest.Id" style="margin-top: 20px;">
                                                 </select>&nbsp;&nbsp;
 
                                             </td>
-                                            <td style="width: 100%" align="left">
+                                            <td style="width: 100%;padding-left: 10px;" align="left">
                                                 <button type="submit" class="btn btn-sm btn-success pull-left">
                                                     Continue
                                                     <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
