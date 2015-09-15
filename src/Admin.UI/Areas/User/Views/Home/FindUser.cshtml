@@ -1,5 +1,4 @@
-﻿@model Admin.UI.Areas.User.Models.FindUser
-@{
+﻿@{
 
     Layout = "~/Views/shared/_layout.cshtml";
 }
@@ -16,13 +15,14 @@
 
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
-                            @Html.LabelFor(model => model.UserName, " UserName ")
+                            User Name
                         </label>
 
                         <div class="input-group col-sm-8">
-                            @Html.TextBoxFor(model => model.UserName, "UserName", new { type = "email", id = "UserName", @class = "form-control", @placeholder = "User Name", ng_model = "User.UserName", @name = "UserName", ng_class = "submitted?'ng-dirty':''" })
-                            <validated-input name="UserName" display="User Name" ng-model="User.UserName" required>
-                                <span class="error" ng-show="(frmLogin.UserName.$dirty || submitted) && frmLogin.UserName.$error.required && frmLogin.UserName.$invalid">Username required! and should be valid email!</span>
+                            <input id="userName" class="form-control" name="userName" type="email" data-ng-model="person.userName" required ng-unique validate-email />
+                            <span class="error" data-ng-show="mainForm.userName.$error.required"></span>
+                            <span class="error" data-ng-show="mainForm.userName.$error.unique">Username already exists.</span>
+                            <span class="error" data-ng-show="mainForm.userName.$error.invalid">Invalid! it should be a valid email</span>
                         </div>
                     </div>
 

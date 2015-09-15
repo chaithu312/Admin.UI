@@ -124,9 +124,8 @@ $('#timepicker2').timepicker({
 });
 
 //or change it into a date range picker
-$('.input-daterange').datepicker({autoclose:true});
-			
-			
+$('.input-daterange').datepicker({ autoclose: true });
+
 //to translate the daterange picker, please copy the "examples/daterange-fr.js" contents here before initialization
 $('input[name=date-range-picker]').daterangepicker({
     'applyClass': 'btn-sm btn-success'

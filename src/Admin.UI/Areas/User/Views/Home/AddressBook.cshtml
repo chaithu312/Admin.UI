@@ -1,0 +1,170 @@
+﻿@{
+
+    Layout = "~/Views/shared/_layout.cshtml";
+}
+<div class="col-sm-7">
+    <div class="widget-box">
+        <div class="widget-header">
+            <h4 class="widget-title">Address Book</h4>
+        </div>
+        <div class="widget-body">
+            <div class="widget-main">
+                <form name="mainForm" data-ng-submit="sendForm()" data-ng-controller="AddressController" novalidate>
+                    <div id="errorMessages" class="error">{{message}}</div>
+                    <div>
+                        <label for="form-field-mask-1" class="col-sm-3">
+                            <label>Account No</label>
+                        </label>
+
+                        <div class="input-group col-sm-8">
+                            <input id="accountnumber" class="form-control" name="accountnumber" type="text" data-ng-model="person.accountnumber" required />
+                            <span class="error" data-ng-show="mainForm.userName.$error.required"></span>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div>
+                        <label for="form-field-mask-1" class="col-sm-3">
+                            <label>Address Type</label>
+                        </label>
+
+                        <div class="input-group col-sm-8">
+                            <select id="addressType"><option>Sender</option><option>Receiver</option></select>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div>
+                        <label for="form-field-mask-1" class="col-sm-3">
+                            <label>Address Caption</label>
+                        </label>
+
+                        <div class="input-group col-sm-8">
+                            <input id="addressCaption" class="form-control" name="addressCaption" type="text" data-ng-model="person.addressCaption" required />
+                            <span class="error" data-ng-show="mainForm.userName.$error.required"></span>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div>
+                        <label for="form-field-mask-1" class="col-sm-3">
+                            <label>Country</label>
+                        </label>
+
+                        <div class="input-group col-sm-8">
+                            <select id="county"><option>-Select</option></select>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div>
+                        <label for="form-field-mask-1" class="col-sm-3">
+                            <label>State</label>
+                        </label>
+
+                        <div class="input-group col-sm-8">
+                            <select id="state"><option>-Select</option></select>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div>
+                        <label for="form-field-mask-1" class="col-sm-3">
+                            <label>City</label>
+                        </label>
+
+                        <div class="input-group col-sm-8">
+                            <input id="city" class="form-control" name="city" type="text" data-ng-model="person.city" required />
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div>
+                        <label for="form-field-mask-1" class="col-sm-3">
+                            <label>Adress Line 1</label>
+                        </label>
+
+                        <div class="input-group col-sm-8">
+                            <input id="addressline1" class="form-control" name="addressline1" type="text" data-ng-model="person.addressline1" required />
+                            <span class="error" data-ng-show="mainForm.userName.$error.required"></span>
+                        </div>
+                    </div>
+                    <hr />
+                    <div>
+                        <label for="form-field-mask-1" class="col-sm-3">
+                            <label>Adress Line 2</label>
+                        </label>
+
+                        <div class="input-group col-sm-8">
+                            <input id="addressline2" class="form-control" name="addressline2" type="text" data-ng-model="person.addressline2" required />
+                            <span class="error" data-ng-show="mainForm.userName.$error.required"></span>
+                        </div>
+                    </div>
+                    <hr />
+                    <div>
+                        <label for="form-field-mask-1" class="col-sm-3">
+                            <label>Postal Code </label>
+                        </label>
+
+                        <div class="input-group col-sm-8">
+                            <input id="postalcode" class="form-control" name="postalcode" type="text" data-ng-model="person.postalcode" required />
+                            <span class="error" data-ng-show="mainForm.userName.$error.required"></span>
+                        </div>
+                    </div>
+                    <hr />
+                    <div>
+                        <label for="form-field-mask-1" class="col-sm-3">
+                            <label>Additional Details </label>
+                        </label>
+
+                        <div class="input-group col-sm-8">
+                            <textarea id="additionaldetails" class="form-control" name="additionaldetails" type="text" data-ng-model="person.additionaldetails" row="10" col="10" required></textarea>
+                            <span class="error" data-ng-show="mainForm.userName.$error.required"></span>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div>
+                        <label for="form-field-mask-1" class="col-sm-3">
+                            <label>Courier</label>
+                        </label>
+
+                        <div class="input-group col-sm-8">
+                            <select id="courier">
+                                <option>-Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr />
+                    <div>
+                        <label for="form-field-mask-1" class="col-sm-3">
+                            <label>Check if address</label>
+                        </label>
+
+                        <div class="input-group col-sm-8">
+                            <div style="float:left">
+                                <input id="isresidentials" class="form-control" name="isresidentials" type="checkbox" data-ng-model="person.isresidentials" required />
+                                <span>Residential</span>
+                            </div>
+                            <div style="float:right">
+                                <input id="isremote" class="form-control" name="isremote" type="checkbox" data-ng-model="person.isremote" required />
+                                <span>Remote</span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="clearfix form-actions" style="margin-bottom:0px;">
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-info" data-ng-disabled="mainForm.$invalid">
+                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using Thinktecture.IdentityModel.Client;
 
 namespace Admin.UI.UserArea
@@ -109,14 +110,60 @@ namespace Admin.UI.UserArea
             return View();
         }
 
-        public IActionResult ChangePassword()
+        public IActionResult ChangePassword(TokenResponse response)
         {
+            var client = new HttpClient();
+            client.SetBearerToken(response.AccessToken);
+
+            var result = client.GetStringAsync("http://localhost:14869/test").Result;
+            //Data Comes like {"message":"OK computer","client":"silicon"}
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult ChangePassword(ChangePassword login)
+        {
+            return Json("failed");
         }
 
         public IActionResult FindUser()
         {
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult FindUser(FindUser user)
+        {
+            if (ModelState.IsValid)
+            {
+                //TODO : MAKE CLIENT AS DYNAMIC AS PER USER
+                var client = new OAuth2Client(
+                  new Uri(Constants.idServer + "token"),
+                  Constants.clientID,
+                  Constants.clientSecret, OAuth2Client.ClientAuthenticationStyle.PostValues);
+
+                var optional = new Dictionary<string, string>
+                      {
+                          { "acr_values", String.Format("DomainKey: {0}", user.UserName) }
+                      };
+
+                TokenResponse x = client.RequestClientCredentialsAsync("ChangePassword", optional).Result;
+
+                //TokenResponse y = client.CreateImplicitFlowUrl()
+
+                if (x.AccessToken != null)
+                {
+                    return Json(x.AccessToken.ToString());
+                }
+                else
+                {
+                    return Json("Failed");
+                }
+            }
+            else
+            {
+                return Json("Failed");
+            }
         }
 
         [AllowAnonymous, HttpGet]
@@ -148,6 +195,11 @@ namespace Admin.UI.UserArea
                     return Json(new { result = true });
                 }
             }
+        }
+
+        public IActionResult AddressBook()
+        {
+            return View();
         }
     }
 }
