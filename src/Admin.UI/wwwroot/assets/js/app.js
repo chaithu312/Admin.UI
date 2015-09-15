@@ -124,9 +124,8 @@ $('#timepicker2').timepicker({
 });
 
 //or change it into a date range picker
-$('.input-daterange').datepicker({autoclose:true});
-			
-			
+$('.input-daterange').datepicker({ autoclose: true });
+
 //to translate the daterange picker, please copy the "examples/daterange-fr.js" contents here before initialization
 $('input[name=date-range-picker]').daterangepicker({
     'applyClass': 'btn-sm btn-success'
@@ -220,11 +219,11 @@ $('input[name=date-range-picker]').daterangepicker({
 })();
 (function () {
     var app = angular.module('mainApp')
-      app.controller('PickupRequestController', function ($scope, $http) {
+    app.controller('PickupRequestController', function ($scope, $http) {
         $scope.Contacts = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Account 1' }, { Id: 2, Name: 'Account 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
         $scope.Addresses = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
         $scope.States = { Data: [{ Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }] };
-       
+
         $scope.Pieces = {
             Data: [{ Id: 1, Name: '1' },
                 { Id: 2, Name: '2' },
@@ -255,29 +254,45 @@ $('input[name=date-range-picker]').daterangepicker({
         $scope.PickupType = { Data: [{ Id: 0, Name: 'Package' }, { Id: 1, Name: 'Finance' }], selectedOption: { Id: 0, Name: 'Package' } };
 
         $scope.sendForm = function () {
-            $http({
-                method: 'POST',
-                url: '/Shipment/PickupRequest',
-                data: $scope.person,
-                headers: {
-                    'RequestVerificationToken': $scope.antiForgeryToken
+            $.ajax({
+                url: 'http://192.168.1.241/shipping/dhl/pickup',
+                async: false,
+                type: "POST",
+                dataType: "json",
+                data: $scope.PickupRequest,
+                success: function (result) {
+                    JSON.parse(result);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr);
                 }
-            }).success(function (data, status, headers, config) {
-                $scope.message = '';
-                if (data.success == false) {
-                    var str = '';
-                    for (var error in data.errors) {
-                        str += data.errors[error] + '\n';
-                    }
-                    $scope.message = str;
-                }
-                else {
-                    $scope.message = 'Saved Successfully';
-                    $scope.person = {};
-                }
-            }).error(function (data, status, headers, config) {
-                $scope.message = 'Unexpected Error';
             });
+
+            //$http({
+            //    method: 'POST',
+            //    url: 'http://192.168.1.241/shipping/dhl/pickup',
+            //    data: $scope.person,
+            //    headers: {
+            //        'RequestVerificationToken': $scope.antiForgeryToken,
+            //        'Content-Type': 'application/json'
+            //    }
+            //}).success(function (data, status, headers, config) {
+            //    $scope.message = '';
+            //    if (data.success == false) {
+            //        var str = '';
+            //        for (var error in data.errors) {
+            //            str += data.errors[error] + '\n';
+            //        }
+            //        $scope.message = str;
+            //    }
+            //    else {
+            //        $scope.message = 'Saved Successfully';
+            //        $scope.person = {};
+            //    }
+            //}).error(function (data, status, headers, config) {
+            //    console.log;
+            //    $scope.message = 'Unexpected Error';
+            //});
         };
     });
 })();
@@ -297,7 +312,7 @@ $('input[name=date-range-picker]').daterangepicker({
 
         $scope.Manifest = {
             Data: [{ Id: 0, Name: 'Select...' }],
-                selectedOption: { Id: 0, Name:'Select...' }
+            selectedOption: { Id: 0, Name: 'Select...' }
         };
 
         $scope.sendForm = function () {
