@@ -1,10 +1,9 @@
-﻿@inject IOptions<AppSettings> AppSettings
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" ng-app="mainApp">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta charset="utf-8" />
-    <title>@AppSettings.Options.SiteTitle</title>
+    <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <link rel="stylesheet" href="~/assets/css/global.min.css" class="main-stylesheet" />
     <!--[if lte IE 9]>
@@ -20,7 +19,6 @@
     <div id="navbar" class="navbar navbar-default">
         <div class="navbar-container" id="navbar-container">
             <toggle-sidebar></toggle-sidebar>
-            <navbar-header caption="@AppSettings.Options.SiteTitle"></navbar-header>
             @await Html.PartialAsync("_NavbarPartial")
         </div>
     </div>
@@ -44,5 +42,4 @@
     <script src="/assets/js/app.js"></script>
     @RenderSection("js_inline", required: false)
 </body>
-zz
 </html>
