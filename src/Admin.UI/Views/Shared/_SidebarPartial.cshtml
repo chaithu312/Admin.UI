@@ -28,7 +28,6 @@
             <span class="btn btn-danger"></span>
         </div>
     </div>
-<<<<<<< HEAD
 
     <ul class="nav nav-list" ng-controller="navsController" ng-init="init()">
 
@@ -52,29 +51,6 @@
             </ul>
         </li>
     </ul>
-=======
-    <div auto-active>
-        <ul class="nav nav-list" ng-controller="navsController" ng-init="init()">
-            <li class="" data-ng-if="nav.ParentId == 0" ng-repeat="nav in navs">
-                <a href="{{nav.NavURL}}" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-list"></i>
-                    <span class="menu-text"> {{nav.Title}} </span>
-                    <b class="arrow fa fa-angle-down" ng-if=""></b>
-                </a>
-                <ul class="submenu">
-                    <li class="" data-ng-repeat="child in navs" data-ng-if="child.ParentId == nav.Id" >
-                        <a href="{{child.NavURL}}">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            {{child.Title}}
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
->>>>>>> 2e58373c1d71618c4684d77f735a0df0f488a0a4
 
     <sidebar-minimize></sidebar-minimize>
 </div>

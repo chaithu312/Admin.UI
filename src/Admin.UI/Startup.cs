@@ -40,9 +40,9 @@ namespace Admin.UI
                     template: "{area:exists}/{action}",
                     defaults: new { controller = "Home", action = "Index" });
 
-                routes.MapRoute(name: "areaRouteForHome",
-                    template: "{area:exists}/{action}",
-                    defaults: new { controller = "Home", action = "Index" });
+                //routes.MapRoute(name: "areaRouteForHome",
+                //    template: "{area:exists}/{action}",
+                //    defaults: new { controller = "Home", action = "Index" });
 
                 routes.MapRoute(
                     name: "default",
