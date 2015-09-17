@@ -190,7 +190,7 @@ namespace Admin.UI.UserArea
                             return Json(new { result = true });
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     return Json(new { result = true });
                 }
