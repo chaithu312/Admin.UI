@@ -17,6 +17,12 @@ namespace Admin.UI.ShipmentArea
             return View();
         }
 
+        [HttpGet]
+        public IActionResult PickupRequest(string pickup)
+        {
+            return View();
+        }
+
         public IActionResult Tracking()
         {
             return View();

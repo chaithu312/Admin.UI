@@ -1,13 +1,12 @@
 ﻿(function () {
     var app = angular.module('mainApp')
-      app.controller('PickupRequestController', function ($scope, $http) {
+    app.controller('PickupRequestController', function ($scope, $http) {
         $scope.Contacts = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Account 1' }, { Id: 2, Name: 'Account 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
         $scope.Addresses = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
         $scope.States = { Data: [{ Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }] };
         $scope.Countries = { Data: [{ Id: 1, Name: 'Country 1' }, { Id: 2, Name: 'Country 2' }] };
         $scope.Carriers = { Data: [{ Id: 1, Name: 'DHL' }, { Id: 2, Name: 'Endicia' }] };
-        
-       
+
         $scope.Pieces = {
             Data: [{ Id: 1, Name: '1' },
                 { Id: 2, Name: '2' },
@@ -39,7 +38,7 @@
 
         $scope.sendForm = function () {
             $.ajax({
-                url: 'http://192.168.1.241/shipping/dhl/pickup',
+                url: '/Shipment/PickupRequest',
                 async: false,
                 type: "POST",
                 dataType: "json",
@@ -52,11 +51,11 @@
                 }
             })
         };
-    
+
         //$scope.sendForm = function () {
         //    $http({
         //        method: 'POST',
-                
+
         //        url: '/Shipment/PickupRequest',
         //        data: $scope.person,
         //        headers: {
