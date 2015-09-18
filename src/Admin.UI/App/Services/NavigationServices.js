@@ -8,5 +8,4 @@
               query: { method: 'GET', params: {}, isArray: true }
           });
       }]);
-    alert("services");
 })();

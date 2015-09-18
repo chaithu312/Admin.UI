@@ -37,19 +37,94 @@
         $scope.PickupType = { Data: [{ Id: 0, Name: 'Package' }, { Id: 1, Name: 'Finance' }], selectedOption: { Id: 0, Name: 'Package' } };
 
         $scope.sendForm = function () {
-            $.ajax({
-                url: '/Shipment/PickupRequest',
-                async: false,
-                type: "POST",
-                dataType: "json",
-                data: $scope.PickupRequest,
-                success: function (result) {
-                    JSON.parse(result);
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr);
+            $scope.PickupRequestData = {
+                data: [{
+                    UseShipperAddress: 'false', Address: {
+                        Department: null, FirstName: $scope.PickupRequest.FirstName,
+                        MiddleName: null,
+                        LastName: $scope.PickupRequest.LastName,
+                        NamePrefix: null,
+                        NamePostfix: null,
+                        Name: $scope.PickupRequest.FirstName + ' ' + $scope.PickupRequest.LastName,
+                        Phone: $scope.PickupRequest.Phone,
+                        EMail: $scope.PickupRequest.EMail,
+                        Address1: $scope.PickupRequest.Address1,
+                        Address2: $scope.PickupRequest.Address2,
+                        Address3: $scope.PickupRequest.Address3,
+                        City: $scope.PickupRequest.City,
+                        PostalCode: $scope.PickupRequest.PostalCode,
+                        DivisionName: $scope.PickupRequest.Division,
+                        DivisionCode: $scope.PickupRequest.DivisionCode,
+                        CountryName: $scope.PickupRequest.CountryName,
+                        CountryCode: $scope.PickupRequest.CountryCode,
+                        Division: null,
+                        State: $scope.PickupRequest.State,
+                        IsResidential: $scope.PickupRequest.IsResidential,
+                        IsRemoteArea: $scope.PickupRequest.IsRemoteArea,
+                        LocationType: "B",
+                        PackageLocation: $scope.PickupRequest.PackageLocation
+                    },
+                    ReadyBy: '0001-01-01T00:00:00',
+                    NoLaterThan: '0001-01-01T00:00:00',
+                    Instructions: null,
+                    IsHeavy: $scope.PickupRequest.IsHeavy,
+                    IsBulky: $scope.PickupRequest.IsBulky,
+                    ConfirmationNumber: null,
+                    OriginSvcArea: null,
+                    CancelReason: null,
+                    RegionCode: $scope.PickupRequest.RegionCode,
+                    RequestorName: $scope.PickupRequest.FirstName + ' ' + $scope.PickupRequest.LastName,
+                    RequestorAccountType: 'D',
+                    RequestorPhone: $scope.PickupRequest.Phone,
+                    AccountType: 'D',
+                    RequestorAccountNumber: '803921577',
+                    Date: $scope.PickupRequest.Date,
+                    ReadyByTime: $scope.PickupRequest.ReadyByTime,
+                    CloseTime: $scope.PickupRequest.CloseTime,
+                    Weight: 10,
+                    WeightUnit: 'L',
+                    AWBNumber: '7520067111',
+                }]
+            };
+
+            $http({
+                method: 'POST',
+
+                url: '192.168.1.241/shipping/dhl/pickup',
+                data: $scope.PickupRequestData,
+                headers: {
+                    'RequestVerificationToken': $scope.antiForgeryToken
                 }
-            })
+            }).success(function (data, status, headers, config) {
+                $scope.message = '';
+                if (data.success == false) {
+                    var str = '';
+                    for (var error in data.errors) {
+                        str += data.errors[error] + '\n';
+                    }
+                    $scope.message = str;
+                }
+                else {
+                    $scope.message = 'Saved Successfully';
+                    $scope.person = {};
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.message = 'Unexpected Error';
+            });
+
+            //$.ajax({
+            //    url: '/Shipment/PickupRequest',
+            //    async: false,
+            //    type: "POST",
+            //    dataType: "json",
+            //    data: $scope.PickupRequest,
+            //    success: function (result) {
+            //        JSON.parse(result);
+            //    },
+            //    error: function (xhr, ajaxOptions, thrownError) {
+            //        console.log(xhr);
+            //    }
+            //})
         };
 
         //$scope.sendForm = function () {

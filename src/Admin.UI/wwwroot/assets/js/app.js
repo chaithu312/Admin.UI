@@ -222,8 +222,8 @@ $('input[name=date-range-picker]').daterangepicker({
     app.controller('PickupRequestController', function ($scope, $http) {
         $scope.Contacts = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Account 1' }, { Id: 2, Name: 'Account 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
         $scope.Addresses = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
-        $scope.States = { Data: [{ Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }] };
-        $scope.Countries = { Data: [{ Id: 1, Name: 'Country 1' }, { Id: 2, Name: 'Country 2' }] };
+        $scope.States = { Data: [{ Id: 1, Name: 'Texas' }, { Id: 2, Name: 'New York' }] };
+        $scope.Countries = { Data: [{ Id: 1, Name: 'US' }, { Id: 2, Name: 'UK' }] };
         $scope.Carriers = { Data: [{ Id: 1, Name: 'DHL' }, { Id: 2, Name: 'Endicia' }] };
 
         $scope.Pieces = {
@@ -255,33 +255,75 @@ $('input[name=date-range-picker]').daterangepicker({
         $scope.PickupAgent = { Data: [{ Id: 0, Name: 'Select...' }, { Id: 1, Name: 'DHL' }, { Id: 2, Name: 'Endicia' }, { Id: 3, Name: 'FedEx' }], selectedOption: { Id: 0, Name: 'Select...' } };
         $scope.PickupType = { Data: [{ Id: 0, Name: 'Package' }, { Id: 1, Name: 'Finance' }], selectedOption: { Id: 0, Name: 'Package' } };
 
-        //$scope.sendForm = function () {
-        //    $.ajax({
-        //        url: '/Shipment/PickupRequest',
-        //        async: false,
-        //        type: "POST",
-        //        dataType: "json",
-        //        data: $scope.PickupRequest,
-        //        success: function (result) {
-        //            JSON.parse(result);
-        //        },
-        //        error: function (xhr, ajaxOptions, thrownError) {
-        //            console.log(xhr);
-        //        }
-        //    })
-        //};
-
         $scope.sendForm = function () {
+            $scope.PickupRequestData = {
+                UseShipperAddress: false,
+                Address: {
+                    Department: null,
+                    FirstName: "FirstName",
+                    MiddleName: null,
+                    LastName: "LastName",
+                    NamePrefix: null,
+                    NamePostfix: null,
+                    Name: "FirstName LastName",
+                    Phone: "2345678901",
+                    EMail: "email@email.com",
+                    Address1: "707 N 90th street",
+                    Address2: "",
+                    Address3: "",
+                    City: "Omaha",
+                    PostalCode: "85281",
+                    DivisionName: "Arizona",
+                    DivisionCode: null,
+                    CountryName: "United States of America",
+                    CountryCode: "US",
+                    Division: null,
+                    State: null,
+                    IsResidential: false,
+                    IsRemoteArea: false,
+                    LocationType: "B",
+                    PackageLocation: "front office"
+                },
+                ReadyBy: "0001-01-01T00:00:00",
+                NoLaterThan: "0001-01-01T00:00:00",
+                Instructions: null,
+                IsHeavy: false,
+                IsBulky: false,
+                ConfirmationNumber: null,
+                OriginSvcArea: null,
+                CancelReason: null,
+                RegionCode: "AM",
+                RequestorName: "RequestorName",
+                RequestorAccountType: "D",
+                RequestorPhone: "803921577",
+                AccountType: "D",
+                RequestorAccountNumber: "803921577",
+                Date: "2015-09-17",
+                ReadyByTime: "06:20",
+                CloseTime: "11:20",
+                Weight: 10,
+                WeightUnit: "L",
+                AWBNumber: "7520067111",
+                Parcels: [{
+                    NumberOfPieces: "1",
+                    Weight: "2",
+                    WeightUnit: "L",
+                    Width: "2",
+                    Length: "2",
+                    Height: "2",
+                    Depth: "2"
+                }]
+            };
+
             $http({
                 method: 'POST',
 
                 url: 'http://192.168.1.241/shipping/dhl/pickup',
-                data: $scope.PickupRequest,
+                data: $scope.PickupRequestData,
                 headers: {
                     'RequestVerificationToken': $scope.antiForgeryToken
                 }
             }).success(function (data, status, headers, config) {
-                console.log(status);
                 $scope.message = '';
                 if (data.success == false) {
                     var str = '';
@@ -291,14 +333,57 @@ $('input[name=date-range-picker]').daterangepicker({
                     $scope.message = str;
                 }
                 else {
-                    $scope.message = 'Saved Successfully';
-                    $scope.person = {};
+                    $("#frm").hide();
+                    $scope.message = "ConfirmationNumber :" + data.ConfirmationNumber + " OriginSvcArea: " + data.OriginSvcArea + " Status:" + data.Status + " Message:" + data.message;
+
+                    console.log(data);
+                    $scope.PickupRequestData = {};
                 }
             }).error(function (data, status, headers, config) {
-                console.log(data);
                 $scope.message = 'Unexpected Error';
             });
+
+            //$.ajax({
+            //    url: '/Shipment/PickupRequest',
+            //    async: false,
+            //    type: "POST",
+            //    dataType: "json",
+            //    data: $scope.PickupRequest,
+            //    success: function (result) {
+            //        JSON.parse(result);
+            //    },
+            //    error: function (xhr, ajaxOptions, thrownError) {
+            //        console.log(xhr);
+            //    }
+            //})
         };
+
+        //$scope.sendForm = function () {
+        //    $http({
+        //        method: 'POST',
+
+        //        url: '/Shipment/PickupRequest',
+        //        data: $scope.person,
+        //        headers: {
+        //            'RequestVerificationToken': $scope.antiForgeryToken
+        //        }
+        //    }).success(function (data, status, headers, config) {
+        //        $scope.message = '';
+        //        if (data.success == false) {
+        //            var str = '';
+        //            for (var error in data.errors) {
+        //                str += data.errors[error] + '\n';
+        //            }
+        //            $scope.message = str;
+        //        }
+        //        else {
+        //            $scope.message = 'Saved Successfully';
+        //            $scope.person = {};
+        //        }
+        //    }).error(function (data, status, headers, config) {
+        //        $scope.message = 'Unexpected Error';
+        //    });
+        //};
     });
 })();
 (function () {

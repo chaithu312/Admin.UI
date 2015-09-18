@@ -28,7 +28,7 @@ namespace Admin.UI.Controllers
 
                 new Navigation { Id = 8, Title = "Create User", ParentId = 3, Type = "", NavURL = "/User" },
                 new Navigation { Id = 9, Title = "View User ", ParentId = 3, Type = "", NavURL = "/User/List" },
-                new Navigation { Id = 10, Title = "Test", ParentId = 3, Type = "", NavURL = "/User/Test" } ,
+                new Navigation { Id = 10, Title = "AddressBook", ParentId = 3, Type = "", NavURL = "/User/AddressBook" } ,
             };
         }
     }
