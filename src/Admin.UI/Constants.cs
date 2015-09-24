@@ -8,8 +8,8 @@ namespace Admin.UI
     public static class Constants
     {
         public const string strAPIURL = "http://192.168.1.241/id/api/register/";
-        public const string idServer = "http://192.168.1.241/id/";
-        public const string clientID = "611AE4FB-0F54-4484-87BF-E28DF7E09CB8";
+        public const string idServer = "http://localhost:63319/core/";
+        public const string clientID = "CA952280-3855-4A55-950A-B8BCA0079868";
 
         public const string clientSecret = "262148";
         public const string clientScope = "read write";

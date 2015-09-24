@@ -199,7 +199,8 @@ $('input[name=date-range-picker]').daterangepicker({
                     'RequestVerificationToken': $scope.antiForgeryToken
                 }
             }).success(function (data, status, headers, config) {
-                $scope.message = '';
+               // $scope.message = '';
+                alert(data.success);
                 if (data.success == false) {
                     var str = '';
                     for (var error in data.errors) {
@@ -208,7 +209,7 @@ $('input[name=date-range-picker]').daterangepicker({
                     $scope.message = str;
                 }
                 else {
-                    $scope.message = 'Login Successfully';
+                    $scope.message = 'Login Failed';
                     $scope.person = {};
                 }
             }).error(function (data, status, headers, config) {

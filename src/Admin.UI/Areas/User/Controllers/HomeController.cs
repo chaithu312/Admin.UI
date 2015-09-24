@@ -67,6 +67,8 @@ namespace Admin.UI.UserArea
 
         public IActionResult Login()
         {
+            Login login = new Login();
+            login.DomainKey = "B171F61C-8914-4C5D-AF88-C3B776D80916";
             return View();
         }
 
@@ -77,9 +79,9 @@ namespace Admin.UI.UserArea
             {
                 //TODO : MAKE CLIENT AS DYNAMIC AS PER USER
                 var client = new OAuth2Client(
-                  new Uri(Constants.idServer + "token"),
-                  Constants.clientID,
-                  Constants.clientSecret, OAuth2Client.ClientAuthenticationStyle.PostValues);
+              new Uri(Constants.idServer + "token"),
+              Constants.clientID,
+              Constants.clientSecret, OAuth2Client.ClientAuthenticationStyle.PostValues);
 
                 var optional = new Dictionary<string, string>
                       {
