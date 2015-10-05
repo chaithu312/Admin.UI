@@ -203,5 +203,56 @@ namespace Admin.UI.UserArea
         {
             return View();
         }
+
+        [HttpPost]
+        public JsonResult AddressBook([FromBody]Address register)
+        {
+            if (register != null)
+            {
+                register.AccountId = 2;
+                register.Status = 1;
+                register.Created = DateTime.Now;
+            }
+            
+            string url = "http://localhost/MasterAPI/api/address/Insert";
+            object result = string.Empty;
+
+            // Uses the System.Net.WebClient and not HttpClient, because .NET 2.0 must be supported.
+            using (var client = new WebClient())
+            {
+                client.Headers[HttpRequestHeader.ContentType] = "application/json";
+
+                string serialisedData = JsonConvert.SerializeObject(register);
+
+                var response = client.UploadString(url, serialisedData);
+
+                result = JsonConvert.DeserializeObject(response);
+            }
+            return Json(result);
+        }
+
+        [HttpGet]
+        public JsonResult Country()
+        {
+            var client = new HttpClient();
+            var result = client.GetStringAsync("http://localhost/MasterAPI/api/Country").Result;
+            return Json(result);
+        }
+
+        [HttpGet]
+        public JsonResult State(string countryId)
+        {
+            var client = new HttpClient();
+            var result = client.GetStringAsync("http://localhost/MasterAPI/api/Division/" + countryId).Result;
+            return Json(result);
+        }
+
+        [HttpGet]
+        public JsonResult PostalCode(string PostalCode)
+        {
+            var client = new HttpClient();
+            var result = client.GetStringAsync("http://localhost:64878/api/postalcode/"+PostalCode).Result;
+            return Json(result);
+        }
     }
 }

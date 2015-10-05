@@ -1,37 +1,41 @@
 {
-  "webroot": "wwwroot",
-  "version": "1.0.0-*",
+    "webroot": "wwwroot",
+    "version": "1.0.0-*",
 
-  "dependencies": {
-    "Microsoft.AspNet.Mvc": "6.0.0-beta5",
-    "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-beta5",
-    "Microsoft.AspNet.Server.IIS": "1.0.0-beta5",
-    "Microsoft.AspNet.Tooling.Razor": "1.0.0-beta5",
-    "System.IdentityModel.Tokens.Jwt": "4.0.0",
-    "Owin": "1.0.0",
-    "Microsoft.AspNet.WebApi.Owin": "5.2.3",
-    "Thinktecture.IdentityModel.Client": "4.0.1",
-    "Microsoft.Framework.ConfigurationModel": "1.0.0-beta5-11337",
-    "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta5-11337",
-    "Microsoft.Framework.OptionsModel": "1.0.0-beta5"
-  },
+    "dependencies": {
+        "Microsoft.AspNet.Mvc": "6.0.0-beta5",
+        "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-beta5",
+        "Microsoft.AspNet.Server.IIS": "1.0.0-beta5",
+        "Microsoft.AspNet.Tooling.Razor": "1.0.0-beta5",
+        "System.IdentityModel.Tokens.Jwt": "4.0.0",
+        "Owin": "1.0.0",
+        "Microsoft.AspNet.WebApi.Owin": "5.2.3",
+        "Thinktecture.IdentityModel.Client": "4.0.1",
+        "Microsoft.Framework.ConfigurationModel": "1.0.0-beta5-11337",
+        "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta5-11337",
+        "Microsoft.Framework.OptionsModel": "1.0.0-beta5"
+    },
 
-  "commands": { },
+    "commands": { },
 
-  "frameworks": {
-    "dnx451": { }
-  },
+    "frameworks": {
+        "dnx451": {
+            "frameworkAssemblies": {
+                "System.Web.Extensions": "4.0.0.0"
+            }
+        }
+    },
 
-  "publishExclude": [
-    "node_modules",
-    "bower_components",
-    "**.xproj",
-    "**.user",
-    "**.vspscc"
-  ],
-  "exclude": [
-    "wwwroot",
-    "node_modules",
-    "bower_components"
-  ]
+    "publishExclude": [
+        "node_modules",
+        "bower_components",
+        "**.xproj",
+        "**.user",
+        "**.vspscc"
+    ],
+    "exclude": [
+        "wwwroot",
+        "node_modules",
+        "bower_components"
+    ]
 }
