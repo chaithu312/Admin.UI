@@ -231,6 +231,11 @@ namespace Admin.UI.UserArea
             return Json(result);
         }
 
+        public IActionResult ViewAddress()
+        {
+            return View();
+        }
+
         [HttpGet]
         public JsonResult Country()
         {
@@ -251,7 +256,15 @@ namespace Admin.UI.UserArea
         public JsonResult PostalCode(string PostalCode)
         {
             var client = new HttpClient();
-            var result = client.GetStringAsync("http://localhost:64878/api/postalcode/"+PostalCode).Result;
+            var result = client.GetStringAsync("http://localhost/MasterAPI/api/postalcode/" + PostalCode).Result;
+            return Json(result);
+        }
+
+        [HttpGet]
+        public JsonResult GetUsers()
+        {
+            var client = new HttpClient();
+            var result = client.GetStringAsync("http://localhost/MasterAPI/api/Address").Result;
             return Json(result);
         }
     }

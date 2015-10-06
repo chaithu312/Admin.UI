@@ -1,6 +1,6 @@
 ﻿(function () {
     var validationApp = angular.module('mainApp');
-
+    
     // create angular controller
     validationApp.controller('AddressBookController', function ($scope, $http) {
 
@@ -105,7 +105,7 @@
     });
     var PHONE_REGEXP = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
     
-    validationApp.directive('phone', function () {
+    validationApp.directive('phone', ['$http', function ($http) {
         return {
             restrice: 'A',
             require: 'ngModel',
@@ -114,6 +114,7 @@
                     if (PHONE_REGEXP.test(this.value)) {
                         //Postal code is in valid format get cities related to that postal code
                         //Getting Postal Code
+                       
                         $http({
                             url: '/User/Home/PostalCode',
                             method: "GET",
@@ -122,7 +123,7 @@
                             dataType: "json"
                         })
                        .success(function (data, status, headers, config) {
-                           alert(data);
+                           scope.contact.PostalCodes = JSON.parse(data);;
 
                        }).error(function (data, status, headers, config) {
                            alert(data);
@@ -146,5 +147,5 @@
                 });
             }
         }
-    });
+    }]);
 })();
