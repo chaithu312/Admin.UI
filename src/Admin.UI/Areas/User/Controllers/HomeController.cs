@@ -264,8 +264,19 @@ namespace Admin.UI.UserArea
         public JsonResult GetUsers()
         {
             var client = new HttpClient();
-            var result = client.GetStringAsync("http://localhost/MasterAPI/api/Address").Result;
+            List<Admin.UI.Areas.User.Models.Address> a = new List<Admin.UI.Areas.User.Models.Address>();
+            a.Add(new Address() { Id = 2, FirstName = "Shashikant", LastName = "Pandit", Phone1 = "", Division = "", City = "" });
+            a.Add(new Address() { Id = 4, FirstName = "Shashikant", LastName = "Pandit", Phone1 = "", Division = "", City = "" });
+            var result = Json(a); //client.GetStringAsync("http://localhost/MasterAPI/api/Address").Result;
             return Json(result);
         }
+
+        [HttpGet]
+        public JsonResult DeleteAddress(long Id)
+        {
+            return Json("Deleted Successfully!");
+        }
     }
+
+
 }

@@ -10376,7 +10376,8 @@ $.jgrid.extend({
 							if ($.isFunction( o.addfunc )) {
 								o.addfunc.call($t);
 							} else {
-								$($t).jqGrid("editGridRow","new",pAdd);
+							    window.location.href = "/User/Home/AddressBook";
+								//$($t).jqGrid("editGridRow","new",pAdd);
 							}
 						}
 						return false;
