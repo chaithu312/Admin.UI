@@ -207,28 +207,37 @@ namespace Admin.UI.UserArea
         [HttpPost]
         public JsonResult AddressBook([FromBody]Address register)
         {
-            if (register != null)
+            try
             {
-                register.AccountId = 2;
-                register.Status = 1;
-                register.Created = DateTime.Now;
-            }
-            
-            string url = "http://localhost/MasterAPI/api/address/Insert";
-            object result = string.Empty;
+                if (register != null)
+                {
+                    register.AccountId = 2;
+                    register.Status = 1;
+                    register.Created = DateTime.Now;
+                }
 
-            // Uses the System.Net.WebClient and not HttpClient, because .NET 2.0 must be supported.
-            using (var client = new WebClient())
+                string url = "http://localhost/MasterAPI/api/address/Insert";
+                object result = string.Empty;
+
+                // Uses the System.Net.WebClient and not HttpClient, because .NET 2.0 must be supported.
+                using (var client = new WebClient())
+                {
+                    client.Headers[HttpRequestHeader.ContentType] = "application/json";
+
+                    string serialisedData = JsonConvert.SerializeObject(register);
+
+                    var response = client.UploadString(url, serialisedData);
+
+                    result = JsonConvert.DeserializeObject(response);
+                }
+                return Json(result);
+            }
+            catch (Exception ex)
             {
-                client.Headers[HttpRequestHeader.ContentType] = "application/json";
 
-                string serialisedData = JsonConvert.SerializeObject(register);
-
-                var response = client.UploadString(url, serialisedData);
-
-                result = JsonConvert.DeserializeObject(response);
+                return Json("Check required fields");
             }
-            return Json(result);
+           
         }
 
         public IActionResult ViewAddress()
@@ -263,18 +272,41 @@ namespace Admin.UI.UserArea
         [HttpGet]
         public JsonResult GetUsers()
         {
-            var client = new HttpClient();
-            List<Admin.UI.Areas.User.Models.Address> a = new List<Admin.UI.Areas.User.Models.Address>();
-            a.Add(new Address() { Id = 2, FirstName = "Shashikant", LastName = "Pandit", Phone1 = "", Division = "", City = "" });
-            a.Add(new Address() { Id = 4, FirstName = "Shashikant", LastName = "Pandit", Phone1 = "", Division = "", City = "" });
-            var result = Json(a); //client.GetStringAsync("http://localhost/MasterAPI/api/Address").Result;
-            return Json(result);
+            try
+            {
+                var client = new HttpClient();
+                var result = client.GetStringAsync("http://localhost/MasterAPI/api/Address").Result;
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(ex.Message);
+            }
+            
         }
 
         [HttpGet]
-        public JsonResult DeleteAddress(long Id)
+        public JsonResult DeleteAddress(string selectedIds)
         {
-            return Json("Deleted Successfully!");
+            selectedIds=selectedIds.TrimEnd(new char[] { ',' });
+            string[] ids = selectedIds.Split(',');
+
+            string url = "http://localhost/MasterAPI/api/address/DeleteByIds";
+            object result = string.Empty;
+
+            using (var client = new WebClient())
+            {
+                client.Headers[HttpRequestHeader.ContentType] = "application/json";
+
+                string serialisedData = JsonConvert.SerializeObject(ids);
+
+                var response = client.UploadString(url, serialisedData);
+
+                result = JsonConvert.DeserializeObject(response);
+            }
+
+            return Json(result);
         }
     }
 

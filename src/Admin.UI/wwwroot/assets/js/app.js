@@ -474,7 +474,9 @@ $('input[name=date-range-picker]').daterangepicker({
                     dataType: "json"
                 })
                 .success(function (data, status, headers, config) {
-                    alert(data);
+                    $scope.message = data;
+                    //alert(data);
+                    //window.location.href = "/User/Home/ViewAddress";
 
                 }).error(function (data, status, headers, config) {
                     alert(data);
@@ -597,13 +599,13 @@ $('input[name=date-range-picker]').daterangepicker({
                 $scope.message = str;
             }
             else {
-                //$scope.Users = JSON.parse(data);
-                $scope.Users = [{ Id: 2, FirstName: "SHASHIKANT", LastName: "Pandit", Phone1: "", EMail: "", Division: "", City: "" }
-                , { Id: 4, FirstName: "SHASHIKANT", LastName: "Pandit", Phone1: "", EMail: "", Division: "", City: "" }
-                , { Id: 3, FirstName: "Test", LastName: "Test", Phone1: "", EMail: "", Division: "", City: "" }];
+                $scope.Users = JSON.parse(data);
+                //$scope.Users = [{ Id: 2, FirstName: "SHASHIKANT", LastName: "Pandit", Phone1: "", EMail: "", Division: "", City: "" }
+                //, { Id: 4, FirstName: "SHASHIKANT", LastName: "Pandit", Phone1: "", EMail: "", Division: "", City: "" }];
                 //Starting binding of jqGrid
                 var grid_data = $scope.Users;
-
+                if ($scope.Users.length == 0)
+                    $scope.message = "No records to view";
 
                 jQuery(function ($) {
                     var grid_selector = "#grid-table";
@@ -624,7 +626,7 @@ $('input[name=date-range-picker]').daterangepicker({
                         }
                     })
                     var selectedRow = null;
-                    var deletingRow = null;
+                    //var deletingRow = null;
                     jQuery(grid_selector).jqGrid({
                         //direction: "rtl",
 
@@ -653,18 +655,12 @@ $('input[name=date-range-picker]').daterangepicker({
                             { name: 'City', index: 'City', width: 150, editoptions: { rows: "2", cols: "10" } }
                         ],
                         onSelectRow: function (id) {
-                            //$("#grid-table")
                             var data = null;
-                            data = $("#grid-table").find('tr[class*="ui-state-highlight"]');
-                            for (i = 1; i<=data.length; data.length)
-                            {
-                               var child= (data[i-1].childNodes)[1].innerHTML;
-                            }
-                            console.log($("#grid-table").find('tr[aria-selected="true"]'));
-                           
-                            deletingRow = this.rows[id];
-                            var row = $(this).getLocalRow(id);
-                            selectedRow = row;
+                            data = $(grid_selector).find('tr[class*="ui-state-highlight"]');
+                            //deletingRow = this.rows[id];
+                            //var row = $(this).getLocalRow(id);
+                            ////selectedRow = row;
+                            selectedRow = data;
                         },
                         viewrecords: true,
                         rowNum: 10,
@@ -827,16 +823,22 @@ $('input[name=date-range-picker]').daterangepicker({
                                 alert('Please select row to delete');
                             else {
                                 if (confirm("Are you sure to delete?")) {
+                                    var selectedIds = "";
+                                    for (i = 1; i <= selectedRow.length; i++) {
+                                        
+                                        selectedIds += (selectedRow[i - 1].childNodes)[1].innerHTML+",";
+                                    }
                                     //alert("Deleting Row Id :" + selectedRow.Id);
                                     $http({
                                         url: '/User/Home/DeleteAddress',
                                         method: "GET",
-                                        params: { Id: selectedRow.Id },
+                                        params: { selectedIds: selectedIds },
                                         contentType: "application/json;",
                                         dataType: "json"
                                     })
                                   .success(function (data, status, headers, config) {
-                                      deletingRow.remove();
+                                      //deletingRow.remove();
+                                      $(grid_selector).find('tr[class*="ui-state-highlight"]').remove();
                                       alert(data);
 
                                   }).error(function (data, status, headers, config) {

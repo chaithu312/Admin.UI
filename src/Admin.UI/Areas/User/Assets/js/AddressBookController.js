@@ -50,7 +50,9 @@
                     dataType: "json"
                 })
                 .success(function (data, status, headers, config) {
-                    alert(data);
+                    $scope.message = data;
+                    //alert(data);
+                    //window.location.href = "/User/Home/ViewAddress";
 
                 }).error(function (data, status, headers, config) {
                     alert(data);
