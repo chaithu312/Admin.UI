@@ -3,8 +3,8 @@
     app.controller('PickupRequestController', function ($scope, $http) {
         $scope.Contacts = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Account 1' }, { Id: 2, Name: 'Account 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
         $scope.Addresses = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
-        $scope.States = { Data: [{ Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }] };
-        $scope.Countries = { Data: [{ Id: 1, Name: 'Country 1' }, { Id: 2, Name: 'Country 2' }] };
+        //$scope.States = { Data: [{ Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }] };
+       // $scope.Countries = { Data: [{ Id: 1, Name: 'Country 1' }, { Id: 2, Name: 'Country 2' }] };
         $scope.Carriers = { Data: [{ Id: 1, Name: 'DHL' }, { Id: 2, Name: 'Endicia' }] };
 
         $scope.Pieces = {
@@ -35,63 +35,48 @@
         $scope.Destination = { Data: [{ Id: 1, Name: 'Domestic' }, { Id: 2, Name: 'International' }], selectedOption: { Id: 1, Name: 'Domestic' } };
         $scope.PickupAgent = { Data: [{ Id: 0, Name: 'Select...' }, { Id: 1, Name: 'DHL' }, { Id: 2, Name: 'Endicia' }, { Id: 3, Name: 'FedEx' }], selectedOption: { Id: 0, Name: 'Select...' } };
         $scope.PickupType = { Data: [{ Id: 0, Name: 'Package' }, { Id: 1, Name: 'Finance' }], selectedOption: { Id: 0, Name: 'Package' } };
+        //HTTP REQUEST BELOW
+        $http({
+            method: 'GET',
+            url: '/User/Home/Country',
+            // data: $scope.person,
+            headers: {
+                'RequestVerificationToken': $scope.antiForgeryToken
+            }
+        }).success(function (data, status, headers, config) {
+            $scope.message = '';
+            if (data.success == false) {
+                var str = '';
+                for (var error in data.errors) {
+                    str += data.errors[error] + '\n';
+                }
+                $scope.message = str;
+            }
+            else {
+                $scope.Country = JSON.parse(data);
+                //  $scope.message = 'Login Successfully';
+            }
+        }).error(function (data, status, headers, config) {
+            $scope.message = 'Unexpected Error';
+        });
 
-        $scope.sendForm = function () {
-            $scope.PickupRequestData = {
-                data: [{
-                    UseShipperAddress: 'false', Address: {
-                        Department: null, FirstName: $scope.PickupRequest.FirstName,
-                        MiddleName: null,
-                        LastName: $scope.PickupRequest.LastName,
-                        NamePrefix: null,
-                        NamePostfix: null,
-                        Name: $scope.PickupRequest.FirstName + ' ' + $scope.PickupRequest.LastName,
-                        Phone: $scope.PickupRequest.Phone,
-                        EMail: $scope.PickupRequest.EMail,
-                        Address1: $scope.PickupRequest.Address1,
-                        Address2: $scope.PickupRequest.Address2,
-                        Address3: $scope.PickupRequest.Address3,
-                        City: $scope.PickupRequest.City,
-                        PostalCode: $scope.PickupRequest.PostalCode,
-                        DivisionName: $scope.PickupRequest.Division,
-                        DivisionCode: $scope.PickupRequest.DivisionCode,
-                        CountryName: $scope.PickupRequest.CountryName,
-                        CountryCode: $scope.PickupRequest.CountryCode,
-                        Division: null,
-                        State: $scope.PickupRequest.State,
-                        IsResidential: $scope.PickupRequest.IsResidential,
-                        IsRemoteArea: $scope.PickupRequest.IsRemoteArea,
-                        LocationType: "B",
-                        PackageLocation: $scope.PickupRequest.PackageLocation
-                    },
-                    ReadyBy: '0001-01-01T00:00:00',
-                    NoLaterThan: '0001-01-01T00:00:00',
-                    Instructions: null,
-                    IsHeavy: $scope.PickupRequest.IsHeavy,
-                    IsBulky: $scope.PickupRequest.IsBulky,
-                    ConfirmationNumber: null,
-                    OriginSvcArea: null,
-                    CancelReason: null,
-                    RegionCode: $scope.PickupRequest.RegionCode,
-                    RequestorName: $scope.PickupRequest.FirstName + ' ' + $scope.PickupRequest.LastName,
-                    RequestorAccountType: 'D',
-                    RequestorPhone: $scope.PickupRequest.Phone,
-                    AccountType: 'D',
-                    RequestorAccountNumber: '803921577',
-                    Date: $scope.PickupRequest.Date,
-                    ReadyByTime: $scope.PickupRequest.ReadyByTime,
-                    CloseTime: $scope.PickupRequest.CloseTime,
-                    Weight: 10,
-                    WeightUnit: 'L',
-                    AWBNumber: '7520067111',
-                }]
-            };
+        //Getting selected Country Code and Country Name
+        $scope.GetValue = function (country) {
+            var countryId = $scope.pickupRequest.CountryId;
+
+            var CountryName = $.grep($scope.Country, function (country) {
+                return country.Id == countryId;
+            })[0].Name;
+            $scope.SelectedCountry = {};
+            $scope.SelectedCountry.Id = countryId;
+            $scope.SelectedCountry.Name = CountryName;
+            //Getting States list using HTTP Request from controller
 
             $http({
-                method: 'POST',
-
-                url: '192.168.1.241/shipping/dhl/pickup',
-                data: $scope.PickupRequestData,
+                method: 'GET',
+                url: '/User/Home/State',
+                //data: $scope.SelectedCountry.CountryCode,
+                params: { countryId: $scope.pickupRequest.CountryId },
                 headers: {
                     'RequestVerificationToken': $scope.antiForgeryToken
                 }
@@ -105,19 +90,24 @@
                     $scope.message = str;
                 }
                 else {
-                    $scope.message = 'Saved Successfully';
-                    $scope.person = {};
+                    $scope.States = JSON.parse(data);
+                    //  $scope.message = 'Login Successfully';
                 }
             }).error(function (data, status, headers, config) {
                 $scope.message = 'Unexpected Error';
             });
 
+            //Ends here getting request of Http for getting states;
+
+        }
+        //Ends here getting country detail
+
+        $scope.sendForm = function () {
             //$.ajax({
             //    url: '/Shipment/PickupRequest',
-            //    async: false,
             //    type: "POST",
             //    dataType: "json",
-            //    data: $scope.PickupRequest,
+            //    data: JSON.stringify($scope.PickupRequest),
             //    success: function (result) {
             //        JSON.parse(result);
             //    },
@@ -125,6 +115,22 @@
             //        console.log(xhr);
             //    }
             //})
+
+            $http({
+                url: '/Shipment/PickupRequest',
+                method: "POST",
+                data: JSON.stringify($scope.pickupRequest),
+                contentType: "application/json;",
+                dataType: "json"
+            })
+                .success(function (data, status, headers, config) {
+                    $scope.message = data;
+                    //alert(data);
+                    //window.location.href = "/User/Home/ViewAddress";
+
+                }).error(function (data, status, headers, config) {
+                    alert(data);
+                });
         };
 
         //$scope.sendForm = function () {

@@ -24,12 +24,13 @@ namespace Admin.UI.Controllers
                 //Child Navigation
                 new Navigation { Id = 5, Title = "AWB with Price", ParentId = 2, Type = "", NavURL = "/Shipment/AWBwithPrice" },
                 new Navigation { Id = 6, Title = "Pickup Request ", ParentId = 2, Type = "", NavURL = "/Shipment/PickUpRequest" },
-                new Navigation { Id = 7, Title = "Tracking", ParentId = 2, Type = "", NavURL = "/Shipment/Tracking" } ,
+                new Navigation { Id = 7, Title = "View Pickup", ParentId = 2, Type = "", NavURL = "/Shipment/ViewPickup" },
+                new Navigation { Id = 8, Title = "Tracking", ParentId = 2, Type = "", NavURL = "/Shipment/Tracking" } ,
 
-                new Navigation { Id = 8, Title = "Create User", ParentId = 3, Type = "", NavURL = "/User" },
-                new Navigation { Id = 9, Title = "View User ", ParentId = 3, Type = "", NavURL = "/User/List" },
-                new Navigation { Id = 10, Title = "AddressBook", ParentId = 3, Type = "", NavURL = "/User/AddressBook" },
-                new Navigation { Id = 11, Title = "View Address", ParentId = 3, Type = "", NavURL = "/User/ViewAddress" }
+                new Navigation { Id = 9, Title = "Create User", ParentId = 3, Type = "", NavURL = "/User" },
+                new Navigation { Id = 10, Title = "View User ", ParentId = 3, Type = "", NavURL = "/User/List" },
+                new Navigation { Id = 11, Title = "AddressBook", ParentId = 3, Type = "", NavURL = "/User/AddressBook" },
+                new Navigation { Id = 12, Title = "View Address", ParentId = 3, Type = "", NavURL = "/User/ViewAddress" }
             };
         }
     }

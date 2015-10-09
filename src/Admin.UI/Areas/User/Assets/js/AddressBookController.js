@@ -107,7 +107,7 @@
     });
     var PHONE_REGEXP = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
     
-    validationApp.directive('phone', ['$http', function ($http) {
+    validationApp.directive('postalcode', ['$http', function ($http) {
         return {
             restrice: 'A',
             require: 'ngModel',

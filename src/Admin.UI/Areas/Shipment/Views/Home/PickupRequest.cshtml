@@ -11,316 +11,323 @@
             <div class="widget-main pikupRequestDetail">
                 <form class="form-inline" name="PickupForm" data-ng-submit="sendForm()" data-ng-controller="PickupRequestController" novalidate>
                     <div id="errorMessages" class="error">{{message}}</div>
-                    <div id="frm">
-                        <div class="widget-box">
-                            <div class="widget-header">
-                                <h5 class="widget-title">Step 1 : Pickup Location</h5>
-                            </div>
-                            <div class="widget-body1">
-                                <div class="widget-main">
 
-                                    <div>
-                                        <label for="form-field-mask-1" class="col-sm-3 marTopNone">
-                                            <span class="error" data-ng-show="PickupForm.contactName.$error.required">*</span>Contact Name
-                                        </label>
-                                        <!-- #section:plugins/input.masked-input -->
-                                        <div class="input-group col-sm-8">
-                                            <input type="text" class="form-control" id="contactName" name="contactName" data-ng-model="PickupRequest.ContactName" required>
-                                        </div>
-                                    </div>
-                                    <div style="clear:both;height:5px;"></div>
-                                    <div>
-                                        <label for="form-field-mask-1" class="col-sm-3">
-                                            <span class="error" data-ng-show="PickupForm.phone.$error.required">*</span>Phone
-                                        </label>
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h5 class="widget-title">Step 1 : Pickup Location</h5>
+                        </div>
+                        <div class="widget-body1">
+                            <div class="widget-main">
 
-                                        <div class="input-group col-sm-8">
-                                            <input type="text" class="form-control" placeholder="" id="phone" name="phone" data-ng-model="PickupRequest.Phone" required>
-                                        </div>
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3 marTopNone">
+                                        <span class="error" data-ng-show="PickupForm.contactName.$error.required">*</span>Contact Name
+                                    </label>
+                                    <!-- #section:plugins/input.masked-input -->
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" class="form-control" id="contactName" name="contactName" data-ng-model="pickupRequest.ContactName" required checkme>
                                     </div>
-                                    <div style="clear:both;height:5px;"></div>
-                                    <div>
-                                        <label for="form-field-mask-1" class="col-sm-3">
-                                            Address
-                                        </label>
+                                </div>
+                                <div style="clear:both;height:5px;"></div>
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <span class="error" data-ng-show="PickupForm.phone.$error.required">*</span>Phone
+                                    </label>
 
-                                        <div class="input-group col-sm-8">
-                                            <select id="" class="form-control" data-ng-model="Addresses.selectedOption"
-                                                    data-ng-options="address.Name for address in Addresses.Data track by address.Id"></select>
-                                        </div>
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" class="form-control" placeholder="" id="phone" name="phone" data-ng-model="pickupRequest.Phone" required>
                                     </div>
-                                    <div style="clear:both;height:5px;"></div>
-                                    <div>
-                                        <label for="form-field-mask-1" class="col-sm-3">
-                                            <span class="error" data-ng-show="PickupForm.address.$error.required"></span>Address Line 1
-                                            <div style="height:15px;clear:both"></div>
-                                            <span class="error" data-ng-show="PickupForm.address.$error.required"></span>Address Line 2
-                                        </label>
+                                </div>
+                                <div style="clear:both;height:5px;"></div>
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        Address
+                                    </label>
 
-                                        <!-- #section:plugins/input.masked-input -->
-                                        <div class="input-group col-sm-8">
-                                            <input type="text" class="form-control" placeholder="" id="addressLine1" name="addressLine1" data-ng-model="PickupRequest.AddressLine1" required>
-                                            <div style="height:5px;clear:both"></div>
-                                            <input type="text" class="form-control" placeholder="" id="addressLine2" name="addressLine2" data-ng-model="Addresses.AddressLine2">
-                                        </div>
+                                    <div class="input-group col-sm-8">
+                                        <select id="AddressType" class="form-control" data-ng-model="pickupRequest.AddressType"
+                                                data-ng-options="address.Name for address in Addresses.Data track by address.Id"></select>
                                     </div>
-                                    <div style="clear:both;height:5px;"></div>
-                                    <div>
-                                        <label for="form-field-mask-1" class="col-sm-3">
-                                            <span class="error" data-ng-show="PickupForm.city.$error.required">*</span>City
-                                        </label>
-                                        <!-- #section:plugins/input.masked-input -->
-                                        <div class="input-group col-sm-8">
-                                            <input type="text" class="form-control" placeholder="" id="city" name="city" data-ng-model="PickupRequest.City" required>
-                                        </div>
-                                    </div>
-                                    <div style="clear:both;height:5px;"></div>
-                                    <div>
-                                        <label for="form-field-mask-1" class="col-sm-3">
-                                            <span class="error" data-ng-show="PickupForm.ddlState.$error.required">*</span>State
-                                        </label>
-                                        <!-- #section:plugins/input.masked-input -->
-                                        <div class="input-group col-sm-8">
-                                            <select id="ddlState" class="form-control" data-ng-model="States.selectedOption" name="ddlState"
-                                                    data-ng-options="state.Name for state in States.Data track by state.Id" required></select>
-                                        </div>
-                                    </div>
-                                    <div style="clear:both;height:5px;"></div>
-                                    <div>
-                                        <label for="form-field-mask-1" class="col-sm-3">
-                                            <span class="error" data-ng-show="PickupForm.zipCode.$error.required">*</span>Zip Code
-                                        </label>
-                                        <!-- #section:plugins/input.masked-input -->
-                                        <div class="input-group col-sm-8">
-                                            <input type="text" class="form-control" placeholder="" id="zipCode" name="zipCode" data-ng-model="PickupRequest.ZipCode" required>
-                                        </div>
-                                    </div>
-                                    <div style="clear:both;height:5px;"></div>
-                                    <div>
-                                        <label for="form-field-mask-1" class="col-sm-3">
-                                            <span class="error" data-ng-show="PickupForm.ddlCountry.$error.required">*</span> Country
-                                        </label>
-                                        <!-- #section:plugins/input.masked-input -->
-                                        <div class="input-group col-sm-8">
-                                            <select id="ddlCountry" class="form-control" data-ng-model="Countries.selectedOption" name="ddlCountry"
-                                                    data-ng-options="country.Name for country in Countries.Data track by country.Id" required></select>
-                                        </div>
-                                    </div>
-                                    <div style="clear:both;height:5px;"></div>
-                                    <div>
-                                        <label for="form-field-mask-1" class="col-sm-3">Address Notes</label>
-                                        <!-- #section:plugins/input.masked-input -->
-                                        <div class="input-group col-sm-8">
-                                            <textarea placeholder="Floor / Doorbell etc" id="form-field-8" class="form-control" data-ng-model="PickupRequest.AddressNotes"></textarea>
-                                        </div>
-                                    </div>
+                                </div>
+                                <div style="clear:both;height:5px;"></div>
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <span class="error" data-ng-show="PickupForm.address.$error.required"></span>Address Line 1
+                                        <div style="height:15px;clear:both"></div>
+                                        <span class="error" data-ng-show="PickupForm.address.$error.required"></span>Address Line 2
+                                    </label>
 
-                                    <div style="clear:both;height:5px;"></div>
-                                    <div>
-                                        <label for="form-field-mask-1" class="col-sm-3">Is Residential?</label>
-                                        <!-- #section:plugins/input.masked-input -->
-                                        <div class="input-group col-sm-8">
-                                            <input type="checkbox" id="heavy" data-ng-model="PickupRequest.IsResidential" />
-                                        </div>
+                                    <!-- #section:plugins/input.masked-input -->
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" class="form-control" placeholder="" id="addressLine1" name="addressLine1" data-ng-model="pickupRequest.Address1" required>
+                                        <div style="height:5px;clear:both"></div>
+                                        <input type="text" class="form-control" placeholder="" id="addressLine2" name="addressLine2" data-ng-model="pickupRequest.Address2">
+                                    </div>
+                                </div>
+                                <div style="clear:both;height:5px;"></div>
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <span class="error" data-ng-show="PickupForm.city.$error.required">*</span>City
+                                    </label>
+                                    <!-- #section:plugins/input.masked-input -->
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" class="form-control" placeholder="" id="city" name="city" data-ng-model="pickupRequest.City" required>
+                                    </div>
+                                </div>
+                                <div style="clear:both;height:5px;"></div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <span class="error" data-ng-show="PickupForm.ddlCountry.$error.required">*</span> Country
+                                    </label>
+                                    <!-- #section:plugins/input.masked-input -->
+                                    <div class="input-group col-sm-8">
+                                        <select id="ddlCountry" class="form-control" data-ng-model="pickupRequest.CountryId" name="ddlCountry"
+                                                 data-ng-options="country.Id as country.Name for country in Country track by country.Id" data-ng-change="GetValue()" required></select>
+                                    </div>
+                                </div>
+                                
+                                <div style="clear:both;height:5px;"></div>
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <span class="error" data-ng-show="PickupForm.zipCode.$error.required">*</span>Zip Code
+                                    </label>
+                                    <!-- #section:plugins/input.masked-input -->
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" class="form-control" placeholder="" id="zipCode" name="zipCode" data-ng-model="pickupRequest.ZipCode" required>
+                                    </div>
+                                </div>
+                                <div style="clear:both;height:5px;"></div>
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <span class="error" data-ng-show="PickupForm.ddlState.$error.required">*</span>Division
+                                    </label>
+                                    <!-- #section:plugins/input.masked-input -->
+                                    <div class="input-group col-sm-8">
+                                        @*<select id="ddlState" class="form-control" data-ng-model="States.State" name="ddlState"
+                                                data-ng-options="state.Name for state in States.Data track by state.Id" required></select>*@
+
+
+                                        <select id="ddlState" class="form-control" data-ng-model="pickupRequest.Division" name="ddlState"
+                                                data-ng-options="state.Name as state.Name for state in States track by state.Id" required></select>
+
+                                    </div>
+                                </div>
+                                <div style="clear:both;height:5px;"></div>
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">Address Notes</label>
+                                    <!-- #section:plugins/input.masked-input -->
+                                    <div class="input-group col-sm-8">
+                                        <textarea placeholder="Floor / Doorbell etc" id="form-field-8" class="form-control" data-ng-model="pickupRequest.AddressNotes"></textarea>
+                                    </div>
+                                </div>
+
+                                <div style="clear:both;height:5px;"></div>
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">Is Residential?</label>
+                                    <!-- #section:plugins/input.masked-input -->
+                                    <div class="input-group col-sm-8">
+                                        <input type="checkbox" id="heavy" data-ng-model="pickupRequest.isResidential" />
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="widget-header">
-                                <h5 class="widget-title">Step 2 : Package and Service Information</h5>
-                            </div>
-                            <div class="widget-body1">
-                                <div class="widget-main">
-                                    <div class="widget-header">
-                                        <div class="row">
+                        <div class="widget-header">
+                            <h5 class="widget-title">Step 2 : Package and Service Information</h5>
+                        </div>
+                        <div class="widget-body1">
+                            <div class="widget-main">
+                                <div class="widget-header">
+                                    <div class="row">
 
-                                            <div class="col-xs-12 col-sm-6">
-                                                <div>
-                                                    <label for="form-field-mask-1" class="col-sm-3">
-                                                        Carrier
-                                                    </label>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div>
+                                                <label for="form-field-mask-1" class="col-sm-3">
+                                                    Carrier
+                                                </label>
 
-                                                    <div class="input-group col-sm-8">
-                                                        <select id="ddlCarrier" class="form-control" data-ng-model="Carriers.selectedOption" name="ddlCarrier"
-                                                                data-ng-options="carrier.Name for carrier in Carriers.Data track by carrier.Id" required></select>
-                                                    </div>
+                                                <div class="input-group col-sm-8">
+                                                    <select id="ddlCarrier" class="form-control" data-ng-model="pickupRequest.Carrier" name="ddlCarrier"
+                                                            data-ng-options="carrier.Id as carrier.Name for carrier in Carriers.Data track by carrier.Id" required></select>
+                                                    country.Id as country.Name for country in Country track by country.Id
                                                 </div>
-                                                <div style="clear:both;height:5px;"></div>
-                                                <div>
-                                                    <label for="form-field-mask-1" class="col-sm-3">
-                                                        Pickup From
-                                                    </label>
+                                            </div>
+                                            <div style="clear:both;height:5px;"></div>
+                                            <div>
+                                                <label for="form-field-mask-1" class="col-sm-3">
+                                                    Pickup From
+                                                </label>
 
-                                                    <div class="input-group col-sm-8">
-                                                        <input type="text" class="form-control" placeholder="" id="pickupfrom">
-                                                    </div>
+                                                <div class="input-group col-sm-8">
+                                                    <input type="text" class="form-control" placeholder="" id="pickupfrom" data-ng-model="pickupRequest.PickupFrom">
                                                 </div>
-                                                <div style="clear:both;height:5px;"></div>
-                                                <div>
-                                                    <label for="form-field-mask-1" class="col-sm-3">
-                                                        <span class="error" data-ng-show="PickupForm.datepicker.$error.required">*</span>  Pickup Date
-                                                    </label>
+                                            </div>
+                                            <div style="clear:both;height:5px;"></div>
+                                            <div>
+                                                <label for="form-field-mask-1" class="col-sm-3">
+                                                    <span class="error" data-ng-show="PickupForm.datepicker.$error.required">*</span>  Pickup Date
+                                                </label>
 
-                                                    <div class="input-group col-sm-8">
-                                                        <input type="text" data-date-format="dd-mm-yyyy" id="datepicker" class="form-control date-picker" required>
-                                                        <span class="input-group-addon">
-                                                            <i class="fa fa-calendar bigger-110"></i>
+                                                <div class="input-group col-sm-8">
+                                                    <input type="text" data-date-format="dd-mm-yyyy" id="datepicker" data-ng-model="pickupRequest.PickupDate" class="form-control date-picker" required>
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar bigger-110"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div style="clear:both;height:5px;"></div>
+                                            <div>
+                                                <label for="form-field-mask-1" class="col-sm-3">
+                                                    Destination
+                                                </label>
+                                                <!-- #section:plugins/input.masked-input -->
+                                                <div class="input-group col-sm-8">
+                                                    <select id="ddldestination" class="form-control" data-ng-model="pickupRequest.Destination" name="ddldestination"
+                                                            data-ng-options="destination.Name for destination in Destination.Data track by destination.Id" required></select>
+                                                </div>
+                                            </div>
+                                            <div style="clear:both;height:5px;"></div>
+                                            <div>
+                                                <label for="form-field-mask-1" class="col-sm-3">
+                                                    Is Heavy or Bulky?
+                                                </label>
+                                                <!-- #section:plugins/input.masked-input -->
+                                                <div class="input-group col-sm-8">
+                                                    <input type="checkbox" id="heavy" data-ng-model="pickupRequest.isHeavy" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div>
+                                                <label class="col-sm-3">
+                                                    <div class="input-group col-sm-8"><span class="error" data-ng-show="PickupForm.timepicker2.$error.required">*</span> Ready Time</div>
+                                                </label>
+                                                <!-- #section:plugins/input.masked-input -->
+                                                <div class="input-group col-sm-8">
+                                                    <div class="bootstrap-timepicker">
+                                                        <input type="text" class="form-control" data-ng-model="pickupRequest.ReadyTime" data-format="hh:mm:ss" id="timepicker2" required>
+                                                        <span class="input-group-addon" style="padding:8px 12px 9px 12px;">
+                                                            <i class="fa fa-clock-o bigger-110"></i>
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <div style="clear:both;height:5px;"></div>
-                                                <div>
-                                                    <label for="form-field-mask-1" class="col-sm-3">
-                                                        Destination
-                                                    </label>
-                                                    <!-- #section:plugins/input.masked-input -->
-                                                    <div class="input-group col-sm-8">
-                                                        <select id="ddldestination" class="form-control" data-ng-model="Destination.selectedOption" name="ddldestination"
-                                                                data-ng-options="destination.Name for destination in Destination.Data track by destination.Id" required></select>
-                                                    </div>
-                                                </div>
-                                                <div style="clear:both;height:5px;"></div>
-                                                <div>
-                                                    <label for="form-field-mask-1" class="col-sm-3">
-                                                        Is Heavy or Bulky?
-                                                    </label>
-                                                    <!-- #section:plugins/input.masked-input -->
-                                                    <div class="input-group col-sm-8">
-                                                        <input type="checkbox" id="heavy" />
+                                            </div>
+                                            <div style="clear:both;height:5px;"></div>
+                                            <div>
+                                                <label class="col-sm-3"><span class="error" data-ng-show="PickupForm.timepicker1.$error.required">*</span>Last Available Time</label>
+                                                <!-- #section:plugins/input.masked-input -->
+                                                <div class="input-group col-sm-8">
+                                                    <div class="bootstrap-timepicker">
+                                                        <input type="text" class="form-control" data-ng-model="pickupRequest.AvailableTime" id="timepicker1" required>
+                                                        <span class="input-group-addon" style="padding:8px 12px 9px 12px;">
+                                                            <i class="fa fa-clock-o bigger-110"></i>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-xs-12 col-sm-6">
-                                                <div>
-                                                    <label class="col-sm-3">
-                                                        <div class="input-group col-sm-8"><span class="error" data-ng-show="PickupForm.timepicker2.$error.required">*</span> Ready Time</div>
-                                                    </label>
-                                                    <!-- #section:plugins/input.masked-input -->
-                                                    <div class="input-group col-sm-8">
-                                                        <div class="bootstrap-timepicker">
-                                                            <input type="text" class="form-control" data-format="hh:mm:ss" id="timepicker2" required>
-                                                            <span class="input-group-addon" style="padding:8px 12px 9px 12px;">
-                                                                <i class="fa fa-clock-o bigger-110"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div style="clear:both;height:5px;"></div>
-                                                <div>
-                                                    <label class="col-sm-3"><span class="error" data-ng-show="PickupForm.timepicker1.$error.required">*</span>Last Available Time</label>
-                                                    <!-- #section:plugins/input.masked-input -->
-                                                    <div class="input-group col-sm-8">
-                                                        <div class="bootstrap-timepicker">
-                                                            <input type="text" class="form-control" id="timepicker1" required>
-                                                            <span class="input-group-addon" style="padding:8px 12px 9px 12px;">
-                                                                <i class="fa fa-clock-o bigger-110"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div style="clear:both;height:5px;"></div>
-                                                <div>
-                                                    <label for="form-field-mask-1" class="col-sm-3">
-                                                        <span class="error" data-ng-show="PickupForm.totalpieces.$error.required">*</span> Total Pieces
-                                                    </label>
+                                            <div style="clear:both;height:5px;"></div>
+                                            <div>
+                                                <label for="form-field-mask-1" class="col-sm-3">
+                                                    <span class="error" data-ng-show="PickupForm.totalpieces.$error.required">*</span> Total Pieces
+                                                </label>
 
-                                                    <div class="input-group col-sm-8">
-                                                        <input type="text" class="form-control" placeholder="" id="pickupfrom" data-ng-model="PickupRequest.TotalPieces">
-                                                    </div>
+                                                <div class="input-group col-sm-8">
+                                                    <input type="text" class="form-control" placeholder="" id="pickupfrom" data-ng-model="pickupRequest.TotalPieces">
                                                 </div>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <label for="form-field-mask-1" class="col-sm-3">
-                                                Additionals Instructions
-                                            </label>
-                                            <!-- #section:plugins/input.masked-input -->
-                                            <div class="input-group col-sm-8">
-                                                <textarea placeholder="Default Text" id="form-field-8" class="form-control" data-ng-model="PickupRequest.Notes"></textarea>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
 
-                            <div class="widget-header">
-                                <h5 class="widget-title">Step 3 : Pickup Notification</h5>
-                                <div class="widget-toolbar">
-                                    <a data-action="collapse" href="#">
-                                        click to show
-                                        <i class="ace-icon fa fa-chevron-up"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="widget-body" style="display:none">
-                                <div class="widget-main">
-                                    <div class="widget-header">
-                                        <div class="row">
-
-                                            <div class="col-xs-12 col-sm-6">
-                                                <div>
-                                                    <label for="form-field-mask-1" class="col-sm-3">
-                                                        Mobile Numbers
-                                                    </label>
-
-                                                    <div class="input-group col-sm-8">
-                                                        <input type="text" class="form-control" placeholder="" id="Mobile">
-                                                    </div>
-                                                </div>
-                                                <div style="clear:both"></div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-6">
-                                                <div>
-                                                    <label for="timepicker1" class="col-sm-3">Emails</label>
-                                                    <!-- #section:plugins/input.masked-input -->
-                                                    <div class="input-group col-sm-8">
-                                                        <input type="text" class="form-control" placeholder="" id="Email">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-xs-12 col-sm-6">
-                                                <div>
-                                                    <label for="form-field-mask-1" class="col-sm-3">
-                                                        your email
-                                                    </label>
-
-                                                    <div class="input-group col-sm-8">
-                                                        <input type="text" class="form-control" placeholder="" name="yourEmail" id="yourEmail">
-                                                    </div>
-                                                </div>
-                                                <div style="clear:both"></div>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <label for="form-field-mask-1" class="col-sm-3">
-                                                personalized messages
-                                            </label>
-                                            <!-- #section:plugins/input.masked-input -->
-                                            <div class="input-group col-sm-8">
-                                                <textarea placeholder="Default Text" id="form-field-8" class="form-control" data-ng-model="PickupRequest.Notes"></textarea>
-                                            </div>
+                                    <div>
+                                        <label for="form-field-mask-1" class="col-sm-3">
+                                            Additionals Instructions
+                                        </label>
+                                        <!-- #section:plugins/input.masked-input -->
+                                        <div class="input-group col-sm-8">
+                                            <textarea placeholder="Default Text" id="form-field-8" class="form-control" data-ng-model="pickupRequest.AdditionalsInstructions"></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="clearfix form-actions" style="margin-bottom:0px;">
-                            <div class="text-right">
-                                <button type="submit" class="btn btn-info">
-                                    <i class="ace-icon fa fa-check bigger-110"></i>
-                                    Save
-                                </button>
 
-                                <button type="reset" class="btn">
-                                    <i class="ace-icon fa fa-undo bigger-110"></i>
-                                    New
-                                </button>
+                        <div class="widget-header">
+                            <h5 class="widget-title">Step 3 : Pickup Notification</h5>
+                            <div class="widget-toolbar">
+                                <a data-action="collapse" href="#">
+                                    click to show
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
                             </div>
+                        </div>
+                        <div class="widget-body" style="display:none">
+                            <div class="widget-main">
+                                <div class="widget-header">
+                                    <div class="row">
+
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div>
+                                                <label for="form-field-mask-1" class="col-sm-3">
+                                                    Mobile Numbers
+                                                </label>
+
+                                                <div class="input-group col-sm-8">
+                                                    <input type="text" class="form-control" data-ng-model="pickupRequest.PickUpNotificationMobile" placeholder="" id="Mobile">
+                                                </div>
+                                            </div>
+                                            <div style="clear:both"></div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div>
+                                                <label for="timepicker1" class="col-sm-3">Emails</label>
+                                                <!-- #section:plugins/input.masked-input -->
+                                                <div class="input-group col-sm-8">
+                                                    <input type="text" class="form-control" data-ng-model="pickupRequest.PickUpNotificationEmail" placeholder="" id="Email">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div>
+                                                <label for="form-field-mask-1" class="col-sm-3">
+                                                    your email
+                                                </label>
+
+                                                <div class="input-group col-sm-8">
+                                                    <input type="text" class="form-control" data-ng-model="pickupRequest.PickUpNotificationYourEmail" placeholder="" name="yourEmail" id="yourEmail">
+                                                </div>
+                                            </div>
+                                            <div style="clear:both"></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="form-field-mask-1" class="col-sm-3">
+                                            personalized messages
+                                        </label>
+                                        <!-- #section:plugins/input.masked-input -->
+                                        <div class="input-group col-sm-8">
+                                            <textarea placeholder="Default Text" id="form-field-8" class="form-control" data-ng-model="pickupRequest.PickUpNotificationPersonalizedMessage"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix form-actions" style="margin-bottom:0px;">
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-info">
+                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                Save
+                            </button>
+
+                            <button type="reset" class="btn">
+                                <i class="ace-icon fa fa-undo bigger-110"></i>
+                                New
+                            </button>
                         </div>
                     </div>
                 </form>

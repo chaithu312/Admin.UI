@@ -13,5 +13,6 @@ namespace Admin.UI
 
         public const string clientSecret = "262148";
         public const string clientScope = "read write";
+        public const string ShippingURL = "http://localhost:49200/";
     }
 }

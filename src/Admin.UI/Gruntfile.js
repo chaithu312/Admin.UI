@@ -55,7 +55,9 @@
                         'Areas/Shipment/Assets/js/PickupRequestController.js',
                         'Areas/Shipment/Assets/js/TrackingRequestController.js',
                         'Areas/User/Assets/js/AddressBookController.js',
-                        'Areas/User/Assets/js/ViewAddress.js'
+                        'Areas/User/Assets/js/ViewAddressController.js',
+                        'Areas/Shipment/Assets/js/ViewPickupController.js'
+                        
 
                     ],
                     'wwwroot/assets/js/DataTable.js': ['Assets/ace/js/dataTables/jquery.dataTables.js',
