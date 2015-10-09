@@ -423,6 +423,11 @@ $('input[name=date-range-picker]').daterangepicker({
     });
 })();
 (function () {
+    var app = angular.module('mainApp');
+    app.controller('vendorController', function ($scope, $http) {
+    })
+})();
+(function () {
     var validationApp = angular.module('mainApp');
     
     // create angular controller

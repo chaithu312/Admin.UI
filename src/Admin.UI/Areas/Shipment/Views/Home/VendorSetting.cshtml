@@ -1,0 +1,173 @@
+﻿@{
+
+    Layout = "~/Views/shared/_layout.cshtml";
+}
+<div class="col-sm-7">
+    <div class="widget-box">
+        <div class="widget-header">
+            <h4 class="widget-title">Vendor Account Settings</h4>
+        </div>
+        <div class="widget-body">
+            <div class="widget-main">
+                <form name="mainForm" data-ng-submit="sendForm()" data-ng-controller="vendorController" novalidate>
+                    <div id="errorMessages" class="error">{{message}}</div>
+                    <div>
+                        <label for="form-field-mask-1" class="col-sm-3">
+                            <label for="nickName">Nick Name</label>
+                        </label>
+
+                        <div class="input-group col-sm-8">
+                            <input id="nickName" class="form-control" name="userName" type="text" data-ng-model="vendor.nickName" required ng-unique validate-email />
+                            <span class="error" data-ng-show="mainForm.nickName.$error.required"></span>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div>
+                        <label for="form-field-mask-1" class="col-sm-3">
+                            <label for="carrier">Carrier</label>
+                        </label>
+
+                        <div class="input-group col-sm-8">
+                            <select name="type" ng-model="vendor.type" ng-dropdown required>
+                                <option ng-option value="DHL">DHL</option>
+                                <option ng-option value="Endicia">Endicia</option>
+                                <option ng-option value="FedEx">FedEx</option>
+                                <option ng-option value="UPS">UPS</option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="widget-header">
+                        <h5 class="widget-title">{{vendor.type}} Configuration Setting</h5>
+                    </div>
+                    <div class="widget-body" id="DHL" ng-if="vendor.type == 'DHL'">
+                        <div class="widget-main">
+                            <div>
+                                <label for="form-field-mask-1" class="col-sm-3">
+                                    <label for="thirdPartyAcc">Third Party Account#</label>
+                                </label>
+
+                                <div class="input-group col-sm-8">
+                                    <input id="DHLAcc" class="form-control" name="DHLAcc" type="number" data-ng-model="vendor.DHLAcc" required />
+                                    <span class="error" data-ng-show="mainForm.DHLAcc.$error.required"></span>
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+                    </div>
+
+                    <div class="widget-body" id="Endicia" ng-if="vendor.type == 'Endicia'">
+                        <div class="widget-main">
+                            <div>
+                                <label for="form-field-mask-1" class="col-sm-3">
+                                    <label for="thirdPartyAcc"> Account#</label>
+                                </label>
+
+                                <div class="input-group col-sm-8">
+                                    <input id="EndiciaAcc" class="form-control" name="EndiciaAcc" type="number" data-ng-model="vendor.EndiciaAcc" required />
+                                    <span class="error" data-ng-show="mainForm.EndiciaAcc.$error.required"></span>
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="widget-body" id="FedEx" ng-if="vendor.type == 'FedEx'">
+                        <div class="widget-main">
+                            <div>
+                                <label for="form-field-mask-1" class="col-sm-3">
+                                    <label for="thirdPartyAcc">Account#</label>
+                                </label>
+
+                                <div class="input-group col-sm-8">
+                                    <input id="FedexAcc" class="form-control" name="FedexAcc" type="number" data-ng-model="vendor.FedexAcc" required />
+                                    <span class="error" data-ng-show="mainForm.FedexAcc.$error.required"></span>
+                                </div>
+                            </div>
+                            <hr />
+                            <div>
+                                <label for="form-field-mask-1" class="col-sm-3">
+                                    <label for="thirdPartyAcc">Meter#</label>
+                                </label>
+
+                                <div class="input-group col-sm-8">
+                                    <input id="FedexMeter" class="form-control" name="FedexMeter" type="number" data-ng-model="vendor.FedexMeter" required />
+                                    <span class="error" data-ng-show="mainForm.FedexMeter.$error.required"></span>
+                                </div>
+                            </div>
+                            <hr />
+                            <div>
+                                <label for="form-field-mask-1" class="col-sm-3">
+                                    <label for="thirdPartyAcc">Billing (Payment) Account#</label>
+                                </label>
+
+                                <div class="input-group col-sm-8">
+                                    <input id="FedexPayAcc" class="form-control" name="FedexPayAcc" type="number" data-ng-model="vendor.FedexPayAcc" required />
+                                    <span class="error" data-ng-show="mainForm.FedexPayAcc.$error.required"></span>
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="widget-body" id="UPS" ng-if="vendor.type == 'UPS'">
+                        <div class="widget-main">
+                            <div>
+                                <label for="form-field-mask-1" class="col-sm-3">
+                                    <label for="thirdPartyAcc">License#</label>
+                                </label>
+
+                                <div class="input-group col-sm-8">
+                                    <input id="UPSLicenseNo" class="form-control" name="UPSLicenseNo" type="number" data-ng-model="vendor.UPSLicenseNo" required />
+                                    <span class="error" data-ng-show="mainForm.UPSLicenseNo.$error.required"></span>
+                                </div>
+                            </div>
+                            <hr />
+                            <div>
+                                <label for="form-field-mask-1" class="col-sm-3">
+                                    <label for="thirdPartyAcc">User Name</label>
+                                </label>
+
+                                <div class="input-group col-sm-8">
+                                    <input id="UPSUserName" class="form-control" name="UPSUserName" type="text" data-ng-model="vendor.UPSUserName" required />
+                                    <span class="error" data-ng-show="mainForm.UPSUserName.$error.required"></span>
+                                </div>
+                            </div>
+                            <hr />
+                            <div>
+                                <label for="form-field-mask-1" class="col-sm-3">
+                                    <label for="thirdPartyAcc">Password</label>
+                                </label>
+
+                                <div class="input-group col-sm-8">
+                                    <input id="UPSpassword" class="form-control" name="UPSpassword" type="password" data-ng-model="vendor.UPSpassword" required />
+                                    <span class="error" data-ng-show="mainForm.UPSpassword.$error.required"></span>
+                                </div>
+                            </div>
+                            <hr />
+                            <div>
+                                <label for="form-field-mask-1" class="col-sm-3">
+                                    <label for="thirdPartyAcc">Third Party Account#</label>
+                                </label>
+
+                                <div class="input-group col-sm-8">
+                                    <input id="UPSAcc" class="form-control" name="UPSAcc" type="number" data-ng-model="vendor.UPSAcc" required />
+                                    <span class="error" data-ng-show="mainForm.UPSAcc.$error.required"></span>
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+                    </div>
+
+                    <div class="clearfix form-actions" style="margin-bottom:0px;">
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-info">
+                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
