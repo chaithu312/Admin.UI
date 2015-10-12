@@ -52,6 +52,7 @@
                 })
                 .success(function (data, status, headers, config) {
                     $scope.message = data;
+
                     window.location.href = "/User/Home/ViewAddress";
 
                 }).error(function (data, status, headers, config) {
