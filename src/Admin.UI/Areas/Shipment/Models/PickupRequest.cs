@@ -9,6 +9,10 @@ namespace Admin.UI.Areas.Shipment.Models
 {
     public class PickupRequest
     {
+        public string UserID { get; set; }
+        public string AccountID { get; set; }
+        public string VendorAccountID { get; set; }
+
         public string ContactName { get; set; }
 
         public string Phone { get; set; }
@@ -24,8 +28,9 @@ namespace Admin.UI.Areas.Shipment.Models
         public string State { get; set; }
 
         public string ZipCode { get; set; }
-
+        public string CountryCode { get; set; }
         public string Country { get; set; }
+        public string CountryID { get; set; }
 
         public string AddressNotes { get; set; }
 
@@ -41,8 +46,8 @@ namespace Admin.UI.Areas.Shipment.Models
 
         public bool isHeavy { get; set; }
 
-        public DateTime ReadyTime { get; set; }
-        public DateTime AvailableTime { get; set; }
+        public string ReadyTime { get; set; }
+        public string AvailableTime { get; set; }
         public int TotalPieces { get; set; }
 
         public string AdditionalsInstructions { get; set; }

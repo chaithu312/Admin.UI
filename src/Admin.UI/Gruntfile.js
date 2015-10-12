@@ -45,7 +45,8 @@
                         'Assets/js/bootstrap.min.js',
                         'Assets/js/date-time/moment.js',
                         'Assets/js/date-time/bootstrap-datetimepicker.js'
-
+                        
+                        
                     ],
                     'wwwroot/assets/js/app.js': [
                         'Assets/js/app.js',
@@ -53,24 +54,25 @@
                         'Areas/User/Assets/js/LoginController.js',
                         'Areas/Shipment/Assets/js/PickupRequestController.js',
                         'Areas/Shipment/Assets/js/TrackingRequestController.js',
-                        'Areas/Shipment/Assets/js/VendorSettingController.js',
                         'Areas/User/Assets/js/AddressBookController.js',
-                        'Areas/User/Assets/js/ViewAddress.js',
+                        'Areas/User/Assets/js/ViewAddressController.js',
+                        'Areas/Shipment/Assets/js/ViewPickupController.js'
+                        
 
                     ],
                     'wwwroot/assets/js/DataTable.js': ['Assets/ace/js/dataTables/jquery.dataTables.js',
                         'Assets/ace/js/dataTables/extensions/TableTools/js/dataTables.tableTools.js',
                         'Assets/ace/js/dataTables/extensions/ColVis/js/dataTables.colVis.js'],
 
-                    'wwwroot/assets/js/jqGrid.js':
+                    'wwwroot/assets/js/jqGrid.js': 
                         [
-
+                            
                             'Assets/js/jquery-1.9.1.min.js',
                             'Assets/js/jquery-ui-1.10.1.custom.min.js',
                             'Assets/js/jquery.jqGrid.js',
                             'Assets/ace/js/jqGrid/i18n/grid.locale-en.js',
                             'Assets/ace/js/jqGrid/jquery.jqGrid.src.js',
-
+                            
                             //'Assets/ace/js/jqGrid/jquery.jqGrid.src.js',
                         ]
                 }
