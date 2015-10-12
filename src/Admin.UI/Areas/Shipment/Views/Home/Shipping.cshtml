@@ -1,0 +1,295 @@
+﻿@{
+
+    Layout = "~/Views/shared/_layout.cshtml";
+}
+<div class="col-sm-10">
+    <div class="widget-box">
+        <div class="widget-header">
+            <h4 class="widget-title">Shipping </h4>
+        </div>
+        <div class="widget-body">
+            <div class="widget-main">
+                <div class="col-sm-5">
+                    <div class="widget-box">
+                        <div class="widget-header widget-header-flat widget-header-small">
+                            <h5 class="widget-title">Shipper Address </h5>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Company <span ng-show="Shipping.company.$error.required" ng-class="{'error-text': Shipping.company.$error.required}">*</span></label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" name="company" id="company" ng-model="Shipping.Company" class="form-control" ng-maxlength="100" required="" />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Sent By<span ng-show="Shipping.name.$error.required" ng-class="{'error-text': Shipping.name.$error.required}">*</span></label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" name="name" id="name" ng-model="Shipping.Name" class="form-control" ng-maxlength="50" required="" />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Phone  <span ng-show="Shipping.phone.$error.required" ng-class="{'error-text': Shipping.phone.$error.required}">*</span><br /></label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" name="phone" id="phone" ng-model="Shipping.Phone" class="form-control" required="" />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Email <span ng-show="Shipping.Email.$error.required" ng-class="{'error-text': Shipping.Email.$error.required}">*</span></label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <input type="email" name="Email" id="Email" ng-model="Shipping.Email" class="form-control" required="" />
+                                    </div>
+                                </div>
+
+                                <div class="widget-header">
+                                    <h6 class="widget-title">Address Information</h6>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Address<span ng-show="Shipping.addressline1.$error.required" ng-class="{'error-text': Shipping.addressline1.$error.required}">*</span></label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <select>
+                                            <option value="=0">-Select Address-</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Address Line 1 <span ng-show="Shipping.addressline1.$error.required" ng-class="{'error-text': Shipping.addressline1.$error.required}">*</span></label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" name="addressline1" id="addressline1" ng-model="contact.Address1" class="form-control" required="" />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Address Line 2 </label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" name="addressline2" id="addressline2" ng-model="contact.Address2" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Address Line 3 </label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" name="addressline3" id="addressline3" ng-model="contact.Address3" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>City<span ng-show="Shipping.city.$error.required" ng-class="{'error-text': Shipping.city.$error.required}">*</span> </label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" name="city" id="city" ng-model="contact.City" class="form-control" required />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Division </label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+
+                                        <select id="ddlState" class="form-control" data-ng-model="contact.Division" name="ddlState"
+                                                data-ng-options="state.Name as state.Name for state in States track by state.Id" required></select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Postal Code <span ng-show="Shipping.postalcode.$error.required" ng-class="{'error-text': Shipping.postalcode.$error.required}">*</span> </label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" name="postalcode" id="postalcode" ng-model="contact.PostalCode" class="form-control" required="" phone />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Country<span ng-show="Shipping.Country.$error.required" ng-class="{'error-text': Shipping.Country.$error.required}">*</span> </label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <select id="Country" class="form-control" data-ng-model="contact.CountryId" name="Country"
+                                                data-ng-options="country.Id as country.Name for country in Country track by country.Id" data-ng-change="GetValue()" required></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="widget-box">
+                        <div class="widget-header widget-header-flat widget-header-small">
+                            <h5 class="widget-title">Consigee Address </h5>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Company <span ng-show="Shipping.company.$error.required" ng-class="{'error-text': Shipping.company.$error.required}">*</span></label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" name="company" id="company" ng-model="Shipping.Company" class="form-control" ng-maxlength="100" required="" />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Receiver's Name<span ng-show="Shipping.name.$error.required" ng-class="{'error-text': Shipping.name.$error.required}">*</span></label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" name="name" id="name" ng-model="Shipping.Name" class="form-control" ng-maxlength="50" required="" />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Phone  <span ng-show="Shipping.phone.$error.required" ng-class="{'error-text': Shipping.phone.$error.required}">*</span><br /></label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" name="phone" id="phone" ng-model="Shipping.Phone" class="form-control" required="" />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Email <span ng-show="Shipping.Email.$error.required" ng-class="{'error-text': Shipping.Email.$error.required}">*</span></label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <input type="email" name="Email" id="Email" ng-model="Shipping.Email" class="form-control" required="" />
+                                    </div>
+                                </div>
+
+                                <div class="widget-header">
+                                    <h6 class="widget-title">Address Information</h6>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Address<span ng-show="Shipping.addressline1.$error.required" ng-class="{'error-text': Shipping.addressline1.$error.required}">*</span></label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <select>
+                                            <option value="=0">-Select Address-</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Address Line 1 <span ng-show="Shipping.addressline1.$error.required" ng-class="{'error-text': Shipping.addressline1.$error.required}">*</span></label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" name="addressline1" id="addressline1" ng-model="contact.Address1" class="form-control" required="" />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Address Line 2 </label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" name="addressline2" id="addressline2" ng-model="contact.Address2" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Address Line 3 </label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" name="addressline3" id="addressline3" ng-model="contact.Address3" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>City<span ng-show="Shipping.city.$error.required" ng-class="{'error-text': Shipping.city.$error.required}">*</span> </label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" name="city" id="city" ng-model="contact.City" class="form-control" required />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Division </label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+
+                                        <select id="ddlState" class="form-control" data-ng-model="contact.Division" name="ddlState"
+                                                data-ng-options="state.Name as state.Name for state in States track by state.Id" required></select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Postal Code <span ng-show="Shipping.postalcode.$error.required" ng-class="{'error-text': Shipping.postalcode.$error.required}">*</span> </label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" name="postalcode" id="postalcode" ng-model="contact.PostalCode" class="form-control" required="" phone />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-field-mask-1" class="col-sm-3">
+                                        <label>Country<span ng-show="Shipping.Country.$error.required" ng-class="{'error-text': Shipping.Country.$error.required}">*</span> </label>
+                                    </label>
+
+                                    <div class="input-group col-sm-8">
+                                        <select id="Country" class="form-control" data-ng-model="contact.CountryId" name="Country"
+                                                data-ng-options="country.Id as country.Name for country in Country track by country.Id" data-ng-change="GetValue()" required></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

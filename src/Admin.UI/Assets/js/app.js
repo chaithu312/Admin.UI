@@ -102,6 +102,7 @@ $('.date-picker').datepicker({
     autoclose: true,
     todayHighlight: true
 })
+
 //show datepicker when clicking on the icon
 .next().on(ace.click_event, function () {
     $(this).prev().focus();
@@ -140,7 +141,6 @@ function style_edit_form(form) {
     form.find('input[name=stock]').addClass('ace ace-switch ace-switch-5').after('<span class="lbl"></span>');
     //don't wrap inside a label element, the checkbox value won't be submitted (POST'ed)
     //.addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
-
 
     //update buttons classes
     var buttons = form.next().find('.EditButton .fm-button');
@@ -191,8 +191,6 @@ function beforeEditCallback(e) {
     style_edit_form(form);
 }
 
-
-
 //it causes some flicker when reloading or navigating grid
 //it may be possible to have some custom formatter to do this as the grid is being created to prevent this
 //or go back to default browser checkbox styles for the grid
@@ -202,13 +200,11 @@ function styleCheckbox(table) {
         .wrap('<label />')
         .after('<span class="lbl align-top" />')
 
-
         $('.ui-jqgrid-labels th[id*="_cb"]:first-child')
         .find('input.cbox[type=checkbox]').addClass('ace')
         .wrap('<label />').after('<span class="lbl align-top" />');
     */
 }
-
 
 //unlike navButtons icons, action icons in rows seem to be hard-coded
 //you can change them like this in here if you want

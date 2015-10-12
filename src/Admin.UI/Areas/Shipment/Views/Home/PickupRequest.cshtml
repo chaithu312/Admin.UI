@@ -83,10 +83,10 @@
                                     <!-- #section:plugins/input.masked-input -->
                                     <div class="input-group col-sm-8">
                                         <select id="ddlCountry" class="form-control" data-ng-model="pickupRequest.CountryId" name="ddlCountry"
-                                                 data-ng-options="country.Id as country.Name for country in Country track by country.Id" data-ng-change="GetValue()" required></select>
+                                                data-ng-options="country.Id as country.Name for country in Country track by country.Id" data-ng-change="GetValue()" required></select>
                                     </div>
                                 </div>
-                                
+
                                 <div style="clear:both;height:5px;"></div>
                                 <div>
                                     <label for="form-field-mask-1" class="col-sm-3">
@@ -105,12 +105,10 @@
                                     <!-- #section:plugins/input.masked-input -->
                                     <div class="input-group col-sm-8">
                                         @*<select id="ddlState" class="form-control" data-ng-model="States.State" name="ddlState"
-                                                data-ng-options="state.Name for state in States.Data track by state.Id" required></select>*@
-
+                                            data-ng-options="state.Name for state in States.Data track by state.Id" required></select>*@
 
                                         <select id="ddlState" class="form-control" data-ng-model="pickupRequest.Division" name="ddlState"
                                                 data-ng-options="state.Name as state.Name for state in States track by state.Id" required></select>
-
                                     </div>
                                 </div>
                                 <div style="clear:both;height:5px;"></div>
@@ -150,7 +148,6 @@
                                                 <div class="input-group col-sm-8">
                                                     <select id="ddlCarrier" class="form-control" data-ng-model="pickupRequest.Carrier" name="ddlCarrier"
                                                             data-ng-options="carrier.Id as carrier.Name for carrier in Carriers.Data track by carrier.Id" required></select>
-                                                    
                                                 </div>
                                             </div>
                                             <div style="clear:both;height:5px;"></div>

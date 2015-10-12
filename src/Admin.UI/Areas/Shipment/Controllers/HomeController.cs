@@ -15,6 +15,16 @@ namespace Admin.UI.ShipmentArea
     [Area("Shipment")]
     public class HomeController : Controller
     {
+        public IActionResult Shipping()
+        {
+            return View();
+        }
+
+        public IActionResult VendorSetting()
+        {
+            return View();
+        }
+
         public IActionResult AWBWithprice()
         {
             return View();
