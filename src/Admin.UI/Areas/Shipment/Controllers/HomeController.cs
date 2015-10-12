@@ -84,7 +84,7 @@ namespace Admin.UI.ShipmentArea
         public JsonResult GetAllPickup()
         {
             string AccountId = "12345";
-            string url = "http://localhost:49200/DHL/accountId";
+            string url = Constants.ShippingURL+"/DHL/accountId";
             object result = string.Empty;
 
             using (var client = new WebClient())

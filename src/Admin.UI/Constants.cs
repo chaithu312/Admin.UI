@@ -13,6 +13,9 @@ namespace Admin.UI
 
         public const string clientSecret = "262148";
         public const string clientScope = "read write";
-        public const string ShippingURL = "http://localhost:49200/";
+        public const string ShippingURL = "http://192.168.1.241/shipping/";
+        public const string MasterApiURL = "http://192.168.1.241/shipping/MasterApi/";
+
+        public const string ContentType = "application/json";
     }
 }
