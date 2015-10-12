@@ -53,8 +53,7 @@ namespace Admin.UI.ShipmentArea
             }
 
             var postData = JsonConvert.SerializeObject(pickupRequest);
-            //string strURL = Constants.ShippingURL + "DHL/Pickup";
-            string strURL = "http://localhost:49201/Dhl/Pickup";
+            string strURL = Constants.APIURL+ "DHL/Pickup";
 
             //Constants.ShippingURL + "Endicia/Pickup"
             //Constants.ShippingURL + "UPS/Pickup"
@@ -95,7 +94,6 @@ namespace Admin.UI.ShipmentArea
         public JsonResult GetAllPickup()
         {
             string AccountId = "12345";
-            //string url = Constants.ShippingURL+"/DHL/accountId";
             string url = Constants.APIURL + "/DHL/accountId";
             
             object result = string.Empty;
@@ -143,7 +141,6 @@ namespace Admin.UI.ShipmentArea
             switch (carrierType)
             {
                 case Carrier.DHL:
-                   // IFormatProvider culture = new CultureInfo("en-US", true);
                     pickupDate = DateTime.ParseExact(pickupDate, "dd-MM-yyyy",CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
                     break;
             }
