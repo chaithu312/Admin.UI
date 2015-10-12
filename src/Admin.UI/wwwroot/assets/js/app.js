@@ -62,8 +62,6 @@
             }
         }
     });
-
-
 })();
 
 //-- Navigation Controller for left navigation
@@ -101,6 +99,11 @@
 //datepicker plugin
 //link
 $('.date-picker').datepicker({
+    autoclose: true,
+    todayHighlight: true
+})
+
+$('#date-picker').datepicker({
     autoclose: true,
     todayHighlight: true
 })
