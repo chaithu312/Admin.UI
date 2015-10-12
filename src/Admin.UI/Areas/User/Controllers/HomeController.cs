@@ -29,7 +29,7 @@ namespace Admin.UI.UserArea
                 registerModel.Password = register.Password;
 
                 var postData = JsonConvert.SerializeObject(registerModel);
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Constants.strAPIURL + "registration");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Constants.RegisterURL + "registration");
                 byte[] bytes;
                 //bytes = System.Text.Encoding.ASCII.un(requestXml);
                 bytes = System.Text.Encoding.UTF8.GetBytes(postData);
@@ -179,7 +179,7 @@ namespace Admin.UI.UserArea
             {
                 try
                 {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Constants.strAPIURL + "IsUserAvailable?Email=" + userName);
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Constants.RegisterURL + "IsUserAvailable?Email=" + userName);
                     request.ContentType = Constants.ContentType;
                     request.Method = "GET";
                     using (WebResponse response = request.GetResponse())
@@ -216,7 +216,7 @@ namespace Admin.UI.UserArea
                     register.Created = DateTime.Now;
                 }
 
-                string url = Constants.MasterApiURL+"Address/Insert";
+                string url = Constants.APIURL+ "MasterApi/Address/Insert";
                 object result = string.Empty;
 
                 // Uses the System.Net.WebClient and not HttpClient, because .NET 2.0 must be supported.
@@ -249,7 +249,7 @@ namespace Admin.UI.UserArea
         public JsonResult Country()
         {
             var client = new HttpClient();
-            var result = client.GetStringAsync(Constants.MasterApiURL + "Country").Result;
+            var result = client.GetStringAsync(Constants.APIURL + "MasterApi/Country").Result;
             return Json(result);
         }
 
@@ -257,7 +257,7 @@ namespace Admin.UI.UserArea
         public JsonResult State(string countryId)
         {
             var client = new HttpClient();
-            var result = client.GetStringAsync(Constants.MasterApiURL + "Division/" + countryId).Result;
+            var result = client.GetStringAsync(Constants.APIURL + "MasterApi/Division/" + countryId).Result;
             return Json(result);
         }
 
@@ -265,7 +265,7 @@ namespace Admin.UI.UserArea
         public JsonResult PostalCode(string PostalCode)
         {
             var client = new HttpClient();
-            var result = client.GetStringAsync(Constants.MasterApiURL + "postalcode/" + PostalCode).Result;
+            var result = client.GetStringAsync(Constants.APIURL + "MasterApi/postalcode/" + PostalCode).Result;
             return Json(result);
         }
 
@@ -275,7 +275,7 @@ namespace Admin.UI.UserArea
             try
             {
                 var client = new HttpClient();
-                var result = client.GetStringAsync(Constants.MasterApiURL + "Address/").Result;
+                var result = client.GetStringAsync(Constants.APIURL + "MasterApi/Address/").Result;
                 return Json(result);
             }
             catch (Exception ex)
@@ -292,7 +292,7 @@ namespace Admin.UI.UserArea
             selectedIds=selectedIds.TrimEnd(new char[] { ',' });
             string[] ids = selectedIds.Split(',');
 
-            string url = Constants.MasterApiURL + "Address/DeleteByIds";
+            string url = Constants.APIURL + "MasterApi/Address/DeleteByIds";
             object result = string.Empty;
 
             using (var client = new WebClient())

@@ -43,7 +43,8 @@ namespace Admin.UI.ShipmentArea
             }
 
             var postData = JsonConvert.SerializeObject(pickupRequest);
-            string strURL = Constants.ShippingURL + "DHL/Pickup";
+            //string strURL = Constants.ShippingURL + "DHL/Pickup";
+            string strURL = "http://localhost:49201/Dhl/Pickup";
 
             //Constants.ShippingURL + "Endicia/Pickup"
             //Constants.ShippingURL + "UPS/Pickup"
@@ -84,7 +85,9 @@ namespace Admin.UI.ShipmentArea
         public JsonResult GetAllPickup()
         {
             string AccountId = "12345";
-            string url = Constants.ShippingURL+"/DHL/accountId";
+            //string url = Constants.ShippingURL+"/DHL/accountId";
+            string url = Constants.APIURL + "/DHL/accountId";
+            
             object result = string.Empty;
 
             using (var client = new WebClient())

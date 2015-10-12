@@ -35,12 +35,13 @@
         // function to submit the form after all validation has occurred
         $scope.submitForm = function () {
             // check to make sure the form is completely valid
-            if ($scope.AddressBook.$valid) {
+            if ($scope.AddressBook.$invalid) {
                 console.clear();
                 console.log('valid');
                 console.log($scope.AddressBook);
+                console.log($scope.AddressBook.$error);
             }
-            if ($scope.AddressBook.$invalid) {
+            if ($scope.AddressBook.$valid) {
 
                 $http({
                     url: '/User/Home/AddressBook',
@@ -51,15 +52,12 @@
                 })
                 .success(function (data, status, headers, config) {
                     $scope.message = data;
-                    //alert(data);
-                    //window.location.href = "/User/Home/ViewAddress";
+                    window.location.href = "/User/Home/ViewAddress";
 
                 }).error(function (data, status, headers, config) {
                     alert(data);
                 });
                 //Ends herefor saving addresssbook record.
-
-                console.log($scope.AddressBook.$error);
             }
         }
         //Getting selected Country Code and Country Name
