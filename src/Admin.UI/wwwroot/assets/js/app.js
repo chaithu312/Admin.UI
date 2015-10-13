@@ -110,7 +110,7 @@ $('.date-picker').datepicker({
 
 $('#timepicker1').timepicker({
     minuteStep: 1,
-    showSeconds: true,
+    showSeconds: false,
     showMeridian: false
 }).next().on(ace.click_event, function () {
     $(this).prev().focus();
@@ -118,7 +118,7 @@ $('#timepicker1').timepicker({
 
 $('#timepicker2').timepicker({
     minuteStep: 1,
-    showSeconds: true,
+    showSeconds: false,
     showMeridian: false
 }).next().on(ace.click_event, function () {
     $(this).prev().focus();
@@ -255,6 +255,8 @@ $(document).one('ajaxloadstart.page', function (e) {
 });
 
 //jqGrid Required Methods Ends here
+
+$('[data-rel=popover]').popover({ container: 'body' });
 (function () {
     function SignUpController($scope) {
         alert("a");
@@ -347,6 +349,69 @@ $(document).one('ajaxloadstart.page', function (e) {
     app.controller('PickupRequestController', function ($scope, $http) {
         $scope.Contacts = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Account 1' }, { Id: 2, Name: 'Account 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
         $scope.Addresses = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
+
+
+        $http({
+            method: 'GET',
+            url: '/User/Home/GetAllAddress',
+            //data: $scope.SelectedCountry.CountryCode,
+            //params: { countryId: $scope.contact.CountryId },
+            headers: {
+                'RequestVerificationToken': $scope.antiForgeryToken
+            }
+        }).success(function (data, status, headers, config) {
+            $scope.message = '';
+            $scope.Address = (JSON.parse(data)).Result;
+            var item =
+            {
+                Id: 0,
+                ShortName: "New Address",
+            };
+            $scope.Address.push(item);
+        });
+
+        $scope.GetAddressValue = function (address) {
+            var addressType = $scope.pickupRequest.AddressType;
+
+            var ShortName = $.grep($scope.Address, function (address) {
+                return address.Id == addressType;
+            })[0].ShortName;
+            $scope.SelectedAddress = {};
+            $scope.SelectedAddress.Id = addressType;
+            $scope.SelectedAddress.ShortNameName = ShortName;
+            //Getting States list using HTTP Request from controller
+
+            $http({
+                method: 'GET',
+                url: '/Shipment/Home/GetAddressById',
+                params: { addressType: $scope.pickupRequest.AddressType },
+                headers: {
+                    'RequestVerificationToken': $scope.antiForgeryToken
+                }
+            }).success(function (data, status, headers, config) {
+                $scope.message = '';
+                if (data.success == false) {
+                    var str = '';
+                    for (var error in data.errors) {
+                        str += data.errors[error] + '\n';
+                    }
+                    $scope.message = str;
+                }
+                else {
+                    var result = JSON.parse(data);
+                    alert(1);
+                    $scope.pickupRequest.City = $scope.AddressRecord.City;
+                    //  $scope.message = 'Login Successfully';
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.message = 'Unexpected Error';
+            });
+
+            //Ends here getting request of Http for getting states;
+
+        }
+        //Ends here getting country detail
+
         //$scope.States = { Data: [{ Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }] };
        // $scope.Countries = { Data: [{ Id: 1, Name: 'Country 1' }, { Id: 2, Name: 'Country 2' }] };
         $scope.Carriers = { Data: [{ Id: 1, Name: 'DHL' }, { Id: 2, Name: 'Endicia' }] };
@@ -376,7 +441,7 @@ $(document).one('ajaxloadstart.page', function (e) {
             ], selectedOption: { Id: 1, Name: '1' }
         };
 
-        $scope.Destination = { Data: [{ Id: 1, Name: 'Domestic' }, { Id: 2, Name: 'International' }], selectedOption: { Id: 1, Name: 'Domestic' } };
+        $scope.Destination = { Data: [{ Id: 1, Name: 'Domestic' }, { Id: 2, Name: 'International' }, { Id: 3, Name: 'InternationalMultiple packages with mixed destinations' }], selectedOption: { Id: 1, Name: 'Domestic' } };
         $scope.PickupAgent = { Data: [{ Id: 0, Name: 'Select...' }, { Id: 1, Name: 'DHL' }, { Id: 2, Name: 'Endicia' }, { Id: 3, Name: 'FedEx' }], selectedOption: { Id: 0, Name: 'Select...' } };
         $scope.PickupType = { Data: [{ Id: 0, Name: 'Package' }, { Id: 1, Name: 'Finance' }], selectedOption: { Id: 0, Name: 'Package' } };
         //HTTP REQUEST BELOW
@@ -447,18 +512,7 @@ $(document).one('ajaxloadstart.page', function (e) {
         //Ends here getting country detail
 
         $scope.sendForm = function () {
-            //$.ajax({
-            //    url: '/Shipment/PickupRequest',
-            //    type: "POST",
-            //    dataType: "json",
-            //    data: JSON.stringify($scope.PickupRequest),
-            //    success: function (result) {
-            //        JSON.parse(result);
-            //    },
-            //    error: function (xhr, ajaxOptions, thrownError) {
-            //        console.log(xhr);
-            //    }
-            //})
+           
 
             if ($scope.PickupForm.$valid) {
                 $http({
@@ -479,33 +533,6 @@ $(document).one('ajaxloadstart.page', function (e) {
             }
             if ($scope.PickupForm.$invalid) { $scope.message = "Check required fields." }
         };
-
-        //$scope.sendForm = function () {
-        //    $http({
-        //        method: 'POST',
-
-        //        url: '/Shipment/PickupRequest',
-        //        data: $scope.person,
-        //        headers: {
-        //            'RequestVerificationToken': $scope.antiForgeryToken
-        //        }
-        //    }).success(function (data, status, headers, config) {
-        //        $scope.message = '';
-        //        if (data.success == false) {
-        //            var str = '';
-        //            for (var error in data.errors) {
-        //                str += data.errors[error] + '\n';
-        //            }
-        //            $scope.message = str;
-        //        }
-        //        else {
-        //            $scope.message = 'Saved Successfully';
-        //            $scope.person = {};
-        //        }
-        //    }).error(function (data, status, headers, config) {
-        //        $scope.message = 'Unexpected Error';
-        //    });
-        //};
     });
 })();
 (function () {
@@ -714,7 +741,7 @@ $(document).one('ajaxloadstart.page', function (e) {
 
         $http({
             method: 'GET',
-            url: '/User/Home/GetUsers',
+            url: '/User/Home/GetAllAddress',
             //data: $scope.SelectedCountry.CountryCode,
             //params: { countryId: $scope.contact.CountryId },
             headers: {
@@ -731,9 +758,6 @@ $(document).one('ajaxloadstart.page', function (e) {
             }
             else {
                 $scope.Users = JSON.parse(data);
-                //$scope.Users = [{ Id: 2, FirstName: "SHASHIKANT", LastName: "Pandit", Phone1: "", EMail: "", Division: "", City: "" }
-                //, { Id: 4, FirstName: "SHASHIKANT", LastName: "Pandit", Phone1: "", EMail: "", Division: "", City: "" }];
-                //Starting binding of jqGrid
                 var grid_data = $scope.Users.Result;
                 if ($scope.Users.length == 0)
                     $scope.message = "No records to view";

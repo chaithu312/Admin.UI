@@ -6,7 +6,7 @@
 
         $http({
             method: 'GET',
-            url: '/User/Home/GetUsers',
+            url: '/User/Home/GetAllAddress',
             //data: $scope.SelectedCountry.CountryCode,
             //params: { countryId: $scope.contact.CountryId },
             headers: {
@@ -23,9 +23,6 @@
             }
             else {
                 $scope.Users = JSON.parse(data);
-                //$scope.Users = [{ Id: 2, FirstName: "SHASHIKANT", LastName: "Pandit", Phone1: "", EMail: "", Division: "", City: "" }
-                //, { Id: 4, FirstName: "SHASHIKANT", LastName: "Pandit", Phone1: "", EMail: "", Division: "", City: "" }];
-                //Starting binding of jqGrid
                 var grid_data = $scope.Users.Result;
                 if ($scope.Users.length == 0)
                     $scope.message = "No records to view";

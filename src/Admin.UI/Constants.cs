@@ -14,7 +14,7 @@ namespace Admin.UI
 
         public const string clientSecret = "262148";
         public const string clientScope = "read write";
-        public const string APIURL = "http://192.168.1.241/shipping/";
+        public const string APIURL = "http://test.shipos.com/shipping/";
 
         public const string ContentType = "application/json";
     }

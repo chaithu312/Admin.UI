@@ -17,6 +17,8 @@ namespace Admin.UI.Areas.Shipment.Models
 
         public string Phone { get; set; }
 
+        public string AddressCaption { get; set; }
+
         public string AddressType { get; set; }
 
         public string Address1 { get; set; }
@@ -25,7 +27,7 @@ namespace Admin.UI.Areas.Shipment.Models
 
         public string City { get; set; }
 
-        public string State { get; set; }
+        public string Division { get; set; }
 
         public string ZipCode { get; set; }
         public string CountryCode { get; set; }
@@ -48,6 +50,7 @@ namespace Admin.UI.Areas.Shipment.Models
 
         public string ReadyTime { get; set; }
         public string AvailableTime { get; set; }
+        public int? ParcelType { get; set; }
         public int TotalPieces { get; set; }
 
         public string AdditionalsInstructions { get; set; }

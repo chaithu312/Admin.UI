@@ -270,7 +270,7 @@ namespace Admin.UI.UserArea
         }
 
         [HttpGet]
-        public JsonResult GetUsers()
+        public JsonResult GetAllAddress()
         {
             try
             {

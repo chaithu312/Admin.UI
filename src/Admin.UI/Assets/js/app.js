@@ -110,7 +110,7 @@ $('.date-picker').datepicker({
 
 $('#timepicker1').timepicker({
     minuteStep: 1,
-    showSeconds: true,
+    showSeconds: false,
     showMeridian: false
 }).next().on(ace.click_event, function () {
     $(this).prev().focus();
@@ -118,7 +118,7 @@ $('#timepicker1').timepicker({
 
 $('#timepicker2').timepicker({
     minuteStep: 1,
-    showSeconds: true,
+    showSeconds: false,
     showMeridian: false
 }).next().on(ace.click_event, function () {
     $(this).prev().focus();
@@ -255,3 +255,5 @@ $(document).one('ajaxloadstart.page', function (e) {
 });
 
 //jqGrid Required Methods Ends here
+
+$('[data-rel=popover]').popover({ container: 'body' });

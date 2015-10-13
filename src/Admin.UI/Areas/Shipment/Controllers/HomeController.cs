@@ -38,22 +38,49 @@ namespace Admin.UI.ShipmentArea
         [HttpPost]
         public JsonResult PickupRequest([FromBody]PickupRequest pickupRequest)
         {
-
+            
             if (pickupRequest != null)
             {
-                //pickupRequest.AvailableTime = pickupRequest.AvailableTime.ToString("HH:mm");
-                //pickupRequest.ReadyTime = pickupRequest.ReadyTime.ToString("HH:mm");
-                pickupRequest.UserID = "4";
-                pickupRequest.AccountID = "2";
-                pickupRequest.VendorAccountID = "1";
-                pickupRequest.ReadyTime = CarrierSpecificValueConversion.GetTime(pickupRequest.ReadyTime, (Carrier)Convert.ToInt16( pickupRequest.Carrier));
-                pickupRequest.AvailableTime = CarrierSpecificValueConversion.GetTime(pickupRequest.AvailableTime, (Carrier)Convert.ToInt16(pickupRequest.Carrier));
+                pickupRequest.UserID = "4";//TODO: 
+                pickupRequest.AccountID = "2";//TODO:
+                pickupRequest.VendorAccountID = "1";//TODO:
                 pickupRequest.PickupDate= CarrierSpecificValueConversion.GetDate(pickupRequest.PickupDate, (Carrier)Convert.ToInt16(pickupRequest.Carrier));
 
             }
 
+            if (pickupRequest.AddressType == "0")
+            {
+                Admin.UI.Areas.User.Models.Address register = new Admin.UI.Areas.User.Models.Address();
+
+                register.AccountId = 2;
+                register.Status = 1;
+                register.Created = DateTime.Now;
+                register.AddressType = Areas.User.Models.Address.AddressTypes.Recipient;
+                register.ShortName = pickupRequest.AddressCaption;
+                register.Phone1 = pickupRequest.Phone;
+                register.EMail = pickupRequest.PickUpNotificationEmail;
+                register.CountryId = pickupRequest.CountryID;
+                register.PostalCode = pickupRequest.ZipCode;
+                register.Division = pickupRequest.Division;
+                register.City = pickupRequest.City;
+                register.Address1 = pickupRequest.Address1;
+                register.Address2 = pickupRequest.Address2;
+                
+                string url = Constants.APIURL + "MasterApi/Address/Insert";
+
+                using (var client = new WebClient())
+                {
+                    client.Headers[HttpRequestHeader.ContentType] = "application/json";
+
+                    string serialisedData = JsonConvert.SerializeObject(register);
+
+                    client.UploadString(url, serialisedData);
+                }
+            }
+
             var postData = JsonConvert.SerializeObject(pickupRequest);
-            string strURL = Constants.APIURL+ "DHL/Pickup";
+            //string strURL = Constants.APIURL+ "DHL/Pickup";
+            string strURL= "http://localhost:49201/"+"DHL/Pickup";
 
             //Constants.ShippingURL + "Endicia/Pickup"
             //Constants.ShippingURL + "UPS/Pickup"
@@ -120,22 +147,30 @@ namespace Admin.UI.ShipmentArea
         {
             return View();
         }
+
+        [HttpGet]
+        public JsonResult GetAddressById(long addressType)
+        {
+            string url = Constants.APIURL + "MasterApi/Address/Id";
+            
+            object result = string.Empty;
+
+            using (var client = new WebClient())
+            {
+                client.Headers[HttpRequestHeader.ContentType] = Constants.ContentType;
+
+                string serialisedData = JsonConvert.SerializeObject(addressType);
+
+                var response = client.UploadString(url, serialisedData);
+
+                result = JsonConvert.DeserializeObject(response);
+            }
+            return Json(result);
+        }
     }
 
     internal struct CarrierSpecificValueConversion
     {
-        internal static string GetTime(string readyTime, Carrier carrierType)
-        {
-            switch (carrierType)
-            {
-                case Carrier.DHL:
-                    TimeSpan originalTime = TimeSpan.Parse(readyTime);
-                    readyTime=originalTime.Hours.ToString("00") + ":" + originalTime.Minutes.ToString("00");
-                    break;
-            }
-            return readyTime;
-        }
-
         public static string GetDate(string pickupDate, Carrier carrierType)
         {
             switch (carrierType)
