@@ -460,21 +460,24 @@ $(document).one('ajaxloadstart.page', function (e) {
             //    }
             //})
 
-            $http({
-                url: '/Shipment/PickupRequest',
-                method: "POST",
-                data: JSON.stringify($scope.pickupRequest),
-                contentType: "application/json;",
-                dataType: "json"
-            })
-                .success(function (data, status, headers, config) {
-                    $scope.message = data;
-                    //alert(data);
-                    //window.location.href = "/User/Home/ViewAddress";
+            if ($scope.PickupForm.$valid) {
+                $http({
+                    url: '/Shipment/PickupRequest',
+                    method: "POST",
+                    data: JSON.stringify($scope.pickupRequest),
+                    contentType: "application/json;",
+                    dataType: "json"
+                })
+                    .success(function (data, status, headers, config) {
+                        $scope.message = data;
+                        //alert(data);
+                        //window.location.href = "/User/Home/ViewAddress";
 
-                }).error(function (data, status, headers, config) {
-                    alert(data);
-                });
+                    }).error(function (data, status, headers, config) {
+                        alert(data);
+                    });
+            }
+            if ($scope.PickupForm.$invalid) { $scope.message = "Check required fields." }
         };
 
         //$scope.sendForm = function () {
@@ -605,8 +608,8 @@ $(document).one('ajaxloadstart.page', function (e) {
                 })
                 .success(function (data, status, headers, config) {
                     $scope.message = data;
-                    //alert(data);
-                    //window.location.href = "/User/Home/ViewAddress";
+
+                    window.location.href = "/User/Home/ViewAddress";
 
                 }).error(function (data, status, headers, config) {
                     alert(data);
