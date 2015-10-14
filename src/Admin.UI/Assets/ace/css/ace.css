@@ -23751,3 +23751,6 @@ input.typeahead.scrollable ~ .tt-dropdown-menu {
 .pikupRequestDetail label {
     padding: 5px 10px;
 }
+
+.error {color:red !important;}
+span.error-text {color:red !important;}

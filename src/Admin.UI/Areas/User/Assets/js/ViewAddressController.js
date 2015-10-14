@@ -54,7 +54,7 @@
                         datatype: "local",
                         height: 350,
                         //colNames: [' ', 'ID', 'Last Sales', 'Name', 'Stock', 'Ship via', 'Notes'],
-                        colNames: ['Id', 'FirstName', 'LastName', 'Phone1', 'EMail', 'Division', 'City'],
+                        colNames: ['Id', 'FirstName', 'LastName', 'Phone1', 'EMail', 'Division', 'City','Edit'],
                         colModel: [
                             //{
                             //    name: 'myac', index: '', width: 80, fixed: true, sortable: false, resize: false,
@@ -72,8 +72,12 @@
                             { name: 'Phone1', index: 'Phone1', width: 130, editable: true, editoptions: { size: "20", maxlength: "30" } },
                             { name: 'EMail', index: 'EMail', width: 180, editable: true },
                             { name: 'Division', index: 'Division', width: 130, editable: true},
-                            { name: 'City', index: 'City', width: 130, editoptions: { rows: "2", cols: "10" } }
+                            { name: 'City', index: 'City', width: 130, editoptions: { rows: "2", cols: "10" } },
+                            { name: 'Edit', formatter: function (cellvalue, options, rowObject) {
+                                return '<a href="#' + $(grid_selector).getCell(Id) + '">' + "Edit" + '</a>';
+                            } }
                         ],
+                        
                         onSelectRow: function (id) {
                             var data = null;
                             data = $(grid_selector).find('tr[class*="ui-state-highlight"]');

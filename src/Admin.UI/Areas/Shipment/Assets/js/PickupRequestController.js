@@ -1,9 +1,13 @@
 ﻿(function () {
     var app = angular.module('mainApp')
+
     app.controller('PickupRequestController', function ($scope, $http) {
         $scope.Contacts = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Account 1' }, { Id: 2, Name: 'Account 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
         $scope.Addresses = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
 
+        $scope.pickupRequest = null;
+
+        $scope.pickupRequest = { ContactName: null, PickupFrom :null}
 
         $http({
             method: 'GET',
@@ -15,18 +19,29 @@
             }
         }).success(function (data, status, headers, config) {
             $scope.message = '';
-            $scope.Address = data;
+            $scope.Address = (JSON.parse(data)).Result;
             var item =
             {
                 Id: 0,
                 ShortName: "New Address",
             };
             $scope.Address.push(item);
+
         });
 
         $scope.GetAddressValue = function (address) {
-            var addressType = $scope.pickupRequest.AddressType;
 
+
+
+            var addressType = $scope.pickupRequest.AddressType;
+            if (addressType == "0")
+                $scope.pickupRequest = { Phone: null, AddressType: $scope.pickupRequest.AddressType, Address1: null, Address2: null, City: null, ZipCode: null, CountryId: null, Division: null };
+            $("#addressLine1").removeAttr('disabled');
+            $("#addressLine2").removeAttr('disabled');
+            $("#city").removeAttr('disabled');
+            $("#CountryId").removeAttr('disabled');
+            $("#zipCode").removeAttr('disabled');
+            $("#Division").removeAttr('disabled');
             var ShortName = $.grep($scope.Address, function (address) {
                 return address.Id == addressType;
             })[0].ShortName;
@@ -52,10 +67,54 @@
                     $scope.message = str;
                 }
                 else {
-                    var result = JSON.parse(data);
-                    alert(1);
-                    $scope.pickupRequest.City = $scope.AddressRecord.City;
-                    //  $scope.message = 'Login Successfully';
+                    var result = data.Result;
+                    
+                    //////////////////
+                    $http({
+                        method: 'GET',
+                        url: '/User/Home/State',
+                        //data: $scope.SelectedCountry.CountryCode,
+                        params: { countryId: result.CountryId },
+                        headers: {
+                            'RequestVerificationToken': $scope.antiForgeryToken
+                        }
+                    }).success(function (data, status, headers, config) {
+                        $scope.message = '';
+                        if (data.success == false) {
+                            var str = '';
+                            for (var error in data.errors) {
+                                str += data.errors[error] + '\n';
+                            }
+                            $scope.message = str;
+                        }
+                        else {
+                            $scope.States = JSON.parse(data);
+                            //  $scope.message = 'Login Successfully';
+                           
+                        }
+                    })
+                    ////////////////////
+                    
+                    $scope.pickupRequest = {
+                         AddressType: $scope.pickupRequest.AddressType,
+                        Address1: result.Address1, Address2: result.Address2, City: result.City,
+                        ZipCode: result.PostalCode
+                    };
+                    
+
+                    $("#addressLine1").attr('disabled', 'disabled');
+                    $("#addressLine2").attr('disabled', 'disabled');
+                    $("#city").attr('disabled', 'disabled');
+                    $("#CountryId").attr('disabled', 'disabled');
+                    $("#zipCode").attr('disabled', 'disabled');
+                    $("#Division").attr('disabled', 'disabled');
+                    $("#Division").removeAttr('selected');
+                    $("#CountryId").removeAttr('selected');
+                    
+                    $("#CountryId").find('option[value=' + result.CountryId + ']').attr('selected', 'selected');
+                    $("#Division").find('option[label=' + result.Division + ']').attr('selected', 'selected');
+                    $scope.pickupRequest.CountryId = result.CountryId;
+                    $scope.pickupRequest.Division = result.Division;
                 }
             }).error(function (data, status, headers, config) {
                 $scope.message = 'Unexpected Error';
@@ -66,9 +125,8 @@
         }
         //Ends here getting country detail
 
-        //$scope.States = { Data: [{ Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }] };
-       // $scope.Countries = { Data: [{ Id: 1, Name: 'Country 1' }, { Id: 2, Name: 'Country 2' }] };
-        $scope.Carriers = { Data: [{ Id: 1, Name: 'DHL' }, { Id: 2, Name: 'Endicia' }] };
+        
+        $scope.Carriers = { Data: [{ Id: 1, Name: 'DHL' }, { Id: 2, Name: 'Endicia' }, { Id: 3, Name: 'UPS' }] };
 
         $scope.Pieces = {
             Data: [{ Id: 1, Name: '1' },
@@ -124,15 +182,7 @@
         });
 
         //Getting selected Country Code and Country Name
-        $scope.GetValue = function (country) {
-            var countryId = $scope.pickupRequest.CountryId;
-
-            var CountryName = $.grep($scope.Country, function (country) {
-                return country.Id == countryId;
-            })[0].Name;
-            $scope.SelectedCountry = {};
-            $scope.SelectedCountry.Id = countryId;
-            $scope.SelectedCountry.Name = CountryName;
+        $scope.GetValue = function () {
             //Getting States list using HTTP Request from controller
 
             $http({
@@ -166,7 +216,7 @@
         //Ends here getting country detail
 
         $scope.sendForm = function () {
-           
+
 
             if ($scope.PickupForm.$valid) {
                 $http({
@@ -187,5 +237,13 @@
             }
             if ($scope.PickupForm.$invalid) { $scope.message = "Check required fields." }
         };
+       
+        $("#contactName").blur(function () {
+
+            $("#pickupfrom").val($("#contactName").val());
+            $scope.pickupRequest.PickupForm = $("#contactName").val();
+
+        });
     });
+    
 })();

@@ -79,8 +79,8 @@ namespace Admin.UI.ShipmentArea
             }
 
             var postData = JsonConvert.SerializeObject(pickupRequest);
-            //string strURL = Constants.APIURL+ "DHL/Pickup";
-            string strURL= "http://localhost:49201/"+"DHL/Pickup";
+            string strURL = Constants.APIURL+ "DHL/Pickup";
+           // string strURL= "http://localhost:49201/"+"DHL/Pickup";
 
             //Constants.ShippingURL + "Endicia/Pickup"
             //Constants.ShippingURL + "UPS/Pickup"

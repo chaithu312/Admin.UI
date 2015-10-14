@@ -27,13 +27,14 @@ namespace Admin.UI.Controllers
                 new Navigation { Id = 7, Title = "View Pickup", ParentId = 2, Type = "", NavURL = "/Shipment/ViewPickup" },
                 new Navigation { Id = 8, Title = "Tracking", ParentId = 2, Type = "", NavURL = "/Shipment/Tracking" } ,
                 new Navigation { Id = 8, Title = "Vendor Setting", ParentId = 2, Type = "", NavURL = "/Shipment/VendorSetting" } ,
+                new Navigation { Id = 9, Title = "Shipping", ParentId = 2, Type = "", NavURL = "/Shipment/Shipping" } ,
 
-                new Navigation { Id = 9, Title = "Create User", ParentId = 3, Type = "", NavURL = "/User" },
-                new Navigation { Id = 10, Title = "View User ", ParentId = 3, Type = "", NavURL = "/User/List" },
-                new Navigation { Id = 11, Title = "AddressBook", ParentId = 3, Type = "", NavURL = "/User/AddressBook" },
-                new Navigation { Id = 12, Title = "View Address", ParentId = 3, Type = "", NavURL = "/User/ViewAddress" },
+                new Navigation { Id = 10, Title = "Create User", ParentId = 3, Type = "", NavURL = "/User" },
+                new Navigation { Id = 11, Title = "View User ", ParentId = 3, Type = "", NavURL = "/User/List" },
+                new Navigation { Id = 12, Title = "AddressBook", ParentId = 3, Type = "", NavURL = "/User/AddressBook" },
+                new Navigation { Id = 13, Title = "View Address", ParentId = 3, Type = "", NavURL = "/User/ViewAddress" },
 
-                new Navigation { Id = 13, Title = "Home", ParentId = 1, Type = "", NavURL = "/default" },
+                new Navigation { Id = 14, Title = "Home", ParentId = 1, Type = "", NavURL = "/default" },
             };
         }
     }
