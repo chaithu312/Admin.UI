@@ -112,39 +112,7 @@
             require: 'ngModel',
             link: function (scope, element, attrs, ctrl) {
                 angular.element(element).bind('blur', function () {
-                    if (PHONE_REGEXP.test(this.value)) {
-                        //Postal code is in valid format get cities related to that postal code
-                        //Getting Postal Code
-                       
-                        $http({
-                            url: '/User/Home/PostalCode',
-                            method: "GET",
-                            data: JSON.stringify(this.value),
-                            contentType: "application/json;",
-                            dataType: "json"
-                        })
-                       .success(function (data, status, headers, config) {
-                           scope.contact.PostalCodes = JSON.parse(data);;
-
-                       }).error(function (data, status, headers, config) {
-                           alert(data);
-                       });
-
-                        //End of getting Postal code
-                        angular.element(this).next().next().css('display', 'none');
-                    } else {
-                        // Invalid input
-                        ctrl.$setValidity('currencyField', false);
-                        console.log("invalid phone number");
-                        angular.element(this).next().css('display', 'block');
-                        angular.element(this).next().css('display', 'block');
-
-                        /*
-                            Looks like at this point ctrl is not available,
-                            so I can't user the following method to display the error node:
-                            ctrl.$setValidity('currencyField', false);
-                        */
-                    }
+                  
                 });
             }
         }

@@ -40,7 +40,6 @@ namespace Admin.UI.ShipmentArea
         [HttpPost]
         public JsonResult PickupRequest([FromBody]PickupRequest pickupRequest)
         {
-            ResponseMessage test = JsonConvert.DeserializeObject<ResponseMessage>("[{  \"@version\":\"1.0\",\"@encoding\":\"UTF-8\"}]");
             if (pickupRequest != null)
             {
                 pickupRequest.UserID = "4";//TODO: 
