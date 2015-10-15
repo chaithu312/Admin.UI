@@ -74,7 +74,7 @@
                             { name: 'Division', index: 'Division', width: 130, editable: true},
                             { name: 'City', index: 'City', width: 130, editoptions: { rows: "2", cols: "10" } },
                             { name: 'Edit', formatter: function (cellvalue, options, rowObject) {
-                                return '<a href="#' + $(grid_selector).getCell(Id) + '">' + "Edit" + '</a>';
+                                return '<a href="#' + $(grid_selector).getCell('Id') + '">' + "Edit" + '</a>';
                             } }
                         ],
                         

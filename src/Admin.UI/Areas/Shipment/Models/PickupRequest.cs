@@ -136,9 +136,9 @@ namespace Admin.UI.Areas.Shipment.Models
         public string ConfirmationNumber { get; set; }
         public PackagePickup PackagePickup { get; set; }
         public string OriginSvcArea { get; set; }
-        public string Status { get; set; }
         public string ErrorMessage { get; set; }
         public string PickupStatus { get; set; }
+        public string Status { get; set; }
     }
 
     public class PackagePickup
@@ -222,5 +222,48 @@ namespace Admin.UI.Areas.Shipment.Models
         public string Length { get; set; }
         public string Height { get; set; }
         public string Depth { get; set; }
+    }
+
+    public class ServiceHeader
+    {
+        public string MessageTime { get; set; }
+        public string MessageReference { get; set; }
+        public string SiteID { get; set; }
+    }
+
+    public class Condition
+    {
+        public string ConditionCode { get; set; }
+        public string ConditionData { get; set; }
+    }
+
+    public class Status
+    {
+        public string ActionStatus { get; set; }
+        public Condition Condition { get; set; }
+    }
+
+
+    public class ResponseMessage
+    {
+        public string res { get; set; }
+        public string xsi { get; set; }
+        public string schemaLocation { get; set; }
+        public ErrorRespnse Response { get; set; }
+    }
+
+    public class ErrorRespnse
+    {
+        public ServiceHeader ServiceHeader { get; set; }
+        public Status Status { get; set; }
+    }
+    public class ViewPickup
+    {
+        public string Id { get; set; }
+        public string Detail { get; set; }
+        public string Confirmation { get; set; }
+        public string Destination { get; set; }
+        public string Status { get; set; }
+        public string Created { get; set; }
     }
 }

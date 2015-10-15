@@ -1,10 +1,12 @@
 ﻿using Admin.UI.Areas.Shipment.Models;
 using Microsoft.AspNet.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Web.Script.Serialization;
 
@@ -38,13 +40,13 @@ namespace Admin.UI.ShipmentArea
         [HttpPost]
         public JsonResult PickupRequest([FromBody]PickupRequest pickupRequest)
         {
-            
+            ResponseMessage test = JsonConvert.DeserializeObject<ResponseMessage>("[{  \"@version\":\"1.0\",\"@encoding\":\"UTF-8\"}]");
             if (pickupRequest != null)
             {
                 pickupRequest.UserID = "4";//TODO: 
                 pickupRequest.AccountID = "2";//TODO:
                 pickupRequest.VendorAccountID = "1";//TODO:
-                pickupRequest.PickupDate= CarrierSpecificValueConversion.GetDate(pickupRequest.PickupDate, (Carrier)Convert.ToInt16(pickupRequest.Carrier));
+                pickupRequest.PickupDate = CarrierSpecificValueConversion.GetDate(pickupRequest.PickupDate, (Carrier)Convert.ToInt16(pickupRequest.Carrier));
 
             }
 
@@ -65,7 +67,7 @@ namespace Admin.UI.ShipmentArea
                 register.City = pickupRequest.City;
                 register.Address1 = pickupRequest.Address1;
                 register.Address2 = pickupRequest.Address2;
-                
+
                 string url = Constants.APIURL + "MasterApi/Address/Insert";
 
                 using (var client = new WebClient())
@@ -79,8 +81,8 @@ namespace Admin.UI.ShipmentArea
             }
 
             var postData = JsonConvert.SerializeObject(pickupRequest);
-            string strURL = Constants.APIURL+ "DHL/Pickup";
-           // string strURL= "http://localhost:49201/"+"DHL/Pickup";
+            string strURL = Constants.APIURL + "DHL/Pickup";
+            // string strURL= "http://localhost:49201/"+"DHL/Pickup";
 
             //Constants.ShippingURL + "Endicia/Pickup"
             //Constants.ShippingURL + "UPS/Pickup"
@@ -102,12 +104,15 @@ namespace Admin.UI.ShipmentArea
                 Stream responseStream = response.GetResponseStream();
                 responseString = new StreamReader(responseStream).ReadToEnd();
 
-
-
                 JavaScriptSerializer json_serializer = new JavaScriptSerializer();
-                var routes_list = json_serializer.DeserializeObject(responseString);
-                if (responseString.ToString().ToLower().Equals("true") == true)
-                    return Json("Success");
+
+                Response routes_list = JsonConvert.DeserializeObject<Response>(responseString);
+                string replacestring = Constants.ReplaceErrorMessage;
+                string ErrorMessage = routes_list.ErrorMessage.Replace(replacestring, "").Replace(Constants.xmlns, "").Replace(Constants.xsi, "");
+
+                ResponseMessage errorResponse = JsonConvert.DeserializeObject<ResponseMessage>(ErrorMessage);
+                if (errorResponse.Response.Status.ActionStatus == "Error")
+                    return Json(errorResponse.Response.Status.Condition.ConditionData);
             }
 
             return Json("Failed");
@@ -120,23 +125,51 @@ namespace Admin.UI.ShipmentArea
         [HttpGet]
         public JsonResult GetAllPickup()
         {
-            string AccountId = "12345";
-            string url = Constants.APIURL + "/DHL/accountId";
-            
-            object result = string.Empty;
+            string strPostData = "accountId=2&orderBy=[Pickup].[Created]&sortBy=DESC";
+            string url = Constants.APIURL + "/DHL/accountId?" + strPostData;
 
-            using (var client = new WebClient())
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.ContentType = Constants.ContentType;
+            request.Method = "GET";
+
+            using (WebResponse response = request.GetResponse())
             {
-                client.Headers[HttpRequestHeader.ContentType] = "application/json";
+                Stream responseStream = response.GetResponseStream();
+                string responseString = new StreamReader(responseStream).ReadToEnd();
+                var objData = JsonConvert.DeserializeObject(responseString);
 
-                string serialisedData = JsonConvert.SerializeObject(AccountId);
 
-                var response = client.UploadString(url, serialisedData);
+                //object result = string.Empty;
 
-                result = JsonConvert.DeserializeObject(response);
+                //using (var client = new WebClient())
+                //{
+                //    client.Headers[HttpRequestHeader.ContentType] = "application/json";
+
+                //    string serialisedData = JsonConvert.SerializeObject(strPostData);
+
+                //    var response = client.UploadString(url, serialisedData);
+
+                //    var objData = JsonConvert.DeserializeObject(response);
+
+                JArray varPickUP = JArray.Parse(objData.ToString());
+                IList<ViewPickup> viewpickup = varPickUP.Select(p => new ViewPickup
+                {
+                    Id = (string)p["Id"],
+                    Detail = (string)p["Detail"],
+                    Confirmation = (string)p["Confirmation"],
+                    Destination = (string)p["Destination"],
+                    Created = ((DateTime)p["Created"]).ToString("yyyy-MM-dd"),
+                    Status = (string)p["Status"].ToString() == "1" ? "Success" : "Failed"
+                }).ToList();
+
+                var result = JsonConvert.SerializeObject(viewpickup);
+
+                //result = JsonConvert.DeserializeObject(response);
+                return Json(result);
             }
-            return Json(result);
         }
+
+
 
         public JsonResult DeletePickup(string selectedIds)
         {
@@ -152,7 +185,7 @@ namespace Admin.UI.ShipmentArea
         public JsonResult GetAddressById(long addressType)
         {
             string url = Constants.APIURL + "MasterApi/Address/Id";
-            
+
             object result = string.Empty;
 
             using (var client = new WebClient())
@@ -176,7 +209,7 @@ namespace Admin.UI.ShipmentArea
             switch (carrierType)
             {
                 case Carrier.DHL:
-                    pickupDate = DateTime.ParseExact(pickupDate, "dd-MM-yyyy",CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
+                    pickupDate = DateTime.ParseExact(pickupDate, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
                     break;
             }
             return pickupDate;

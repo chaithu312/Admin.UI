@@ -15,6 +15,10 @@ namespace Admin.UI
         public const string clientSecret = "262148";
         public const string clientScope = "read write";
         public const string APIURL = "http://test.shipos.com/shipping/";
+        public const string xmlns = "@xmlns:";
+        public const string xsi = "@xsi:";
+
+        public const string ReplaceErrorMessage= "\"?xml\":{\"@version\":\"1.0\",\"@encoding\":\"UTF-8\"}";
 
         public const string ContentType = "application/json";
     }

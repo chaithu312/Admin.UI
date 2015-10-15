@@ -98,9 +98,12 @@
 
 //datepicker plugin
 //link
+var dateToday = new Date();
 $('.date-picker').datepicker({
     autoclose: true,
-    todayHighlight: true
+    startDate: '-0m',
+    dateFormat: "yyyy/mm/dd"
+
 })
 
 //show datepicker when clicking on the icon

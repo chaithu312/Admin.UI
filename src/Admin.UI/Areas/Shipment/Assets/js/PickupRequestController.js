@@ -4,10 +4,10 @@
     app.controller('PickupRequestController', function ($scope, $http) {
         $scope.Contacts = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Account 1' }, { Id: 2, Name: 'Account 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
         $scope.Addresses = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
-
+        
         $scope.pickupRequest = null;
-
-        $scope.pickupRequest = { ContactName: null, PickupFrom :null}
+        
+        $scope.pickupRequest = { ContactName: null, Phone: null, PickupFrom: null, Address1: null, Address2: null, City: null, ZipCode: null, CountryId: null, Division: null }
 
         $http({
             method: 'GET',
@@ -30,12 +30,13 @@
         });
 
         $scope.GetAddressValue = function (address) {
-
-
-
+            
             var addressType = $scope.pickupRequest.AddressType;
             if (addressType == "0")
-                $scope.pickupRequest = { Phone: null, AddressType: $scope.pickupRequest.AddressType, Address1: null, Address2: null, City: null, ZipCode: null, CountryId: null, Division: null };
+                $scope.pickupRequest = {ContactName:null, Phone: null, AddressType: $scope.pickupRequest.AddressType, Address1: null, Address2: null, City: null, ZipCode: null, CountryId: null, Division: null ,PickupFrom:null};
+            $("#contactName").removeAttr('disabled');
+            $("#phone").removeAttr('disabled');
+
             $("#addressLine1").removeAttr('disabled');
             $("#addressLine2").removeAttr('disabled');
             $("#city").removeAttr('disabled');
@@ -95,13 +96,23 @@
                     })
                     ////////////////////
                     
-                    $scope.pickupRequest = {
+                    $scope.pickupRequest = {ContactName:result.FirstName+' '+result.LastName,Phone:result.Phone1,
                          AddressType: $scope.pickupRequest.AddressType,
                         Address1: result.Address1, Address2: result.Address2, City: result.City,
-                        ZipCode: result.PostalCode
+                        ZipCode: result.PostalCode, ReadyTime: $scope.pickupRequest.ReadyTime,
+                        AvailableTime: $scope.pickupRequest.AvailableTime,
+                        TotalPieces: $scope.pickupRequest.TotalPieces,
+                        AdditionalsInstructions: $scope.pickupRequest.AdditionalsInstructions,
+                        PickUpNotificationMobile: $scope.pickupRequest.PickUpNotificationMobile,
+                        PickUpNotificationEmail: $scope.pickupRequest.PickUpNotificationEmail,
+                        PickUpNotificationYourEmail: $scope.pickupRequest.PickUpNotificationYourEmail,
+                        PickUpNotificationPersonalizedMessage: $scope.pickupRequest.PickUpNotificationPersonalizedMessage,
+                        AddressNotes: $scope.pickupRequest.AddressNotes,
+                        PickupDate: $scope.pickupRequest.PickupDate,
                     };
-                    
 
+                    $("#contactName").attr('disabled', 'disabled');
+                    $("#phone").attr('disabled', 'disabled');
                     $("#addressLine1").attr('disabled', 'disabled');
                     $("#addressLine2").attr('disabled', 'disabled');
                     $("#city").attr('disabled', 'disabled');
@@ -121,10 +132,10 @@
             });
 
             //Ends here getting request of Http for getting states;
-
+           
         }
         //Ends here getting country detail
-
+        
         
         $scope.Carriers = { Data: [{ Id: 1, Name: 'DHL' }, { Id: 2, Name: 'Endicia' }, { Id: 3, Name: 'UPS' }] };
 
@@ -153,7 +164,7 @@
             ], selectedOption: { Id: 1, Name: '1' }
         };
 
-        $scope.Destination = { Data: [{ Id: 1, Name: 'Domestic' }, { Id: 2, Name: 'International' }, { Id: 3, Name: 'InternationalMultiple packages with mixed destinations' }], selectedOption: { Id: 1, Name: 'Domestic' } };
+        $scope.Destination = { Data: [{ Id: 1, Name: 'Domestic' }, { Id: 2, Name: 'International' }, { Id: 3, Name: 'International multiple packages with mixed destinations' }], selectedOption: { Id: 1, Name: 'Domestic' } };
         $scope.PickupAgent = { Data: [{ Id: 0, Name: 'Select...' }, { Id: 1, Name: 'DHL' }, { Id: 2, Name: 'Endicia' }, { Id: 3, Name: 'FedEx' }], selectedOption: { Id: 0, Name: 'Select...' } };
         $scope.PickupType = { Data: [{ Id: 0, Name: 'Package' }, { Id: 1, Name: 'Finance' }], selectedOption: { Id: 0, Name: 'Package' } };
         //HTTP REQUEST BELOW
@@ -217,8 +228,8 @@
 
         $scope.sendForm = function () {
 
-
             if ($scope.PickupForm.$valid) {
+               
                 $http({
                     url: '/Shipment/PickupRequest',
                     method: "POST",
@@ -228,6 +239,8 @@
                 })
                     .success(function (data, status, headers, config) {
                         $scope.message = data;
+                        $("#divfrm").hide();
+                        $("#divbtn").hide();
                         //alert(data);
                         //window.location.href = "/User/Home/ViewAddress";
 
@@ -235,7 +248,7 @@
                         alert(data);
                     });
             }
-            if ($scope.PickupForm.$invalid) { $scope.message = "Check required fields." }
+            if ($scope.PickupForm.$invalid) { $scope.message = "Please check required fields (marked by *)" }
         };
        
         $("#contactName").blur(function () {
@@ -244,6 +257,21 @@
             $scope.pickupRequest.PickupForm = $("#contactName").val();
 
         });
+
+        $scope.CheckTime = function (readyTime, lastTime) {
+            var rth, lth, rtm, ltm;
+
+            rth = parseInt(readyTime);
+
+            lth = parseInt(lastTime);
+
+            if (rth > lth) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
     });
     
 })();

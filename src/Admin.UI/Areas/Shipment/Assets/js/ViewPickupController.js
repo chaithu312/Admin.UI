@@ -22,7 +22,7 @@
                 $scope.message = str;
             }
             else {
-                $scope.Users = data;
+                $scope.Users = JSON.parse(data);
                 //$scope.Users = [{ Id: 2, FirstName: "SHASHIKANT", LastName: "Pandit", Phone1: "", EMail: "", Division: "", City: "" }
                 //, { Id: 4, FirstName: "SHASHIKANT", LastName: "Pandit", Phone1: "", EMail: "", Division: "", City: "" }];
                 //Starting binding of jqGrid
