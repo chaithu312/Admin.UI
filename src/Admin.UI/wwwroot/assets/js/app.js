@@ -534,7 +534,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 $scope.message = str;
             }
             else {
-                $scope.Country = JSON.parse(data);
+                $scope.Country = (JSON.parse(data)).Result;
                 //  $scope.message = 'Login Successfully';
             }
         }).error(function (data, status, headers, config) {
@@ -694,7 +694,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 $scope.message = str;
             }
             else {
-                $scope.Country = JSON.parse(data);
+                $scope.Country = (JSON.parse(data)).Result;
                 //  $scope.message = 'Login Successfully';
             }
         }).error(function (data, status, headers, config) {
@@ -784,39 +784,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             require: 'ngModel',
             link: function (scope, element, attrs, ctrl) {
                 angular.element(element).bind('blur', function () {
-                    if (PHONE_REGEXP.test(this.value)) {
-                        //Postal code is in valid format get cities related to that postal code
-                        //Getting Postal Code
-                       
-                        $http({
-                            url: '/User/Home/PostalCode',
-                            method: "GET",
-                            data: JSON.stringify(this.value),
-                            contentType: "application/json;",
-                            dataType: "json"
-                        })
-                       .success(function (data, status, headers, config) {
-                           scope.contact.PostalCodes = JSON.parse(data);;
-
-                       }).error(function (data, status, headers, config) {
-                           alert(data);
-                       });
-
-                        //End of getting Postal code
-                        angular.element(this).next().next().css('display', 'none');
-                    } else {
-                        // Invalid input
-                        ctrl.$setValidity('currencyField', false);
-                        console.log("invalid phone number");
-                        angular.element(this).next().css('display', 'block');
-                        angular.element(this).next().css('display', 'block');
-
-                        /*
-                            Looks like at this point ctrl is not available,
-                            so I can't user the following method to display the error node:
-                            ctrl.$setValidity('currencyField', false);
-                        */
-                    }
+                  
                 });
             }
         }
@@ -1359,3 +1327,46 @@ $('[data-rel=popover]').popover({ container: 'body' });
     });
 
 })();
+(function () {
+    var app = angular.module('mainApp');
+    
+    app.controller('vendorController', function ($scope, $http) {
+        $scope.vendor = { Detail:null};
+        $scope.sendVendorForm = function () {
+
+            if ($scope.mainForm.$valid) {
+                
+                switch ($scope.vendor.VendorType) {
+                    case "1":
+                        $scope.vendor.Detail = "{"+"\""+"ThirdPartyAccount"+"\""+ ":" +"\""+ $scope.vendor.DHLAcc+"\""+"}"
+                        break;
+                    case "2":
+                        $scope.vendor.Detail = { AccountNumber: $scope.vendor.EndiciaAcc }
+                        break;
+                    case "3":
+                        $scope.vendor.Detail = { AccountNumber: $scope.vendor.FedexAcc, FedexMeter: $scope.vendor.FedexMeter, FedexPayAcc: $scope.vendor.FedexPayAcc }
+                        break;
+                    case "4":
+                        $scope.vendor.Detail = { UPSLicenseNo: $scope.vendor.UPSLicenseNo, UPSUserName: $scope.vendor.UPSUserName, UPSpassword: $scope.vendor.UPSpassword, UPSAcc: $scope.vendor.UPSAcc }
+                        break;
+                }
+
+                $http({
+                    url: '/Shipment/VendorSetting',
+                    method: "POST",
+                    data: JSON.stringify($scope.vendor),
+                    contentType: "application/json;",
+                    dataType: "json"
+                })
+                    .success(function (data, status, headers, config) {
+                        $scope.message = data;
+                    }).error(function (data, status, headers, config) {
+                        alert(data);
+                    });
+            }
+            if ($scope.mainForm.$invalid) { $scope.message = "Please check required fields (marked by *)" }
+        };
+    });
+
+})();
+

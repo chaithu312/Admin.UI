@@ -27,6 +27,12 @@ namespace Admin.UI.ShipmentArea
             return View();
         }
 
+        [HttpPost]
+        public JsonResult VendorSetting([FromBody]VendorSetting vendorSetting)
+        {
+            return Json(null);
+        }
+
         public IActionResult AWBWithprice()
         {
             return View();

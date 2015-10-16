@@ -56,7 +56,8 @@
                         'Areas/Shipment/Assets/js/TrackingRequestController.js',
                         'Areas/User/Assets/js/AddressBookController.js',
                         'Areas/User/Assets/js/ViewAddressController.js',
-                        'Areas/Shipment/Assets/js/ViewPickupController.js'
+                        'Areas/Shipment/Assets/js/ViewPickupController.js',
+                        'Areas/Shipment/Assets/js/VendorSettingController.js'
                         
 
                     ],

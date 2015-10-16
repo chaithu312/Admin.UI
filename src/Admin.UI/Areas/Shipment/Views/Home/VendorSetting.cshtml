@@ -9,16 +9,16 @@
         </div>
         <div class="widget-body">
             <div class="widget-main">
-                <form name="mainForm" data-ng-submit="sendForm()" data-ng-controller="vendorController" novalidate>
+                <form name="mainForm" data-ng-submit="sendVendorForm()" data-ng-controller="vendorController" novalidate>
                     <div id="errorMessages" class="error">{{message}}</div>
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
-                            <label for="nickName">Nick Name</label>
+                            <label for="Name">Nick Name </label><span class="error" data-ng-show="mainForm.Name.$error.required">* </span>
                         </label>
 
                         <div class="input-group col-sm-8">
-                            <input id="nickName" class="form-control" name="userName" type="text" data-ng-model="vendor.nickName" required ng-unique validate-email />
-                            <span class="error" data-ng-show="mainForm.nickName.$error.required"></span>
+                            <input id="Name" class="form-control" name="Name" type="text" data-ng-model="vendor.Name" required ng-unique validate-email />
+                            
                         </div>
                     </div>
                     <hr />
@@ -29,11 +29,11 @@
                         </label>
 
                         <div class="input-group col-sm-8">
-                            <select name="type" ng-model="vendor.type" ng-dropdown required>
-                                <option ng-option value="DHL">DHL</option>
-                                <option ng-option value="Endicia">Endicia</option>
-                                <option ng-option value="FedEx">FedEx</option>
-                                <option ng-option value="UPS">UPS</option>
+                            <select name="type" ng-model="vendor.VendorType" ng-dropdown required>
+                                <option ng-option value="1">DHL</option>
+                                <option ng-option value="2">Endicia</option>
+                                <option ng-option value="3">FedEx</option>
+                                <option ng-option value="4">UPS</option>
                             </select>
                         </div>
                     </div>
@@ -41,114 +41,118 @@
                     <div class="widget-header">
                         <h5 class="widget-title">{{vendor.type}} Configuration Setting</h5>
                     </div>
-                    <div class="widget-body" id="DHL" ng-if="vendor.type == 'DHL'">
+                    <div class="widget-body" id="DHL" ng-if="vendor.VendorType == '1'">
                         <div class="widget-main">
                             <div>
                                 <label for="form-field-mask-1" class="col-sm-3">
                                     <label for="thirdPartyAcc">Third Party Account#</label>
+                                    <span class="error" data-ng-show="mainForm.DHLAcc.$error.required">*</span>
                                 </label>
 
                                 <div class="input-group col-sm-8">
-                                    <input id="DHLAcc" class="form-control" name="DHLAcc" type="number" data-ng-model="vendor.DHLAcc" required />
-                                    <span class="error" data-ng-show="mainForm.DHLAcc.$error.required"></span>
+                                    <input id="DHLAcc" class="form-control" name="DHLAcc" data-ng-model="vendor.DHLAcc" required />
+                                    
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="widget-body" id="Endicia" ng-if="vendor.type == 'Endicia'">
+                    <div class="widget-body" id="Endicia" ng-if="vendor.VendorType == '2'">
                         <div class="widget-main">
                             <div>
                                 <label for="form-field-mask-1" class="col-sm-3">
                                     <label for="thirdPartyAcc"> Account#</label>
+                                    <span class="error" data-ng-show="mainForm.EndiciaAcc.$error.required">*</span>
                                 </label>
 
                                 <div class="input-group col-sm-8">
                                     <input id="EndiciaAcc" class="form-control" name="EndiciaAcc" type="number" data-ng-model="vendor.EndiciaAcc" required />
-                                    <span class="error" data-ng-show="mainForm.EndiciaAcc.$error.required"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="widget-body" id="FedEx" ng-if="vendor.type == 'FedEx'">
+                    <div class="widget-body" id="FedEx" ng-if="vendor.VendorType == '3'">
                         <div class="widget-main">
                             <div>
                                 <label for="form-field-mask-1" class="col-sm-3">
                                     <label for="thirdPartyAcc">Account#</label>
+                                    <span class="error" data-ng-show="mainForm.FedexAcc.$error.required">*</span>
                                 </label>
 
                                 <div class="input-group col-sm-8">
                                     <input id="FedexAcc" class="form-control" name="FedexAcc" type="number" data-ng-model="vendor.FedexAcc" required />
-                                    <span class="error" data-ng-show="mainForm.FedexAcc.$error.required"></span>
+                                    
                                 </div>
                             </div>
                             <hr />
                             <div>
                                 <label for="form-field-mask-1" class="col-sm-3">
                                     <label for="thirdPartyAcc">Meter#</label>
+                                    <span class="error" data-ng-show="mainForm.FedexMeter.$error.required">*</span>
                                 </label>
 
                                 <div class="input-group col-sm-8">
                                     <input id="FedexMeter" class="form-control" name="FedexMeter" type="number" data-ng-model="vendor.FedexMeter" required />
-                                    <span class="error" data-ng-show="mainForm.FedexMeter.$error.required"></span>
+                                    
                                 </div>
                             </div>
                             <hr />
                             <div>
                                 <label for="form-field-mask-1" class="col-sm-3">
                                     <label for="thirdPartyAcc">Billing (Payment) Account#</label>
+                                    <span class="error" data-ng-show="mainForm.FedexPayAcc.$error.required">*</span>
                                 </label>
 
                                 <div class="input-group col-sm-8">
                                     <input id="FedexPayAcc" class="form-control" name="FedexPayAcc" type="number" data-ng-model="vendor.FedexPayAcc" required />
-                                    <span class="error" data-ng-show="mainForm.FedexPayAcc.$error.required"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="widget-body" id="UPS" ng-if="vendor.type == 'UPS'">
+                    <div class="widget-body" id="UPS" ng-if="vendor.VendorType == '4'">
                         <div class="widget-main">
                             <div>
                                 <label for="form-field-mask-1" class="col-sm-3">
                                     <label for="thirdPartyAcc">License#</label>
+                                    <span class="error" data-ng-show="mainForm.UPSLicenseNo.$error.required">*</span>
                                 </label>
 
                                 <div class="input-group col-sm-8">
                                     <input id="UPSLicenseNo" class="form-control" name="UPSLicenseNo" type="number" data-ng-model="vendor.UPSLicenseNo" required />
-                                    <span class="error" data-ng-show="mainForm.UPSLicenseNo.$error.required"></span>
+                                    
                                 </div>
                             </div>
                             <hr />
                             <div>
                                 <label for="form-field-mask-1" class="col-sm-3">
                                     <label for="thirdPartyAcc">User Name</label>
+                                    <span class="error" data-ng-show="mainForm.UPSUserName.$error.required">*</span>
                                 </label>
 
                                 <div class="input-group col-sm-8">
                                     <input id="UPSUserName" class="form-control" name="UPSUserName" type="text" data-ng-model="vendor.UPSUserName" required />
-                                    <span class="error" data-ng-show="mainForm.UPSUserName.$error.required"></span>
                                 </div>
                             </div>
                             <hr />
                             <div>
                                 <label for="form-field-mask-1" class="col-sm-3">
                                     <label for="thirdPartyAcc">Password</label>
+                                    <span class="error" data-ng-show="mainForm.UPSpassword.$error.required">*</span>
                                 </label>
 
                                 <div class="input-group col-sm-8">
                                     <input id="UPSpassword" class="form-control" name="UPSpassword" type="password" data-ng-model="vendor.UPSpassword" required />
-                                    <span class="error" data-ng-show="mainForm.UPSpassword.$error.required"></span>
                                 </div>
                             </div>
                             <hr />
                             <div>
                                 <label for="form-field-mask-1" class="col-sm-3">
                                     <label for="thirdPartyAcc">Third Party Account#</label>
+                                    <span class="error" data-ng-show="mainForm.UPSAcc.$error.required">*</span>
                                 </label>
 
                                 <div class="input-group col-sm-8">
                                     <input id="UPSAcc" class="form-control" name="UPSAcc" type="number" data-ng-model="vendor.UPSAcc" required />
-                                    <span class="error" data-ng-show="mainForm.UPSAcc.$error.required"></span>
                                 </div>
                             </div>
                         </div>
@@ -163,7 +167,7 @@
                         </label>
 
                         <div class="input-group col-sm-8">
-                            <input type="text" data-date-format="dd-mm-yyyy" id="datepicker" class="form-control date-picker" required>
+                            <input type="text" data-date-format="dd-mm-yyyy" id="datepicker" ng-model="vendor.Effective" class="form-control date-picker">
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
@@ -177,7 +181,7 @@
                             </label>
 
                             <div class="input-group col-sm-8">
-                                <input type="text" data-date-format="dd-mm-yyyy" id="datepicker" class="form-control date-picker" required>
+                                <input type="text" data-date-format="dd-mm-yyyy" ng-model="vendor.Expiration" id="datepicker" class="form-control date-picker">
                                 <span class="input-group-addon">
                                     <i class="fa fa-calendar bigger-110"></i>
                                 </span>

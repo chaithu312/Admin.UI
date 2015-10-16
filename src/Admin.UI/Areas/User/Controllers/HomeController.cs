@@ -249,7 +249,9 @@ namespace Admin.UI.UserArea
         public JsonResult Country()
         {
             var client = new HttpClient();
-            var result = client.GetStringAsync(Constants.APIURL + "MasterApi/Country").Result;
+            string strPostData = "orderBy=[Country].[Name]&sortdir=ASC";
+            //var result = client.GetStringAsync(Constants.APIURL + "MasterApi/Country").Result;
+            var result = client.GetStringAsync("http://localhost:49201/" + "MasterApi/Country?"+strPostData).Result;
             return Json(result);
         }
 
