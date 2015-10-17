@@ -25,7 +25,7 @@
                                     </label>
                                     <!-- #section:plugins/input.masked-input -->
                                     <div class="input-group col-sm-8">
-                                        <input type="text" class="form-control" id="contactName" name="contactName" data-ng-model="pickupRequest.ContactName" ng-disabled="isDisabled" required>
+                                        <input type="text" class="form-control" id="contactName" name="contactName" data-ng-model="pickupRequest.ContactName" ng-disabled="pickupRequest.isDisabled" required>
                                     </div>
                                 </div>
                                 <div style="clear:both;height:5px;"></div>
@@ -194,7 +194,7 @@
                                                 <!-- #section:plugins/input.masked-input -->
                                                 <div class="input-group col-sm-8">
                                                     <select id="ddldestination" class="form-control" data-ng-model="pickupRequest.Destination" name="ddldestination"
-                                                            data-ng-options="destination.Name for destination in Destination.Data track by destination.Id" required></select>
+                                                            data-ng-options="destination.Id as destination.Name for destination in Destination.Data track by destination.Id" required></select>
                                                 </div>
                                             </div>
                                             <div style="clear:both;height:5px;"></div>

@@ -59,6 +59,7 @@ namespace Admin.UI.ShipmentArea
             {
                 Admin.UI.Areas.User.Models.Address register = new Admin.UI.Areas.User.Models.Address();
 
+                register.FirstName = pickupRequest.ContactName;
                 register.AccountId = 2;
                 register.Status = 1;
                 register.Created = DateTime.Now;
