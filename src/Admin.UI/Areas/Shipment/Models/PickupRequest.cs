@@ -60,75 +60,7 @@ namespace Admin.UI.Areas.Shipment.Models
         public string PickUpNotificationYourEmail { get; set; }
         public string PickUpNotificationPersonalizedMessage { get; set; }
     }
-
-    public class Pickup
-    {
-        [Required]
-        public bool UseShipperAddress { get; set; }
-
-        [Required]
-        public Address Address { get; set; }
-
-        [Required]
-        public DateTime ReadyBy { get; set; }
-
-        [Required]
-        public DateTime NoLaterThan { get; set; }
-
-        [Required]
-        public string Instructions { get; set; }
-
-        [Required]
-        public bool IsHeavy { get; set; }
-
-        [Required]
-        public bool IsBulky { get; set; }
-
-        public string ConfirmationNumber { get; set; }
-
-        public string OriginSvcArea { get; set; }
-
-        public string CancelReason { get; set; }
-
-        public string RegionCode { get; set; }
-
-        [Required]
-        public string RequestorName { get; set; }
-
-        [Required]
-        public string RequestorAccountType { get; set; }
-
-        [Required]
-        public string RequestorPhone { get; set; }
-
-        [Required]
-        public string AccountType { get; set; }
-
-        [Required]
-        public string RequestorAccountNumber { get; set; }
-
-        [Required]
-        public string Date { get; set; }
-
-        [Required]
-        public string ReadyByTime { get; set; }
-
-        [Required]
-        public string CloseTime { get; set; }
-
-        [Required]
-        public string Weight { get; set; }
-
-        [Required]
-        public string WeightUnit { get; set; }
-
-        [Required]
-        public string AWBNumber { get; set; }
-
-        [Required]
-        public List<Parcel> Parcels { get; set; }
-    }
-
+    
     public class Response
     {
         public string RequesterID { get; set; }
@@ -212,18 +144,6 @@ namespace Admin.UI.Areas.Shipment.Models
 
         public string PackageLocation { get; set; }
     }
-
-    public class Parcel
-    {
-        public string NumberOfPieces { get; set; }//Quantity for UPS
-        public string Weight { get; set; }
-        public string WeightUnit { get; set; }
-        public string Width { get; set; }
-        public string Length { get; set; }
-        public string Height { get; set; }
-        public string Depth { get; set; }
-    }
-
     public class ServiceHeader
     {
         public string MessageTime { get; set; }

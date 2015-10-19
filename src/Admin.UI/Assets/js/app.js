@@ -62,6 +62,19 @@
             }
         }
     });
+
+    var vendor=function($http)
+    {
+        var vendor = {};
+        vendor.data = function ()
+        {
+           return  $http.get("http://localhost:49201/MasterApi/vendor");
+        }
+
+        return vendor;
+    }
+
+    app.factory("vendor", vendor);
 })();
 
 //-- Navigation Controller for left navigation

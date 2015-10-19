@@ -62,6 +62,19 @@
             }
         }
     });
+
+    var vendor=function($http)
+    {
+        var vendor = {};
+        vendor.data = function ()
+        {
+           return  $http.get("http://localhost:49201/MasterApi/vendor");
+        }
+
+        return vendor;
+    }
+
+    app.factory("vendor", vendor);
 })();
 
 //-- Navigation Controller for left navigation
@@ -359,6 +372,13 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.pickupRequest = { ContactName: null, Phone: null, PickupFrom: null, Address1: null, Address2: null, City: null, ZipCode: null, CountryId: null, Division: null, isDisabled:null }
         var AllAddress = new Array();
         var selectedAddress = null;
+        $scope.Address = new Array();
+        var item =
+            {
+                Id: 0,
+                ShortName: "New Address",
+            };
+        $scope.Address.push(item);
         $http({
             method: 'GET',
             url: '/User/Home/GetAllAddress',
@@ -371,13 +391,6 @@ $('[data-rel=popover]').popover({ container: 'body' });
             $scope.message = '';
             $scope.Address = (JSON.parse(data)).Result;
             AllAddress = $scope.Address;
-            var item =
-            {
-                Id: 0,
-                ShortName: "New Address",
-            };
-            $scope.Address.push(item);
-
         });
 
         $http({
@@ -444,9 +457,9 @@ $('[data-rel=popover]').popover({ container: 'body' });
                     break;
                 }
             }
-            if (selectedAddress.LastName!=null)
+            if (selectedAddress.LastName==null)
                 $scope.pickupRequest.ContactName = selectedAddress.FirstName;
-            else
+            else if (selectedAddress.LastName != null && selectedAddress.FirstName!=null)
                 $scope.pickupRequest.ContactName = selectedAddress.FirstName + " " + selectedAddress.LastName;
             $scope.pickupRequest.Phone = selectedAddress.Phone1;
             $scope.pickupRequest.Address1 = selectedAddress.Address1;
@@ -1291,24 +1304,23 @@ $('[data-rel=popover]').popover({ container: 'body' });
 (function () {
     var app = angular.module('mainApp');
     
-    app.controller('vendorController', function ($scope, $http) {
+    app.controller('vendorController', function ($scope, $http, vendor) {
         $scope.vendor = { Detail:null};
         $scope.sendVendorForm = function () {
-
             if ($scope.mainForm.$valid) {
-                
+                $scope.vendor.isDisabled = true;
                 switch ($scope.vendor.VendorType) {
-                    case "1":
-                        $scope.vendor.Detail = "{"+"\""+"ThirdPartyAccount"+"\""+ ":" +"\""+ $scope.vendor.DHLAcc+"\""+"}"
+                    case 1:
+                        $scope.vendor.Detail = "{" + "\"" + "ThirdPartyAccount" + "\"" + ":" + "\"" + $scope.vendor.DHLAcc + "\"" + "}";
                         break;
-                    case "2":
-                        $scope.vendor.Detail = { AccountNumber: $scope.vendor.EndiciaAcc }
+                    case 2:
+                        $scope.vendor.Detail = "{" + "\"" + "AccountNumber" + "\"" + ":" + "\"" + $scope.vendor.EndiciaAcc + "\"" + "}";
                         break;
-                    case "3":
-                        $scope.vendor.Detail = { AccountNumber: $scope.vendor.FedexAcc, FedexMeter: $scope.vendor.FedexMeter, FedexPayAcc: $scope.vendor.FedexPayAcc }
+                    case 3:
+                        $scope.vendor.Detail = "{" + "\"" + "AccountNumber" + "\"" + ":" + "\"" + $scope.vendor.FedexAcc + "\"" + "," + "\"" + "FedexMeter" + "\"" + ":" + "\"" + $scope.vendor.FedexMeter + "\"" + "," + "\"" + "FedexPayAcc" + "\"" + ":" + "\"" + $scope.vendor.FedexPayAcc + "\"" + "}";
                         break;
-                    case "4":
-                        $scope.vendor.Detail = { UPSLicenseNo: $scope.vendor.UPSLicenseNo, UPSUserName: $scope.vendor.UPSUserName, UPSpassword: $scope.vendor.UPSpassword, UPSAcc: $scope.vendor.UPSAcc }
+                    case 4:
+                        $scope.vendor.Detail = "{" + "\"" + "UPSLicenseNo" + "\"" + ":" + "\"" + $scope.vendor.UPSLicenseNo + "\"" + "," + "\"" + "UPSUserName" + "\"" + ":" + "\"" + $scope.vendor.UPSUserName + "\"" + "," + "\"" + "UPSpassword" + "\"" + ":" + "\"" + $scope.vendor.UPSpassword + "\"" + "," + "\"" + "UPSAcc" + "\"" + ":" + "\"" + $scope.vendor.UPSAcc + "\"" + "}";
                         break;
                 }
 
@@ -1320,14 +1332,130 @@ $('[data-rel=popover]').popover({ container: 'body' });
                     dataType: "json"
                 })
                     .success(function (data, status, headers, config) {
+                        $scope.vendor = null;
                         $scope.message = data;
                     }).error(function (data, status, headers, config) {
-                        alert(data);
+                        $scope.message = data;
                     });
+
+                
             }
             if ($scope.mainForm.$invalid) { $scope.message = "Please check required fields (marked by *)" }
         };
+
+        vendor.data().success(function(Vendors){
+            $scope.Vendors = Vendors.Result;
+        }).error(function (error) {
+            $scope.message = 'Unable to load vendor data: ' + error.message;
+
+        });
     });
 
 })();
 
+
+(function () {
+    var app = angular.module('mainApp');
+    app.controller('shipmentsController', function ($scope, $http) {
+        $http({
+            method: 'GET',
+            url: '/User/Home/GetAllAddress',
+            headers: {
+                'RequestVerificationToken': $scope.antiForgeryToken
+            }
+        }).success(function (data, status, headers, config) {
+            $scope.message = '';
+            $scope.Address = (JSON.parse(data)).Result;
+            var item =
+            {
+                Id: 0,
+                ShortName: "New Address",
+            };
+            $scope.Address.push(item);
+        });
+
+        //HTTP REQUEST BELOW
+        $http({
+            method: 'GET',
+            url: '/User/Home/Country',
+            headers: {
+                'RequestVerificationToken': $scope.antiForgeryToken
+            }
+        }).success(function (data, status, headers, config) {
+            $scope.message = '';
+            if (data.success == false) {
+                var str = '';
+                for (var error in data.errors) {
+                    str += data.errors[error] + '\n';
+                }
+                $scope.message = str;
+            }
+            else {
+                $scope.Country = JSON.parse(data).Result;
+            }
+        }).error(function (data, status, headers, config) {
+            $scope.message = 'Unexpected Error';
+        });
+
+        //Getting selected Country Code and Country Name
+        $scope.GetDivision = function (CountryId) {
+            //Getting States list using HTTP Request from controller
+
+            $http({
+                method: 'GET',
+                url: '/User/Home/State',
+                params: { countryId: CountryId },
+                headers: {
+                    'RequestVerificationToken': $scope.antiForgeryToken
+                }
+            }).success(function (data, status, headers, config) {
+                $scope.message = '';
+                if (data.success == false) {
+                    var str = '';
+                    for (var error in data.errors) {
+                        str += data.errors[error] + '\n';
+                    }
+                    $scope.message = str;
+                }
+                else {
+                    $scope.States = JSON.parse(data);
+                    //  $scope.message = 'Login Successfully';
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.message = 'Unexpected Error';
+            });
+        }
+
+        $scope.noofpackages = [{ id: 1, name: "1" }, { id: 2, name: "2" }, { id: 3, name: "3" }]
+
+        $scope.nopackage = function (value) {
+            $scope.nopackage = [{ id: 'package' }];
+            for (var i = 0; i < value; i++) {
+                var lastItem = $scope.nopackage.length - i;
+                $scope.nopackage.splice(lastItem);
+            }
+
+            for (var i = 0; i < value; i++) {
+                $scope.nopackage.push({ 'id': 'package' + i });
+            }
+        };
+
+        $scope.sendForm = function () {
+            //if ($scope.shipmentsForm.$valid) {
+            $http({
+                url: '/Shipment/Shipments',
+                method: "POST",
+                data: JSON.stringify($scope.Shipments),
+                contentType: "application/json;",
+                dataType: "json"
+            })
+                .success(function (data, status, headers, config) {
+                    $scope.message = data;
+                }).error(function (data, status, headers, config) {
+                    alert(data);
+                });
+            //}
+            if ($scope.shipmentsForm.$invalid) { $scope.message = "Please check required fields (marked by *)" }
+        };
+    })
+})();

@@ -17,9 +17,90 @@ namespace Admin.UI.ShipmentArea
     [Area("Shipment")]
     public class HomeController : Controller
     {
-        public IActionResult Shipping()
+        public IActionResult Shipments()
         {
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult Shipments([FromBody] Shipments shipment)
+        {
+            if (shipment != null)
+            {
+                shipment.UserId = "4";//TODO:
+                shipment.AccountId = "2";//TODO:
+                shipment.TrackingNumber = "";//TODO:
+                shipment.PickupId = "";//TODO:
+                
+            }
+
+            if (shipment.AddressType == "0")
+            {
+                Admin.UI.Areas.User.Models.Address register = new Admin.UI.Areas.User.Models.Address();
+
+                register.FirstName = shipment.Name;
+                register.AccountId = 2;
+                register.Status = 1;
+                register.Created = DateTime.Now;
+                register.AddressType = Areas.User.Models.Address.AddressTypes.Recipient;
+                register.ShortName = shipment.AddressCaption;
+                register.Phone1 = shipment.Phone;
+                register.EMail = shipment.Email;
+                register.CountryId = shipment.CountryId;
+                register.PostalCode = shipment.PostalCode;
+                register.Division = shipment.Division;
+                register.City = shipment.City;
+                register.Address1 = shipment.Address1;
+                register.Address2 = shipment.Address2;
+
+                string url = Constants.APIURL + "MasterApi/Address/Insert";
+
+                using (var client = new WebClient())
+                {
+                    client.Headers[HttpRequestHeader.ContentType] = "application/json";
+
+                    string serialisedData = JsonConvert.SerializeObject(register);
+
+                    client.UploadString(url, serialisedData);
+                }
+            }
+
+            var postData = JsonConvert.SerializeObject(shipment);
+            string strURL = Constants.APIURL + "Shipments/SaveShipment";
+            // string strURL= "http://localhost:49201/"+"DHL/Pickup";
+
+            //Constants.ShippingURL + "Endicia/Pickup"
+            //Constants.ShippingURL + "UPS/Pickup"
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(strURL);
+            byte[] bytes;
+            //bytes = System.Text.Encoding.ASCII.un(requestXml);
+            bytes = System.Text.Encoding.UTF8.GetBytes(postData);
+            request.ContentType = "application/json";
+            request.ContentLength = bytes.Length;
+            request.Method = "POST";
+            Stream requestStream = request.GetRequestStream();
+            requestStream.Write(bytes, 0, bytes.Length);
+            requestStream.Close();
+            HttpWebResponse response;
+            response = (HttpWebResponse)request.GetResponse();
+            string responseString = string.Empty;
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                Stream responseStream = response.GetResponseStream();
+                responseString = new StreamReader(responseStream).ReadToEnd();
+
+                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+
+                Response routes_list = JsonConvert.DeserializeObject<Response>(responseString);
+                string replacestring = Constants.ReplaceErrorMessage;
+                string ErrorMessage = routes_list.ErrorMessage.Replace(replacestring, "").Replace(Constants.xmlns, "").Replace(Constants.xsi, "");
+
+                ResponseMessage errorResponse = JsonConvert.DeserializeObject<ResponseMessage>(ErrorMessage);
+                if (errorResponse.Response.Status.ActionStatus == "Error")
+                    return Json(errorResponse.Response.Status.Condition.ConditionData);
+            }
+
+            return Json("Failed");
         }
 
         public IActionResult VendorSetting()
@@ -30,7 +111,39 @@ namespace Admin.UI.ShipmentArea
         [HttpPost]
         public JsonResult VendorSetting([FromBody]VendorSetting vendorSetting)
         {
-            return Json(null);
+            var message = Constants.message;
+            try
+            {
+                if (vendorSetting != null)
+                {
+                    vendorSetting.AccountId = Constants.accountId;
+                    vendorSetting.DomainKey = Constants.DomainKey;
+                    vendorSetting.VendorId = (long)vendorSetting.VendorType;
+
+                    vendorSetting.Expiration = DateTime.ParseExact(vendorSetting.Expiration, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
+                    vendorSetting.Effective = DateTime.ParseExact(vendorSetting.Effective, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
+                    string url = "http://localhost:49201/VendorSetting/";
+
+                    object result = string.Empty;
+
+                    using (var client = new WebClient())
+                    {
+                        client.Headers[HttpRequestHeader.ContentType] = Constants.ContentType;
+
+                        string serialisedData = JsonConvert.SerializeObject(vendorSetting);
+
+                        var response = client.UploadString(url, serialisedData);
+
+                        result = JsonConvert.DeserializeObject(response);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+            }
+
+            return Json(message);
         }
 
         public IActionResult AWBWithprice()
@@ -48,11 +161,10 @@ namespace Admin.UI.ShipmentArea
         {
             if (pickupRequest != null)
             {
-                pickupRequest.UserID = "4";//TODO: 
+                pickupRequest.UserID = "4";//TODO:
                 pickupRequest.AccountID = "2";//TODO:
                 pickupRequest.VendorAccountID = "1";//TODO:
                 pickupRequest.PickupDate = CarrierSpecificValueConversion.GetDate(pickupRequest.PickupDate, (Carrier)Convert.ToInt16(pickupRequest.Carrier));
-
             }
 
             if (pickupRequest.AddressType == "0")
@@ -127,7 +239,6 @@ namespace Admin.UI.ShipmentArea
         public ActionResult ViewPickup()
         { return View(); }
 
-
         [HttpGet]
         public JsonResult GetAllPickup()
         {
@@ -143,7 +254,6 @@ namespace Admin.UI.ShipmentArea
                 Stream responseStream = response.GetResponseStream();
                 string responseString = new StreamReader(responseStream).ReadToEnd();
                 var objData = JsonConvert.DeserializeObject(responseString);
-
 
                 //object result = string.Empty;
 
@@ -174,8 +284,6 @@ namespace Admin.UI.ShipmentArea
                 return Json(result);
             }
         }
-
-
 
         public JsonResult DeletePickup(string selectedIds)
         {

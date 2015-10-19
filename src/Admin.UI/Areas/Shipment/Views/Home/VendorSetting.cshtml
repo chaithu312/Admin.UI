@@ -17,7 +17,7 @@
                         </label>
 
                         <div class="input-group col-sm-8">
-                            <input id="Name" class="form-control" name="Name" type="text" data-ng-model="vendor.Name" required ng-unique validate-email />
+                            <input id="Name" class="form-control" name="Name" type="text" data-ng-model="vendor.Name" required/>
                             
                         </div>
                     </div>
@@ -25,15 +25,12 @@
 
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
-                            <label for="carrier">Carrier</label>
+                            <label for="carrier">Carrier</label> <span class="error" data-ng-show="mainForm.vendortype.$error.required">* </span>
                         </label>
 
                         <div class="input-group col-sm-8">
-                            <select name="type" ng-model="vendor.VendorType" ng-dropdown required>
-                                <option ng-option value="1">DHL</option>
-                                <option ng-option value="2">Endicia</option>
-                                <option ng-option value="3">FedEx</option>
-                                <option ng-option value="4">UPS</option>
+                            <select name="vendortype" ng-model="vendor.VendorType" 
+                                    data-ng-options="vendor.Id as vendor.Name for vendor in Vendors track by vendor.Id" ng-dropdown required>
                             </select>
                         </div>
                     </div>
@@ -162,12 +159,12 @@
                     <div>
                         <label for="form-field-mask-1" class="col-sm-3">
                             <label for="Effective">
-                                Effective Date
+                                Effective Date <span class="error" data-ng-show="mainForm.effectiveDate.$error.required">*</span>
                             </label>
                         </label>
 
                         <div class="input-group col-sm-8">
-                            <input type="text" data-date-format="dd-mm-yyyy" id="datepicker" ng-model="vendor.Effective" class="form-control date-picker">
+                            <input type="text" name="effectiveDate" data-date-format="dd-mm-yyyy" id="effectiveDate" ng-model="vendor.Effective" class="form-control date-picker" required>
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
@@ -176,12 +173,13 @@
                         <div>
                             <label for="form-field-mask-1" class="col-sm-3">
                                 <label for="Expiration">
-                                    Expiration Date
+                                    Expiration Date <span class="error" data-ng-show="mainForm.expirationDate.$error.required">*</span>
+                                    
                                 </label>
                             </label>
 
                             <div class="input-group col-sm-8">
-                                <input type="text" data-date-format="dd-mm-yyyy" ng-model="vendor.Expiration" id="datepicker" class="form-control date-picker">
+                                <input type="text" data-date-format="dd-mm-yyyy" name="expirationDate" ng-model="vendor.Expiration" id="expirationDate" class="form-control date-picker" required>
                                 <span class="input-group-addon">
                                     <i class="fa fa-calendar bigger-110"></i>
                                 </span>
@@ -191,7 +189,7 @@
                     </div>
                     <div class="clearfix form-actions" style="margin-bottom:0px;">
                         <div class="text-right">
-                            <button type="submit" class="btn btn-info">
+                            <button type="submit" class="btn btn-info" ng-disabled="vendor.isDisabled">
                                 <i class="ace-icon fa fa-check bigger-110"></i>
                                 Save
                             </button>

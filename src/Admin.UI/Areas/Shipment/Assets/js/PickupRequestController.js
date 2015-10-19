@@ -10,6 +10,13 @@
         $scope.pickupRequest = { ContactName: null, Phone: null, PickupFrom: null, Address1: null, Address2: null, City: null, ZipCode: null, CountryId: null, Division: null, isDisabled:null }
         var AllAddress = new Array();
         var selectedAddress = null;
+        $scope.Address = new Array();
+        var item =
+            {
+                Id: 0,
+                ShortName: "New Address",
+            };
+        $scope.Address.push(item);
         $http({
             method: 'GET',
             url: '/User/Home/GetAllAddress',
@@ -22,13 +29,6 @@
             $scope.message = '';
             $scope.Address = (JSON.parse(data)).Result;
             AllAddress = $scope.Address;
-            var item =
-            {
-                Id: 0,
-                ShortName: "New Address",
-            };
-            $scope.Address.push(item);
-
         });
 
         $http({
@@ -95,9 +95,9 @@
                     break;
                 }
             }
-            if (selectedAddress.LastName!=null)
+            if (selectedAddress.LastName==null)
                 $scope.pickupRequest.ContactName = selectedAddress.FirstName;
-            else
+            else if (selectedAddress.LastName != null && selectedAddress.FirstName!=null)
                 $scope.pickupRequest.ContactName = selectedAddress.FirstName + " " + selectedAddress.LastName;
             $scope.pickupRequest.Phone = selectedAddress.Phone1;
             $scope.pickupRequest.Address1 = selectedAddress.Address1;
