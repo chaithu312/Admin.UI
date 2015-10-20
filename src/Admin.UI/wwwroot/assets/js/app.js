@@ -364,12 +364,43 @@ $('[data-rel=popover]').popover({ container: 'body' });
     var app = angular.module('mainApp')
 
     app.controller('PickupRequestController', function ($scope, $http) {
+
+        $scope.notification = {
+            Mobile: [{
+                Number: ""
+            }],
+            Email: [{
+                ID: ""
+            }]
+        };
+
+        $scope.addMobile = function () {
+            $scope.notification.Mobile.push({
+                Number: ""
+            });
+        },
+
+        $scope.removeMobile = function (index) {
+            $scope.notification.Mobile.splice(index, 1);
+        },
+
+        $scope.addEmail = function () {
+            $scope.notification.Email.push({
+                ID: ""
+            });
+        },
+
+        $scope.removeEmail = function (index) {
+            $scope.notification.Email.splice(index, 1);
+        },
+
+
         $scope.Contacts = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Account 1' }, { Id: 2, Name: 'Account 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
         $scope.Addresses = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
         
         $scope.pickupRequest = null;
         
-        $scope.pickupRequest = { ContactName: null, Phone: null, PickupFrom: null, Address1: null, Address2: null, City: null, ZipCode: null, CountryId: null, Division: null, isDisabled:null }
+        $scope.pickupRequest = { ContactName: null, Phone: null, PickupFrom: null, Address1: null, Address2: null, City: null, ZipCode: null, CountryId: null, Division: null, isDisabled: null, notification: [] }
         var AllAddress = new Array();
         var selectedAddress = null;
         $scope.Address = new Array();
@@ -389,7 +420,12 @@ $('[data-rel=popover]').popover({ container: 'body' });
             }
         }).success(function (data, status, headers, config) {
             $scope.message = '';
-            $scope.Address = (JSON.parse(data)).Result;
+            var successresult = (JSON.parse(data)).Result;
+            if (data != "One or more errors occurred.") {
+                for (var i = 0; i < successresult.length; i++) {
+                    $scope.Address.push(successresult[i]);
+                }
+            }
             AllAddress = $scope.Address;
         });
 
@@ -457,10 +493,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
                     break;
                 }
             }
-            if (selectedAddress.LastName==null)
-                $scope.pickupRequest.ContactName = selectedAddress.FirstName;
-            else if (selectedAddress.LastName != null && selectedAddress.FirstName!=null)
-                $scope.pickupRequest.ContactName = selectedAddress.FirstName + " " + selectedAddress.LastName;
+            
+            $scope.pickupRequest.ContactName = selectedAddress.Name;
             $scope.pickupRequest.Phone = selectedAddress.Phone1;
             $scope.pickupRequest.Address1 = selectedAddress.Address1;
             $scope.pickupRequest.Address2 = selectedAddress.Address2;
@@ -475,7 +509,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             
             $("#CountryId").find('option[value=' + selectedAddress.CountryId + ']').attr('selected', 'selected');
 
-            $("#Division").find('option[label=' + selectedAddress.Division + ']').attr('selected', 'selected');
+            $("#Division").find('option[value=' + selectedAddress.Division + ']').attr('selected', 'selected');
         }
             //Cut above
         //Ends here getting country detail
@@ -547,7 +581,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
         }
         //Ends here getting country detail
-
+        $scope.pickupRequest.notification.push($scope.notification);
         $scope.sendForm = function () {
             
             if ($scope.PickupForm.$valid) {
@@ -576,7 +610,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $("#contactName").blur(function () {
 
             $("#pickupfrom").val($("#contactName").val());
-            $scope.pickupRequest.PickupForm = $("#contactName").val();
+            $scope.pickupRequest.PickupFrom = $("#contactName").val();
+            $scope.$apply();
 
         });
 
@@ -820,7 +855,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                         datatype: "local",
                         height: 350,
                         //colNames: [' ', 'ID', 'Last Sales', 'Name', 'Stock', 'Ship via', 'Notes'],
-                        colNames: ['Id', 'FirstName', 'LastName', 'Phone1', 'EMail', 'Division', 'City','Edit'],
+                        colNames: ['Id', 'Name','Phone1', 'EMail', 'Division', 'City','Edit'],
                         colModel: [
                             //{
                             //    name: 'myac', index: '', width: 80, fixed: true, sortable: false, resize: false,
@@ -833,8 +868,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                             //    }
                             //},
                             { name: 'Id', index: 'Id', width: 30, editable: true,sortable:false },
-                            { name: 'FirstName', index: 'FirstName', width: 130, editable: true },
-                            { name: 'LastName', index: 'LastName', width: 130, editable: true },
+                            { name: 'Name', index: 'Name', width: 130, editable: true },
                             { name: 'Phone1', index: 'Phone1', width: 130, editable: true, editoptions: { size: "20", maxlength: "30" } },
                             { name: 'EMail', index: 'EMail', width: 180, editable: true },
                             { name: 'Division', index: 'Division', width: 130, editable: true},
@@ -1357,6 +1391,14 @@ $('[data-rel=popover]').popover({ container: 'body' });
 (function () {
     var app = angular.module('mainApp');
     app.controller('shipmentsController', function ($scope, $http) {
+        $scope.Address = new Array();
+        var selectedShipperAddress = null;
+        var item =
+            {
+                Id: 0,
+                ShortName: "New Address",
+            };
+        $scope.Address.push(item);
         $http({
             method: 'GET',
             url: '/User/Home/GetAllAddress',
@@ -1365,14 +1407,67 @@ $('[data-rel=popover]').popover({ container: 'body' });
             }
         }).success(function (data, status, headers, config) {
             $scope.message = '';
-            $scope.Address = (JSON.parse(data)).Result;
-            var item =
-            {
-                Id: 0,
-                ShortName: "New Address",
-            };
-            $scope.Address.push(item);
+            var successresult = (JSON.parse(data)).Result;
+            if (data != "One or more errors occurred.") {
+                for (var i = 0; i < successresult.length; i++) {
+                    $scope.Address.push(successresult[i]);
+                }
+            }
+            AllAddress = $scope.Address;
         });
+        $http({
+            method: 'GET',
+            url: '/User/Home/Division',
+            //data: $scope.SelectedCountry.CountryCode,
+            headers: {
+                'RequestVerificationToken': $scope.antiForgeryToken
+            }
+        }).success(function (data, status, headers, config) {
+            $scope.message = '';
+            $scope.States = JSON.parse(data);
+        }).error(function (data, status, headers, config) {
+            $scope.message = 'Unexpected Error';
+        });
+
+        $scope.GetShipperAddressValue = function () {
+
+            var addressType = $scope.Shipments.AddressType;
+            if (addressType == "0") {
+                $scope.Shipments.Name = null
+                $scope.Shipments.Phone = null
+                $scope.Shipments.AddressType = $scope.Shipments.AddressType
+                $scope.Shipments.Address1 = null
+                $scope.Shipments.Address2 = null
+                $scope.Shipments.City = null
+                $scope.Shipments.PostalCode = null
+                $scope.Shipments.CountryId = null;
+                $scope.Shipments.Division = null;
+                $scope.Shipments.isDisabled = false;
+                return;
+            }
+
+            for (var i = 0; i < AllAddress.length; i++) {
+                if (AllAddress[i].Id == addressType) {
+                    selectedShipperAddress = AllAddress[i]
+                    break;
+                }
+            }
+
+            $scope.Shipments.ContactName = selectedShipperAddress.Name;
+            $scope.Shipments.Phone = selectedShipperAddress.Phone1;
+            $scope.Shipments.Address1 = selectedShipperAddress.Address1;
+            $scope.Shipments.Address2 = selectedShipperAddress.Address2;
+            $scope.Shipments.City = selectedShipperAddress.City;
+            $scope.Shipments.PostalCode = selectedShipperAddress.PostalCode;
+            $scope.Shipments.CountryId = selectedShipperAddress.CountryId;
+            $scope.Shipments.Division = selectedShipperAddress.Division;
+            $scope.Shipments.isDisabled = true;
+            $scope.$apply();
+
+            $("#CountryId").find('option[value=' + selectedShipperAddress.CountryId + ']').attr('selected', 'selected');
+
+            $("#Division").find('option[value=' + selectedShipperAddress.Division + ']').attr('selected', 'selected');
+        }
 
         //HTTP REQUEST BELOW
         $http({
@@ -1424,38 +1519,50 @@ $('[data-rel=popover]').popover({ container: 'body' });
             }).error(function (data, status, headers, config) {
                 $scope.message = 'Unexpected Error';
             });
-        }
-
-        $scope.noofpackages = [{ id: 1, name: "1" }, { id: 2, name: "2" }, { id: 3, name: "3" }]
-
-        $scope.nopackage = function (value) {
-            $scope.nopackage = [{ id: 'package' }];
-            for (var i = 0; i < value; i++) {
-                var lastItem = $scope.nopackage.length - i;
-                $scope.nopackage.splice(lastItem);
-            }
-
-            for (var i = 0; i < value; i++) {
-                $scope.nopackage.push({ 'id': 'package' + i });
-            }
+        };
+        $scope.Parcel = {
+            items: [{
+                Weight: 0,
+                Width: 0,
+                Height: 0,
+                Length: 0
+            }]
         };
 
-        $scope.sendForm = function () {
-            //if ($scope.shipmentsForm.$valid) {
-            $http({
-                url: '/Shipment/Shipments',
-                method: "POST",
-                data: JSON.stringify($scope.Shipments),
-                contentType: "application/json;",
-                dataType: "json"
-            })
-                .success(function (data, status, headers, config) {
-                    $scope.message = data;
-                }).error(function (data, status, headers, config) {
-                    alert(data);
-                });
-            //}
+        $scope.addItem = function () {
+            $scope.Parcel.items.push({
+                Weight: 0,
+                Width: 0,
+                Height: 0,
+                Length: 0
+            });
+        },
+
+        $scope.removeItem = function (index) {
+            $scope.Parcel.items.splice(index, 1);
+        },
+
+        $scope.Shipments = null;
+        $scope.Shipments = { Parcel: [] };
+        $scope.Shipments.Parcel.push($scope.Parcel);
+      
+        $scope.sendShipmentsForm = function () {
+            if ($scope.shipmentsForm.$valid) {
+                $http({
+                    url: '/Shipment/Shipments',
+                    method: "POST",
+                    data: JSON.stringify($scope.Shipments),
+                    contentType: "application/json;",
+                    dataType: "json"
+                })
+                    .success(function (data, status, headers, config) {
+                        $scope.message = data;
+                    }).error(function (data, status, headers, config) {
+                        alert(data);
+                    });
+            }
             if ($scope.shipmentsForm.$invalid) { $scope.message = "Please check required fields (marked by *)" }
+
         };
-    })
+    });
 })();

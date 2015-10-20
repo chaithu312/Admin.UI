@@ -31,7 +31,13 @@ namespace Admin.UI.ShipmentArea
                 shipment.AccountId = "2";//TODO:
                 shipment.TrackingNumber = "";//TODO:
                 shipment.PickupId = "";//TODO:
-                
+                shipment.SessionKey = "1";
+                shipment.VendorSettingId = "1";
+                shipment.Unit = "1";
+                shipment.Currency = "1";
+                shipment.PickupId = "4";
+                shipment.shipmentdate = DateTime.ParseExact(shipment.shipmentdate, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
+
             }
 
             if (shipment.AddressType == "0")
@@ -66,7 +72,7 @@ namespace Admin.UI.ShipmentArea
             }
 
             var postData = JsonConvert.SerializeObject(shipment);
-            string strURL = Constants.APIURL + "Shipments/SaveShipment";
+            string strURL = Constants.APIURL + "Shipment/SaveShipment";
             // string strURL= "http://localhost:49201/"+"DHL/Pickup";
 
             //Constants.ShippingURL + "Endicia/Pickup"

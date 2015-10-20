@@ -214,6 +214,7 @@ namespace Admin.UI.UserArea
                     register.AccountId = 2;
                     register.Status = 1;
                     register.Created = DateTime.Now;
+                    register.Name = register.FirstName + " " + register.LastName;
                 }
 
                 string url = Constants.APIURL+ "MasterApi/Address/Insert";

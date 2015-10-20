@@ -2,12 +2,43 @@
     var app = angular.module('mainApp')
 
     app.controller('PickupRequestController', function ($scope, $http) {
+
+        $scope.notification = {
+            Mobile: [{
+                Number: ""
+            }],
+            Email: [{
+                ID: ""
+            }]
+        };
+
+        $scope.addMobile = function () {
+            $scope.notification.Mobile.push({
+                Number: ""
+            });
+        },
+
+        $scope.removeMobile = function (index) {
+            $scope.notification.Mobile.splice(index, 1);
+        },
+
+        $scope.addEmail = function () {
+            $scope.notification.Email.push({
+                ID: ""
+            });
+        },
+
+        $scope.removeEmail = function (index) {
+            $scope.notification.Email.splice(index, 1);
+        },
+
+
         $scope.Contacts = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Account 1' }, { Id: 2, Name: 'Account 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
         $scope.Addresses = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
         
         $scope.pickupRequest = null;
         
-        $scope.pickupRequest = { ContactName: null, Phone: null, PickupFrom: null, Address1: null, Address2: null, City: null, ZipCode: null, CountryId: null, Division: null, isDisabled:null }
+        $scope.pickupRequest = { ContactName: null, Phone: null, PickupFrom: null, Address1: null, Address2: null, City: null, ZipCode: null, CountryId: null, Division: null, isDisabled: null, notification: [] }
         var AllAddress = new Array();
         var selectedAddress = null;
         $scope.Address = new Array();
@@ -27,7 +58,12 @@
             }
         }).success(function (data, status, headers, config) {
             $scope.message = '';
-            $scope.Address = (JSON.parse(data)).Result;
+            var successresult = (JSON.parse(data)).Result;
+            if (data != "One or more errors occurred.") {
+                for (var i = 0; i < successresult.length; i++) {
+                    $scope.Address.push(successresult[i]);
+                }
+            }
             AllAddress = $scope.Address;
         });
 
@@ -95,10 +131,8 @@
                     break;
                 }
             }
-            if (selectedAddress.LastName==null)
-                $scope.pickupRequest.ContactName = selectedAddress.FirstName;
-            else if (selectedAddress.LastName != null && selectedAddress.FirstName!=null)
-                $scope.pickupRequest.ContactName = selectedAddress.FirstName + " " + selectedAddress.LastName;
+            
+            $scope.pickupRequest.ContactName = selectedAddress.Name;
             $scope.pickupRequest.Phone = selectedAddress.Phone1;
             $scope.pickupRequest.Address1 = selectedAddress.Address1;
             $scope.pickupRequest.Address2 = selectedAddress.Address2;
@@ -113,7 +147,7 @@
             
             $("#CountryId").find('option[value=' + selectedAddress.CountryId + ']').attr('selected', 'selected');
 
-            $("#Division").find('option[label=' + selectedAddress.Division + ']').attr('selected', 'selected');
+            $("#Division").find('option[value=' + selectedAddress.Division + ']').attr('selected', 'selected');
         }
             //Cut above
         //Ends here getting country detail
@@ -185,7 +219,7 @@
 
         }
         //Ends here getting country detail
-
+        $scope.pickupRequest.notification.push($scope.notification);
         $scope.sendForm = function () {
             
             if ($scope.PickupForm.$valid) {
@@ -214,7 +248,8 @@
         $("#contactName").blur(function () {
 
             $("#pickupfrom").val($("#contactName").val());
-            $scope.pickupRequest.PickupForm = $("#contactName").val();
+            $scope.pickupRequest.PickupFrom = $("#contactName").val();
+            $scope.$apply();
 
         });
 

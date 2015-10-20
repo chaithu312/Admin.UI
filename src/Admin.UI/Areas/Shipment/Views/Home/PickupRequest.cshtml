@@ -72,7 +72,7 @@
 
                                     <!-- #section:plugins/input.masked-input -->
                                     <div class="input-group col-sm-8">
-                                        <input type="text" class="form-control" placeholder="" id="addressLine1" name="addressLine1" data-ng-model="pickupRequest.Address1"  ng-disabled="pickupRequest.isDisabled" required>
+                                        <input type="text" class="form-control" placeholder="" id="addressLine1" name="addressLine1" data-ng-model="pickupRequest.Address1" ng-disabled="pickupRequest.isDisabled" required>
                                         <div style="height:5px;clear:both"></div>
                                         <input type="text" class="form-control" placeholder="" id="addressLine2" name="addressLine2" data-ng-model="pickupRequest.Address2" ng-disabled="pickupRequest.isDisabled">
                                     </div>
@@ -119,7 +119,7 @@
                                     <div class="input-group col-sm-8">
 
                                         <select id="Division" class="form-control" data-ng-model="pickupRequest.Division" name="Division"
-                                                data-ng-options="state.Name as state.Name for state in States track by state.Id" ng-disabled="pickupRequest.isDisabled" required></select>
+                                                data-ng-options="state.Id as state.Name for state in States track by state.Id" ng-disabled="pickupRequest.isDisabled" required></select>
                                     </div>
                                 </div>
                                 <div style="clear:both;height:5px;"></div>
@@ -176,7 +176,7 @@
                                             <div style="clear:both;height:5px;"></div>
                                             <div>
                                                 <label for="form-field-mask-1" class="col-sm-3">
-                                                    Pickup Date<span class="error" data-ng-show="PickupForm.datepicker.$error.required">*</span>  
+                                                    Pickup Date<span class="error" data-ng-show="PickupForm.datepicker.$error.required">*</span>
                                                 </label>
 
                                                 <div class="input-group col-sm-8">
@@ -189,7 +189,7 @@
                                             <div style="clear:both;height:5px;"></div>
                                             <div>
                                                 <label for="form-field-mask-1" class="col-sm-3">
-                                                    Destination <span class="error" data-ng-show="PickupForm.ddldestination.$error.required">*</span>  
+                                                    Destination <span class="error" data-ng-show="PickupForm.ddldestination.$error.required">*</span>
                                                 </label>
                                                 <!-- #section:plugins/input.masked-input -->
                                                 <div class="input-group col-sm-8">
@@ -200,7 +200,7 @@
                                             <div style="clear:both;height:5px;"></div>
                                             <div>
                                                 <label for="form-field-mask-1" class="col-sm-3">
-                                                    Parcel type <span class="error" data-ng-show="PickupForm.parcelType.$error.required">*</span>  
+                                                    Parcel type <span class="error" data-ng-show="PickupForm.parcelType.$error.required">*</span>
                                                 </label>
 
                                                 <!-- #section:plugins/input.masked-input -->
@@ -251,7 +251,7 @@
                                                 <!-- #section:plugins/input.masked-input -->
                                                 <div class="input-group col-sm-5">
                                                     <div class="bootstrap-timepicker">
-                                                        <input type="text" class="col-sm-5" data-ng-model="pickupRequest.AvailableTime" id="timepicker1"  name="timepicker1" data-format="hh:mm" required>
+                                                        <input type="text" class="col-sm-5" data-ng-model="pickupRequest.AvailableTime" id="timepicker1" name="timepicker1" data-format="hh:mm" required>
                                                         <span class="input-group-addon" style="padding:8px 12px 9px 12px;">
                                                             <i class="fa fa-clock-o bigger-110"></i>
                                                         </span>
@@ -264,11 +264,11 @@
                                             <div style="clear:both;height:5px;"></div>
                                             <div>
                                                 <label for="form-field-mask-1" class="col-sm-5">
-                                                     Total Pieces <span class="error" data-ng-show="PickupForm.totalPieces.$error.required">*</span>
+                                                    Total Pieces <span class="error" data-ng-show="PickupForm.totalPieces.$error.required">*</span>
                                                 </label>
 
                                                 <div class="input-group col-sm-5">
-                                                    <input type="number" class="col-sm-8" placeholder="" id="totalPieces" name="totalPieces" data-ng-model="pickupRequest.TotalPieces"  min="1" required>
+                                                    <input type="number" class="col-sm-8" placeholder="" id="totalPieces" name="totalPieces" data-ng-model="pickupRequest.TotalPieces" min="1" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -292,71 +292,76 @@
                             <div class="widget-main">
                                 <div class="widget-header">
                                     <div class="row">
+                                        <div> <button type="button" class="btn-info" ng-click="addMobile()"> Add more Mobile</button></div>
 
-                                        <div class="col-xs-12 col-sm-6">
-                                            <div>
-                                                <label for="form-field-mask-1" class="col-sm-3">
-                                                    Mobile Numbers
-                                                </label>
+                                        <div class="col-sm-10" ng:repeat="mobile in notification.Mobile">
 
-                                                <div class="input-group col-sm-8">
-                                                    <input type="text" class="form-control" data-ng-model="pickupRequest.PickUpNotificationMobile" placeholder="" id="Mobile">
-                                                </div>
+                                            <label for="form-field-mask-1" class="col-sm-3">
+                                                Mobile Numbers
+                                            </label>
+
+                                            <div class="input-group col-sm-5">
+                                                <input type="number" class="form-control" data-ng-model="mobile.Number" placeholder="Enter you notification mobile" id="Mobile">
                                             </div>
-                                            <div style="clear:both"></div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-6">
-                                            <div>
-                                                <label for="timepicker1" class="col-sm-3">Emails</label>
-                                                <!-- #section:plugins/input.masked-input -->
-                                                <div class="input-group col-sm-8">
-                                                    <input type="text" class="form-control" data-ng-model="pickupRequest.PickUpNotificationEmail" placeholder="" id="Email">
-                                                </div>
-                                            </div>
+                                            <div class="col-sm-3"><button type="button" class="btn-info" ng-click="removeMobile($index)"> - </button></div>
                                         </div>
                                     </div>
-
+                                    <div style="clear:both"></div>
                                     <div class="row">
-                                        <div class="col-xs-12 col-sm-6">
-                                            <div>
-                                                <label for="form-field-mask-1" class="col-sm-3">
-                                                    your email
-                                                </label>
 
-                                                <div class="input-group col-sm-8">
-                                                    <input type="text" class="form-control" data-ng-model="pickupRequest.PickUpNotificationYourEmail" placeholder="" name="yourEmail" id="yourEmail">
-                                                </div>
+                                        <div> <button type="button" class="btn-info" ng-click="addEmail()"> Add more Emails</button></div>
+                                        <div class="col-sm-10" ng:repeat="email in notification.Email">
+
+                                            <label for="timepicker1" class="col-sm-3">Emails</label>
+
+                                            <div class="input-group col-sm-5">
+                                                <input type="email" class="form-control" data-ng-model="email.ID" placeholder="Enter you notification email" id="Email">
                                             </div>
-                                            <div style="clear:both"></div>
+
+                                            <div class="col-sm-3"><button type="button" class="btn-info" ng-click="removeEmail($index)"> - </button></div>
                                         </div>
                                     </div>
+                                    <div style="clear:both"></div>
+                                    <div class="row">
+                                        <div class="col-sm-10">
 
-                                    <div>
-                                        <label for="form-field-mask-1" class="col-sm-3">
-                                            personalized messages
-                                        </label>
-                                        <!-- #section:plugins/input.masked-input -->
-                                        <div class="input-group col-sm-8">
-                                            <textarea placeholder="Default Text" id="form-field-8" class="form-control" data-ng-model="pickupRequest.PickUpNotificationPersonalizedMessage"></textarea>
+                                            <label for="form-field-mask-1" class="col-sm-3">
+                                                your email
+                                            </label>
+
+                                            <div class="input-group col-sm-5">
+                                                <input type="text" class="form-control" data-ng-model="pickupRequest.PickUpNotificationYourEmail" placeholder="Enter your's Email" name="yourEmail" id="yourEmail">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="clear:both"></div>
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <label for="form-field-mask-1" class="col-sm-3">
+                                                personalized messages
+                                            </label>
+                                            <!-- #section:plugins/input.masked-input -->
+                                            <div class="input-group col-sm-8">
+                                                <textarea placeholder="Enter personalized message" id="form-field-8" class="form-control" data-ng-model="pickupRequest.PickUpNotificationPersonalizedMessage"></textarea>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="clearfix form-actions" id="divbtn" style="margin-bottom:0px;">
-                        <div class="text-right">
-                            <button type="submit" class="btn btn-info" ng-disabled="CheckTime(pickupRequest.ReadyTime.replace(':',''),pickupRequest.AvailableTime.replace(':',''))">
-                                <i class="ace-icon fa fa-check bigger-110"></i>
-                                Save
-                            </button>
+                        <div class="clearfix form-actions" id="divbtn" style="margin-bottom:0px;">
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-info" ng-disabled="CheckTime(pickupRequest.ReadyTime.replace(':',''),pickupRequest.AvailableTime.replace(':',''))">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    Save
+                                </button>
 
-                            <button type="reset" class="btn">
-                                <i class="ace-icon fa fa-undo bigger-110"></i>
-                                New
-                            </button>
+                                <button type="reset" class="btn">
+                                    <i class="ace-icon fa fa-undo bigger-110"></i>
+                                    New
+                                </button>
+                            </div>
                         </div>
-                    </div>
                 </form>
             </div>
         </div>

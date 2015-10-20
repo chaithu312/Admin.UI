@@ -9,7 +9,7 @@
         </div>
         <div class="widget-body">
             <div class="widget-main">
-                <form class="form-inline" name="shipmentsForm" data-ng-submit="sendForm()" data-ng-controller="shipmentsController" novalidate>
+                <form class="form-inline" name="shipmentsForm"  data-ng-submit="sendShipmentsForm()" data-ng-controller="shipmentsController" novalidate>
                     <div id="errorMessages" class="error">{{message}}</div>
                     <div class="col-sm-6">
                         <div class="widget-box">
@@ -35,7 +35,7 @@
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <input type="text" name="name" id="name" ng-model="Shipments.Name" class="form-control" ng-maxlength="50" required="" />
+                                            <input type="text" name="name" id="name" ng-model="Shipments.Name" class="form-control" ng-maxlength="50" required />
                                         </div>
                                     </div>
                                     <div style="clear:both;height:5px;"></div>
@@ -45,7 +45,7 @@
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <input type="text" name="phone" id="phone" ng-model="Shipments.Phone" class="form-control" required="" />
+                                            <input type="text" name="phone" id="phone" ng-model="Shipments.Phone" class="form-control" required />
                                         </div>
                                     </div>
                                     <div style="clear:both;height:5px;"></div>
@@ -55,7 +55,7 @@
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <input type="email" name="email" id="Email" ng-model="Shipments.Email" class="form-control" required="" />
+                                            <input type="email" name="email" id="email" ng-model="Shipments.Email" class="form-control" required />
                                         </div>
                                     </div>
 
@@ -69,7 +69,7 @@
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <select name="address" ng-model="Shipment.AddressType" data-ng-options="address.Id as address.ShortName for address in Address track by address.Id"></select>
+                                            <select name="address" ng-model="Shipment.AddressType" data-ng-options="address.Id as address.ShortName for address in Address track by address.Id" data-ng-change="GetShipperAddressValue()" required></select>
                                         </div>
                                     </div>
                                     <div style="clear:both;height:5px;"></div>
@@ -90,7 +90,7 @@
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <input type="text" name="addressline1" id="addressline1" ng-model="Shipments.Address1" class="form-control" required="" />
+                                            <input type="text" name="addressline1" id="addressline1" ng-model="Shipments.Address1" class="form-control" required />
                                         </div>
                                     </div>
                                     <div style="clear:both;height:5px;"></div>
@@ -124,15 +124,15 @@
                                         </div>
                                     </div>
                                     <div style="clear:both;height:5px;"></div>
+                                    
                                     <div>
                                         <label for="form-field-mask-1" class="col-sm-3">
-                                            <label>Division  <span class="error" ng-show="shipmentsForm.ddlstate.$error.required">*</span> </label>
+                                            <label>Country <span class="error" ng-show="shipmentsForm.CountryId.$error.required">*</span></label>
                                         </label>
 
                                         <div class="input-group col-sm-8">
-
-                                            <select id="ddlState" class="form-control" data-ng-model="Shipments.Division" name="ddlState"
-                                                    data-ng-options="state.Name as state.Name for state in States track by state.Id"></select>
+                                            <select id="CountryId" class="form-control" data-ng-model="Shipments.CountryId" name="CountryId"
+                                                    data-ng-options="country.Id as country.Name for country in Country track by country.Id" data-ng-change="GetDivision(Shipments.CountryId)" required></select>
                                         </div>
                                     </div>
                                     <div style="clear:both;height:5px;"></div>
@@ -142,18 +142,19 @@
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <input type="text" name="postalcode" id="postalcode" ng-model="Shipments.PostalCode" class="form-control" required="" phone />
+                                            <input type="text" name="postalcode" id="postalcode" ng-model="Shipments.PostalCode" class="form-control" required />
                                         </div>
                                     </div>
                                     <div style="clear:both;height:5px;"></div>
                                     <div>
                                         <label for="form-field-mask-1" class="col-sm-3">
-                                            <label>Country <span class="error" ng-show="shipmentsForm.CountryId.$error.required">*</span></label>
+                                            <label>Division  <span class="error" ng-show="shipmentsForm.ddlState.$error.required">*</span> </label>
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <select id="CountryId" class="form-control" data-ng-model="Shipments.CountryId" name="CountryId"
-                                                    data-ng-options="country.Id as country.Name for country in Country" data-ng-change="GetDivision(Shipments.CountryId)"></select>
+
+                                            <select id="ddlState" class="form-control" data-ng-model="Shipments.Division" name="ddlState"
+                                                    data-ng-options="state.Name as state.Name for state in States track by state.Id" required></select>
                                         </div>
                                     </div>
                                 </div>
@@ -174,7 +175,7 @@
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <input type="text" name="RCompany" id="RCompany" ng-model="Shipments.RCompany" class="form-control" ng-maxlength="100" required="" />
+                                            <input type="text" name="RCompany" id="RCompany" ng-model="Shipments.RCompany" class="form-control" ng-maxlength="100" required />
                                         </div>
                                     </div>
                                     <div style="clear:both;height:5px;"></div>
@@ -184,7 +185,7 @@
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <input type="text" name="Rname" id="Rname" ng-model="Shipments.RName" class="form-control" ng-maxlength="50" required="" />
+                                            <input type="text" name="Rname" id="Rname" ng-model="Shipments.Rname" class="form-control" ng-maxlength="50" required />
                                         </div>
                                     </div>
                                     <div style="clear:both;height:5px;"></div>
@@ -194,7 +195,7 @@
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <input type="text" name="Rphone" id="Rphone" ng-model="Shipments.RPhone" class="form-control" required="" />
+                                            <input type="text" name="Rphone" id="Rphone" ng-model="Shipments.Rphone" class="form-control" required />
                                         </div>
                                     </div>
                                     <div style="clear:both;height:5px;"></div>
@@ -204,7 +205,7 @@
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <input type="email" name="Remail" id="Remail" ng-model="Shipments.REmail" class="form-control" required="" />
+                                            <input type="email" name="Remail" id="Remail" ng-model="Shipments.REmail" class="form-control" required />
                                         </div>
                                     </div>
 
@@ -214,11 +215,11 @@
                                     <div style="clear:both;height:5px;"></div>
                                     <div>
                                         <label for="form-field-mask-1" class="col-sm-3">
-                                            <label>Address<span ng-show="Shipments.Raddress.$error.required" ng-class="{'error-text': Shipments.addressline1.$error.required}">*</span></label>
+                                            <label>Address<span ng-show="shipmentsForm.Raddress.$error.required" class="error">*</span></label>
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <select name="Raddress" ng-model="Shipment.RAddressType" data-ng-options="address.Id as address.ShortName for address in Address track by address.Id"></select>
+                                            <select name="Raddress" ng-model="Shipments.RAddressType" data-ng-options="address.Id as address.ShortName for address in Address track by address.Id" required></select>
                                         </div>
                                     </div>
 
@@ -229,7 +230,7 @@
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <input type="text" class="form-control" placeholder="" id="raddressCaption" name="raddressCaption" data-ng-model="Shipments.RAddressCaption" required>
+                                            <input type="text" class="form-control" placeholder="" id="raddressCaption" name="raddressCaption" data-ng-model="Shipments.RaddressCaption" required>
                                         </div>
                                     </div>
 
@@ -240,7 +241,7 @@
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <input type="text" name="Raddressline1" id="Raddressline1" ng-model="Shipments.RAddress1" class="form-control" required="" />
+                                            <input type="text" name="Raddressline1" id="Raddressline1" ng-model="Shipments.Raddressline1" class="form-control" required />
                                         </div>
                                     </div>
                                     <div style="clear:both;height:5px;"></div>
@@ -250,7 +251,7 @@
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <input type="text" name="Raddressline2" id="Raddressline2" ng-model="Shipments.RAddress2" class="form-control" />
+                                            <input type="text" name="Raddressline2" id="Raddressline2" ng-model="Shipments.Raddressline2" class="form-control" />
                                         </div>
                                     </div>
                                     <div style="clear:both;height:5px;"></div>
@@ -260,7 +261,7 @@
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <input type="text" name="Raddressline3" id="Raddressline3" ng-model="Shipments.RAddress3" class="form-control" />
+                                            <input type="text" name="Raddressline3" id="Raddressline3" ng-model="Shipments.Raddressline3" class="form-control" />
                                         </div>
                                     </div>
                                     <div style="clear:both;height:5px;"></div>
@@ -270,19 +271,19 @@
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <input type="text" name="Rcity" id="Rcity" ng-model="Shipments.RCity" class="form-control" required />
+                                            <input type="text" name="Rcity" id="Rcity" ng-model="Shipments.Rcity" class="form-control" required />
                                         </div>
                                     </div>
                                     <div style="clear:both;height:5px;"></div>
+                                    
                                     <div>
                                         <label for="form-field-mask-1" class="col-sm-3">
-                                            <label>Division <span class="error" ng-show="shipmentsForm.Rddlstate.$error.required">*</span> </label>
+                                            <label>Country<span class="error" ng-show="shipmentsForm.RCountry.$error.required">*</span> </label>
                                         </label>
 
                                         <div class="input-group col-sm-8">
-
-                                            <select id="RddlState" class="form-control" data-ng-model="Shipments.RDivision" name="RddlState"
-                                                    data-ng-options="state.Name as state.Name for state in States track by state.Id"></select>
+                                            <select id="RCountry" class="form-control" data-ng-model="Shipments.RCountryId" name="RCountry"
+                                                    data-ng-options="country.Id as country.Name for country in Country track by country.Id" data-ng-change="GetDivision(Shipments.RCountryId)" required></select>
                                         </div>
                                     </div>
                                     <div style="clear:both;height:5px;"></div>
@@ -292,18 +293,19 @@
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <input type="text" name="Rpostalcode" id="Rpostalcode" ng-model="Shipments.RPostalCode" class="form-control" required="" phone />
+                                            <input type="text" name="Rpostalcode" id="Rpostalcode" ng-model="Shipments.Rpostalcode" class="form-control" required/>
                                         </div>
                                     </div>
                                     <div style="clear:both;height:5px;"></div>
                                     <div>
                                         <label for="form-field-mask-1" class="col-sm-3">
-                                            <label>Country<span class="error" ng-show="shipmentsForm.RCountry.$error.required">*</span> </label>
+                                            <label>Division <span class="error" ng-show="shipmentsForm.RddlState.$error.required">*</span> </label>
                                         </label>
 
                                         <div class="input-group col-sm-8">
-                                            <select id="RCountry" class="form-control" data-ng-model="Shipments.RCountryId" name="RCountry"
-                                                    data-ng-options="country.ID as country.Name for country in Country track by country.ID" data-ng-change="GetDivision(Shipments.RCountryId)"></select>
+
+                                            <select id="RddlState" class="form-control" data-ng-model="Shipments.RDivision" name="RddlState"
+                                                    data-ng-options="state.Name as state.Name for state in States track by state.Id" required></select>
                                         </div>
                                     </div>
                                 </div>
@@ -329,7 +331,7 @@
                                                 </label>
 
                                                 <div class="input-group col-sm-8">
-                                                    <input type="text" data-date-format="dd-mm-yyyy" id="shipmentdate" name="shipmentdate" data-ng-model="Shipments.PickupDate" class="form-control date-picker" required>
+                                                    <input type="text" data-date-format="dd-mm-yyyy" id="shipmentdate" name="shipmentdate" data-ng-model="Shipments.shipmentdate" class="form-control date-picker" required>
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar bigger-110"></i>
                                                     </span>
@@ -339,49 +341,32 @@
                                             <div style="clear:both;height:5px;"></div>
                                             <div>
                                                 <label for="form-field-mask-1" class="col-sm-3">
-                                                    <label>No of Package<span class="error" ng-show="shipmentsForm.noofpackage.$error.required">*</span></label>
+                                                    <label>Weight & Dimensions <span class="error" ng-show="shipmentsForm.weight.$error.required">*</span></label>
                                                 </label>
 
-                                                <div class="input-group col-sm-8">
-                                                    <select name="noofpackage" ng-model="Shipments.noofpackage" ng-change="nopackage(Shipments.noofpackage)" data-ng-options="noofpage.id as noofpage.name for noofpage in noofpackages "></select>
-                                                </div>
-                                            </div>
-                                            <div style="clear:both;height:5px;"></div>
-                                            <div>
-                                                <label for="form-field-mask-1" class="col-sm-3">
-                                                    <label>Weight & Dimensions <span class="error" ng-show="shipmentsForm.weight.$error.required">*</span>></label>
-                                                </label>
-
-                                                <div class="input-group col-sm-8">
+                                                <div class="input-group col-sm-10">
 
                                                     <div>
 
-                                                        <table style="width:100%" cellspacing="0" cellpadding="2" border="0" ng-model="shipments.Parcel[]">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td style="background-color: #cccccc; width: 60px">&nbsp;</td>
-                                                                    <td style="background-color: #cccccc; text-align: center; font-weight: bold; width: 75px">Weight</td>
-                                                                    <td style="background-color: #cccccc; text-align: center; width: 16px"></td>
-                                                                    <td style="background-color: #cccccc; text-align: center; font-weight: bold">Dimensions</td>
-                                                                </tr>
+                                                        <table class="table col-sm-10">
+                                                            <tr>
 
-                                                                <tr ng-repeat="pkg in nopackage">
-                                                                    <td style="width: 60px">
-                                                                        <span>Details</span>
-                                                                    </td>
-                                                                    <td style="text-align: center; width: 75px"><input type="number" id="weight" ng-model="Shipments.weight" placeholder="Weight" class="col-xs-5" /></td>
-                                                                    <td style="text-align: center; width: 16px">
-                                                                        <span disabled="disabled"></span>
-                                                                    </td>
-                                                                    <td style="text-align: center">
-                                                                        <input type="number" id="Length" placeholder="L" class="col-xs-3" ng-model="Shipments.Length" />
-                                                                        <span> x</span>
-                                                                        <input type="number" id="Width" placeholder="W" class="col-xs-3" ng-model="Shipments.width" />
-                                                                        <span> x</span>
-                                                                        <input type="number" id="Height" placeholder="H" class="col-xs-3" ng-model="Shipments.Height" />
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
+                                                                <th>Width</th>
+                                                                <th colspan="3">Dimensions</th>
+                                                            </tr>
+                                                            <tr ng:repeat="item in Parcel.items">
+                                                                <td><input type="number" min="0" ng:model="item.Weight" required class="col-xs-7"></td>
+                                                                <td><input type="number" min="0" ng:model="item.Length" required class="col-xs-7"></td>
+                                                                <td><input type="number" min="0" ng:model="item.Width" required class="col-xs-7"></td>
+                                                                <td><input type="number" min="0" ng:model="item.Height" required class="col-xs-7"></td>
+                                                                <td>
+
+                                                                    <button type="button" class="btn-info" ng-click="removeItem($index)">Remove Packet</button>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3"><button type="button" class="btn-info" ng-click="addItem()">Add Packet</button></td>
+                                                            </tr>
                                                         </table>
                                                     </div>
                                                 </div>
@@ -401,13 +386,14 @@
                                                     <label>Package Type <span class="error" ng-show="shipmentsForm.packagetype.$error.required">*</span></label>
                                                 </label>
 
-                                                <div class="input-group col-sm-8">
+                                                <div class="input-group col-sm-10">
                                                     <select name="packagetype" ng-model="Shipments.packagetype">
                                                         <option ng-option value="1">Document</option>
-                                                        <option ng-option value="2">Standard Package (Can be carrier by one person)</option>
-                                                        <option ng-option value="3">Has Heavy Piece(s) weight is more than 35 lbs</option>
-                                                        <option ng-option value="4">Has Bulky Piece(s) at least one dimension is larger than 40 inches</option>
+                                                        <option ng-option value="2">Standard Package</option>
+                                                        <option ng-option value="3">Has Heavy Piece(s)</option>
+                                                        <option ng-option value="4">Has Bulky Piece(s)</option>
                                                     </select>
+                                                    <span class="help-button" data-rel="popover" data-trigger="hover" data-placement="left" data-content=" Standard Package (Can be carrier by one person).Has Heavy Piece(s) weight is more than 35 lbs. Has Bulky Piece(s) at least one dimension is larger than 40 inches" title="Info">?</span>
                                                 </div>
                                             </div>
                                             <div style="clear:both;height:5px;"></div>
@@ -430,7 +416,7 @@
                                                 </label>
 
                                                 <div class="input-group col-sm-1">
-                                                    <input type="checkbox" name="insurance" id="insurance" ng-model="Shipments.insurance" class="form-control" ng-maxlength="50" required="" />
+                                                    <input type="checkbox" name="insurance" id="insurance" ng-model="Shipments.insurance" class="form-control" required="" />
                                                 </div>
                                             </div>
                                             <div style="clear:both;height:5px;"></div>

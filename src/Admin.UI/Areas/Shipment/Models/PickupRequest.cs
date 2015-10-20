@@ -59,8 +59,26 @@ namespace Admin.UI.Areas.Shipment.Models
         public string PickUpNotificationEmail { get; set; }
         public string PickUpNotificationYourEmail { get; set; }
         public string PickUpNotificationPersonalizedMessage { get; set; }
+
+        public List<Notification> notification { get; set; }
     }
-    
+
+    public class Notification
+    {
+        public List<email> Email { get; set; }
+        public List<mobile> Mobile { get; set; }
+    }
+
+    public class mobile
+    {
+        public string Number { get; set; }
+    }
+
+    public class email
+    {
+        public string ID { get; set; }
+    }
+
     public class Response
     {
         public string RequesterID { get; set; }
@@ -80,70 +98,7 @@ namespace Admin.UI.Areas.Shipment.Models
         public string CarrierRoute { get; set; }
     }
 
-    public class Address
-    {
-        public string Department { get; set; }
-
-        public string FirstName { get; set; }
-
-        public string MiddleName { get; set; }
-
-        public string LastName { get; set; }
-
-        public string NamePrefix { get; set; }
-
-        public string NamePostfix { get; set; }
-
-        public string Name
-        {
-            get
-            {
-                return Regex.Replace(
-                    string.Format("{0} {1} {2} {3} {4}", this.NamePrefix, this.FirstName, this.MiddleName, this.LastName, this.NamePostfix),
-                    @"\s+", " ").Trim();
-            }
-        }
-
-        public string Phone { get; set; }
-
-        public string EMail { get; set; }
-
-        public string Address1 { get; set; }
-
-        public string Address2 { get; set; }
-
-        public string Address3 { get; set; }
-
-        public string City { get; set; }
-
-        public string PostalCode { get; set; }
-
-        public string DivisionName { get; set; }
-
-        public string DivisionCode { get; set; }
-
-        public string CountryName { get; set; }
-
-        public string CountryCode { get; set; }
-
-        public string Division
-        {
-            get
-            {
-                return this.DivisionCode ?? this.DivisionName;
-            }
-        }
-
-        public string State { get; set; }
-
-        public bool IsResidential { get; set; }
-
-        public bool IsRemoteArea { get; set; }
-
-        public string LocationType { get; set; }
-
-        public string PackageLocation { get; set; }
-    }
+  
     public class ServiceHeader
     {
         public string MessageTime { get; set; }

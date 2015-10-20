@@ -54,7 +54,7 @@
                         datatype: "local",
                         height: 350,
                         //colNames: [' ', 'ID', 'Last Sales', 'Name', 'Stock', 'Ship via', 'Notes'],
-                        colNames: ['Id', 'FirstName', 'LastName', 'Phone1', 'EMail', 'Division', 'City','Edit'],
+                        colNames: ['Id', 'Name','Phone1', 'EMail', 'Division', 'City','Edit'],
                         colModel: [
                             //{
                             //    name: 'myac', index: '', width: 80, fixed: true, sortable: false, resize: false,
@@ -67,8 +67,7 @@
                             //    }
                             //},
                             { name: 'Id', index: 'Id', width: 30, editable: true,sortable:false },
-                            { name: 'FirstName', index: 'FirstName', width: 130, editable: true },
-                            { name: 'LastName', index: 'LastName', width: 130, editable: true },
+                            { name: 'Name', index: 'Name', width: 130, editable: true },
                             { name: 'Phone1', index: 'Phone1', width: 130, editable: true, editoptions: { size: "20", maxlength: "30" } },
                             { name: 'EMail', index: 'EMail', width: 180, editable: true },
                             { name: 'Division', index: 'Division', width: 130, editable: true},

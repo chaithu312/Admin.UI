@@ -9,6 +9,8 @@ namespace Admin.UI.Areas.Shipment.Models
     {
         public long Id { get; set; }
         public string UserId { get; set; }
+        public string SessionKey { get; set; }
+        public string VendorSettingId { get; set; }
         public string AccountId { get; set; }
         public string PickupId { get; set; }
 
@@ -35,14 +37,14 @@ namespace Admin.UI.Areas.Shipment.Models
         public string Rphone { get; set; }
         public string REmail { get; set; }
         public string RAddressType { get; set; }
-        public string raddressCaption { get; set; }
+        public string RaddressCaption { get; set; }
         public string Raddressline1 { get; set; }
         public string Raddressline2 { get; set; }
         public string Raddressline3 { get; set; }
         public string Rcity { get; set; }
-        public string Rddlstate { get; set; }
+        public string RDivision { get; set; }
         public string Rpostalcode { get; set; }
-        public string RCountry { get; set; }
+        public string RCountryId { get; set; }
 
         public string Notifications { get; set; }
         public string Unit { get; set; }
@@ -60,13 +62,15 @@ namespace Admin.UI.Areas.Shipment.Models
 
     public class Parcel
     {
-        public long Id { get; set; }
-        public long ShipmentId { get; set; }
-        public long PackagingType { get; set; }
+        public List<items> items { get; set; }
+    }
+
+    public class items
+    {
         public decimal Weight { get; set; }
-        public long Length { get; set; }
         public long Width { get; set; }
         public long Height { get; set; }
+        public long Length { get; set; }
         public string Detail { get; set; }
     }
 }
