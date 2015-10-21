@@ -25,12 +25,58 @@ namespace Admin.UI.ShipmentArea
         [HttpPost]
         public JsonResult Shipments([FromBody] Shipments shipment)
         {
+            //Starting Generate Label
+
+            string urlLabelGeneration = Constants.APIURL+ "Endicia/Shipment";
+            Shipment shipmentLabel = new Shipment();
+            if (shipment != null)
+
+            {
+                shipmentLabel.Shipper.FirstName = shipment.Name;
+                shipmentLabel.Shipper.Phone = shipment.Phone;
+                shipmentLabel.Shipper.EMail = shipment.Email;
+                shipmentLabel.Shipper.Address1 = shipment.Address1;
+                shipmentLabel.Shipper.Address2 = shipment.Address2;
+                shipmentLabel.Shipper.Address3 = shipment.Address3;
+                shipmentLabel.Shipper.CountryName = shipment.CountryId;
+                shipmentLabel.Shipper.City = shipment.City;
+                shipmentLabel.Shipper.PostalCode = shipment.PostalCode;
+                shipmentLabel.Shipper.Division = shipment.Division;
+                shipmentLabel.Shipper.State = shipment.Division;
+
+                shipmentLabel.Consignee.FirstName = shipment.Rname;
+                shipmentLabel.Consignee.Phone = shipment.Rphone;
+                shipmentLabel.Consignee.EMail = shipment.REmail;
+                shipmentLabel.Consignee.Address1 = shipment.Raddressline1;
+                shipmentLabel.Consignee.Address2 = shipment.Raddressline2;
+                shipmentLabel.Consignee.Address3 = shipment.Raddressline3;
+                shipmentLabel.Consignee.CountryName = shipment.RCountryId;
+                shipmentLabel.Consignee.City = shipment.Rcity;
+                shipmentLabel.Consignee.PostalCode = shipment.Rpostalcode;
+                shipmentLabel.Consignee.Division = shipment.RDivision;
+                shipmentLabel.Consignee.State = shipment.RDivision;
+            }
+            object result = string.Empty;
+
+            using (var client = new WebClient())
+            {
+                client.Headers[HttpRequestHeader.ContentType] = Constants.ContentType;
+
+                string serialisedData = JsonConvert.SerializeObject(shipmentLabel);
+
+                var Apiresponse = client.UploadString(urlLabelGeneration, serialisedData);
+
+                result = JsonConvert.DeserializeObject(Apiresponse);
+            }
+
+            //End of generating Label
+
+
             if (shipment != null)
             {
                 shipment.UserId = "4";//TODO:
                 shipment.AccountId = "2";//TODO:
                 shipment.TrackingNumber = "";//TODO:
-                shipment.PickupId = "";//TODO:
                 shipment.SessionKey = "1";
                 shipment.VendorSettingId = "1";
                 shipment.Unit = "1";
@@ -73,7 +119,6 @@ namespace Admin.UI.ShipmentArea
 
             var postData = JsonConvert.SerializeObject(shipment);
             string strURL = Constants.APIURL + "Shipment/SaveShipment";
-            // string strURL= "http://localhost:49201/"+"DHL/Pickup";
 
             //Constants.ShippingURL + "Endicia/Pickup"
             //Constants.ShippingURL + "UPS/Pickup"
@@ -98,12 +143,12 @@ namespace Admin.UI.ShipmentArea
                 JavaScriptSerializer json_serializer = new JavaScriptSerializer();
 
                 Response routes_list = JsonConvert.DeserializeObject<Response>(responseString);
-                string replacestring = Constants.ReplaceErrorMessage;
-                string ErrorMessage = routes_list.ErrorMessage.Replace(replacestring, "").Replace(Constants.xmlns, "").Replace(Constants.xsi, "");
+                //string replacestring = Constants.ReplaceErrorMessage;
+                //string ErrorMessage = routes_list.ErrorMessage.Replace(replacestring, "").Replace(Constants.xmlns, "").Replace(Constants.xsi, "");
 
-                ResponseMessage errorResponse = JsonConvert.DeserializeObject<ResponseMessage>(ErrorMessage);
-                if (errorResponse.Response.Status.ActionStatus == "Error")
-                    return Json(errorResponse.Response.Status.Condition.ConditionData);
+                //ResponseMessage errorResponse = JsonConvert.DeserializeObject<ResponseMessage>(ErrorMessage);
+                //if (errorResponse.Response.Status.ActionStatus == "Error")
+                //    return Json(errorResponse.Response.Status.Condition.ConditionData);
             }
 
             return Json("Failed");
@@ -128,7 +173,7 @@ namespace Admin.UI.ShipmentArea
 
                     vendorSetting.Expiration = DateTime.ParseExact(vendorSetting.Expiration, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
                     vendorSetting.Effective = DateTime.ParseExact(vendorSetting.Effective, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
-                    string url = "http://localhost:49201/VendorSetting/";
+                    string url = Constants.APIURL+ "VendorSetting/";
 
                     object result = string.Empty;
 
@@ -206,7 +251,7 @@ namespace Admin.UI.ShipmentArea
 
             var postData = JsonConvert.SerializeObject(pickupRequest);
             string strURL = Constants.APIURL + "DHL/Pickup";
-            // string strURL= "http://localhost:49201/"+"DHL/Pickup";
+            
 
             //Constants.ShippingURL + "Endicia/Pickup"
             //Constants.ShippingURL + "UPS/Pickup"

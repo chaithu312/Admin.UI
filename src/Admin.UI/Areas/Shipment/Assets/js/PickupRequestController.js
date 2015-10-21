@@ -147,7 +147,7 @@
             
             $("#CountryId").find('option[value=' + selectedAddress.CountryId + ']').attr('selected', 'selected');
 
-            $("#Division").find('option[value=' + selectedAddress.Division + ']').attr('selected', 'selected');
+            $("#Division").find('option[label=' + selectedAddress.Division + ']').attr('selected', 'selected');
         }
             //Cut above
         //Ends here getting country detail

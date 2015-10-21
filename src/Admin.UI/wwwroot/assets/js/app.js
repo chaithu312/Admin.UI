@@ -509,7 +509,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             
             $("#CountryId").find('option[value=' + selectedAddress.CountryId + ']').attr('selected', 'selected');
 
-            $("#Division").find('option[value=' + selectedAddress.Division + ']').attr('selected', 'selected');
+            $("#Division").find('option[label=' + selectedAddress.Division + ']').attr('selected', 'selected');
         }
             //Cut above
         //Ends here getting country detail
@@ -1417,14 +1417,14 @@ $('[data-rel=popover]').popover({ container: 'body' });
         });
         $http({
             method: 'GET',
-            url: '/User/Home/Division',
+            url: 'http://test.shipos.com/shipping/masterapi/division',
             //data: $scope.SelectedCountry.CountryCode,
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
             }
         }).success(function (data, status, headers, config) {
             $scope.message = '';
-            $scope.States = JSON.parse(data);
+            $scope.States = data;
         }).error(function (data, status, headers, config) {
             $scope.message = 'Unexpected Error';
         });
@@ -1438,6 +1438,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 $scope.Shipments.AddressType = $scope.Shipments.AddressType
                 $scope.Shipments.Address1 = null
                 $scope.Shipments.Address2 = null
+                $scope.Shipments.Address3 = null
                 $scope.Shipments.City = null
                 $scope.Shipments.PostalCode = null
                 $scope.Shipments.CountryId = null;
@@ -1457,17 +1458,65 @@ $('[data-rel=popover]').popover({ container: 'body' });
             $scope.Shipments.Phone = selectedShipperAddress.Phone1;
             $scope.Shipments.Address1 = selectedShipperAddress.Address1;
             $scope.Shipments.Address2 = selectedShipperAddress.Address2;
+            $scope.Shipments.Address3 = selectedShipperAddress.Address3;
             $scope.Shipments.City = selectedShipperAddress.City;
             $scope.Shipments.PostalCode = selectedShipperAddress.PostalCode;
             $scope.Shipments.CountryId = selectedShipperAddress.CountryId;
             $scope.Shipments.Division = selectedShipperAddress.Division;
             $scope.Shipments.isDisabled = true;
+            //if ($scope.$root.$$phase != '$apply')
+            //if(!$scope.$$phase)
             $scope.$apply();
 
             $("#CountryId").find('option[value=' + selectedShipperAddress.CountryId + ']').attr('selected', 'selected');
 
-            $("#Division").find('option[value=' + selectedShipperAddress.Division + ']').attr('selected', 'selected');
-        }
+            $("#Division").find('option[label=' + selectedShipperAddress.Division + ']').attr('selected', 'selected');
+        };
+
+        $scope.GetConsigeeAddressValue = function () {
+
+            var addressType = $scope.Shipments.RAddressType;
+            if (addressType == "0") {
+                $scope.Shipments.Rname = null
+                $scope.Shipments.Rphone = null
+                $scope.Shipments.RAddressType = $scope.Shipments.RAddressType
+                $scope.Shipments.Raddressline1 = null
+                $scope.Shipments.Raddressline2 = null
+                $scope.Shipments.Raddressline3 = null
+                $scope.Shipments.Rcity = null
+                $scope.Shipments.Rpostalcode = null
+                $scope.Shipments.RCountryId = null;
+                $scope.Shipments.RDivision = null;
+                $scope.Shipments.isRDisabled = false;
+                return;
+            }
+
+            for (var i = 0; i < AllAddress.length; i++) {
+                if (AllAddress[i].Id == addressType) {
+                    selectedShipperAddress = AllAddress[i]
+                    break;
+                }
+            }
+
+            $scope.Shipments.Rname = selectedShipperAddress.Name;
+            $scope.Shipments.Rphone = selectedShipperAddress.Phone1;
+            $scope.Shipments.Raddressline1 = selectedShipperAddress.Address1;
+            $scope.Shipments.Raddressline2 = selectedShipperAddress.Address2;
+            $scope.Shipments.Raddressline3 = selectedShipperAddress.Address3;
+
+            $scope.Shipments.Rcity = selectedShipperAddress.City;
+            $scope.Shipments.Rpostalcode = selectedShipperAddress.PostalCode;
+            $scope.Shipments.RCountryId = selectedShipperAddress.CountryId;
+            $scope.Shipments.RDivision = selectedShipperAddress.Division;
+            $scope.Shipments.isRDisabled = true;
+            //if ($scope.$root.$$phase != '$apply')
+            //if(!$scope.$$phase)
+            $scope.$apply();
+
+            $("#RCountry").find('option[value=' + selectedShipperAddress.CountryId + ']').attr('selected', 'selected');
+
+            $("#RDivision").find('option[label=' + selectedShipperAddress.Division + ']').attr('selected', 'selected');
+        };
 
         //HTTP REQUEST BELOW
         $http({
@@ -1545,7 +1594,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.Shipments = null;
         $scope.Shipments = { Parcel: [] };
         $scope.Shipments.Parcel.push($scope.Parcel);
-      
+
         $scope.sendShipmentsForm = function () {
             if ($scope.shipmentsForm.$valid) {
                 $http({

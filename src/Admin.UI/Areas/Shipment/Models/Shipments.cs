@@ -29,6 +29,7 @@ namespace Admin.UI.Areas.Shipment.Models
         public string Address3 { get; set; }
         public string City { get; set; }
         public string Division { get; set; }
+        public string DivisionName { get; set; }
         public string PostalCode { get; set; }
         public string CountryId { get; set; }
 
@@ -43,6 +44,7 @@ namespace Admin.UI.Areas.Shipment.Models
         public string Raddressline3 { get; set; }
         public string Rcity { get; set; }
         public string RDivision { get; set; }
+        public string RDivisionName { get; set; }
         public string Rpostalcode { get; set; }
         public string RCountryId { get; set; }
 
@@ -73,4 +75,69 @@ namespace Admin.UI.Areas.Shipment.Models
         public long Length { get; set; }
         public string Detail { get; set; }
     }
+
+
+    public class Consignee
+    {
+        public string Department { get; set; }
+        public string FirstName { get; set; }
+        public object MiddleName { get; set; }
+        public string LastName { get; set; }
+        public object NamePrefix { get; set; }
+        public object NamePostfix { get; set; }
+        public string Name { get; set; }
+        public string Phone { get; set; }
+        public string EMail { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string Address3 { get; set; }
+        public string City { get; set; }
+        public string PostalCode { get; set; }
+        public string CountryName { get; set; }
+        public string CountryCode { get; set; }
+        public object Division { get; set; }
+        public string State { get; set; }
+        public bool IsResidential { get; set; }
+        public bool IsRemoteArea { get; set; }
+        public string LocationType { get; set; }
+        public string PackageLocation { get; set; }
+    }
+
+    public class Shipper
+    {
+        public object Department { get; set; }
+        public string FirstName { get; set; }
+        public object MiddleName { get; set; }
+        public string LastName { get; set; }
+        public object NamePrefix { get; set; }
+        public object NamePostfix { get; set; }
+        public string Name { get; set; }
+        public string Phone { get; set; }
+        public string EMail { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string Address3 { get; set; }
+        public string City { get; set; }
+        public string PostalCode { get; set; }
+        public string CountryName { get; set; }
+        public string CountryCode { get; set; }
+        public object Division { get; set; }
+        public string State { get; set; }
+        public bool IsResidential { get; set; }
+        public bool IsRemoteArea { get; set; }
+        public string LocationType { get; set; }
+        public string PackageLocation { get; set; }
+    }
+    public class Shipment
+    {
+        public Consignee Consignee { get; set; }
+        public Shipper Shipper { get; set; }
+
+        public Shipment()
+        {
+            Consignee = new Consignee();
+            Shipper = new Shipper();
+        }
+    }
+
 }

@@ -268,8 +268,8 @@ namespace Admin.UI.UserArea
         public JsonResult Division()
         {
             var client = new HttpClient();
-            //var result = client.GetStringAsync(Constants.APIURL + "MasterApi/Division/").Result;
-            var result = client.GetStringAsync("http://localhost:49201/" + "MasterApi/Division/").Result;
+            var result = client.GetStringAsync(Constants.APIURL + "MasterApi/Division/").Result;
+            //var result = client.GetStringAsync("http://localhost:49201/" + "MasterApi/Division/").Result;
             return Json(result);
         }
 
