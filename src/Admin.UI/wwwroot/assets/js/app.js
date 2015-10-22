@@ -364,7 +364,6 @@ $('[data-rel=popover]').popover({ container: 'body' });
     var app = angular.module('mainApp')
 
     app.controller('PickupRequestController', function ($scope, $http) {
-
         $scope.notification = {
             Mobile: [{
                 Number: ""
@@ -394,12 +393,11 @@ $('[data-rel=popover]').popover({ container: 'body' });
             $scope.notification.Email.splice(index, 1);
         },
 
-
         $scope.Contacts = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Account 1' }, { Id: 2, Name: 'Account 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
         $scope.Addresses = { Data: [{ Id: 0, Name: 'Select an account...' }, { Id: 1, Name: 'Address 1' }, { Id: 2, Name: 'Address 2' }], selectedOption: { Id: 0, Name: 'Select an account...' } };
-        
+
         $scope.pickupRequest = null;
-        
+
         $scope.pickupRequest = { ContactName: null, Phone: null, PickupFrom: null, Address1: null, Address2: null, City: null, ZipCode: null, CountryId: null, Division: null, isDisabled: null, notification: [] }
         var AllAddress = new Array();
         var selectedAddress = null;
@@ -453,7 +451,6 @@ $('[data-rel=popover]').popover({ container: 'body' });
             $scope.message = 'Unexpected Error';
         });
 
-
         $http({
             method: 'GET',
             url: '/User/Home/Division',
@@ -469,7 +466,6 @@ $('[data-rel=popover]').popover({ container: 'body' });
         });
 
         $scope.GetAddressValue = function (address) {
-            
             var addressType = $scope.pickupRequest.AddressType;
             if (addressType == "0") {
                 $scope.pickupRequest.ContactName = null
@@ -477,23 +473,22 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 $scope.pickupRequest.AddressType = $scope.pickupRequest.AddressType
                 $scope.pickupRequest.Address1 = null
                 $scope.pickupRequest.Address2 = null
-                $scope.pickupRequest.City= null
+                $scope.pickupRequest.City = null
                 $scope.pickupRequest.ZipCode = null
-                $scope.pickupRequest.CountryId=null;
-                $scope.pickupRequest.Division=null;
+                $scope.pickupRequest.CountryId = null;
+                $scope.pickupRequest.Division = null;
                 $scope.pickupRequest.PickupFrom = $scope.pickupRequest.PickupFrom;
                 $scope.pickupRequest.isDisabled = false;
                 return;
             }
-            
+
             for (var i = 0; i < AllAddress.length; i++) {
-                if (AllAddress[i].Id == addressType)
-                {
+                if (AllAddress[i].Id == addressType) {
                     selectedAddress = AllAddress[i]
                     break;
                 }
             }
-            
+
             $scope.pickupRequest.ContactName = selectedAddress.Name;
             $scope.pickupRequest.Phone = selectedAddress.Phone1;
             $scope.pickupRequest.Address1 = selectedAddress.Address1;
@@ -506,15 +501,14 @@ $('[data-rel=popover]').popover({ container: 'body' });
             $scope.pickupRequest.PickupFrom = $scope.pickupRequest.PickupFrom;
             $scope.pickupRequest.isDisabled = true;
             $scope.$apply();
-            
+
             $("#CountryId").find('option[value=' + selectedAddress.CountryId + ']').attr('selected', 'selected');
 
             $("#Division").find('option[label=' + selectedAddress.Division + ']').attr('selected', 'selected');
         }
-            //Cut above
+        //Cut above
         //Ends here getting country detail
-        
-        
+
         $scope.Carriers = { Data: [{ Id: 1, Name: 'DHL' }, { Id: 2, Name: 'Endicia' }, { Id: 3, Name: 'UPS' }] };
 
         $scope.Pieces = {
@@ -546,7 +540,6 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.PickupAgent = { Data: [{ Id: 0, Name: 'Select...' }, { Id: 1, Name: 'DHL' }, { Id: 2, Name: 'Endicia' }, { Id: 3, Name: 'FedEx' }], selectedOption: { Id: 0, Name: 'Select...' } };
         $scope.PickupType = { Data: [{ Id: 0, Name: 'Package' }, { Id: 1, Name: 'Finance' }], selectedOption: { Id: 0, Name: 'Package' } };
         //HTTP REQUEST BELOW
-   
 
         //Getting selected Country Code and Country Name
         $scope.GetValue = function () {
@@ -578,14 +571,11 @@ $('[data-rel=popover]').popover({ container: 'body' });
             });
 
             //Ends here getting request of Http for getting states;
-
         }
         //Ends here getting country detail
         $scope.pickupRequest.notification.push($scope.notification);
         $scope.sendForm = function () {
-            
             if ($scope.PickupForm.$valid) {
-               
                 $http({
                     url: '/Shipment/PickupRequest',
                     method: "POST",
@@ -599,20 +589,17 @@ $('[data-rel=popover]').popover({ container: 'body' });
                         $("#divbtn").hide();
                         //alert(data);
                         //window.location.href = "/User/Home/ViewAddress";
-
                     }).error(function (data, status, headers, config) {
                         alert(data);
                     });
             }
             if ($scope.PickupForm.$invalid) { $scope.message = "Please check required fields (marked by *)" }
         };
-       
-        $("#contactName").blur(function () {
 
+        $("#contactName").blur(function () {
             $("#pickupfrom").val($("#contactName").val());
             $scope.pickupRequest.PickupFrom = $("#contactName").val();
             $scope.$apply();
-
         });
 
         $scope.CheckTime = function (readyTime, lastTime) {
@@ -630,9 +617,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             }
         }
     });
-    
 })();
-
 (function () {
     var app = angular.module('mainApp')
     app.controller('TrackController', function ($scope, $http) {
