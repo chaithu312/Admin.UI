@@ -40,7 +40,6 @@
         });
 
         $scope.GetShipperAddressValue = function () {
-
             var addressType = $scope.Shipments.AddressType;
             if (addressType == "0") {
                 $scope.Shipments.Name = null
@@ -84,7 +83,6 @@
         };
 
         $scope.GetConsigeeAddressValue = function () {
-
             var addressType = $scope.Shipments.RAddressType;
             if (addressType == "0") {
                 $scope.Shipments.Rname = null
@@ -215,23 +213,21 @@
                     dataType: "json"
                 })
                     .success(function (data, status, headers, config) {
-                        if(data==null)
+                        if (data == null)
                             $scope.message = "Failed";
                         else if (data.ErrorMessage != null) {
                             $scope.message = data.ErrorMessage;
                             $("#frmShipments").hide();
                         }
                         else {
-                            window.open("http://" + data.LabelImage.OutputImage, "_blank");
+                            window.open("http://" + data.LabelImage.OutputImage.replace("10.0.0.124", "test.shipos.com/shipping"), "_blank");
                             $scope.message = "Label Generated Successfully";
                             $("#frmShipments").hide();
                         }
-                        
                     }).error(function (data, status, headers, config) {
                     });
             }
             if ($scope.shipmentsForm.$invalid) { $scope.message = "Please check required fields (marked by *)" }
-
         };
     });
 })();
