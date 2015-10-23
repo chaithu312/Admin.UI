@@ -25,13 +25,78 @@ namespace Admin.UI.ShipmentArea
         [HttpPost]
         public JsonResult Shipments([FromBody] Shipments shipment)
         {
+            LabelImageResponse labelresponse = null;
             //Starting Generate Label
+            try {
+                if (shipment != null)
+                {
+                    shipment.UserId = "4";//TODO:
+                    shipment.AccountId = "2";//TODO:
+                    shipment.TrackingNumber = "";//TODO:
+                    shipment.SessionKey = "1";
+                    shipment.VendorSettingId = "1";
+                    shipment.Unit = "1";
+                    shipment.Currency = "1";
+                    shipment.PickupId = "4";
+                    shipment.shipmentdate = DateTime.ParseExact(shipment.shipmentdate, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
 
-            string urlLabelGeneration = Constants.APIURL+ "Endicia/Shipment";
+                }
+
+                if (shipment.AddressType == "0")
+                {
+                    SaveShipperAddress(shipment);
+                }
+                if (shipment.RAddressType == "0")
+                {
+                    SaveConsigneeAddress(shipment);
+                }
+
+                var postData = JsonConvert.SerializeObject(shipment);
+                string strURL = Constants.APIURL + "Shipment/SaveShipment";
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(strURL);
+                byte[] bytes;
+                bytes = System.Text.Encoding.UTF8.GetBytes(postData);
+                request.ContentType = "application/json";
+                request.ContentLength = bytes.Length;
+                request.Method = "POST";
+                Stream requestStream = request.GetRequestStream();
+                requestStream.Write(bytes, 0, bytes.Length);
+                requestStream.Close();
+                HttpWebResponse response;
+                response = (HttpWebResponse)request.GetResponse();
+                string responseString = string.Empty;
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    Stream responseStream = response.GetResponseStream();
+                    responseString = new StreamReader(responseStream).ReadToEnd();
+                    JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+                }
+
+                if (Convert.ToInt16(responseString) > 0)
+                {
+                    shipment.ShipmentId = responseString;
+                    labelresponse = GenerateLabelImage(shipment);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+            }
+            return Json(labelresponse);
+        }
+
+        public IActionResult VendorSetting()
+        {
+            return View();
+        }
+        private LabelImageResponse GenerateLabelImage(Shipments shipment)
+        {
+
+            string urlLabelGeneration = Constants.APIURL + "Endicia/Shipment";
             Shipment shipmentLabel = new Shipment();
             if (shipment != null)
-
             {
+                shipmentLabel.ShipmentId = shipment.ShipmentId;
                 shipmentLabel.Shipper.FirstName = shipment.Name;
                 shipmentLabel.Shipper.Phone = shipment.Phone;
                 shipmentLabel.Shipper.EMail = shipment.Email;
@@ -43,8 +108,9 @@ namespace Admin.UI.ShipmentArea
                 shipmentLabel.Shipper.PostalCode = shipment.PostalCode;
                 shipmentLabel.Shipper.Division = shipment.Division;
                 shipmentLabel.Shipper.State = shipment.Division;
+                shipmentLabel.Shipper.Department = shipment.Company;
 
-                shipmentLabel.Consignee.FirstName = shipment.Rname;
+                shipmentLabel.Consignee.Name = shipment.Rname;
                 shipmentLabel.Consignee.Phone = shipment.Rphone;
                 shipmentLabel.Consignee.EMail = shipment.REmail;
                 shipmentLabel.Consignee.Address1 = shipment.Raddressline1;
@@ -55,9 +121,9 @@ namespace Admin.UI.ShipmentArea
                 shipmentLabel.Consignee.PostalCode = shipment.Rpostalcode;
                 shipmentLabel.Consignee.Division = shipment.RDivision;
                 shipmentLabel.Consignee.State = shipment.RDivision;
+                shipmentLabel.Consignee.Department = shipment.RCompany;
             }
-            object result = string.Empty;
-
+            LabelImageResponse labelResponse = null;
             using (var client = new WebClient())
             {
                 client.Headers[HttpRequestHeader.ContentType] = Constants.ContentType;
@@ -65,98 +131,71 @@ namespace Admin.UI.ShipmentArea
                 string serialisedData = JsonConvert.SerializeObject(shipmentLabel);
 
                 var Apiresponse = client.UploadString(urlLabelGeneration, serialisedData);
-
-                result = JsonConvert.DeserializeObject(Apiresponse);
+                labelResponse = JsonConvert.DeserializeObject<LabelImageResponse>(Apiresponse);
             }
-
-            //End of generating Label
-
-
-            if (shipment != null)
-            {
-                shipment.UserId = "4";//TODO:
-                shipment.AccountId = "2";//TODO:
-                shipment.TrackingNumber = "";//TODO:
-                shipment.SessionKey = "1";
-                shipment.VendorSettingId = "1";
-                shipment.Unit = "1";
-                shipment.Currency = "1";
-                shipment.PickupId = "4";
-                shipment.shipmentdate = DateTime.ParseExact(shipment.shipmentdate, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
-
-            }
-
-            if (shipment.AddressType == "0")
-            {
-                Admin.UI.Areas.User.Models.Address register = new Admin.UI.Areas.User.Models.Address();
-
-                register.FirstName = shipment.Name;
-                register.AccountId = 2;
-                register.Status = 1;
-                register.Created = DateTime.Now;
-                register.AddressType = Areas.User.Models.Address.AddressTypes.Recipient;
-                register.ShortName = shipment.AddressCaption;
-                register.Phone1 = shipment.Phone;
-                register.EMail = shipment.Email;
-                register.CountryId = shipment.CountryId;
-                register.PostalCode = shipment.PostalCode;
-                register.Division = shipment.Division;
-                register.City = shipment.City;
-                register.Address1 = shipment.Address1;
-                register.Address2 = shipment.Address2;
-
-                string url = Constants.APIURL + "MasterApi/Address/Insert";
-
-                using (var client = new WebClient())
-                {
-                    client.Headers[HttpRequestHeader.ContentType] = "application/json";
-
-                    string serialisedData = JsonConvert.SerializeObject(register);
-
-                    client.UploadString(url, serialisedData);
-                }
-            }
-
-            var postData = JsonConvert.SerializeObject(shipment);
-            string strURL = Constants.APIURL + "Shipment/SaveShipment";
-
-            //Constants.ShippingURL + "Endicia/Pickup"
-            //Constants.ShippingURL + "UPS/Pickup"
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(strURL);
-            byte[] bytes;
-            //bytes = System.Text.Encoding.ASCII.un(requestXml);
-            bytes = System.Text.Encoding.UTF8.GetBytes(postData);
-            request.ContentType = "application/json";
-            request.ContentLength = bytes.Length;
-            request.Method = "POST";
-            Stream requestStream = request.GetRequestStream();
-            requestStream.Write(bytes, 0, bytes.Length);
-            requestStream.Close();
-            HttpWebResponse response;
-            response = (HttpWebResponse)request.GetResponse();
-            string responseString = string.Empty;
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                Stream responseStream = response.GetResponseStream();
-                responseString = new StreamReader(responseStream).ReadToEnd();
-
-                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
-
-                Response routes_list = JsonConvert.DeserializeObject<Response>(responseString);
-                //string replacestring = Constants.ReplaceErrorMessage;
-                //string ErrorMessage = routes_list.ErrorMessage.Replace(replacestring, "").Replace(Constants.xmlns, "").Replace(Constants.xsi, "");
-
-                //ResponseMessage errorResponse = JsonConvert.DeserializeObject<ResponseMessage>(ErrorMessage);
-                //if (errorResponse.Response.Status.ActionStatus == "Error")
-                //    return Json(errorResponse.Response.Status.Condition.ConditionData);
-            }
-
-            return Json("Failed");
+            return labelResponse;
         }
 
-        public IActionResult VendorSetting()
+        private void SaveShipperAddress(Shipments shipment)
         {
-            return View();
+            Admin.UI.Areas.User.Models.Address register = new Admin.UI.Areas.User.Models.Address();
+
+            register.FirstName = shipment.Name;
+            register.AccountId = 2;
+            register.Status = 1;
+            register.Created = DateTime.Now;
+            register.AddressType = Areas.User.Models.Address.AddressTypes.Sender;
+            register.ShortName = shipment.AddressCaption;
+            register.Phone1 = shipment.Phone;
+            register.EMail = shipment.Email;
+            register.CountryId = shipment.CountryId;
+            register.PostalCode = shipment.PostalCode;
+            register.Division = shipment.Division;
+            register.City = shipment.City;
+            register.Address1 = shipment.Address1;
+            register.Address2 = shipment.Address2;
+
+            string url = Constants.APIURL + "MasterApi/Address/Insert";
+
+            using (var client = new WebClient())
+            {
+                client.Headers[HttpRequestHeader.ContentType] = "application/json";
+
+                string serialisedData = JsonConvert.SerializeObject(register);
+
+                client.UploadString(url, serialisedData);
+            }
+        }
+
+        private void SaveConsigneeAddress(Shipments shipment)
+        {
+            Admin.UI.Areas.User.Models.Address register = new Admin.UI.Areas.User.Models.Address();
+
+            register.FirstName = shipment.Rname;
+            register.AccountId = 2;
+            register.Status = 1;
+            register.Created = DateTime.Now;
+            register.AddressType = Areas.User.Models.Address.AddressTypes.Recipient;
+            register.ShortName = shipment.RaddressCaption;
+            register.Phone1 = shipment.Rphone;
+            register.EMail = shipment.REmail;
+            register.CountryId = shipment.RCountryId;
+            register.PostalCode = shipment.Rpostalcode;
+            register.Division = shipment.RDivision;
+            register.City = shipment.Rcity;
+            register.Address1 = shipment.Raddressline1;
+            register.Address2 = shipment.Raddressline2;
+
+            string url = Constants.APIURL + "MasterApi/Address/Insert";
+
+            using (var client = new WebClient())
+            {
+                client.Headers[HttpRequestHeader.ContentType] = "application/json";
+
+                string serialisedData = JsonConvert.SerializeObject(register);
+
+                client.UploadString(url, serialisedData);
+            }
         }
 
         [HttpPost]

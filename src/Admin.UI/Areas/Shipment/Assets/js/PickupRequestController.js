@@ -239,7 +239,7 @@
                         //window.location.href = "/User/Home/ViewAddress";
 
                     }).error(function (data, status, headers, config) {
-                        alert(data);
+                        
                     });
             }
             if ($scope.PickupForm.$invalid) { $scope.message = "Please check required fields (marked by *)" }

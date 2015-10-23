@@ -215,9 +215,19 @@
                     dataType: "json"
                 })
                     .success(function (data, status, headers, config) {
-                        $scope.message = data;
+                        if(data==null)
+                            $scope.message = "Failed";
+                        else if (data.ErrorMessage != null) {
+                            $scope.message = data.ErrorMessage;
+                            $("#frmShipments").hide();
+                        }
+                        else {
+                            window.open("http://" + data.LabelImage.OutputImage, "_blank");
+                            $scope.message = "Label Generated Successfully";
+                            $("#frmShipments").hide();
+                        }
+                        
                     }).error(function (data, status, headers, config) {
-                        alert(data);
                     });
             }
             if ($scope.shipmentsForm.$invalid) { $scope.message = "Please check required fields (marked by *)" }

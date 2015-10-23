@@ -9,6 +9,7 @@ namespace Admin.UI.Areas.Shipment.Models
     {
         public long Id { get; set; }
         public string UserId { get; set; }
+        public string ShipmentId { get; set; }
         public string SessionKey { get; set; }
         public string VendorSettingId { get; set; }
         public string AccountId { get; set; }
@@ -53,6 +54,7 @@ namespace Admin.UI.Areas.Shipment.Models
         public string Currency { get; set; }
         public string Detail { get; set; }
         public decimal Declared { get; set; }
+        public bool Insurance { get; set; }
 
         public string weight { get; set; }
         public string Length { get; set; }
@@ -132,7 +134,7 @@ namespace Admin.UI.Areas.Shipment.Models
     {
         public Consignee Consignee { get; set; }
         public Shipper Shipper { get; set; }
-
+        public string ShipmentId { get; set; }
         public Shipment()
         {
             Consignee = new Consignee();
@@ -140,4 +142,48 @@ namespace Admin.UI.Areas.Shipment.Models
         }
     }
 
+
+    public class LabelImage
+    {
+        public string OutputFormat { get; set; }
+        public string OutputImage { get; set; }
+    }
+
+    public class LabelImageResponse
+    {
+        public object RegionCode { get; set; }
+        public object AirwayBillNumber { get; set; }
+        public object ErrorMessage { get; set; }
+        public int Status { get; set; }
+        public object BillingCode { get; set; }
+        public object CurrencyCode { get; set; }
+        public object CourierMessage { get; set; }
+        public object PackageCharge { get; set; }
+        public object Rated { get; set; }
+        public object ShippingCharge { get; set; }
+        public object NegotiatedRateCharges { get; set; }
+        public object WeightUnit { get; set; }
+        public object ChargeableWeight { get; set; }
+        public object DimensionalWeight { get; set; }
+        public object CountryCode { get; set; }
+        public object Barcodes { get; set; }
+        public object CustomerID { get; set; }
+        public object ShipmentDate { get; set; }
+        public object GlobalProductCode { get; set; }
+        public object NewShipper { get; set; }
+        public object DHLRoutingCode { get; set; }
+        public object DHLRoutingDataId { get; set; }
+        public object ProductContentCode { get; set; }
+        public object ProductShortName { get; set; }
+        public object InternalServiceCode { get; set; }
+        public string DeliveryDateCode { get; set; }
+        public object DeliveryTimeCode { get; set; }
+        public double FinalPostage { get; set; }
+        public double CostCenter { get; set; }
+        public string TrackingNumber { get; set; }
+        public int TransactionID { get; set; }
+        public object Pieces { get; set; }
+        public LabelImage LabelImage { get; set; }
+        public object PostagePrice { get; set; }
+    }
 }
