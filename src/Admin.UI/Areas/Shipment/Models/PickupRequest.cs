@@ -11,6 +11,11 @@ namespace Admin.UI.Areas.Shipment.Models
     {
         public string UserID { get; set; }
         public string AccountID { get; set; }
+        public string PassPhrase { get; set; }
+        public string MailClass { get; set; }
+        public string RequesterID { get; set; }
+        public string RequestID { get; set; }
+        public string UseAddressOnFile { get; set; }
         public string VendorAccountID { get; set; }
 
         public string ContactName { get; set; }
@@ -42,6 +47,8 @@ namespace Admin.UI.Areas.Shipment.Models
 
         public string PickupFrom { get; set; }
 
+        public string PackageLocation { get; set; }
+
         public string PickupDate { get; set; }
 
         public string Destination { get; set; }
@@ -61,6 +68,26 @@ namespace Admin.UI.Areas.Shipment.Models
         public string PickUpNotificationPersonalizedMessage { get; set; }
 
         public List<Notification> notification { get; set; }
+
+        public string RatePickupIndicator { get; set; }
+        public string AccountNumber { get; set; }
+
+        public int ExpressMailCount { get; set; }
+        public int PriorityMailCount { get; set; }
+        public int ReturnsCount { get; set; }
+        public int InternationalCount { get; set; }
+        public int OtherPackagesCount { get; set; }
+        public double EstimatedWeightLb { get; set; }
+
+        public string LocationType { get; set; }
+        public string RegionCode { get; set; }
+        public string AccountType { get; set; }
+        public string AWBNumber { get; set; }
+        public string WeightUnit { get; set; }
+
+        public string GlobalProductCode { get; set; }
+        public string DimensionUnit { get; set; }
+        public string Weight { get; set; }
     }
 
     public class Notification

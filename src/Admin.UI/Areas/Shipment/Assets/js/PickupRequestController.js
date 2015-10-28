@@ -1,7 +1,7 @@
 ﻿(function () {
     var app = angular.module('mainApp')
 
-    app.controller('PickupRequestController', function ($scope, $http) {
+    app.controller('PickupRequestController', function ($scope, $http, $filter) {
         $scope.notification = {
             Mobile: [{
                 Number: ""
@@ -143,6 +143,10 @@
             $("#CountryId").find('option[value=' + selectedAddress.CountryId + ']').attr('selected', 'selected');
 
             $("#Division").find('option[label=' + selectedAddress.Division + ']').attr('selected', 'selected');
+
+            var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.pickupRequest.CountryId); })[0];
+            $scope.pickupRequest.Country = countryfiltered.Name;
+            $scope.pickupRequest.CountryCode = countryfiltered.Code;
         }
         //Cut above
         //Ends here getting country detail

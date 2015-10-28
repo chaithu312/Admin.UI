@@ -136,6 +136,8 @@
                                                 <select id="CountryId" class="form-control" data-ng-model="Shipments.CountryId" name="CountryId"
                                                         data-ng-options="country.Id as country.Name for country in Country track by country.Id" ng-disabled="Shipments.isDisabled" data-ng-change="GetDivision(Shipments.CountryId)" required></select>
                                             </div>
+                                            <input type="hidden" ng-model="Shipments.CountryName"/>
+                                            <input type="hidden" ng-model="Shipments.CountryCode" />
                                         </div>
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
@@ -287,6 +289,8 @@
                                                 <select id="RCountry" class="form-control" data-ng-model="Shipments.RCountryId" name="RCountry"
                                                         data-ng-options="country.Id as country.Name for country in Country track by country.Id" ng-disabled="Shipments.isRDisabled" data-ng-change="GetDivision(Shipments.RCountryId)" required></select>
                                             </div>
+                                            <input type="hidden" ng-model="Shipments.RCountryName" />
+                                            <input type="hidden" ng-model="Shipments.RCountryCode" />
                                         </div>
                                         <div style="clear:both;height:5px;"></div>
                                         <div>

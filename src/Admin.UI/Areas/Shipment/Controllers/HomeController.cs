@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web.Script.Serialization;
+using Admin.UI.Utility;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,7 +35,7 @@ namespace Admin.UI.ShipmentArea
                     shipment.AccountId = "2";//TODO:
                     shipment.TrackingNumber = "";//TODO:
                     shipment.SessionKey = "1";
-                    shipment.VendorSettingId = "1";
+                    shipment.VendorSettingId = Global.VendorAccountID;
                     shipment.Unit = "1";
                     shipment.Currency = "1";
                     shipment.PickupId = "4";
@@ -92,18 +93,51 @@ namespace Admin.UI.ShipmentArea
         private LabelImageResponse GenerateLabelImage(Shipments shipment)
         {
 
-            string urlLabelGeneration = Constants.APIURL + "Endicia/Shipment";
+            string urlLabelGeneration = Constants.APIURL + "UPS/Shipment";
+            //Starts Endicia
             Shipment shipmentLabel = new Shipment();
+            shipmentLabel.Parcels = shipment.Parcel;
+            shipmentLabel.LabelType = Global.LabelType;
+            shipmentLabel.LabelSize = Global.LabelSize;
+            shipmentLabel.ImageFormat = Global.ImageFormat;
+            shipmentLabel.Test = Global.Test;
+            shipmentLabel.PartnerTransactionID = Global.PartnerTransactionID;
+            shipmentLabel.RequesterID = Global.RequesterID;
+            shipmentLabel.AccountID = Global.AccountID;
+            shipmentLabel.PassPhrase = Global.PassPhrase;
+            shipmentLabel.MailClass = Global.MailClass;
+            //Ends Endicia
+
+            //Starts Here For DHL Only
+            shipmentLabel.Billing.ShippingPaymentAccount = Global.ShippingPaymentAccount;//TODO:
+            shipmentLabel.Billing.ShippingPaymentType = Billing.PaymentTypes.Shipper;
+            shipmentLabel.Billing.DutyTaxPaymentType = Billing.PaymentTypes.Shipper;
+            shipmentLabel.Billing.DutyTaxPaymentAccount = Global.DutyTaxPaymentAccount;//TODO:
+            shipmentLabel.ShipTimestamp = DateTime.Parse(shipment.shipmentdate);
+            shipmentLabel.Dutiable.DeclaredValue = Convert.ToString(shipment.Declared);
+            shipmentLabel.ImageFormat = Global.ImageFormat;//TODO:
+            shipmentLabel.RegionCode = Admin.UI.Utility.Enumerations.RegionCode.AM;//TODO:
+            shipmentLabel.LanguageCode = Global.LanguageCode;
+            shipmentLabel.PiecesEnabled = Global.PiecesEnabled;
+            shipmentLabel.WeightUnit = Global.WeightUnit;
+            shipmentLabel.GlobalProductCode = Global.GlobalProductCode;
+            shipmentLabel.DimensionUnit = Global.DimensionUnit;
+            shipmentLabel.CurrencyCode =Global.CurrencyCode;
+            //End Here for DHL Only
+
+
             if (shipment != null)
             {
                 shipmentLabel.ShipmentId = shipment.ShipmentId;
-                shipmentLabel.Shipper.FirstName = shipment.Name;
+                shipmentLabel.ShipperID = Global.ShipperID;//TODO:
+                shipmentLabel.Shipper.Name = shipment.Name;
                 shipmentLabel.Shipper.Phone = shipment.Phone;
                 shipmentLabel.Shipper.EMail = shipment.Email;
                 shipmentLabel.Shipper.Address1 = shipment.Address1;
                 shipmentLabel.Shipper.Address2 = shipment.Address2;
                 shipmentLabel.Shipper.Address3 = shipment.Address3;
-                shipmentLabel.Shipper.CountryName = shipment.CountryId;
+                shipmentLabel.Shipper.CountryName = shipment.CountryName;
+                shipmentLabel.Shipper.CountryCode = shipment.CountryCode;
                 shipmentLabel.Shipper.City = shipment.City;
                 shipmentLabel.Shipper.PostalCode = shipment.PostalCode;
                 shipmentLabel.Shipper.Division = shipment.Division;
@@ -116,7 +150,8 @@ namespace Admin.UI.ShipmentArea
                 shipmentLabel.Consignee.Address1 = shipment.Raddressline1;
                 shipmentLabel.Consignee.Address2 = shipment.Raddressline2;
                 shipmentLabel.Consignee.Address3 = shipment.Raddressline3;
-                shipmentLabel.Consignee.CountryName = shipment.RCountryId;
+                shipmentLabel.Consignee.CountryName = shipment.RCountryName;
+                shipmentLabel.Consignee.CountryCode = shipment.RCountryCode;
                 shipmentLabel.Consignee.City = shipment.Rcity;
                 shipmentLabel.Consignee.PostalCode = shipment.Rpostalcode;
                 shipmentLabel.Consignee.Division = shipment.RDivision;
@@ -249,81 +284,143 @@ namespace Admin.UI.ShipmentArea
         [HttpPost]
         public JsonResult PickupRequest([FromBody]PickupRequest pickupRequest)
         {
-            if (pickupRequest != null)
+            try
             {
-                pickupRequest.UserID = "4";//TODO:
-                pickupRequest.AccountID = "2";//TODO:
-                pickupRequest.VendorAccountID = "1";//TODO:
-                pickupRequest.PickupDate = CarrierSpecificValueConversion.GetDate(pickupRequest.PickupDate, (Carrier)Convert.ToInt16(pickupRequest.Carrier));
-            }
-
-            if (pickupRequest.AddressType == "0")
-            {
-                Admin.UI.Areas.User.Models.Address register = new Admin.UI.Areas.User.Models.Address();
-
-                register.FirstName = pickupRequest.ContactName;
-                register.AccountId = 2;
-                register.Status = 1;
-                register.Created = DateTime.Now;
-                register.AddressType = Areas.User.Models.Address.AddressTypes.Recipient;
-                register.ShortName = pickupRequest.AddressCaption;
-                register.Phone1 = pickupRequest.Phone;
-                register.EMail = pickupRequest.PickUpNotificationEmail;
-                register.CountryId = pickupRequest.CountryID;
-                register.PostalCode = pickupRequest.ZipCode;
-                register.Division = pickupRequest.Division;
-                register.City = pickupRequest.City;
-                register.Address1 = pickupRequest.Address1;
-                register.Address2 = pickupRequest.Address2;
-
-                string url = Constants.APIURL + "MasterApi/Address/Insert";
-
-                using (var client = new WebClient())
+                if (pickupRequest != null)
                 {
-                    client.Headers[HttpRequestHeader.ContentType] = "application/json";
-
-                    string serialisedData = JsonConvert.SerializeObject(register);
-
-                    client.UploadString(url, serialisedData);
+                    pickupRequest.UserID = Global.UserID;
+                    pickupRequest.AccountID = Global.AccountID;
+                    pickupRequest.VendorAccountID = Global.VendorAccountID;
+                    pickupRequest.RatePickupIndicator = Global.RatePickupIndicator;
+                    pickupRequest.AccountNumber = Global.AccountNumber;
+                    pickupRequest.PickupDate = CarrierSpecificValueConversion.GetDate(pickupRequest.PickupDate, (Carrier)Convert.ToInt16(pickupRequest.Carrier));
+                    pickupRequest.ReadyTime = CarrierSpecificValueConversion.GetTime(pickupRequest.ReadyTime, (Carrier)Convert.ToInt16(pickupRequest.Carrier));
+                    pickupRequest.AvailableTime = CarrierSpecificValueConversion.GetTime(pickupRequest.AvailableTime, (Carrier)Convert.ToInt16(pickupRequest.Carrier));
                 }
+
+                if (pickupRequest.AddressType == "0")
+                {
+                    Admin.UI.Areas.User.Models.Address register = new Admin.UI.Areas.User.Models.Address();
+
+                    register.FirstName = pickupRequest.ContactName;
+                    register.AccountId = 2;
+                    register.Status = 1;
+                    register.Created = DateTime.Now;
+                    register.AddressType = Areas.User.Models.Address.AddressTypes.Recipient;
+                    register.ShortName = pickupRequest.AddressCaption;
+                    register.Phone1 = pickupRequest.Phone;
+                    register.EMail = pickupRequest.PickUpNotificationEmail;
+                    register.CountryId = pickupRequest.CountryID;
+                    register.PostalCode = pickupRequest.ZipCode;
+                    register.Division = pickupRequest.Division;
+                    register.City = pickupRequest.City;
+                    register.Address1 = pickupRequest.Address1;
+                    register.Address2 = pickupRequest.Address2;
+
+                    string url = Constants.APIURL + "MasterApi/Address/Insert";
+
+                    using (var client = new WebClient())
+                    {
+                        client.Headers[HttpRequestHeader.ContentType] = "application/json";
+
+                        string serialisedData = JsonConvert.SerializeObject(register);
+
+                        client.UploadString(url, serialisedData);
+                    }
+                }
+
+
+                string strURL = string.Empty;
+                switch ((Carrier)Convert.ToInt16(pickupRequest.Carrier))
+                {
+                    case Carrier.DHL:
+                        strURL = Constants.APIURL + "DHL/Pickup";
+                        Global.PackageLocation = "Front Office";
+                        Global.LocationType = "B";
+                        Global.GlobalProductCode = "D";
+                        pickupRequest.PackageLocation = Global.PackageLocation;
+                        pickupRequest.LocationType = Global.LocationType;
+                        pickupRequest.AccountType = Global.AccountType;
+                        pickupRequest.AccountNumber = Global.AccountNumber;
+                        pickupRequest.AWBNumber = Global.AWBNumber;
+                        pickupRequest.RegionCode = Global.RegionCode;
+                        pickupRequest.WeightUnit = Global.WeightUnit;
+                        pickupRequest.GlobalProductCode = Global.GlobalProductCode;
+                        pickupRequest.DimensionUnit = Global.DimensionUnit;
+                        pickupRequest.Weight = Global.Weight;
+
+                        break;
+                    case Carrier.Endicia:
+                        strURL = Constants.APIURL + "Endicia/BookPickup";
+                        Global.PackageLocation = "Front Door";
+                        pickupRequest.PackageLocation = Global.PackageLocation;//TODO:
+                        pickupRequest.RequesterID = Global.RequesterID;
+                        pickupRequest.AccountID = Global.AccountID;
+                        pickupRequest.PassPhrase = Global.PassPhrase;
+                        pickupRequest.RequestID = Global.RequestID;
+                        pickupRequest.UseAddressOnFile = Global.UseAddressOnFile;
+                        pickupRequest.ExpressMailCount = Global.ExpressMailCount;
+
+                        pickupRequest.PriorityMailCount = Global.PriorityMailCount;
+                        pickupRequest.ReturnsCount = Global.ReturnsCount;
+                        pickupRequest.InternationalCount = Global.InternationalCount;
+                        pickupRequest.OtherPackagesCount = Global.OtherPackagesCount;
+                        pickupRequest.EstimatedWeightLb = Global.EstimatedWeightLb;
+
+                        break;
+                    case Carrier.UPS:
+                        strURL = Constants.APIURL + "UPS/Pickup";
+                        break;
+                    default:
+                        break;
+                }
+                var postData = JsonConvert.SerializeObject(pickupRequest);
+
+
+                //Constants.ShippingURL + "Endicia/Pickup"
+                //Constants.ShippingURL + "UPS/Pickup"
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(strURL);
+                byte[] bytes;
+                //bytes = System.Text.Encoding.ASCII.un(requestXml);
+                bytes = System.Text.Encoding.UTF8.GetBytes(postData);
+                request.ContentType = "application/json";
+                request.ContentLength = bytes.Length;
+                request.Method = "POST";
+                Stream requestStream = request.GetRequestStream();
+                requestStream.Write(bytes, 0, bytes.Length);
+                requestStream.Close();
+                HttpWebResponse response;
+                response = (HttpWebResponse)request.GetResponse();
+                string responseString = string.Empty;
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    Stream responseStream = response.GetResponseStream();
+                    responseString = new StreamReader(responseStream).ReadToEnd();
+
+                    JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+
+                    Response routes_list = JsonConvert.DeserializeObject<Response>(responseString);
+                    string ErrorMessage = string.Empty;
+                    if (routes_list.ErrorMessage != null)
+                    {
+                        string replacestring = Constants.ReplaceErrorMessage;
+                        ErrorMessage = routes_list.ErrorMessage.Replace(replacestring, "").Replace(Constants.xmlns, "").Replace(Constants.xsi, "");
+                    }
+
+                    ResponseMessage errorResponse = JsonConvert.DeserializeObject<ResponseMessage>(ErrorMessage);
+                    if (errorResponse.Response.Status.ActionStatus == "Error")
+                        return Json(errorResponse.Response.Status.Condition.ConditionData);
+                }
+
+                return Json("Failed");
             }
-
-            var postData = JsonConvert.SerializeObject(pickupRequest);
-            string strURL = Constants.APIURL + "DHL/Pickup";
-            
-
-            //Constants.ShippingURL + "Endicia/Pickup"
-            //Constants.ShippingURL + "UPS/Pickup"
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(strURL);
-            byte[] bytes;
-            //bytes = System.Text.Encoding.ASCII.un(requestXml);
-            bytes = System.Text.Encoding.UTF8.GetBytes(postData);
-            request.ContentType = "application/json";
-            request.ContentLength = bytes.Length;
-            request.Method = "POST";
-            Stream requestStream = request.GetRequestStream();
-            requestStream.Write(bytes, 0, bytes.Length);
-            requestStream.Close();
-            HttpWebResponse response;
-            response = (HttpWebResponse)request.GetResponse();
-            string responseString = string.Empty;
-            if (response.StatusCode == HttpStatusCode.OK)
+            catch (Exception ex)
             {
-                Stream responseStream = response.GetResponseStream();
-                responseString = new StreamReader(responseStream).ReadToEnd();
-
-                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
-
-                Response routes_list = JsonConvert.DeserializeObject<Response>(responseString);
-                string replacestring = Constants.ReplaceErrorMessage;
-                string ErrorMessage = routes_list.ErrorMessage.Replace(replacestring, "").Replace(Constants.xmlns, "").Replace(Constants.xsi, "");
-
-                ResponseMessage errorResponse = JsonConvert.DeserializeObject<ResponseMessage>(ErrorMessage);
-                if (errorResponse.Response.Status.ActionStatus == "Error")
-                    return Json(errorResponse.Response.Status.Condition.ConditionData);
+                if(ex.Message!=null)
+                return Json(ex.Message);
+                else
+                    return Json(ex.InnerException.Message);
             }
-
-            return Json("Failed");
         }
 
         public ActionResult ViewPickup()
@@ -415,14 +512,30 @@ namespace Admin.UI.ShipmentArea
                 case Carrier.DHL:
                     pickupDate = DateTime.ParseExact(pickupDate, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
                     break;
+                case Carrier.UPS:
+                    pickupDate = DateTime.ParseExact(pickupDate, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd").Replace("-","");
+                    break;
+
             }
             return pickupDate;
+        }
+
+        public static string GetTime(string timeToConvert, Carrier carrierType)
+        {
+            switch (carrierType)
+            {
+                case Carrier.UPS:
+                    timeToConvert = timeToConvert.Replace(":", "");
+                    break;
+            }
+            return timeToConvert;
         }
     }
 
     public enum Carrier
     {
         DHL = 1,
-        Endicia
+        Endicia,
+        UPS
     }
 }

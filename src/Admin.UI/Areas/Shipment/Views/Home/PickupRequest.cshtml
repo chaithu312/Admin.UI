@@ -97,6 +97,8 @@
                                         <select id="CountryId" class="form-control" data-ng-model="pickupRequest.CountryId" name="CountryId"
                                                 data-ng-options="country.Id as country.Name for country in Country track by country.Id" data-ng-change="GetValue()" ng-disabled="pickupRequest.isDisabled" required></select>
                                     </div>
+                                    <input type="hidden" ng-model="pickupRequest.Country" />
+                                    <input type="hidden" ng-model="pickupRequest.CountryCode" />
                                 </div>
 
                                 <div style="clear:both;height:5px;"></div>

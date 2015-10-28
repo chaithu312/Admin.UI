@@ -363,7 +363,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 (function () {
     var app = angular.module('mainApp')
 
-    app.controller('PickupRequestController', function ($scope, $http) {
+    app.controller('PickupRequestController', function ($scope, $http, $filter) {
         $scope.notification = {
             Mobile: [{
                 Number: ""
@@ -505,6 +505,10 @@ $('[data-rel=popover]').popover({ container: 'body' });
             $("#CountryId").find('option[value=' + selectedAddress.CountryId + ']').attr('selected', 'selected');
 
             $("#Division").find('option[label=' + selectedAddress.Division + ']').attr('selected', 'selected');
+
+            var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.pickupRequest.CountryId); })[0];
+            $scope.pickupRequest.Country = countryfiltered.Name;
+            $scope.pickupRequest.CountryCode = countryfiltered.Code;
         }
         //Cut above
         //Ends here getting country detail
@@ -618,6 +622,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         }
     });
 })();
+
 (function () {
     var app = angular.module('mainApp')
     app.controller('TrackController', function ($scope, $http) {
@@ -1375,7 +1380,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
 (function () {
     var app = angular.module('mainApp');
-    app.controller('shipmentsController', function ($scope, $http) {
+    app.controller('shipmentsController', function ($scope, $http, $filter) {
         $scope.Address = new Array();
         var selectedShipperAddress = null;
         var item =
@@ -1415,7 +1420,6 @@ $('[data-rel=popover]').popover({ container: 'body' });
         });
 
         $scope.GetShipperAddressValue = function () {
-
             var addressType = $scope.Shipments.AddressType;
             if (addressType == "0") {
                 $scope.Shipments.Name = null
@@ -1456,10 +1460,13 @@ $('[data-rel=popover]').popover({ container: 'body' });
             $("#CountryId").find('option[value=' + selectedShipperAddress.CountryId + ']').attr('selected', 'selected');
 
             $("#Division").find('option[label=' + selectedShipperAddress.Division + ']').attr('selected', 'selected');
+
+            var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.Shipments.CountryId); })[0];
+            $scope.Shipments.CountryName = countryfiltered.Name;
+            $scope.Shipments.CountryCode = countryfiltered.Code;
         };
 
         $scope.GetConsigeeAddressValue = function () {
-
             var addressType = $scope.Shipments.RAddressType;
             if (addressType == "0") {
                 $scope.Shipments.Rname = null
@@ -1501,6 +1508,10 @@ $('[data-rel=popover]').popover({ container: 'body' });
             $("#RCountry").find('option[value=' + selectedShipperAddress.CountryId + ']').attr('selected', 'selected');
 
             $("#RDivision").find('option[label=' + selectedShipperAddress.Division + ']').attr('selected', 'selected');
+
+            var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.Shipments.RCountryId); })[0];
+            $scope.Shipments.RCountryName = countryfiltered.Name;
+            $scope.Shipments.RCountryCode = countryfiltered.Code;
         };
 
         //HTTP REQUEST BELOW
@@ -1590,23 +1601,21 @@ $('[data-rel=popover]').popover({ container: 'body' });
                     dataType: "json"
                 })
                     .success(function (data, status, headers, config) {
-                        if(data==null)
+                        if (data == null)
                             $scope.message = "Failed";
                         else if (data.ErrorMessage != null) {
                             $scope.message = data.ErrorMessage;
                             $("#frmShipments").hide();
                         }
                         else {
-                            window.open("http://" + data.LabelImage.OutputImage, "_blank");
+                            window.open("http://" + data.LabelImage.OutputImage.replace("10.0.0.124", "test.shipos.com/shipping"), "_blank");
                             $scope.message = "Label Generated Successfully";
                             $("#frmShipments").hide();
                         }
-                        
                     }).error(function (data, status, headers, config) {
                     });
             }
             if ($scope.shipmentsForm.$invalid) { $scope.message = "Please check required fields (marked by *)" }
-
         };
     });
 })();

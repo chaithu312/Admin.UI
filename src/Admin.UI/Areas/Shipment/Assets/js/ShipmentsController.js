@@ -1,6 +1,6 @@
 ﻿(function () {
     var app = angular.module('mainApp');
-    app.controller('shipmentsController', function ($scope, $http) {
+    app.controller('shipmentsController', function ($scope, $http, $filter) {
         $scope.Address = new Array();
         var selectedShipperAddress = null;
         var item =
@@ -80,6 +80,10 @@
             $("#CountryId").find('option[value=' + selectedShipperAddress.CountryId + ']').attr('selected', 'selected');
 
             $("#Division").find('option[label=' + selectedShipperAddress.Division + ']').attr('selected', 'selected');
+
+            var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.Shipments.CountryId); })[0];
+            $scope.Shipments.CountryName = countryfiltered.Name;
+            $scope.Shipments.CountryCode = countryfiltered.Code;
         };
 
         $scope.GetConsigeeAddressValue = function () {
@@ -124,6 +128,10 @@
             $("#RCountry").find('option[value=' + selectedShipperAddress.CountryId + ']').attr('selected', 'selected');
 
             $("#RDivision").find('option[label=' + selectedShipperAddress.Division + ']').attr('selected', 'selected');
+
+            var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.Shipments.RCountryId); })[0];
+            $scope.Shipments.RCountryName = countryfiltered.Name;
+            $scope.Shipments.RCountryCode = countryfiltered.Code;
         };
 
         //HTTP REQUEST BELOW

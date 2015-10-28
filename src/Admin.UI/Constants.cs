@@ -13,7 +13,7 @@ namespace Admin.UI
 
         public const string clientSecret = "262148";
         public const string clientScope = "read write";
-        public const string APIURL = "http://test.shipos.com/shipping/";
+        public const string APIURL = "http://localhost:49201/"; //"http://test.shipos.com/shipping/";
         public const string xmlns = "@xmlns:";
         public const string xsi = "@xsi:";
 
@@ -23,5 +23,6 @@ namespace Admin.UI
         public const long accountId = 2;
         public const string DomainKey = "CA952280-3855-4A55-950A-B8BCA0079890";
         public const string message = "Record saved successfully";
+        
     }
 }
