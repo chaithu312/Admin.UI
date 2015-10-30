@@ -51,5 +51,18 @@ namespace Admin.UI.Utility
 
         public static string Weight { get; set; } = "35";
 
+        public static string CompanyName { get; set; } = "Company Name";
+        public static Admin.UI.Utility.Enumerations.ContainerCode ContainerCode { get; set; } = Admin.UI.Utility.Enumerations.ContainerCode.PACKAGE;
+        public static string ServiceCode { get; set; } = "001";
+
+        public static string AccessLicenseNumber { get; set; } = "DCF8389DE7FC9D06";
+        public static string Username { get; set; } = "frank@k3pl.com";
+        public static string Password { get; set; } = "Aa123456";
+
+        public static string ShipmentChargeType { get; set; } = "01";
+        public static string ShipmentServiceType { get; set; } = "01";
+        public static string ShipmentPackageType { get; set; } = "02";
+        public static string ShipmentrequestOption { get; set; } = "nonvalidate";
+
     }
 }

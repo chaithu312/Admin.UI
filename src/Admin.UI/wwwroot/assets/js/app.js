@@ -506,10 +506,19 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
             $("#Division").find('option[label=' + selectedAddress.Division + ']').attr('selected', 'selected');
 
+            //var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.pickupRequest.CountryId); })[0];
+            //$scope.pickupRequest.Country = countryfiltered.Name;
+            //$scope.pickupRequest.CountryCode = countryfiltered.Code;
+            $scope.SetCountryAndCode();
+        }
+
+        $scope.SetCountryAndCode = function ()
+        {
             var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.pickupRequest.CountryId); })[0];
             $scope.pickupRequest.Country = countryfiltered.Name;
             $scope.pickupRequest.CountryCode = countryfiltered.Code;
         }
+
         //Cut above
         //Ends here getting country detail
 
@@ -548,7 +557,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         //Getting selected Country Code and Country Name
         $scope.GetValue = function () {
             //Getting States list using HTTP Request from controller
-
+            $scope.SetCountryAndCode();
             $http({
                 method: 'GET',
                 url: '/User/Home/State',
@@ -1461,11 +1470,23 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
             $("#Division").find('option[label=' + selectedShipperAddress.Division + ']').attr('selected', 'selected');
 
-            var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.Shipments.CountryId); })[0];
-            $scope.Shipments.CountryName = countryfiltered.Name;
-            $scope.Shipments.CountryCode = countryfiltered.Code;
+            $scope.SetCountryAndDivision(selectedShipperAddress.CountryId, selectedShipperAddress.Division,"shipper");
         };
-
+        $scope.SetCountryAndDivision = function (CountryId, Division,type)
+        {
+            var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number(CountryId); })[0];
+            var Divisionfiltered = $filter('filter')($scope.States, function (d) { return d.Name === Division; })[0];
+            if (type == "shipper") {
+                $scope.Shipments.CountryName = countryfiltered.Name;
+                $scope.Shipments.CountryCode = countryfiltered.Code;
+                $scope.Shipments.DivisionCode = Divisionfiltered.Code;
+            }
+            if (type == "consignee") {
+                $scope.Shipments.RCountryName = countryfiltered.Name;
+                $scope.Shipments.RCountryCode = countryfiltered.Code;
+                $scope.Shipments.RDivisionCode = Divisionfiltered.Code;
+            }
+        }
         $scope.GetConsigeeAddressValue = function () {
             var addressType = $scope.Shipments.RAddressType;
             if (addressType == "0") {
@@ -1508,10 +1529,10 @@ $('[data-rel=popover]').popover({ container: 'body' });
             $("#RCountry").find('option[value=' + selectedShipperAddress.CountryId + ']').attr('selected', 'selected');
 
             $("#RDivision").find('option[label=' + selectedShipperAddress.Division + ']').attr('selected', 'selected');
-
-            var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.Shipments.RCountryId); })[0];
-            $scope.Shipments.RCountryName = countryfiltered.Name;
-            $scope.Shipments.RCountryCode = countryfiltered.Code;
+            $scope.SetCountryAndDivision($scope.Shipments.RCountryId, selectedShipperAddress.Division,"consignee");
+            //var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.Shipments.RCountryId); })[0];
+            //$scope.Shipments.RCountryName = countryfiltered.Name;
+            //$scope.Shipments.RCountryCode = countryfiltered.Code;
         };
 
         //HTTP REQUEST BELOW

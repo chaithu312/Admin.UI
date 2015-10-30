@@ -160,6 +160,7 @@
                                                 <select id="Division" class="form-control" data-ng-model="Shipments.Division" name="Division"
                                                         data-ng-options="state.Name as state.Name for state in States track by state.Id" ng-disabled="Shipments.isDisabled" required></select>
                                             </div>
+                                            <input  type="hidden" ng-model="Shipments.DivisionCode" />
                                         </div>
                                     </div>
                                 </div>
@@ -313,6 +314,7 @@
                                                 <select id="RDivision" class="form-control" data-ng-model="Shipments.RDivision" name="RDivision"
                                                         data-ng-options="state.Name as state.Name for state in States track by state.Id" ng-disabled="Shipments.isRDisabled" required></select>
                                             </div>
+                                            <input type="hidden" ng-model="Shipments.RDivisionCode" />
                                         </div>
                                     </div>
                                 </div>

@@ -88,6 +88,9 @@ namespace Admin.UI.Areas.Shipment.Models
         public string GlobalProductCode { get; set; }
         public string DimensionUnit { get; set; }
         public string Weight { get; set; }
+        public string CompanyName { get; set; }
+        public Admin.UI.Utility.Enumerations.ContainerCode ContainerCode { get; set; }
+        public string ServiceCode { get; set; }
     }
 
     public class Notification

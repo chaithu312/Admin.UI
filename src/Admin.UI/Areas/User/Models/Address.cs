@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Admin.UI.Utility.Enumerations;
 
 namespace Admin.UI.Areas.User.Models
 {
@@ -51,10 +52,6 @@ namespace Admin.UI.Areas.User.Models
 
         public sbyte Status { get; set; }
 
-        public enum AddressTypes
-        {
-            Sender = 1,
-            Recipient = -1
-        }
+        
     }
 }

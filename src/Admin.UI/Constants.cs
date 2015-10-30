@@ -13,7 +13,7 @@ namespace Admin.UI
 
         public const string clientSecret = "262148";
         public const string clientScope = "read write";
-        public const string APIURL = "http://localhost:49201/"; //"http://test.shipos.com/shipping/";
+        public const string APIURL = "http://localhost:49202/"; //"http://test.shipos.com/shipping/";
         public const string xmlns = "@xmlns:";
         public const string xsi = "@xsi:";
 

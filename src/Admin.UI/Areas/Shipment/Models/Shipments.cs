@@ -32,6 +32,7 @@ namespace Admin.UI.Areas.Shipment.Models
         public string City { get; set; }
         public string Division { get; set; }
         public string DivisionName { get; set; }
+        public string DivisionCode { get; set; }
         public string PostalCode { get; set; }
         public string CountryId { get; set; }
         public string CountryCode { get; set; }
@@ -49,6 +50,7 @@ namespace Admin.UI.Areas.Shipment.Models
         public string Rcity { get; set; }
         public string RDivision { get; set; }
         public string RDivisionName { get; set; }
+        public string RDivisionCode { get; set; }
         public string Rpostalcode { get; set; }
         public string RCountryId { get; set; }
         public string RCountryCode { get; set; }
@@ -67,6 +69,7 @@ namespace Admin.UI.Areas.Shipment.Models
         public string Height { get; set; }
         public List<Parcel> Parcel { get; set; }
         public DateTime Created { get; set; }
+
     }
 
     public class Parcel
@@ -103,7 +106,8 @@ namespace Admin.UI.Areas.Shipment.Models
         public string PostalCode { get; set; }
         public string CountryName { get; set; }
         public string CountryCode { get; set; }
-        public object Division { get; set; }
+        public object DivisionName { get; set; }
+        public object DivisionCode { get; set; }
         public string State { get; set; }
         public bool IsResidential { get; set; }
         public bool IsRemoteArea { get; set; }
@@ -130,7 +134,8 @@ namespace Admin.UI.Areas.Shipment.Models
         public string PostalCode { get; set; }
         public string CountryName { get; set; }
         public string CountryCode { get; set; }
-        public object Division { get; set; }
+        public object DivisionName { get; set; }
+        public object DivisionCode { get; set; }
         public string State { get; set; }
         public bool IsResidential { get; set; }
         public bool IsRemoteArea { get; set; }
@@ -205,6 +210,17 @@ namespace Admin.UI.Areas.Shipment.Models
 
         public DateTime ShipTimestamp { get; set; }
         public List<Parcel> Parcels { get; set; }
+
+        public string AccessLicenseNumber { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string AccountNumber { get; set; }
+
+        public string ShipmentChargeType { get; set; }
+        public string ShipmentServiceType { get; set; }
+        public string ShipmentPackageType { get; set; }
+        public string ShipmentrequestOption { get; set; }
+
         public Shipment()
         {
             Consignee = new Consignee();

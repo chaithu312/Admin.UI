@@ -144,10 +144,19 @@
 
             $("#Division").find('option[label=' + selectedAddress.Division + ']').attr('selected', 'selected');
 
+            //var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.pickupRequest.CountryId); })[0];
+            //$scope.pickupRequest.Country = countryfiltered.Name;
+            //$scope.pickupRequest.CountryCode = countryfiltered.Code;
+            $scope.SetCountryAndCode();
+        }
+
+        $scope.SetCountryAndCode = function ()
+        {
             var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.pickupRequest.CountryId); })[0];
             $scope.pickupRequest.Country = countryfiltered.Name;
             $scope.pickupRequest.CountryCode = countryfiltered.Code;
         }
+
         //Cut above
         //Ends here getting country detail
 
@@ -186,7 +195,7 @@
         //Getting selected Country Code and Country Name
         $scope.GetValue = function () {
             //Getting States list using HTTP Request from controller
-
+            $scope.SetCountryAndCode();
             $http({
                 method: 'GET',
                 url: '/User/Home/State',

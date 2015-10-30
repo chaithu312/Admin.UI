@@ -81,11 +81,23 @@
 
             $("#Division").find('option[label=' + selectedShipperAddress.Division + ']').attr('selected', 'selected');
 
-            var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.Shipments.CountryId); })[0];
-            $scope.Shipments.CountryName = countryfiltered.Name;
-            $scope.Shipments.CountryCode = countryfiltered.Code;
+            $scope.SetCountryAndDivision(selectedShipperAddress.CountryId, selectedShipperAddress.Division,"shipper");
         };
-
+        $scope.SetCountryAndDivision = function (CountryId, Division,type)
+        {
+            var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number(CountryId); })[0];
+            var Divisionfiltered = $filter('filter')($scope.States, function (d) { return d.Name === Division; })[0];
+            if (type == "shipper") {
+                $scope.Shipments.CountryName = countryfiltered.Name;
+                $scope.Shipments.CountryCode = countryfiltered.Code;
+                $scope.Shipments.DivisionCode = Divisionfiltered.Code;
+            }
+            if (type == "consignee") {
+                $scope.Shipments.RCountryName = countryfiltered.Name;
+                $scope.Shipments.RCountryCode = countryfiltered.Code;
+                $scope.Shipments.RDivisionCode = Divisionfiltered.Code;
+            }
+        }
         $scope.GetConsigeeAddressValue = function () {
             var addressType = $scope.Shipments.RAddressType;
             if (addressType == "0") {
@@ -128,10 +140,10 @@
             $("#RCountry").find('option[value=' + selectedShipperAddress.CountryId + ']').attr('selected', 'selected');
 
             $("#RDivision").find('option[label=' + selectedShipperAddress.Division + ']').attr('selected', 'selected');
-
-            var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.Shipments.RCountryId); })[0];
-            $scope.Shipments.RCountryName = countryfiltered.Name;
-            $scope.Shipments.RCountryCode = countryfiltered.Code;
+            $scope.SetCountryAndDivision($scope.Shipments.RCountryId, selectedShipperAddress.Division,"consignee");
+            //var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.Shipments.RCountryId); })[0];
+            //$scope.Shipments.RCountryName = countryfiltered.Name;
+            //$scope.Shipments.RCountryCode = countryfiltered.Code;
         };
 
         //HTTP REQUEST BELOW
