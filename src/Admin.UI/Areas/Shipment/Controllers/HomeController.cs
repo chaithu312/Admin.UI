@@ -27,7 +27,8 @@ namespace Admin.UI.ShipmentArea
         {
             LabelImageResponse labelresponse = null;
             //Starting Generate Label
-            try {
+            try
+            {
                 if (shipment != null)
                 {
                     shipment.UserId = "4";//TODO:
@@ -39,7 +40,6 @@ namespace Admin.UI.ShipmentArea
                     shipment.Currency = "1";
                     shipment.PickupId = "4";
                     shipment.shipmentdate = DateTime.ParseExact(shipment.shipmentdate, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
-
                 }
 
                 if (shipment.AddressType == "0")
@@ -77,7 +77,6 @@ namespace Admin.UI.ShipmentArea
                     shipment.ShipmentId = responseString;
                     labelresponse = GenerateLabelImage(shipment);
                 }
-                
             }
             catch (Exception ex)
             {
@@ -89,9 +88,9 @@ namespace Admin.UI.ShipmentArea
         {
             return View();
         }
+
         private LabelImageResponse GenerateLabelImage(Shipments shipment)
         {
-
             string urlLabelGeneration = Constants.APIURL + "Endicia/Shipment";
             Shipment shipmentLabel = new Shipment();
             if (shipment != null)
@@ -212,7 +211,7 @@ namespace Admin.UI.ShipmentArea
 
                     vendorSetting.Expiration = DateTime.ParseExact(vendorSetting.Expiration, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
                     vendorSetting.Effective = DateTime.ParseExact(vendorSetting.Effective, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
-                    string url = Constants.APIURL+ "VendorSetting/";
+                    string url = Constants.APIURL + "VendorSetting/";
 
                     object result = string.Empty;
 
@@ -290,7 +289,6 @@ namespace Admin.UI.ShipmentArea
 
             var postData = JsonConvert.SerializeObject(pickupRequest);
             string strURL = Constants.APIURL + "DHL/Pickup";
-            
 
             //Constants.ShippingURL + "Endicia/Pickup"
             //Constants.ShippingURL + "UPS/Pickup"
@@ -358,6 +356,10 @@ namespace Admin.UI.ShipmentArea
                 //    var objData = JsonConvert.DeserializeObject(response);
 
                 JArray varPickUP = JArray.Parse(objData.ToString());
+
+                dynamic test = new JObject();
+                test.abc = "sadfasd";
+
                 IList<ViewPickup> viewpickup = varPickUP.Select(p => new ViewPickup
                 {
                     Id = (string)p["Id"],

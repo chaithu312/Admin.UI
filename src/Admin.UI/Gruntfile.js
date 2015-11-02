@@ -60,7 +60,9 @@
                         'Areas/Shipment/Assets/js/ShipmentsController.js'
 
                     ],
-                    'wwwroot/assets/js/DataTable.js': ['Assets/ace/js/dataTables/jquery.dataTables.js',
+                    'wwwroot/assets/js/DataTable.js': [
+                        'Assets/ace/js/dataTables/jquery.dataTables.js',
+                        'Assets/ace/js/dataTables/jquery.dataTables.bootstrap.js',
                         'Assets/ace/js/dataTables/extensions/TableTools/js/dataTables.tableTools.js',
                         'Assets/ace/js/dataTables/extensions/ColVis/js/dataTables.colVis.js'],
 
