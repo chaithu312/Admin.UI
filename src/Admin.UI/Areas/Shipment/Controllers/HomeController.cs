@@ -93,24 +93,24 @@ namespace Admin.UI.ShipmentArea
         }
         private LabelImageResponse GenerateLabelImage(Shipments shipment)
         {
-
-            string urlLabelGeneration = Constants.APIURL + "UPS/Shipment";
+            string urlLabelGeneration = Constants.APIURL + "Endicia/Shipment";
             Shipment shipmentLabel = new Shipment();
             #region Endicia
 
-            //shipmentLabel.Parcels = shipment.Parcel;
-            //shipmentLabel.LabelType = Global.LabelType;
-            //shipmentLabel.LabelSize = Global.LabelSize;
-            //shipmentLabel.ImageFormat = Global.ImageFormat;
-            //shipmentLabel.Test = Global.Test;
-            //shipmentLabel.PartnerTransactionID = Global.PartnerTransactionID;
-            //shipmentLabel.RequesterID = Global.RequesterID;
-            //shipmentLabel.AccountID = Global.AccountID;
-            //shipmentLabel.PassPhrase = Global.PassPhrase;
-            //shipmentLabel.MailClass = Global.MailClass;
+            shipmentLabel.Parcels = shipment.Parcel;
+            shipmentLabel.LabelType = Global.LabelType;
+            shipmentLabel.LabelSize = Global.LabelSize;
+            shipmentLabel.ImageFormat = Global.ImageFormat;
+            shipmentLabel.Test = Global.Test;
+            shipmentLabel.PartnerTransactionID = Global.PartnerTransactionID;
+            shipmentLabel.RequesterID = Global.RequesterID;
+            shipmentLabel.AccountID = Global.AccountID;
+            shipmentLabel.PassPhrase = Global.PassPhrase;
+            shipmentLabel.MailClass = Global.MailClass;
             #endregion Endicia
 
             #region DHL
+            //shipmentLabel.Parcels = shipment.Parcel;
             //shipmentLabel.Billing.ShippingPaymentAccount = Global.ShippingPaymentAccount;//TODO:
             //shipmentLabel.Billing.ShippingPaymentType = Billing.PaymentTypes.Shipper;
             //shipmentLabel.Billing.DutyTaxPaymentType = Billing.PaymentTypes.Shipper;
@@ -127,19 +127,19 @@ namespace Admin.UI.ShipmentArea
             #endregion DHL
 
             #region UPS
-            shipmentLabel.AccessLicenseNumber = Global.AccessLicenseNumber;
-            shipmentLabel.Username = Global.Username;
-            shipmentLabel.Password = Global.Password;
-            Global.WeightUnit = "LBS";
-            Global.ImageFormat = "GIF";
-            shipmentLabel.WeightUnit = Global.WeightUnit;
-            shipmentLabel.ImageFormat = Global.ImageFormat;
-            shipmentLabel.AccountNumber = Global.AccountNumber;
-            shipmentLabel.ShipmentChargeType = Global.ShipmentChargeType;
-            shipmentLabel.ShipmentServiceType = Global.ShipmentServiceType;
-            shipmentLabel.ShipmentPackageType = Global.ShipmentPackageType;
-            shipmentLabel.ShipmentrequestOption = Global.ShipmentrequestOption;
-            shipmentLabel.Parcels = shipment.Parcel;
+            //shipmentLabel.AccessLicenseNumber = Global.AccessLicenseNumber;
+            //shipmentLabel.Username = Global.Username;
+            //shipmentLabel.Password = Global.Password;
+            //Global.WeightUnit = "LBS";
+            //Global.ImageFormat = "GIF";
+            //shipmentLabel.WeightUnit = Global.WeightUnit;
+            //shipmentLabel.ImageFormat = Global.ImageFormat;
+            //shipmentLabel.AccountNumber = Global.AccountNumber;
+            //shipmentLabel.ShipmentChargeType = Global.ShipmentChargeType;
+            //shipmentLabel.ShipmentServiceType = Global.ShipmentServiceType;
+            //shipmentLabel.ShipmentPackageType = Global.ShipmentPackageType;
+            //shipmentLabel.ShipmentrequestOption = Global.ShipmentrequestOption;
+            //shipmentLabel.Parcels = shipment.Parcel;
             #endregion UPS
 
             if (shipment != null)
