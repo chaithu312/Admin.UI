@@ -14,7 +14,7 @@ namespace Admin.UI.Controllers
 
         public IActionResult Index()
         {
-            string siteName = AppSettings.Options.SiteTitle;
+            string siteName = AppSettings.Value.SiteTitle;
 
             if (User.Identity.IsAuthenticated)
                 return View();

@@ -1,21 +1,35 @@
 ﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
-using Microsoft.Framework.ConfigurationModel;
+using Microsoft.Dnx.Runtime;
 using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Runtime;
+using Microsoft.Framework.Configuration;
 
 namespace Admin.UI
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; set; }
+        //public static IConfiguration Configuration { get; set; }
+        public static IConfiguration Configuration { get; private set; }
+
+        //public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
+        //{
+        //    Configuration = new Configuration(appEnv.ApplicationBasePath)
+        //        .AddJsonFile("config.json")
+        //        .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true)
+        //        .AddEnvironmentVariables();
+        //}
 
         public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
-            Configuration = new Configuration(appEnv.ApplicationBasePath)
+            var configBuilder = new ConfigurationBuilder().SetBasePath(appEnv.ApplicationBasePath)
                 .AddJsonFile("config.json")
-                .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
+                .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true); ;
+
+            configBuilder.AddJsonFile("config.json", optional: true);
+            configBuilder.AddJsonFile($"config-{env.EnvironmentName}.json", optional: true);
+            configBuilder.AddEnvironmentVariables();
+
+            Configuration = configBuilder.Build();
         }
 
         // This method gets called by a runtime.
@@ -27,7 +41,7 @@ namespace Admin.UI
 
         public void Configure(IApplicationBuilder app)
         {
-            //app.UseStaticFiles();
+            app.UseIISPlatformHandler();
 
             app.UseMvc(routes =>
             {
