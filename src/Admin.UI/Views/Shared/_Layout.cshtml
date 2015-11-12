@@ -25,7 +25,89 @@
 
     <div class="main-container" id="main-container">
         @await Html.PartialAsync("_SidebarPartial")
-        @RenderBody()
+
+        <div class="main-content">
+            <div class="main-content-inner">
+                <!-- #section:basics/content.breadcrumbs -->
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <script type="text/javascript">
+                        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                    </script>
+
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="ace-icon fa fa-home home-icon"></i>
+                            <a href="#">Home</a>
+                        </li>
+
+                        <li>
+                            <a href="#">Other Pages</a>
+                        </li>
+                        <li class="active">Blank Page</li>
+                    </ul><!-- /.breadcrumb -->
+                    <!-- #section:basics/content.searchbox -->
+
+                    <div class="nav-search" id="nav-search">
+                        <form class="form-search">
+                            <span class="input-icon">
+                                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                                <i class="ace-icon fa fa-search nav-search-icon"></i>
+                            </span>
+                        </form>
+                    </div><!-- /.nav-search -->
+                    <!-- /section:basics/content.searchbox -->
+                </div>
+
+                <!-- /section:basics/content.breadcrumbs -->
+                <div class="page-content">
+                    <div class="page-header">
+                        <h1>
+                            User
+                            <small>
+                                <i class="ace-icon fa fa-angle-double-right"></i>
+                                Registration
+                            </small>
+                        </h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <!-- PAGE CONTENT BEGINS -->
+                            @RenderBody()
+                            <!-- PAGE CONTENT ENDS -->
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.page-content -->
+            </div>
+        </div><!-- /.main-content -->
+
+        <div class="footer">
+            <div class="footer-inner">
+                <!-- #section:basics/footer -->
+                <div class="footer-content">
+                    <span class="bigger-120">
+                        <span class="blue bolder">ShipOS</span>
+                        Application &copy; 2000-2015
+                    </span>
+
+                    &nbsp; &nbsp;
+                    <span class="action-buttons">
+                        <a href="#">
+                            <i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
+                        </a>
+
+                        <a href="#">
+                            <i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
+                        </a>
+
+                        <a href="#">
+                            <i class="ace-icon fa fa-rss-square orange bigger-150"></i>
+                        </a>
+                    </span>
+                </div>
+
+                <!-- /section:basics/footer -->
+            </div>
+        </div>
     </div>
 
     <!--[if !IE]> -->

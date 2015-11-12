@@ -7940,8 +7940,8 @@
       "sha512": "OseTFniKmyp76mEzOBwIKGBRS5eMoYNkMKaMXOpxx9jv88+b6mh1rSaw43vjBOItNhaLFG3d0a20PfHyibH5sw==",
       "files": [
         "lib/net40/Owin.dll",
-        "Owin.1.0.0.nupkg",
-        "Owin.1.0.0.nupkg.sha512",
+        "Owin.1.0.nupkg",
+        "Owin.1.0.nupkg.sha512",
         "Owin.nuspec"
       ]
     },
@@ -8217,7 +8217,7 @@
     },
     "System.Threading/4.0.0": {
       "type": "package",
-      "sha512": "H6O/9gUrjPDNYanh/7OFGAZHjVXvEuITD0RcnjfvIV04HOGrOPqUBU0kmz9RIX/7YGgCQn1o1S2DX6Cuv8kVGQ==",
+      "sha512": "ZsZ8i38K9t14aLQJ+19WUFoS7fVA/3QLHxgE1O6+xICYtl/VzUv17NCWFCNkBn6pfsIlC8XOjRQqiKzjdUGotw==",
       "files": [
         "lib/MonoAndroid10/_._",
         "lib/MonoTouch10/_._",

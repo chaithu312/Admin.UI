@@ -217,7 +217,7 @@ namespace Admin.UI.UserArea
                     register.Name = register.FirstName + " " + register.LastName;
                 }
 
-                string url = Constants.APIURL+ "MasterApi/Address/Insert";
+                string url = Constants.APIURL + "MasterApi/Address/Insert";
                 object result = string.Empty;
 
                 // Uses the System.Net.WebClient and not HttpClient, because .NET 2.0 must be supported.
@@ -235,10 +235,8 @@ namespace Admin.UI.UserArea
             }
             catch (Exception ex)
             {
-
                 return Json("Check required fields");
             }
-           
         }
 
         public IActionResult ViewAddress()
@@ -292,16 +290,14 @@ namespace Admin.UI.UserArea
             }
             catch (Exception ex)
             {
-
                 return Json(ex.Message);
             }
-            
         }
 
         [HttpGet]
         public JsonResult DeleteAddress(string selectedIds)
         {
-            selectedIds=selectedIds.TrimEnd(new char[] { ',' });
+            selectedIds = selectedIds.TrimEnd(new char[] { ',' });
             string[] ids = selectedIds.Split(',');
 
             string url = Constants.APIURL + "MasterApi/Address/DeleteByIds";
@@ -321,6 +317,4 @@ namespace Admin.UI.UserArea
             return Json(result);
         }
     }
-
-
 }
