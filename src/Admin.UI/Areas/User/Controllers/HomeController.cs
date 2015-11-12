@@ -250,7 +250,6 @@ namespace Admin.UI.UserArea
             var client = new HttpClient();
             string strPostData = "orderBy=[Country].[Name]&sortdir=ASC";
             var result = client.GetStringAsync(Constants.APIURL + "MasterApi/Country?" + strPostData).Result;
-            //var result = client.GetStringAsync("http://localhost:49201/" + "MasterApi/Country?"+strPostData).Result;
             return Json(result);
         }
 
@@ -267,7 +266,6 @@ namespace Admin.UI.UserArea
         {
             var client = new HttpClient();
             var result = client.GetStringAsync(Constants.APIURL + "MasterApi/Division/").Result;
-            //var result = client.GetStringAsync("http://localhost:49201/" + "MasterApi/Division/").Result;
             return Json(result);
         }
 

@@ -12,6 +12,9 @@
 
                 <form class="form-inline" name="shipmentsForm" data-ng-submit="sendShipmentsForm()" data-ng-controller="shipmentsController" novalidate>
                     <div id="errorMessages" class="error">{{message}}</div>
+                    @*<ul>
+                        <li ng-repeat="err in valResult.errors">{{ err.propertyName }}: {{ err.errorMessage }}</li>
+                    </ul>*@
                     <div id="frmShipments">
                         <div class="col-sm-6">
                             <div class="widget-box">
@@ -23,42 +26,46 @@
 
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>Company </label><span class="error" ng-show="shipmentsForm.company.$error.required">*</span>
+                                                <label>Company </label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <input type="text" name="company" id="company" ng-model="Shipments.Company" class="form-control" ng-maxlength="100" required />
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.Company"><label></label></i>
                                         </div>
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>Sent By<span class="error" ng-show="shipmentsForm.name.$error.required">*</span></label>
+                                                <label>Sent By</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <input type="text" name="name" id="name" ng-model="Shipments.Name" class="form-control" ng-maxlength="50" required />
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.Name"><label></label></i>
                                         </div>
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>Phone  <span class="error" ng-show="shipmentsForm.phone.$error.required">*</span></label>
+                                                <label>Phone</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <input type="text" name="phone" id="phone" ng-model="Shipments.Phone" class="form-control" ng-disabled="Shipments.isDisabled" required />
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.Phone"><label></label></i>
                                         </div>
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>Email <span class="error" ng-show="shipmentsForm.email.$error.required">*</span></label>
+                                                <label>Email</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <input type="email" name="email" id="email" ng-model="Shipments.Email" class="form-control" required />
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.Email"><label></label></i>
                                         </div>
 
                                         <div class="widget-header">
@@ -67,33 +74,36 @@
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>Address<span class="error" ng-show="shipmentsForm.address.$error.required">*</span></label>
+                                                <label>Address</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <select name="address" ng-model="Shipments.AddressType" data-ng-options="address.Id as address.ShortName for address in Address track by address.Id" data-ng-change="GetShipperAddressValue()" required></select>
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.AddressType"><label></label></i>
                                         </div>
                                         <div style="clear:both;height:5px;"></div>
                                         <div ng-if="Shipment.AddressType == 0">
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                Address Caption <span class="error" data-ng-show="shipmentsForm.addressCaption.$error.required">*</span>
+                                                Address Caption
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <input type="text" class="form-control" placeholder="" id="addressCaption" name="addressCaption" data-ng-model="Shipments.AddressCaption" required>
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.AddressCaption"><label></label></i>
                                         </div>
 
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>Address Line 1 <span class="error" ng-show="shipmentsForm.addressline1.$error.required">*</span></label>
+                                                <label>Address Line 1</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <input type="text" name="addressline1" id="addressline1" ng-model="Shipments.Address1" class="form-control" ng-disabled="Shipments.isDisabled" required />
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.Address1"><label></label></i>
                                         </div>
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
@@ -118,41 +128,44 @@
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>City <span class="error" ng-show="shipmentsForm.city.$error.required">*</span></label>
+                                                <label>City</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <input type="text" name="city" id="city" ng-model="Shipments.City" class="form-control" ng-disabled="Shipments.isDisabled" required />
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.City"><label></label></i>
                                         </div>
                                         <div style="clear:both;height:5px;"></div>
 
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>Country <span class="error" ng-show="shipmentsForm.CountryId.$error.required">*</span></label>
+                                                <label>Country</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <select id="CountryId" class="form-control" data-ng-model="Shipments.CountryId" name="CountryId"
                                                         data-ng-options="country.Id as country.Name for country in Country track by country.Id" ng-disabled="Shipments.isDisabled" data-ng-change="GetDivision(Shipments.CountryId)" required></select>
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.CountryId"><label></label></i>
                                             <input type="hidden" ng-model="Shipments.CountryName"/>
                                             <input type="hidden" ng-model="Shipments.CountryCode" />
                                         </div>
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>Postal Code  <span class="error" ng-show="shipmentsForm.postalcode.$error.required">*</span> </label>
+                                                <label>Postal Code</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <input type="text" name="postalcode" id="postalcode" ng-model="Shipments.PostalCode" class="form-control" ng-disabled="Shipments.isDisabled" required />
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.PostalCode"><label></label></i>
                                         </div>
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>Division  <span class="error" ng-show="shipmentsForm.ddlState.$error.required">*</span> </label>
+                                                <label>Division</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
@@ -160,6 +173,7 @@
                                                 <select id="Division" class="form-control" data-ng-model="Shipments.Division" name="Division"
                                                         data-ng-options="state.Name as state.Name for state in States track by state.Id" ng-disabled="Shipments.isDisabled" required></select>
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.Division"><label></label></i>
                                             <input  type="hidden" ng-model="Shipments.DivisionCode" />
                                         </div>
                                     </div>
@@ -176,42 +190,46 @@
 
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>Company  <span class="error" ng-show="shipmentsForm.RCompany.$error.required">*</span></label>
+                                                <label>Company</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <input type="text" name="RCompany" id="RCompany" ng-model="Shipments.RCompany" class="form-control" ng-maxlength="100" required />
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.RCompany"><label></label></i>
                                         </div>
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>Receiver's Name<span class="error" ng-show="shipmentsForm.Rname.$error.required">*</span></label>
+                                                <label>Receiver's Name</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <input type="text" name="Rname" id="Rname" ng-model="Shipments.Rname" class="form-control" ng-maxlength="50" required />
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.Rname"><label></label></i>
                                         </div>
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>Phone  <span class="error" ng-show="shipmentsForm.Rphone.$error.required">*</span></label>
+                                                <label>Phone</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <input type="text" name="Rphone" id="Rphone" ng-model="Shipments.Rphone" class="form-control" ng-disabled="Shipments.isRDisabled" required />
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.Rphone"><label></label></i>
                                         </div>
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>Email <span class="error" ng-show="shipmentsForm.Remail.$error.required">*</span></label>
+                                                <label>Email</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <input type="email" name="Remail" id="Remail" ng-model="Shipments.REmail" class="form-control" required />
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.REmail"><label></label></i>
                                         </div>
 
                                         <div class="widget-header">
@@ -220,34 +238,37 @@
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>Address<span ng-show="shipmentsForm.Raddress.$error.required" class="error">*</span></label>
+                                                <label>Address</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <select name="Raddress" ng-model="Shipments.RAddressType" data-ng-options="address.Id as address.ShortName for address in Address track by address.Id" data-ng-change="GetConsigeeAddressValue()" required></select>
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.RAddressType"><label></label></i>
                                         </div>
 
                                         <div style="clear:both;height:5px;"></div>
                                         <div ng-if="Shipments.RAddressType == 0">
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                Address Caption <span class="error" data-ng-show="shipmentsForm.raddressCaption.$error.required">*</span>
+                                                Address Caption
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <input type="text" class="form-control" placeholder="" id="raddressCaption" name="raddressCaption" data-ng-model="Shipments.RaddressCaption" required>
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.RaddressCaption"><label></label></i>
                                         </div>
 
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>Address Line 1 <span class="error" ng-show="shipmentsForm.Raddressline1.$error.required">*</span></label>
+                                                <label>Address Line 1</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <input type="text" name="Raddressline1" id="Raddressline1" ng-model="Shipments.Raddressline1" class="form-control" ng-disabled="Shipments.isRDisabled" required />
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.Raddressline1"><label></label></i>
                                         </div>
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
@@ -272,41 +293,44 @@
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>City<span class="error" ng-show="shipmentsForm.Rcity.$error.required">*</span></label>
+                                                <label>City</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <input type="text" name="Rcity" id="Rcity" ng-model="Shipments.Rcity" class="form-control" ng-disabled="Shipments.isRDisabled" required />
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.Rcity"><label></label></i>
                                         </div>
                                         <div style="clear:both;height:5px;"></div>
 
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>Country<span class="error" ng-show="shipmentsForm.RCountry.$error.required">*</span> </label>
+                                                <label>Country</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <select id="RCountry" class="form-control" data-ng-model="Shipments.RCountryId" name="RCountry"
                                                         data-ng-options="country.Id as country.Name for country in Country track by country.Id" ng-disabled="Shipments.isRDisabled" data-ng-change="GetDivision(Shipments.RCountryId)" required></select>
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.RCountryId"><label></label></i>
                                             <input type="hidden" ng-model="Shipments.RCountryName" />
                                             <input type="hidden" ng-model="Shipments.RCountryCode" />
                                         </div>
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>Postal Code <span class="error" ng-show="shipmentsForm.Rpostalcode.$error.required">*</span> </label>
+                                                <label>Postal Code</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
                                                 <input type="text" name="Rpostalcode" id="Rpostalcode" ng-model="Shipments.Rpostalcode" ng-disabled="Shipments.isRDisabled" class="form-control" required />
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.Rpostalcode"><label></label></i>
                                         </div>
                                         <div style="clear:both;height:5px;"></div>
                                         <div>
                                             <label for="form-field-mask-1" class="col-sm-3">
-                                                <label>Division <span class="error" ng-show="shipmentsForm.RddlState.$error.required">*</span> </label>
+                                                <label>Division</label>
                                             </label>
 
                                             <div class="input-group col-sm-8">
@@ -314,6 +338,7 @@
                                                 <select id="RDivision" class="form-control" data-ng-model="Shipments.RDivision" name="RDivision"
                                                         data-ng-options="state.Name as state.Name for state in States track by state.Id" ng-disabled="Shipments.isRDisabled" required></select>
                                             </div>
+                                            <i ng-validation-icon="Shipments.$errors.RDivision"><label></label></i>
                                             <input type="hidden" ng-model="Shipments.RDivisionCode" />
                                         </div>
                                     </div>
@@ -335,7 +360,7 @@
 
                                                 <div>
                                                     <label for="form-field-mask-1" class="col-sm-3">
-                                                        <label>Shipment Date <span class="error" ng-show="shipmentsForm.shipmentdate.$error.required">*</span></label>
+                                                        <label>Shipment Date</label>
                                                     </label>
 
                                                     <div class="input-group col-sm-8">
@@ -344,6 +369,7 @@
                                                             <i class="fa fa-calendar bigger-110"></i>
                                                         </span>
                                                     </div>
+                                                    <i ng-validation-icon="Shipments.$errors.shipmentdate"><label></label></i>
                                                 </div>
 
                                                 <div style="clear:both;height:5px;"></div>
@@ -391,7 +417,7 @@
 
                                                 <div>
                                                     <label for="form-field-mask-1" class="col-sm-3">
-                                                        <label>Package Type <span class="error" ng-show="shipmentsForm.packagetype.$error.required">*</span></label>
+                                                        <label>Package Type</label>
                                                     </label>
 
                                                     <div class="input-group col-sm-8">
@@ -403,11 +429,12 @@
                                                         </select>
                                                         <span class="help-button" data-rel="popover" data-trigger="hover" data-placement="left" data-content=" Standard Package (Can be carrier by one person).Has Heavy Piece(s) weight is more than 35 lbs. Has Bulky Piece(s) at least one dimension is larger than 40 inches" title="Info">?</span>
                                                     </div>
+                                                    <i ng-validation-icon="Shipments.$errors.packagetype"><label></label></i>
                                                 </div>
                                                 <div style="clear:both;height:5px;"></div>
                                                 <div>
                                                     <label for="form-field-mask-1" class="col-sm-3">
-                                                        <label>Unit System<span class="error" ng-show="shipmentsForm.unitsystem.$error.required">*</span></label>
+                                                        <label>Unit System</label>
                                                     </label>
 
                                                     <div class="input-group col-sm-8">
@@ -416,16 +443,18 @@
                                                             <option value="eu">Metric (kg-cm)</option>
                                                         </select>
                                                     </div>
+                                                    <i ng-validation-icon="Shipments.$errors.unitsystem"><label></label></i>
                                                 </div>
                                                 <div style="clear:both;height:5px;"></div>
                                                 <div>
                                                     <label for="form-field-mask-1" class="col-sm-3">
-                                                        <label>Insurance<span class="error" ng-show="shipmentsForm.insurance.$error.required">*</span></label>
+                                                        <label>Insurance</label>
                                                     </label>
 
                                                     <div class="input-group col-sm-1">
                                                         <input type="checkbox" name="insurance" id="insurance" ng-model="Shipments.Insurance" class="form-control" required="" />
                                                     </div>
+                                                    <i ng-validation-icon="Shipments.$errors.Insurance"><label></label></i>
                                                 </div>
                                                 <div style="clear:both;height:5px;"></div>
                                                 <div>

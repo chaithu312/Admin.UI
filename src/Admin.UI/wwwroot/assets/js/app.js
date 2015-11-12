@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var app = angular.module("mainApp", ['navsServices']);
+    var app = angular.module("mainApp", ['navsServices', 'ngFluentValidation']);
 
     app.directive('toggleSidebar', function () {
         return {
@@ -273,6 +273,7 @@ $(document).one('ajaxloadstart.page', function (e) {
 //jqGrid Required Methods Ends here
 
 $('[data-rel=popover]').popover({ container: 'body' });
+
 (function () {
     function SignUpController($scope) {
         alert("a");
@@ -1176,7 +1177,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
 (function () {
     var app = angular.module('mainApp');
-    app.controller('shipmentsController', function ($scope, $http, $filter) {
+    app.controller('shipmentsController', function (shippingModels, shippingValidator, $scope, $http, $filter) {
+        $scope.Shipments = shippingModels.Shipment;
         $scope.Address = new Array();
         var selectedShipperAddress = null;
         var item =
@@ -1203,14 +1205,15 @@ $('[data-rel=popover]').popover({ container: 'body' });
         });
         $http({
             method: 'GET',
-            url: 'http://test.shipos.com/shipping/masterapi/division',
+            //url: 'http://test.shipos.com/shipping/masterapi/division',
+            url: '/User/Home/Division',
             //data: $scope.SelectedCountry.CountryCode,
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
             }
         }).success(function (data, status, headers, config) {
             $scope.message = '';
-            $scope.States = data;
+            $scope.States = JSON.parse(data);
         }).error(function (data, status, headers, config) {
             $scope.message = 'Unexpected Error';
         });
@@ -1398,8 +1401,17 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.Shipments = null;
         $scope.Shipments = { Parcel: [] };
         $scope.Shipments.Parcel.push($scope.Parcel);
-
+        $scope.valResult = {};
         $scope.sendShipmentsForm = function () {
+
+            var unregisterValidatorWatch =
+            $scope.$watch(function () { return $scope.Shipments; },
+                         function () {
+                             $scope.valResult = shippingValidator.validate($scope.Shipments);
+                             if ($scope.Shipments.$isValid)
+                                 unregisterValidatorWatch();
+                         }, true);
+
             if ($scope.shipmentsForm.$valid) {
                 $http({
                     url: '/Shipment/Shipments',
@@ -1426,4 +1438,81 @@ $('[data-rel=popover]').popover({ container: 'body' });
             if ($scope.shipmentsForm.$invalid) { $scope.message = "Please check required fields (marked by *)" }
         };
     });
+
+    app.factory('shippingModels', function () {
+
+        var shippingModels = {};
+        shippingModels.Shipment = function () {
+            this.Company = null;
+            this.Name = null;
+            this.Phone = null;
+            this.Email = null;
+            this.AddressType = null;
+            this.AddressCaption = null;
+            this.Address1 = null;
+            this.City = null;
+            this.CountryId = null;
+            this.PostalCode = null;
+            this.Division = null;
+
+            this.RCompany = null;
+            this.Rname = null;
+            this.Rphone = null;
+            this.REmail = null;
+            this.RAddressType = null;
+
+            this.AddressCaption = null;
+            this.RaddressCaption = null;
+            this.Raddressline1 = null;
+            this.Rcity = null;
+            this.RCountryId = null;
+            this.Rpostalcode = null;
+            this.RDivision = null;
+
+            this.shipmentdate = null;
+            this.unitsystem = null;
+            this.packagetype = null;
+            this.Insurance = null;
+        }
+        return shippingModels;
+    });
+    app.factory('shippingValidator', function (validator) {
+        var shippingValidator = s = new validator();
+        s.ruleFor('Company').notEmpty();
+        s.ruleFor('Name').notEmpty();
+        s.ruleFor('Phone').notEmpty().withMessage('Phone');
+        s.ruleFor('Email').notEmpty();
+        s.ruleFor('AddressType').notEmpty();
+        s.ruleFor('AddressCaption').notEmpty();
+        s.ruleFor('Address1').notEmpty();
+        s.ruleFor('City').notEmpty();
+        s.ruleFor('CountryId').notEmpty();
+        s.ruleFor('PostalCode').notEmpty();
+        s.ruleFor('Division').notEmpty();
+        
+
+        s.ruleFor('RCompany').notEmpty();
+        s.ruleFor('Rname').notEmpty();
+        s.ruleFor('Rphone').notEmpty();
+        s.ruleFor('REmail').notEmpty();
+
+
+        s.ruleFor('RAddressType').notEmpty();
+        s.ruleFor('RaddressCaption').notEmpty();
+        
+        s.ruleFor('Raddressline1').notEmpty();
+        s.ruleFor('Rcity').notEmpty();
+        s.ruleFor('RCountryId').notEmpty();
+        s.ruleFor('Rpostalcode').notEmpty();
+
+        s.ruleFor('RDivision').notEmpty();
+        
+        s.ruleFor('shipmentdate').notEmpty();
+        s.ruleFor('unitsystem').notEmpty();
+        s.ruleFor('packagetype').notEmpty();
+        s.ruleFor('Insurance').notEmpty();
+
+        return shippingValidator;
+    })
+
 })();

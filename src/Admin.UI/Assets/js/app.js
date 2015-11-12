@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    var app = angular.module("mainApp", ['navsServices']);
+    var app = angular.module("mainApp", ['navsServices', 'ngFluentValidation']);
 
     app.directive('toggleSidebar', function () {
         return {
