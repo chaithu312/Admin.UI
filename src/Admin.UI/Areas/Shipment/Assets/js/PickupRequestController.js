@@ -1,7 +1,56 @@
 ﻿(function () {
-    var app = angular.module('mainApp')
+    var app = angular.module('mainApp');
+    app.factory('pickupModels', function () {
 
-    app.controller('PickupRequestController', function ($scope, $http, $filter) {
+        var pickupModels = {};
+        pickupModels.Pickup = function () {
+            this.ContactName= null;
+            this.Phone = null;
+            this.AddressType = null;
+            this.AddressCaption = null;
+            this.Address1 = null;
+            this.Address2 = null;
+            this.City = null;
+            this.CountryId = null;
+            this.ZipCode = null;
+            this.Division = null;
+            this.Carrier = null;
+            this.PickupFrom = null;
+            this.PickupDate = null;
+            this.Destination = null;
+            this.ParcelType = null;
+            this.ReadyTime = null;
+            this.AvailableTime = null;
+            this.TotalPieces = null;
+            this.isDisabled = null;
+            this.notification=[];
+        }
+        return pickupModels;
+    });
+    app.factory('pickupValidator', function (validator) {
+        var pickupValidator = s = new validator();
+        s.ruleFor('Phone').notEmpty();
+        s.ruleFor('AddressType').notEmpty();
+        s.ruleFor('AddressCaption').notEmpty();
+        s.ruleFor('AddressType').notEmpty();
+        s.ruleFor('AddressCaption').notEmpty();
+        s.ruleFor('Address1').notEmpty();
+        s.ruleFor('City').notEmpty();
+        s.ruleFor('CountryId').notEmpty();
+        s.ruleFor('ZipCode').notEmpty();
+        s.ruleFor('Division').notEmpty();
+        s.ruleFor('Carrier').notEmpty();
+        s.ruleFor('PickupFrom').notEmpty();
+        s.ruleFor('PickupDate').notEmpty();
+        s.ruleFor('Destination').notEmpty();
+        s.ruleFor('ParcelType').notEmpty();
+        s.ruleFor('ReadyTime').notEmpty();
+        s.ruleFor('AvailableTime').notEmpty();
+        s.ruleFor('TotalPieces').notEmpty();
+        return pickupValidator;
+    });
+    app.controller('PickupRequestController', function (pickupModels, pickupValidator, addressModels, addressValidator, $scope, $http, $filter) {
+        $scope.pickupRequest = pickupModels.Pickup;
         $scope.notification = {
             Mobile: [{
                 Number: ""
@@ -225,7 +274,17 @@
         }
         //Ends here getting country detail
         $scope.pickupRequest.notification.push($scope.notification);
+        $scope.valResult = {};
         $scope.sendForm = function () {
+
+            var unregisterValidatorWatch =
+           $scope.$watch(function () { return $scope.pickupRequest; },
+                        function () {
+                            $scope.valResult = pickupValidator.validate($scope.pickupRequest);
+                            if ($scope.pickupRequest.$isValid)
+                                unregisterValidatorWatch();
+                        }, true);
+
             if ($scope.PickupForm.$valid) {
                 $http({
                     url: '/Shipment/PickupRequest',
@@ -267,5 +326,8 @@
                 return false;
             }
         }
+
+
+        
     });
 })();

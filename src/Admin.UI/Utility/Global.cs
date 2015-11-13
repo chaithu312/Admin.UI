@@ -28,10 +28,10 @@ namespace Admin.UI.Utility
 
         public static string ShippingPaymentAccount { get; set; } = "803921577";
         public static string DutyTaxPaymentAccount { get; set; } = "803921577";
-        public static string LanguageCode { get; set; }="en";
+        public static string LanguageCode { get; set; } = "en";
         public static string PiecesEnabled { get; set; } = "Y";
         public static string WeightUnit { get; set; } = "L";
-        public static string GlobalProductCode { get; set; }="P";
+        public static string GlobalProductCode { get; set; } = "P";
         public static string DimensionUnit { get; set; } = "I";
         public static string CurrencyCode { get; set; } = "USD";
 

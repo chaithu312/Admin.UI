@@ -258,7 +258,7 @@
                     }).error(function (data, status, headers, config) {
                     });
             }
-            if ($scope.shipmentsForm.$invalid) { $scope.message = "Please check required fields (marked by *)" }
+            if ($scope.shipmentsForm.$invalid) { $scope.message = "Please check required fields." }
         };
     });
 
@@ -296,6 +296,7 @@
             this.unitsystem = null;
             this.packagetype = null;
             this.Insurance = null;
+            this.Declared = null;
         }
         return shippingModels;
     });
@@ -334,6 +335,7 @@
         s.ruleFor('unitsystem').notEmpty();
         s.ruleFor('packagetype').notEmpty();
         s.ruleFor('Insurance').notEmpty();
+        s.ruleFor('Declared').notEmpty();
 
         return shippingValidator;
     })

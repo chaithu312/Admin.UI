@@ -362,9 +362,58 @@ $('[data-rel=popover]').popover({ container: 'body' });
     });
 })();
 (function () {
-    var app = angular.module('mainApp')
+    var app = angular.module('mainApp');
+    app.factory('pickupModels', function () {
 
-    app.controller('PickupRequestController', function ($scope, $http, $filter) {
+        var pickupModels = {};
+        pickupModels.Pickup = function () {
+            this.ContactName= null;
+            this.Phone = null;
+            this.AddressType = null;
+            this.AddressCaption = null;
+            this.Address1 = null;
+            this.Address2 = null;
+            this.City = null;
+            this.CountryId = null;
+            this.ZipCode = null;
+            this.Division = null;
+            this.Carrier = null;
+            this.PickupFrom = null;
+            this.PickupDate = null;
+            this.Destination = null;
+            this.ParcelType = null;
+            this.ReadyTime = null;
+            this.AvailableTime = null;
+            this.TotalPieces = null;
+            this.isDisabled = null;
+            this.notification=[];
+        }
+        return pickupModels;
+    });
+    app.factory('pickupValidator', function (validator) {
+        var pickupValidator = s = new validator();
+        s.ruleFor('Phone').notEmpty();
+        s.ruleFor('AddressType').notEmpty();
+        s.ruleFor('AddressCaption').notEmpty();
+        s.ruleFor('AddressType').notEmpty();
+        s.ruleFor('AddressCaption').notEmpty();
+        s.ruleFor('Address1').notEmpty();
+        s.ruleFor('City').notEmpty();
+        s.ruleFor('CountryId').notEmpty();
+        s.ruleFor('ZipCode').notEmpty();
+        s.ruleFor('Division').notEmpty();
+        s.ruleFor('Carrier').notEmpty();
+        s.ruleFor('PickupFrom').notEmpty();
+        s.ruleFor('PickupDate').notEmpty();
+        s.ruleFor('Destination').notEmpty();
+        s.ruleFor('ParcelType').notEmpty();
+        s.ruleFor('ReadyTime').notEmpty();
+        s.ruleFor('AvailableTime').notEmpty();
+        s.ruleFor('TotalPieces').notEmpty();
+        return pickupValidator;
+    });
+    app.controller('PickupRequestController', function (pickupModels, pickupValidator, addressModels, addressValidator, $scope, $http, $filter) {
+        $scope.pickupRequest = pickupModels.Pickup;
         $scope.notification = {
             Mobile: [{
                 Number: ""
@@ -588,7 +637,17 @@ $('[data-rel=popover]').popover({ container: 'body' });
         }
         //Ends here getting country detail
         $scope.pickupRequest.notification.push($scope.notification);
+        $scope.valResult = {};
         $scope.sendForm = function () {
+
+            var unregisterValidatorWatch =
+           $scope.$watch(function () { return $scope.pickupRequest; },
+                        function () {
+                            $scope.valResult = pickupValidator.validate($scope.pickupRequest);
+                            if ($scope.pickupRequest.$isValid)
+                                unregisterValidatorWatch();
+                        }, true);
+
             if ($scope.PickupForm.$valid) {
                 $http({
                     url: '/Shipment/PickupRequest',
@@ -630,6 +689,9 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 return false;
             }
         }
+
+
+        
     });
 })();
 
@@ -680,11 +742,46 @@ $('[data-rel=popover]').popover({ container: 'body' });
     });
 })();
 (function () {
-    var validationApp = angular.module('mainApp');
-    
-    // create angular controller
-    validationApp.controller('AddressBookController', function ($scope, $http) {
+    var app = angular.module('mainApp');
+    app.factory('addressModels', function () {
 
+        var addressModels = {};
+        addressModels.Address = function () {
+            this.AddressType = null;
+            this.ShortName = null;
+            this.Company = null;
+            this.FirstName = null;
+            this.LastName = null;
+            this.Phone1 = null;
+            this.Phone2 = null;
+            this.Fax = null;
+            this.Email = null;
+            this.CountryId = null;
+            this.PostalCode = null;
+            this.Division = null;
+            this.City = null;
+            this.Address1 = null;
+        }
+        return addressModels;
+    });
+    app.factory('addressValidator', function (validator) {
+        var s = new validator();
+        s.ruleFor('AddressType').notEmpty();
+        s.ruleFor('Company').notEmpty();
+        s.ruleFor('FirstName').notEmpty();
+        s.ruleFor('LastName').notEmpty();
+        s.ruleFor('Phone1').notEmpty();
+        s.ruleFor('Email').notEmpty();
+        s.ruleFor('CountryId').notEmpty();
+        s.ruleFor('PostalCode').notEmpty();
+        s.ruleFor('Division').notEmpty();
+        s.ruleFor('City').notEmpty();
+        s.ruleFor('Address1').notEmpty();
+        return s;
+    });
+    // create angular controller
+    app.controller('AddressBookController', function (addressModels, addressValidator,$scope, $http, $filter) {
+        $scope.contact = addressModels.Address;
         //HTTP REQUEST BELOW
         $http({
             method: 'GET',
@@ -712,9 +809,16 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
         //HTTP REQUEST ABOVE
 
-
+        $scope.valResult = {};
         // function to submit the form after all validation has occurred
         $scope.submitForm = function () {
+            var unregisterValidatorWatch =
+         $scope.$watch(function () { return $scope.contact; },
+                      function () {
+                          $scope.valResult = addressValidator.validate($scope.contact);
+                          if ($scope.contact.$isValid)
+                              unregisterValidatorWatch();
+                      }, true);
             // check to make sure the form is completely valid
             if ($scope.AddressBook.$invalid) {
                 console.clear();
@@ -787,7 +891,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
     });
     var PHONE_REGEXP = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
     
-    validationApp.directive('postalcode', ['$http', function ($http) {
+    app.directive('postalcode', ['$http', function ($http) {
         return {
             restrice: 'A',
             require: 'ngModel',
@@ -1435,7 +1539,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                     }).error(function (data, status, headers, config) {
                     });
             }
-            if ($scope.shipmentsForm.$invalid) { $scope.message = "Please check required fields (marked by *)" }
+            if ($scope.shipmentsForm.$invalid) { $scope.message = "Please check required fields." }
         };
     });
 
@@ -1473,6 +1577,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             this.unitsystem = null;
             this.packagetype = null;
             this.Insurance = null;
+            this.Declared = null;
         }
         return shippingModels;
     });
@@ -1511,6 +1616,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         s.ruleFor('unitsystem').notEmpty();
         s.ruleFor('packagetype').notEmpty();
         s.ruleFor('Insurance').notEmpty();
+        s.ruleFor('Declared').notEmpty();
 
         return shippingValidator;
     })

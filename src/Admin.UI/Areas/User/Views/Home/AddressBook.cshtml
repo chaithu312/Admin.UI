@@ -11,13 +11,11 @@
 
         <div class="col-sm-9">
 
-            <select name="Type" ng-model="contact.AddressType" required="" class="col-xs-10 col-sm-5">
+            <select name="Type" ng-model="contact.AddressType" required class="col-xs-10 col-sm-5">
                 <option value="1">Shipper</option>
                 <option value="-1">Recipient</option>
             </select>
-            <span class="help-inline col-xs-12 col-sm-7">
-                <span class="error middle" ng-show="AddressBook.Type.$error.required">Choose address type</span>
-            </span>
+             &nbsp; <i ng-validation-icon="contact.$errors.AddressType"><label></label></i>
         </div>
     </div>
 
@@ -32,34 +30,38 @@
     </div>
 
     <div class="form-group">
-        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Company <span ng-show="AddressBook.company.$error.required" ng-class="{'error-text': AddressBook.company.$error.required}">*</span></label>
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Company</label>
 
         <div class="col-sm-9">
             <input type="text" name="company" id="company" ng-model="contact.Company" class="col-xs-10 col-sm-5" ng-maxlength="100" required="" />
+            &nbsp; <i ng-validation-icon="contact.$errors.Company"><label></label></i>
         </div>
     </div>
 
     <div class="form-group">
-        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">First name<span ng-show="AddressBook.firstname.$error.required" ng-class="{'error-text': AddressBook.firstname.$error.required}">*</span></label>
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">First name</label>
 
         <div class="col-sm-9">
             <input type="text" name="firstname" id="firstname" ng-model="contact.FirstName" class="col-xs-10 col-sm-5" ng-maxlength="50" required="" />
+            &nbsp; <i ng-validation-icon="contact.$errors.FirstName"><label></label></i>
         </div>
     </div>
 
     <div class="form-group">
-        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Last name <span ng-show="AddressBook.lastname.$error.required" ng-class="{'error-text': AddressBook.lastname.$error.required}">*</span></label>
-
-        <div class=" col-sm-9">
-            <input type="text" name="lastname" id="lastname" ng-model="contact.LastName" class="col-xs-10 col-sm-5" ng-maxlength="50" required="" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Phone 1 <span ng-show="AddressBook.phone1.$error.required" ng-class="{'error-text': AddressBook.phone1.$error.required}">*</span><br /></label>
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Last name</label>
 
         <div class="col-sm-9">
-            <input type="text" name="phone1" id="phone1" ng-model="contact.Phone1" class="col-xs-10 col-sm-5" required="" />
+            <input type="text" name="lastname" id="lastname" ng-model="contact.LastName" class="col-xs-10 col-sm-5" ng-maxlength="50" required="" />
+            &nbsp; <i ng-validation-icon="contact.$errors.LastName"><label></label></i>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Phone 1</label>
+
+        <div class="col-sm-9">
+            <input type="text" name="phone1" id="phone1" data-ng-model="contact.Phone1" placeholder="" class="col-xs-10 col-sm-5" required />
+            &nbsp; <i ng-validation-icon="contact.$errors.Phone1"><label></label></i>
         </div>
     </div>
 
@@ -79,10 +81,11 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Email <span ng-show="AddressBook.Email.$error.required" ng-class="{'error-text': AddressBook.Email.$error.required}">*</span></label>
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Email</label>
 
         <div class="col-sm-9">
             <input type="email" name="Email" id="Email" ng-model="contact.Email" class="col-xs-10 col-sm-5" required="" />
+            &nbsp; <i ng-validation-icon="contact.$errors.Email"><label></label></i>
         </div>
     </div>
 
@@ -90,20 +93,22 @@
         Address Information
     </h3>
     <div class="form-group">
-        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Country<span ng-show="AddressBook.Country.$error.required" ng-class="{'error-text': AddressBook.Country.$error.required}">*</span> </label>
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Country</label>
 
         <div class="col-sm-9">
 
             <select id="Country" class="col-xs-10 col-sm-5" data-ng-model="contact.CountryId" name="Country"
                     data-ng-options="country.Id as country.Name for country in Country track by country.Id" data-ng-change="GetValue()" required></select>
+            &nbsp; <i ng-validation-icon="contact.$errors.CountryId"><label></label></i>
         </div>
     </div>
 
     <div class="form-group">
-        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Postal Code <span ng-show="AddressBook.postalcode.$error.required" ng-class="{'error-text': AddressBook.postalcode.$error.required}">*</span> </label>
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Postal Code</label>
 
         <div class="col-sm-9">
             <input type="text" name="postalcode" id="postalcode" ng-model="contact.PostalCode" class="col-xs-10 col-sm-5" required postalcode />
+            &nbsp; <i ng-validation-icon="contact.$errors.PostalCode"><label></label></i>
         </div>
     </div>
     <div class="form-group">
@@ -112,21 +117,24 @@
         <div class="col-sm-9">
             <select id="ddlState" class="col-xs-10 col-sm-5" data-ng-model="contact.Division" name="ddlState"
                     data-ng-options="state.Name as state.Name for state in States track by state.Id" required></select>
+            &nbsp; <i ng-validation-icon="contact.$errors.Division"><label></label></i>
         </div>
     </div>
 
     <div class="form-group">
-        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">City<span ng-show="AddressBook.city.$error.required" ng-class="{'error-text': AddressBook.city.$error.required}">*</span> </label>
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">City</label>
 
         <div class="col-sm-9">
             <input type="text" name="city" id="city" ng-model="contact.City" class="col-xs-10 col-sm-5" required />
+            &nbsp; <i ng-validation-icon="contact.$errors.City"><label></label></i>
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Address Line 1 <span ng-show="AddressBook.addressline1.$error.required" ng-class="{'error-text': AddressBook.addressline1.$error.required}">*</span></label>
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Address Line 1</label>
 
         <div class="col-sm-9">
             <input type="text" name="addressline1" id="addressline1" ng-model="contact.Address1" class="col-xs-10 col-sm-5" required="" />
+            &nbsp; <i ng-validation-icon="contact.$errors.Address1"><label></label></i>
         </div>
     </div>
     <div class="form-group">
@@ -147,7 +155,7 @@
 
     <div class="clearfix form-actions">
         <div class="col-md-offset-3 col-md-9">
-            <button type="button" class="btn btn-info">
+            <button type="submit" class="btn btn-info">
                 <i class="ace-icon fa fa-check bigger-110"></i>
                 Save
             </button>
