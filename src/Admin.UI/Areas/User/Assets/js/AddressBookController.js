@@ -28,6 +28,8 @@
         s.ruleFor('FirstName').notEmpty();
         s.ruleFor('LastName').notEmpty();
         s.ruleFor('Phone1').notEmpty();
+        s.ruleFor('Phone1').notNull();
+        s.ruleFor('Phone1').length(10, 11);
         s.ruleFor('Email').notEmpty();
         s.ruleFor('CountryId').notEmpty();
         s.ruleFor('PostalCode').notEmpty();
@@ -39,6 +41,8 @@
     // create angular controller
     app.controller('AddressBookController', function (addressModels, addressValidator,$scope, $http, $filter) {
         $scope.contact = addressModels.Address;
+        $scope.contact = null;
+        $scope.contact = { AddressType :null,ShortName:null,Company:null,FirstName:null,LastName:null,Phone1:null,Phone2:null,Fax:null,Email:null,CountryId:null,PostalCode:null,Division:null,City:null,Address1:null};
         //HTTP REQUEST BELOW
         $http({
             method: 'GET',
@@ -77,13 +81,13 @@
                               unregisterValidatorWatch();
                       }, true);
             // check to make sure the form is completely valid
-            if ($scope.AddressBook.$invalid) {
-                console.clear();
-                console.log('valid');
-                console.log($scope.AddressBook);
-                console.log($scope.AddressBook.$error);
-            }
-            if ($scope.AddressBook.$valid) {
+            //if (!$scope.contact.$isValid) {
+            //    console.clear();
+            //    console.log('valid');
+            //    console.log($scope.AddressBook);
+            //    console.log($scope.AddressBook.$error);
+            //}
+            if ($scope.contact.$isValid) {
 
                 $http({
                     url: '/User/Home/AddressBook',

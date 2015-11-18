@@ -68,7 +68,7 @@
         var vendor = {};
         vendor.data = function ()
         {
-           return  $http.get("http://localhost:49201/MasterApi/vendor");
+            return $http.get("http://test.shipos.com/Shipping/MasterApi/vendor");
         }
 
         return vendor;
@@ -412,8 +412,9 @@ $('[data-rel=popover]').popover({ container: 'body' });
         s.ruleFor('TotalPieces').notEmpty();
         return pickupValidator;
     });
-    app.controller('PickupRequestController', function (pickupModels, pickupValidator, addressModels, addressValidator, $scope, $http, $filter) {
-        $scope.pickupRequest = pickupModels.Pickup;
+    
+    app.controller('PickupRequestController', function (pickupModels, pickupValidator,$scope, $http, $filter) {
+       $scope.pickupRequest = pickupModels.Pickup;
         $scope.notification = {
             Mobile: [{
                 Number: ""
@@ -449,6 +450,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.pickupRequest = null;
 
         $scope.pickupRequest = { ContactName: null, Phone: null, PickupFrom: null, Address1: null, Address2: null, City: null, ZipCode: null, CountryId: null, Division: null, isDisabled: null, notification: [] }
+
         var AllAddress = new Array();
         var selectedAddress = null;
         $scope.Address = new Array();
@@ -648,6 +650,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
                                 unregisterValidatorWatch();
                         }, true);
 
+            
+            
             if ($scope.PickupForm.$valid) {
                 $http({
                     url: '/Shipment/PickupRequest',
@@ -666,7 +670,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                         
                     });
             }
-            if ($scope.PickupForm.$invalid) { $scope.message = "Please check required fields (marked by *)" }
+            if ($scope.PickupForm.$invalid) { $scope.message = "Please check required fields." }
         };
 
         $("#contactName").blur(function () {
@@ -771,6 +775,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
         s.ruleFor('FirstName').notEmpty();
         s.ruleFor('LastName').notEmpty();
         s.ruleFor('Phone1').notEmpty();
+        s.ruleFor('Phone1').notNull();
+        s.ruleFor('Phone1').length(10, 11);
         s.ruleFor('Email').notEmpty();
         s.ruleFor('CountryId').notEmpty();
         s.ruleFor('PostalCode').notEmpty();
@@ -782,6 +788,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
     // create angular controller
     app.controller('AddressBookController', function (addressModels, addressValidator,$scope, $http, $filter) {
         $scope.contact = addressModels.Address;
+        $scope.contact = null;
+        $scope.contact = { AddressType :null,ShortName:null,Company:null,FirstName:null,LastName:null,Phone1:null,Phone2:null,Fax:null,Email:null,CountryId:null,PostalCode:null,Division:null,City:null,Address1:null};
         //HTTP REQUEST BELOW
         $http({
             method: 'GET',
@@ -820,13 +828,13 @@ $('[data-rel=popover]').popover({ container: 'body' });
                               unregisterValidatorWatch();
                       }, true);
             // check to make sure the form is completely valid
-            if ($scope.AddressBook.$invalid) {
-                console.clear();
-                console.log('valid');
-                console.log($scope.AddressBook);
-                console.log($scope.AddressBook.$error);
-            }
-            if ($scope.AddressBook.$valid) {
+            //if (!$scope.contact.$isValid) {
+            //    console.clear();
+            //    console.log('valid');
+            //    console.log($scope.AddressBook);
+            //    console.log($scope.AddressBook.$error);
+            //}
+            if ($scope.contact.$isValid) {
 
                 $http({
                     url: '/User/Home/AddressBook',
@@ -1265,7 +1273,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
                 
             }
-            if ($scope.mainForm.$invalid) { $scope.message = "Please check required fields (marked by *)" }
+            if ($scope.mainForm.$invalid) { $scope.message = "Please check required fields." }
         };
 
         vendor.data().success(function(Vendors){

@@ -49,8 +49,9 @@
         s.ruleFor('TotalPieces').notEmpty();
         return pickupValidator;
     });
-    app.controller('PickupRequestController', function (pickupModels, pickupValidator, addressModels, addressValidator, $scope, $http, $filter) {
-        $scope.pickupRequest = pickupModels.Pickup;
+    
+    app.controller('PickupRequestController', function (pickupModels, pickupValidator,$scope, $http, $filter) {
+       $scope.pickupRequest = pickupModels.Pickup;
         $scope.notification = {
             Mobile: [{
                 Number: ""
@@ -86,6 +87,7 @@
         $scope.pickupRequest = null;
 
         $scope.pickupRequest = { ContactName: null, Phone: null, PickupFrom: null, Address1: null, Address2: null, City: null, ZipCode: null, CountryId: null, Division: null, isDisabled: null, notification: [] }
+
         var AllAddress = new Array();
         var selectedAddress = null;
         $scope.Address = new Array();
@@ -285,6 +287,8 @@
                                 unregisterValidatorWatch();
                         }, true);
 
+            
+            
             if ($scope.PickupForm.$valid) {
                 $http({
                     url: '/Shipment/PickupRequest',
@@ -303,7 +307,7 @@
                         
                     });
             }
-            if ($scope.PickupForm.$invalid) { $scope.message = "Please check required fields (marked by *)" }
+            if ($scope.PickupForm.$invalid) { $scope.message = "Please check required fields." }
         };
 
         $("#contactName").blur(function () {

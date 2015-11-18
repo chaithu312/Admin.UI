@@ -37,7 +37,7 @@
 
                 
             }
-            if ($scope.mainForm.$invalid) { $scope.message = "Please check required fields (marked by *)" }
+            if ($scope.mainForm.$invalid) { $scope.message = "Please check required fields." }
         };
 
         vendor.data().success(function(Vendors){

@@ -68,7 +68,7 @@
         var vendor = {};
         vendor.data = function ()
         {
-           return  $http.get("http://localhost:49201/MasterApi/vendor");
+            return $http.get("http://test.shipos.com/Shipping/MasterApi/vendor");
         }
 
         return vendor;
