@@ -38,6 +38,7 @@
                 str == "";
         };
 
+
         var regex = function () {
 
             var _isMatch = function (input, pattern, flags) {
@@ -265,9 +266,12 @@
                     },
 
                     length: function (min, max) {
-
+                        
                         var v = this.must(function (obj, x) {
                             var iMax = max || (x || '').length;
+                            if (isStringNullOrEmpty(x))
+                                return true;
+                            else
                             return !isStringNullOrEmpty(x) && x.length >= min && x.length <= iMax;
                         });
                         if (max == undefined)
@@ -372,6 +376,28 @@
 
 
                         v.withMessage("'{propertyName}' is not a valid email address.");
+
+                        return v;
+
+                    },
+
+                    validatePostalCode: function () {
+                        var postalCodePattern = '^[0-9]{5}(?:-[0-9]{4})?$';
+                        var v = this.must(function (obj, x) { return x != undefined && x != null && regex.isMatch(x, postalCodePattern, 'i') });
+
+
+                        v.withMessage("'{propertyName}' is not a valid postal code.");
+
+                        return v;
+
+                    },
+
+                    validatePhone: function () {
+                        var phonePattern = '^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$';
+                        var v = this.must(function (obj, x) { return x != undefined && x != null && regex.isMatch(x, phonePattern, 'i') });
+
+
+                        v.withMessage("'{propertyName}' is not a valid phone.");
 
                         return v;
 

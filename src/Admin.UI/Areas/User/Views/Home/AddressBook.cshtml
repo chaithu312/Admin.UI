@@ -25,7 +25,8 @@
         </label>
 
         <div class="col-sm-9">
-            <input type="text" name="sName" id="sName" ng-model="contact.ShortName" class="col-xs-10 col-sm-5" ng-minlength="3" required />
+            <input type="text" name="sName" id="sName" ng-model="contact.ShortName" class="col-xs-10 col-sm-5" ng-minlength="3" required="" />
+            &nbsp; <i ng-validation-icon="contact.$errors.ShortName"><label></label></i>
         </div>
     </div>
 
@@ -69,7 +70,8 @@
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Phone 2</label>
 
         <div class="col-sm-9">
-            <input type="tel" name="phone2" id="phone2" ng-model="contact.Phone2" class="col-xs-10 col-sm-5" data-phone />
+            <input type="text" name="phone2" id="phone2" ng-model="contact.Phone2" class="col-xs-10 col-sm-5" data-phone />
+            &nbsp; <i ng-validation-icon="contact.$errors.Phone2"><label></label></i>
         </div>
     </div>
 
@@ -84,7 +86,7 @@
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Email</label>
 
         <div class="col-sm-9">
-            <input type="email" name="Email" id="Email" ng-model="contact.Email" class="col-xs-10 col-sm-5" required="" />
+            <input type="text" name="Email" id="Email" ng-model="contact.Email" class="col-xs-10 col-sm-5" required="" />
             &nbsp; <i ng-validation-icon="contact.$errors.Email"><label></label></i>
         </div>
     </div>
@@ -101,18 +103,19 @@
                     data-ng-options="country.Id as country.Name for country in Country track by country.Id" data-ng-change="GetValue()" required></select>
             &nbsp; <i ng-validation-icon="contact.$errors.CountryId"><label></label></i>
         </div>
+        <input type="hidden" ng-model="contact.CountryCode" />
     </div>
 
     <div class="form-group">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Postal Code</label>
 
         <div class="col-sm-9">
-            <input type="text" name="postalcode" id="postalcode" ng-model="contact.PostalCode" class="col-xs-10 col-sm-5" required postalcode />
+            <input type="text" name="postalcode" id="postalcode" ng-model="contact.PostalCode" class="col-xs-10 col-sm-5" required="" />
             &nbsp; <i ng-validation-icon="contact.$errors.PostalCode"><label></label></i>
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">State </label>
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Province / State</label>
 
         <div class="col-sm-9">
             <select id="ddlState" class="col-xs-10 col-sm-5" data-ng-model="contact.Division" name="ddlState"
@@ -122,7 +125,7 @@
     </div>
 
     <div class="form-group">
-        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">City</label>
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Town / City</label>
 
         <div class="col-sm-9">
             <input type="text" name="city" id="city" ng-model="contact.City" class="col-xs-10 col-sm-5" required />
@@ -130,7 +133,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Address Line 1</label>
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">{{contact.Address1Label}} </label>
 
         <div class="col-sm-9">
             <input type="text" name="addressline1" id="addressline1" ng-model="contact.Address1" class="col-xs-10 col-sm-5" required="" />
@@ -138,19 +141,22 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Address Line 2 </label>
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">{{contact.Address2Label}} </label>
 
         <div class="col-sm-9">
-            <input type="text" name="addressline2" id="addressline2" ng-model="contact.Address2" class="col-xs-10 col-sm-5" />
+            <input type="text" name="addressline2" id="addressline2" ng-model="contact.Address2" class="col-xs-10 col-sm-5"  />
+            &nbsp; <i ng-validation-icon="contact.$errors.Address2"><label></label></i>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-show="contact.isAddress3Visible">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Address Line 3 </label>
 
         <div class="col-sm-9">
             <input type="text" name="addressline3" id="addressline3" ng-model="contact.Address3" class="col-xs-10 col-sm-5" />
+            &nbsp; <i ng-validation-icon="contact.$errors.Address3"><label></label></i>
         </div>
     </div>
+
     <hr />
 
     <div class="clearfix form-actions">
