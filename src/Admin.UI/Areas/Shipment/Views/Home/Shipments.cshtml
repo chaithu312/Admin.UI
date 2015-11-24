@@ -479,11 +479,23 @@
                                             <th>Height</th>
                                         </tr>
                                         <tr ng:repeat="item in Parcel.items">
-                                            <td><input type="number" min="0" ng:model="item.Weight" required class="form-control col-md-1"></td>
-                                            <td><input type="number" min="0" ng:model="item.Length" required class="form-control col-md-1"></td>
-                                            <td><input type="number" min="0" ng:model="item.Width" required class="form-control col-md-1"></td>
-                                            <td><input type="number" min="0" ng:model="item.Height" required class="form-control col-md-1"></td>
-                                            <td>
+                                            <td><input type="number" min="0" ng:model="item.Weight" required class="form-control col-md-1">
+                                                <span class="help-inline col-xs-12 col-sm-5">
+                                                    <i ng-validation-icon="item.$errors.Weight"><label></label></i>
+                                                </span></td>
+                                            <td><input type="number" min="0" ng:model="item.Length" required class="form-control col-md-1">
+                                                <span class="help-inline col-xs-12 col-sm-5">
+                                                    <i ng-validation-icon="item.$errors.Length"><label></label></i>
+                                                </span></td>
+                                            <td><input type="number" min="0" ng:model="item.Width" required class="form-control col-md-1">
+                                                <span class="help-inline col-xs-12 col-sm-5">
+                                                    <i ng-validation-icon="item.$errors.Width"><label></label></i>
+                                                </span></td>
+                                            <td><input type="number" min="0" ng:model="item.Height" required class="form-control col-md-1">
+                                                <span class="help-inline col-xs-12 col-sm-5">
+                                                    <i ng-validation-icon="item.$errors.Height"><label></label></i>
+                                                </span></td>
+                                            <td ng-if="item.IsRemoveActive == '1'">
 
                                                 <button type="button" class="btn btn-info btn-xs" ng-click="removeItem($index)">Remove Packet</button>
                                             </td>

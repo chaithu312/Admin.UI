@@ -571,7 +571,7 @@
                 ngValidationIcon: '='
             },
             link: function (scope, element, attrs) {
-                debugger;
+                
                 var icon = $compile(angular.element('<i class="glyphicon glyphicon-warning-sign validation-sign" '
                     + 'ng-show="ngValidationIcon"></i>'))(scope);
 
