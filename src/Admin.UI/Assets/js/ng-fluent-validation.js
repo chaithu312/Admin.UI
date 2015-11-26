@@ -539,7 +539,7 @@
                     } else
                         element.removeClass('has-error');
                 }
-
+                
                 //var sp = angular.element('<span class="validation-control-field"></span>');
                 var icon = $compile(angular.element('<i class="glyphicon glyphicon-warning-sign validation-sign" '
                     + 'ng-validation-visibility="{{ !!ngValidationResult }}"'
@@ -571,7 +571,7 @@
                 ngValidationIcon: '='
             },
             link: function (scope, element, attrs) {
-
+                
                 var icon = $compile(angular.element('<i class="glyphicon glyphicon-warning-sign validation-sign" '
                     + 'ng-show="ngValidationIcon"></i>'))(scope);
 

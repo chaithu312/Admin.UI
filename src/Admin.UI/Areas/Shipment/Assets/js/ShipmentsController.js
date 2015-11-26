@@ -2,6 +2,7 @@
     var app = angular.module('mainApp');
     app.controller('shipmentsController', function (shippingModels, shippingValidator, $scope, $http, $filter) {
         $scope.Shipments = shippingModels.Shipment;
+        $scope.Parcel = shippingModels.Shipment.Parcel;
         $scope.Address = new Array();
         var selectedShipperAddress = null;
         var item =
@@ -83,10 +84,9 @@
 
             $("#Division").find('option[label=' + selectedShipperAddress.Division + ']').attr('selected', 'selected');
 
-            $scope.SetCountryAndDivision(selectedShipperAddress.CountryId, selectedShipperAddress.Division,"shipper");
+            $scope.SetCountryAndDivision(selectedShipperAddress.CountryId, selectedShipperAddress.Division, "shipper");
         };
-        $scope.SetCountryAndDivision = function (CountryId, Division,type)
-        {
+        $scope.SetCountryAndDivision = function (CountryId, Division, type) {
             var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number(CountryId); })[0];
             var Divisionfiltered = $filter('filter')($scope.States, function (d) { return d.Name === Division; })[0];
             if (type == "shipper") {
@@ -142,7 +142,7 @@
             $("#RCountry").find('option[value=' + selectedShipperAddress.CountryId + ']').attr('selected', 'selected');
 
             $("#RDivision").find('option[label=' + selectedShipperAddress.Division + ']').attr('selected', 'selected');
-            $scope.SetCountryAndDivision($scope.Shipments.RCountryId, selectedShipperAddress.Division,"consignee");
+            $scope.SetCountryAndDivision($scope.Shipments.RCountryId, selectedShipperAddress.Division, "consignee");
             //var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.Shipments.RCountryId); })[0];
             //$scope.Shipments.RCountryName = countryfiltered.Name;
             //$scope.Shipments.RCountryCode = countryfiltered.Code;
@@ -204,17 +204,21 @@
                 Weight: 0,
                 Width: 0,
                 Height: 0,
-                Length: 0
+                Length: 0,
+                IsRemoveActive: 0
             }]
         };
 
         $scope.addItem = function () {
-            $scope.Parcel.items.push({
-                Weight: 0,
-                Width: 0,
-                Height: 0,
-                Length: 0
-            });
+            var x = new shippingModels.Shipment.Parcel().items[0];
+            $scope.Parcel.items.push(new shippingModels.Shipment.Parcel().items[0]);
+            //$scope.Parcel.items.push({
+            //    Weight: 0,
+            //    Width: 0,
+            //    Height: 0,
+            //    Length: 0,
+            //    IsRemoveActive: 1
+            //});
         },
 
         $scope.removeItem = function (index) {
@@ -297,8 +301,30 @@
             this.packagetype = null;
             this.Insurance = null;
             this.Declared = null;
-        }
+            this.Parcel = [];
+
+        };
+        shippingModels.Shipment.Parcel = function () {
+
+            this.items = [{
+                Weight: 0,
+                Width: 0,
+                Height: 0,
+                Length: 0,
+                IsRemoveActive: 1
+            }];
+        };
+
         return shippingModels;
+    });
+    app.factory('pacakageValidator', function (validator) {
+        var pacakageValidator = s = new validator();
+
+        s.ruleFor('Weight').notEmpty();
+        s.ruleFor('Width').notEmpty();
+        s.ruleFor('Height').notEmpty();
+        s.ruleFor('Length').notEmpty();
+        return pacakageValidator;
     });
     app.factory('shippingValidator', function (validator) {
         var shippingValidator = s = new validator();
@@ -313,7 +339,7 @@
         s.ruleFor('CountryId').notEmpty();
         s.ruleFor('PostalCode').notEmpty();
         s.ruleFor('Division').notEmpty();
-        
+
 
         s.ruleFor('RCompany').notEmpty();
         s.ruleFor('Rname').notEmpty();
@@ -323,19 +349,22 @@
 
         s.ruleFor('RAddressType').notEmpty();
         s.ruleFor('RaddressCaption').notEmpty();
-        
+
         s.ruleFor('Raddressline1').notEmpty();
         s.ruleFor('Rcity').notEmpty();
         s.ruleFor('RCountryId').notEmpty();
         s.ruleFor('Rpostalcode').notEmpty();
 
         s.ruleFor('RDivision').notEmpty();
-        
+
         s.ruleFor('shipmentdate').notEmpty();
         s.ruleFor('unitsystem').notEmpty();
         s.ruleFor('packagetype').notEmpty();
         s.ruleFor('Insurance').notEmpty();
         s.ruleFor('Declared').notEmpty();
+        debugger;
+        s.ruleFor('Parcel.items').notEmpty();
+        //s.ruleFor('Parcel.items').setCollectionValidator(pacakageValidator).withMessage('Invalid Parcel');
 
         return shippingValidator;
     })
