@@ -230,7 +230,6 @@
         $scope.Shipments.Parcel.push($scope.Parcel);
         $scope.valResult = {};
         $scope.sendShipmentsForm = function () {
-
             var unregisterValidatorWatch =
             $scope.$watch(function () { return $scope.Shipments; },
                          function () {
@@ -267,7 +266,6 @@
     });
 
     app.factory('shippingModels', function () {
-
         var shippingModels = {};
         shippingModels.Shipment = function () {
             this.Company = null;
@@ -302,10 +300,8 @@
             this.Insurance = null;
             this.Declared = null;
             this.Parcel = [];
-
         };
         shippingModels.Shipment.Parcel = function () {
-
             this.items = [{
                 Weight: 0,
                 Width: 0,
@@ -340,12 +336,10 @@
         s.ruleFor('PostalCode').notEmpty();
         s.ruleFor('Division').notEmpty();
 
-
         s.ruleFor('RCompany').notEmpty();
         s.ruleFor('Rname').notEmpty();
         s.ruleFor('Rphone').notEmpty();
         s.ruleFor('REmail').notEmpty();
-
 
         s.ruleFor('RAddressType').notEmpty();
         s.ruleFor('RaddressCaption').notEmpty();
@@ -367,6 +361,23 @@
         //s.ruleFor('Parcel.items').setCollectionValidator(pacakageValidator).withMessage('Invalid Parcel');
 
         return shippingValidator;
+    });
+
+    app.factory('VendorTypeValidator', function (validator) {
+        var shippingValidator = s = new validator();
+        s.ruleFor('vendortype').notEmpty();
     })
 
+    app.factory('VendorTypeModels', function () {
+        var VendorTypeModels = {};
+        vendorTypeModels.Shipment = function () {
+            this.vendortype = null;
+        };
+
+        return VendorTypeModels;
+    });
+
+    app.controller('VendorTypeController', function (vendorTypeModels, VendorTypeValidator, $scope, $http, $filter) {
+        if ($scope.VendorType.$invalid) { $scope.message = "Please check required fields." }
+    });
 })();
