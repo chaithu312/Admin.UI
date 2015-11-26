@@ -2,9 +2,9 @@
   "webroot": "wwwroot",
   "userSecretsId": "aspnet5-Admin.UI-7bd893f1-ac7a-4f69-9888-05b6c5873a4f",
   "version": "1.0.0-*",
- 
+
   "dependencies": {
-   "Microsoft.AspNet.Mvc": "6.0.0-beta8",
+    "Microsoft.AspNet.Mvc": "6.0.0-beta8",
 
     "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-beta8",
 
@@ -20,7 +20,7 @@
     "Newtonsoft.Json": "8.0.1-beta1",
     "Microsoft.AspNet.IISPlatformHandler": "1.0.0-beta8",
     "Microsoft.AspNet.Server.Kestrel": "1.0.0-beta8",
-     "EntityFramework.Commands": "7.0.0-beta8",
+    "EntityFramework.Commands": "7.0.0-beta8",
     "EntityFramework.SqlServer": "7.0.0-beta8",
     "Microsoft.AspNet.Authentication.Cookies": "1.0.0-beta8",
     "Microsoft.AspNet.Authentication.Facebook": "1.0.0-beta8",
@@ -36,10 +36,8 @@
     "Microsoft.Framework.Configuration.UserSecrets": "1.0.0-beta8",
     "Microsoft.Framework.Logging": "1.0.0-beta8",
     "Microsoft.Framework.Logging.Console": "1.0.0-beta8",
-    "Microsoft.Framework.Logging.Debug" : "1.0.0-beta8",
-    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-beta8",
-     
-
+    "Microsoft.Framework.Logging.Debug": "1.0.0-beta8",
+    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-beta8"
   },
   "commands": {
     "web": "Microsoft.AspNet.Server.Kestrel",
