@@ -1,4 +1,6 @@
 ﻿using Admin.UI.Areas.Shipment.Models;
+using Admin.UI.Utility;
+using Admin.UI.Utility.Enumerations;
 using Microsoft.AspNet.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -9,9 +11,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web.Script.Serialization;
-using Admin.UI.Utility;
-using Admin.UI.Utility.Enumerations;
-
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -43,7 +42,6 @@ namespace Admin.UI.ShipmentArea
                     shipment.Currency = "1";
                     shipment.PickupId = "4";
                     shipment.shipmentdate = DateTime.ParseExact(shipment.shipmentdate, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
-
                 }
 
                 if (shipment.AddressType == "0")
@@ -81,9 +79,8 @@ namespace Admin.UI.ShipmentArea
                     shipment.ShipmentId = responseString;
                     labelresponse = GenerateLabelImage(shipment);
                 }
-
             }
-            catch (Exception ex)
+            catch
             {
             }
             return Json(labelresponse);
@@ -93,10 +90,12 @@ namespace Admin.UI.ShipmentArea
         {
             return View();
         }
+
         private LabelImageResponse GenerateLabelImage(Shipments shipment)
         {
             string urlLabelGeneration = Constants.APIURL + "Endicia/Shipment";
             Shipment shipmentLabel = new Shipment();
+
             #region Endicia
 
             shipmentLabel.Parcels = shipment.Parcel;
@@ -109,9 +108,11 @@ namespace Admin.UI.ShipmentArea
             shipmentLabel.AccountID = Global.AccountID;
             shipmentLabel.PassPhrase = Global.PassPhrase;
             shipmentLabel.MailClass = Global.MailClass;
+
             #endregion Endicia
 
             #region DHL
+
             //shipmentLabel.Parcels = shipment.Parcel;
             //shipmentLabel.Billing.ShippingPaymentAccount = Global.ShippingPaymentAccount;//TODO:
             //shipmentLabel.Billing.ShippingPaymentType = Billing.PaymentTypes.Shipper;
@@ -126,9 +127,11 @@ namespace Admin.UI.ShipmentArea
             //shipmentLabel.GlobalProductCode = Global.GlobalProductCode;
             //shipmentLabel.DimensionUnit = Global.DimensionUnit;
             //shipmentLabel.CurrencyCode = Global.CurrencyCode;
+
             #endregion DHL
 
             #region UPS
+
             //shipmentLabel.AccessLicenseNumber = Global.AccessLicenseNumber;
             //shipmentLabel.Username = Global.Username;
             //shipmentLabel.Password = Global.Password;
@@ -142,6 +145,7 @@ namespace Admin.UI.ShipmentArea
             //shipmentLabel.ShipmentPackageType = Global.ShipmentPackageType;
             //shipmentLabel.ShipmentrequestOption = Global.ShipmentrequestOption;
             //shipmentLabel.Parcels = shipment.Parcel;
+
             #endregion UPS
 
             if (shipment != null)
@@ -150,6 +154,7 @@ namespace Admin.UI.ShipmentArea
                 shipmentLabel.Dutiable.DeclaredValue = Convert.ToString(shipment.Declared);
 
                 #region Shipper
+
                 shipmentLabel.ShipmentId = shipment.ShipmentId;
                 shipmentLabel.ShipperID = Global.ShipperID;//TODO:
                 shipmentLabel.Shipper.Name = shipment.Name;
@@ -166,9 +171,11 @@ namespace Admin.UI.ShipmentArea
                 shipmentLabel.Shipper.DivisionCode = shipment.DivisionCode;
                 shipmentLabel.Shipper.State = shipment.Division;
                 shipmentLabel.Shipper.Department = shipment.Company;
+
                 #endregion Shipper
 
                 #region Consignee
+
                 shipmentLabel.Consignee.Name = shipment.Rname;
                 shipmentLabel.Consignee.Phone = shipment.Rphone;
                 shipmentLabel.Consignee.EMail = shipment.REmail;
@@ -183,6 +190,7 @@ namespace Admin.UI.ShipmentArea
                 shipmentLabel.Consignee.State = shipment.RDivision;
                 shipmentLabel.Consignee.DivisionCode = shipment.RDivisionCode;
                 shipmentLabel.Consignee.Department = shipment.RCompany;
+
                 #endregion Consignee
             }
             LabelImageResponse labelResponse = null;
@@ -356,7 +364,6 @@ namespace Admin.UI.ShipmentArea
                     }
                 }
 
-
                 string strURL = string.Empty;
                 switch ((Carrier)Convert.ToInt16(pickupRequest.Carrier))
                 {
@@ -378,6 +385,7 @@ namespace Admin.UI.ShipmentArea
                         pickupRequest.Weight = Global.Weight;
 
                         break;
+
                     case Carrier.Endicia:
                         strURL = Constants.APIURL + "Endicia/BookPickup";
                         Global.PackageLocation = "Front Door";
@@ -397,6 +405,7 @@ namespace Admin.UI.ShipmentArea
                         pickupRequest.EstimatedWeightLb = Global.EstimatedWeightLb;
 
                         break;
+
                     case Carrier.UPS:
                         strURL = Constants.APIURL + "UPS/Pickup";
                         Global.WeightUnit = "LBS";
@@ -409,11 +418,11 @@ namespace Admin.UI.ShipmentArea
                         pickupRequest.ServiceCode = Global.ServiceCode;
 
                         break;
+
                     default:
                         break;
                 }
                 var postData = JsonConvert.SerializeObject(pickupRequest);
-
 
                 //Constants.ShippingURL + "Endicia/Pickup"
                 //Constants.ShippingURL + "UPS/Pickup"
@@ -448,9 +457,9 @@ namespace Admin.UI.ShipmentArea
                         if (routes_list.ErrorMessage.Contains("xml"))
                             errorResponse = JsonConvert.DeserializeObject<ResponseMessage>(ErrorMessage);
 
-                        if(errorResponse!=null)
-                        if (errorResponse.Response.Status.ActionStatus == "Error")
-                            return Json(errorResponse.Response.Status.Condition.ConditionData);
+                        if (errorResponse != null)
+                            if (errorResponse.Response.Status.ActionStatus == "Error")
+                                return Json(errorResponse.Response.Status.Condition.ConditionData);
                     }
 
                     if (routes_list.ErrorMessage != null && !routes_list.ErrorMessage.Contains("xml"))
@@ -461,8 +470,6 @@ namespace Admin.UI.ShipmentArea
 
                     if (errorResponse == null)
                         return Json("PRN:-" + routes_list.ConfirmationNumber);
-
-
                 }
 
                 return Json("Failed");
@@ -565,10 +572,10 @@ namespace Admin.UI.ShipmentArea
                 case Carrier.DHL:
                     pickupDate = DateTime.ParseExact(pickupDate, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
                     break;
+
                 case Carrier.UPS:
                     pickupDate = DateTime.ParseExact(pickupDate, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd").Replace("-", "");
                     break;
-
             }
             return pickupDate;
         }
@@ -584,6 +591,4 @@ namespace Admin.UI.ShipmentArea
             return timeToConvert;
         }
     }
-
-
 }

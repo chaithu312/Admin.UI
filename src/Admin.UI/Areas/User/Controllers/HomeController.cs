@@ -233,7 +233,8 @@ namespace Admin.UI.UserArea
                 }
                 return Json(result);
             }
-            catch (Exception ex)
+            catch
+
             {
                 return Json("Check required fields");
             }
