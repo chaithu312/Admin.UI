@@ -28,10 +28,8 @@ namespace Admin.UI
 
             //configBuilder.AddJsonFile("config.json", optional: true);
             //configBuilder.AddJsonFile($"config-{env.EnvironmentName}.json", optional: true);
-            configBuilder.AddEnvironmentVariables();
+            //configBuilder.AddEnvironmentVariables();
 
-            Configuration = configBuilder.Build();
-            configBuilder.AddEnvironmentVariables();
             Configuration = configBuilder.Build();
         }
 
