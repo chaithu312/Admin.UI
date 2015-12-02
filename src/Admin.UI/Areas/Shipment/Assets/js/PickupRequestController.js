@@ -133,26 +133,29 @@
                 $scope.message = str;
             }
             else {
-                $scope.Country = (JSON.parse(data)).Result;
+                
+                $scope.Country = (JSON.parse(data));
+
+                $http({
+                    method: 'GET',
+                    url: '/User/Home/Division',
+                    //data: $scope.SelectedCountry.CountryCode,
+                    headers: {
+                        'RequestVerificationToken': $scope.antiForgeryToken
+                    }
+                }).success(function (data, status, headers, config) {
+                    $scope.message = '';
+                    $scope.States = JSON.parse(data);
+                }).error(function (data, status, headers, config) {
+                    $scope.message = 'Unexpected Error';
+                });
                 //  $scope.message = 'Login Successfully';
             }
         }).error(function (data, status, headers, config) {
             $scope.message = 'Unexpected Error';
         });
 
-        $http({
-            method: 'GET',
-            url: '/User/Home/Division',
-            //data: $scope.SelectedCountry.CountryCode,
-            headers: {
-                'RequestVerificationToken': $scope.antiForgeryToken
-            }
-        }).success(function (data, status, headers, config) {
-            $scope.message = '';
-            $scope.States = JSON.parse(data);
-        }).error(function (data, status, headers, config) {
-            $scope.message = 'Unexpected Error';
-        });
+       
 
         $scope.GetAddressValue = function (address) {
             var addressType = $scope.pickupRequest.AddressType;

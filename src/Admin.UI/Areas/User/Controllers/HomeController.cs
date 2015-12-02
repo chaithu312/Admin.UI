@@ -217,7 +217,7 @@ namespace Admin.UI.UserArea
                     register.Name = register.FirstName + " " + register.LastName;
                 }
 
-                string url = Constants.APIURL + "MasterApi/Address/Insert";
+                string url = Constants.Profile + "Address/Insert";
                 object result = string.Empty;
 
                 // Uses the System.Net.WebClient and not HttpClient, because .NET 2.0 must be supported.
@@ -249,8 +249,9 @@ namespace Admin.UI.UserArea
         public JsonResult Country()
         {
             var client = new HttpClient();
-            string strPostData = "orderBy=[Country].[Name]&sortdir=ASC";
-            var result = client.GetStringAsync(Constants.APIURL + "MasterApi/Country?" + strPostData).Result;
+            string strPostData = "orderby=Name&sortdir=ASC";
+            //var result = client.GetStringAsync(Constants.Profile + "Country?" + strPostData).Result;
+            var result = client.GetStringAsync(Constants.Profile + "Country").Result;
             return Json(result);
         }
 
@@ -258,7 +259,7 @@ namespace Admin.UI.UserArea
         public JsonResult State(string countryId)
         {
             var client = new HttpClient();
-            var result = client.GetStringAsync(Constants.APIURL + "MasterApi/Division/" + countryId).Result;
+            var result = client.GetStringAsync(Constants.Profile + "Division/" + countryId).Result;
             return Json(result);
         }
 
@@ -266,7 +267,7 @@ namespace Admin.UI.UserArea
         public JsonResult Division()
         {
             var client = new HttpClient();
-            var result = client.GetStringAsync(Constants.APIURL + "MasterApi/Division/").Result;
+            var result = client.GetStringAsync(Constants.Profile + "Division/").Result;
             return Json(result);
         }
 
@@ -284,7 +285,7 @@ namespace Admin.UI.UserArea
             try
             {
                 var client = new HttpClient();
-                var result = client.GetStringAsync(Constants.APIURL + "MasterApi/Address/").Result;
+                var result = client.GetStringAsync(Constants.Profile + "Address/").Result;
                 return Json(result);
             }
             catch (Exception ex)

@@ -1,18 +1,4 @@
 (function () {
-    angular.module("app", ["ngWizard"])
-.controller('wizard', function ($scope) {
-    $scope.submit = function () {
-        alert("Submitted Wizard!");
-    }
-    $scope.addNewStep = function (newStep) {
-        $scope.dynamicSteps.push(newStep);
-    }
-
-    $scope.dynamicSteps = ["step 3"];
-    $scope.dynamicRequiredText = {};
-});
-})();
-(function () {
     'use strict';
 
     var app = angular.module("mainApp", ['navsServices', 'ngFluentValidation']);
@@ -77,9 +63,11 @@
         }
     });
 
-    var vendor = function ($http) {
+    var vendor=function($http)
+    {
         var vendor = {};
-        vendor.data = function () {
+        vendor.data = function ()
+        {
             return $http.get("http://test.shipos.com/Shipping/MasterApi/vendor");
         }
 
@@ -128,6 +116,7 @@ $('.date-picker').datepicker({
     autoclose: true,
     startDate: '-0m',
     dateFormat: "yyyy/mm/dd"
+
 })
 
 //show datepicker when clicking on the icon
@@ -375,9 +364,10 @@ $('[data-rel=popover]').popover({ container: 'body' });
 (function () {
     var app = angular.module('mainApp');
     app.factory('pickupModels', function () {
+
         var pickupModels = {};
         pickupModels.Pickup = function () {
-            this.ContactName = null;
+            this.ContactName= null;
             this.Phone = null;
             this.AddressType = null;
             this.AddressCaption = null;
@@ -396,7 +386,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             this.AvailableTime = null;
             this.TotalPieces = null;
             this.isDisabled = null;
-            this.notification = [];
+            this.notification=[];
         }
         return pickupModels;
     });
@@ -422,9 +412,9 @@ $('[data-rel=popover]').popover({ container: 'body' });
         s.ruleFor('TotalPieces').notEmpty();
         return pickupValidator;
     });
-
-    app.controller('PickupRequestController', function (pickupModels, pickupValidator, $scope, $http, $filter) {
-        $scope.pickupRequest = pickupModels.Pickup;
+    
+    app.controller('PickupRequestController', function (pickupModels, pickupValidator,$scope, $http, $filter) {
+       $scope.pickupRequest = pickupModels.Pickup;
         $scope.notification = {
             Mobile: [{
                 Number: ""
@@ -506,26 +496,29 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 $scope.message = str;
             }
             else {
-                $scope.Country = (JSON.parse(data)).Result;
+                
+                $scope.Country = (JSON.parse(data));
+
+                $http({
+                    method: 'GET',
+                    url: '/User/Home/Division',
+                    //data: $scope.SelectedCountry.CountryCode,
+                    headers: {
+                        'RequestVerificationToken': $scope.antiForgeryToken
+                    }
+                }).success(function (data, status, headers, config) {
+                    $scope.message = '';
+                    $scope.States = JSON.parse(data);
+                }).error(function (data, status, headers, config) {
+                    $scope.message = 'Unexpected Error';
+                });
                 //  $scope.message = 'Login Successfully';
             }
         }).error(function (data, status, headers, config) {
             $scope.message = 'Unexpected Error';
         });
 
-        $http({
-            method: 'GET',
-            url: '/User/Home/Division',
-            //data: $scope.SelectedCountry.CountryCode,
-            headers: {
-                'RequestVerificationToken': $scope.antiForgeryToken
-            }
-        }).success(function (data, status, headers, config) {
-            $scope.message = '';
-            $scope.States = JSON.parse(data);
-        }).error(function (data, status, headers, config) {
-            $scope.message = 'Unexpected Error';
-        });
+       
 
         $scope.GetAddressValue = function (address) {
             var addressType = $scope.pickupRequest.AddressType;
@@ -574,7 +567,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
             $scope.SetCountryAndCode();
         }
 
-        $scope.SetCountryAndCode = function () {
+        $scope.SetCountryAndCode = function ()
+        {
             var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.pickupRequest.CountryId); })[0];
             $scope.pickupRequest.Country = countryfiltered.Name;
             $scope.pickupRequest.CountryCode = countryfiltered.Code;
@@ -650,6 +644,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.pickupRequest.notification.push($scope.notification);
         $scope.valResult = {};
         $scope.sendForm = function () {
+
             var unregisterValidatorWatch =
            $scope.$watch(function () { return $scope.pickupRequest; },
                         function () {
@@ -658,6 +653,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
                                 unregisterValidatorWatch();
                         }, true);
 
+            
+            
             if ($scope.PickupForm.$valid) {
                 $http({
                     url: '/Shipment/PickupRequest',
@@ -673,6 +670,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                         //alert(data);
                         //window.location.href = "/User/Home/ViewAddress";
                     }).error(function (data, status, headers, config) {
+                        
                     });
             }
             if ($scope.PickupForm.$invalid) { $scope.message = "Please check required fields." }
@@ -698,6 +696,9 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 return false;
             }
         }
+
+
+        
     });
 })();
 
@@ -717,7 +718,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
         $scope.Manifest = {
             Data: [{ Id: 0, Name: 'Select...' }],
-            selectedOption: { Id: 0, Name: 'Select...' }
+                selectedOption: { Id: 0, Name:'Select...' }
         };
 
         $scope.sendForm = function () {
@@ -750,6 +751,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 (function () {
     var app = angular.module('mainApp');
     app.factory('addressModels', function () {
+
         var addressModels = {};
         addressModels.Address = function () {
             this.AddressType = null;
@@ -768,8 +770,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
             this.Address1 = null;
             this.Address2 = null;
             this.Address3 = null;
-            Address1Label = null
-            Address2Label = null
+            Address1Label=null
+            Address2Label=null
             isAddress3Visible = true
             CountryCode = null;
         }
@@ -783,28 +785,30 @@ $('[data-rel=popover]').popover({ container: 'body' });
         s.ruleFor('ShortName').length(2, 100);
 
         s.ruleFor('Company').notEmpty();
-        s.ruleFor('Company').length(2, 100);
+        s.ruleFor('Company').length(2,100);
+
 
         s.ruleFor('FirstName').notEmpty();
-        s.ruleFor('FirstName').length(2, 50);
-
+        s.ruleFor('FirstName').length(2,50);
+        
         s.ruleFor('LastName').notEmpty();
         s.ruleFor('LastName').length(2, 50);
 
         s.ruleFor('Phone1').notEmpty();
         s.ruleFor('Phone1').notNull();
         s.ruleFor('Phone1').validatePhone();
-
+        
         s.ruleFor('Phone2').validatePhone();
 
         s.ruleFor('Email').notEmpty();
         s.ruleFor('Email').emailAddress();
+        
 
         s.ruleFor('CountryId').notEmpty();
 
         s.ruleFor('PostalCode').notEmpty();
         s.ruleFor('PostalCode').validatePostalCode();
-
+        
         s.ruleFor('Division').notEmpty();
         s.ruleFor('City').notEmpty();
 
@@ -814,14 +818,14 @@ $('[data-rel=popover]').popover({ container: 'body' });
         s.ruleFor('Address2').length(0, 100);
 
         s.ruleFor('Address3').length(0, 100);
-
+        
         return s;
     });
     // create angular controller
-    app.controller('AddressBookController', function (addressModels, addressValidator, $scope, $http, $filter) {
+    app.controller('AddressBookController', function (addressModels, addressValidator,$scope, $http, $filter) {
         $scope.contact = addressModels.Address;
         $scope.contact = null;
-        $scope.contact = { AddressType: null, ShortName: null, Company: null, FirstName: null, LastName: null, Phone1: null, Phone2: null, Fax: null, Email: null, CountryId: null, PostalCode: null, Division: null, City: null, Address1: null, Address2: null, Address3: null, Address1Label: "Address Line 1", Address2Label: "Address Line 2", isAddress3Visible: true, CountryCode: null };
+        $scope.contact = { AddressType: null, ShortName: null, Company: null, FirstName: null, LastName: null, Phone1: null, Phone2: null, Fax: null, Email: null, CountryId: null, PostalCode: null, Division: null, City: null, Address1: null, Address2: null, Address3: null, Address1Label: "Address Line 1", Address2Label: "Address Line 2", isAddress3Visible: true, CountryCode:null };
         //HTTP REQUEST BELOW
         $http({
             method: 'GET',
@@ -840,7 +844,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 $scope.message = str;
             }
             else {
-                $scope.Country = (JSON.parse(data)).Result;
+                $scope.Country = (JSON.parse(data));
                 //  $scope.message = 'Login Successfully';
             }
         }).error(function (data, status, headers, config) {
@@ -852,7 +856,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.$watch('contact', function (newValue) {
             if ($scope.contact.CountryId != null)
                 $scope.GetCountryDetail($scope.contact.CountryId);
-            $scope.valResult = addressValidator.validate($scope.contact);
+            $scope.valResult =addressValidator.validate($scope.contact);
         }, true);
 
         $scope.GetCountryDetail = function (CountryId) {
@@ -886,6 +890,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             //    console.log($scope.AddressBook.$error);
             //}
             if ($scope.contact.$isValid) {
+
                 $http({
                     url: '/User/Home/AddressBook',
                     method: "POST",
@@ -897,6 +902,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                     $scope.message = data;
 
                     window.location.href = "/User/Home/ViewAddress";
+
                 }).error(function (data, status, headers, config) {
                     alert(data);
                 });
@@ -941,17 +947,20 @@ $('[data-rel=popover]').popover({ container: 'body' });
             });
 
             //Ends here getting request of Http for getting states;
+
         }
         //Ends here getting country detail
+
     });
     var PHONE_REGEXP = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
-
+    
     app.directive('postalcode', ['$http', function ($http) {
         return {
             restrice: 'A',
             require: 'ngModel',
             link: function (scope, element, attrs, ctrl) {
                 angular.element(element).bind('blur', function () {
+                  
                 });
             }
         }
@@ -962,6 +971,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
     var validationApp = angular.module('mainApp');
     // create angular controller
     validationApp.controller('ViewAddressController', function ($scope, $http) {
+
         $http({
             method: 'GET',
             url: '/User/Home/GetAllAddress',
@@ -1012,7 +1022,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                         datatype: "local",
                         height: 350,
                         //colNames: [' ', 'ID', 'Last Sales', 'Name', 'Stock', 'Ship via', 'Notes'],
-                        colNames: ['Id', 'Name', 'Phone1', 'EMail', 'Division', 'City', 'Edit'],
+                        colNames: ['Id', 'Name','Phone1', 'EMail', 'Division', 'City','Edit'],
                         colModel: [
                             //{
                             //    name: 'myac', index: '', width: 80, fixed: true, sortable: false, resize: false,
@@ -1024,19 +1034,17 @@ $('[data-rel=popover]').popover({ container: 'body' });
                             //        //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
                             //    }
                             //},
-                            { name: 'Id', index: 'Id', width: 30, editable: true, sortable: false },
+                            { name: 'Id', index: 'Id', width: 30, editable: true,sortable:false },
                             { name: 'Name', index: 'Name', width: 130, editable: true },
                             { name: 'Phone1', index: 'Phone1', width: 130, editable: true, editoptions: { size: "20", maxlength: "30" } },
                             { name: 'EMail', index: 'EMail', width: 180, editable: true },
-                            { name: 'Division', index: 'Division', width: 130, editable: true },
+                            { name: 'Division', index: 'Division', width: 130, editable: true},
                             { name: 'City', index: 'City', width: 130, editoptions: { rows: "2", cols: "10" } },
-                            {
-                                name: 'Edit', formatter: function (cellvalue, options, rowObject) {
-                                    return '<a href="#' + $(grid_selector).getCell('Id') + '">' + "Edit" + '</a>';
-                                }
-                            }
+                            { name: 'Edit', formatter: function (cellvalue, options, rowObject) {
+                                return '<a href="#' + $(grid_selector).getCell('Id') + '">' + "Edit" + '</a>';
+                            } }
                         ],
-
+                        
                         onSelectRow: function (id) {
                             var data = null;
                             data = $(grid_selector).find('tr[class*="ui-state-highlight"]');
@@ -1050,7 +1058,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                         rowList: [10, 20, 30],
                         pager: pager_selector,
                         altRows: true,
-
+                       
                         //toppager: true,
 
                         multiselect: true,
@@ -1073,6 +1081,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
                         //,autowidth: true,
 
+
                         /**
                         ,
                         grouping:true,
@@ -1084,12 +1093,16 @@ $('[data-rel=popover]').popover({ container: 'body' });
                         },
                         caption: "Grouping"
                         */
+
                     });
                     $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
+
+
 
                     //enable search/filter toolbar
                     //jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch:true,stringResult:true})
                     //jQuery(grid_selector).filterToolbar({});
+
 
                     //switch element when editing inline
                     function aceSwitch(cellvalue, options, cell) {
@@ -1106,6 +1119,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                                     .datepicker({ format: 'yyyy-mm-dd', autoclose: true });
                         }, 0);
                     }
+
 
                     //navButtons
                     jQuery(grid_selector).jqGrid('navGrid', pager_selector,
@@ -1160,6 +1174,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                                 form.data('styled', true);
                             },
                             onClick: function (e) {
+
                                 //alert(1);
                             }
                         },
@@ -1192,15 +1207,17 @@ $('[data-rel=popover]').popover({ container: 'body' });
                     ).navButtonAdd(pager_selector, {
                         caption: "",
                         buttonicon: "ui-icon ui-icon-trash",
-
+                       
                         onClickButton: function () {
+                            
                             if (selectedRow == null)
                                 alert('Please select row to delete');
                             else {
                                 if (confirm("Are you sure to delete?")) {
                                     var selectedIds = "";
                                     for (i = 1; i <= selectedRow.length; i++) {
-                                        selectedIds += (selectedRow[i - 1].childNodes)[1].innerHTML + ",";
+                                        
+                                        selectedIds += (selectedRow[i - 1].childNodes)[1].innerHTML+",";
                                     }
                                     //alert("Deleting Row Id :" + selectedRow.Id);
                                     $http({
@@ -1214,14 +1231,16 @@ $('[data-rel=popover]').popover({ container: 'body' });
                                       //deletingRow.remove();
                                       $(grid_selector).find('tr[class*="ui-state-highlight"]').remove();
                                       alert(data);
+
                                   }).error(function (data, status, headers, config) {
                                   });
                                 }
                                 else { }
+
                             }
                         },
                         position: "last",
-                        id: "cusDelete"
+                        id:"cusDelete"
                     });
                 });
                 //Ending binding of jqGrid
@@ -1230,7 +1249,13 @@ $('[data-rel=popover]').popover({ container: 'body' });
         }).error(function (data, status, headers, config) {
             $scope.message = 'Unexpected Error';
         });
+
+
+
+      
+
     });
+    
 })();
 (function () {
     var app = angular.module('mainApp');
@@ -1266,9 +1291,9 @@ $('[data-rel=popover]').popover({ container: 'body' });
 })();
 (function () {
     var app = angular.module('mainApp');
-
+    
     app.controller('vendorController', function ($scope, $http, vendor) {
-        $scope.vendor = { Detail: null };
+        $scope.vendor = { Detail:null};
         $scope.sendVendorForm = function () {
             if ($scope.mainForm.$valid) {
                 $scope.vendor.isDisabled = true;
@@ -1300,17 +1325,22 @@ $('[data-rel=popover]').popover({ container: 'body' });
                     }).error(function (data, status, headers, config) {
                         $scope.message = data;
                     });
+
+                
             }
             if ($scope.mainForm.$invalid) { $scope.message = "Please check required fields." }
         };
 
-        vendor.data().success(function (Vendors) {
+        vendor.data().success(function(Vendors){
             $scope.Vendors = Vendors.Result;
         }).error(function (error) {
             $scope.message = 'Unable to load vendor data: ' + error.message;
+
         });
     });
+
 })();
+
 
 (function () {
     var app = angular.module('mainApp');
@@ -1675,5 +1705,23 @@ $('[data-rel=popover]').popover({ container: 'body' });
         //s.ruleFor('Parcel.items').setCollectionValidator(pacakageValidator).withMessage('Invalid Parcel');
 
         return shippingValidator;
+    });
+
+    app.factory('VendorTypeValidator', function (validator) {
+        var shippingValidator = s = new validator();
+        s.ruleFor('vendortype').notEmpty();
     })
+
+    app.factory('VendorTypeModels', function () {
+        var VendorTypeModels = {};
+        vendorTypeModels.Shipment = function () {
+            this.vendortype = null;
+        };
+
+        return VendorTypeModels;
+    });
+
+    app.controller('VendorTypeController', function (vendorTypeModels, VendorTypeValidator, $scope, $http, $filter) {
+        if ($scope.VendorType.$invalid) { $scope.message = "Please check required fields." }
+    });
 })();

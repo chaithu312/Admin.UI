@@ -94,7 +94,7 @@
                 $scope.message = str;
             }
             else {
-                $scope.Country = (JSON.parse(data)).Result;
+                $scope.Country = (JSON.parse(data));
                 //  $scope.message = 'Login Successfully';
             }
         }).error(function (data, status, headers, config) {

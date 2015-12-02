@@ -352,7 +352,7 @@ namespace Admin.UI.ShipmentArea
                     register.Address1 = pickupRequest.Address1;
                     register.Address2 = pickupRequest.Address2;
 
-                    string url = Constants.APIURL + "MasterApi/Address/Insert";
+                    string url = Constants.Profile + "Address/Insert";
 
                     using (var client = new WebClient())
                     {
@@ -462,14 +462,15 @@ namespace Admin.UI.ShipmentArea
                                 return Json(errorResponse.Response.Status.Condition.ConditionData);
                     }
 
+                    if (errorResponse == null)
+                        return Json("PRN:-" + routes_list.ConfirmationNumber);
+
                     if (routes_list.ErrorMessage != null && !routes_list.ErrorMessage.Contains("xml"))
                     {
                         if (!routes_list.ErrorMessage.Contains("xml"))
                             return Json(routes_list.ErrorMessage);
                     }
-
-                    if (errorResponse == null)
-                        return Json("PRN:-" + routes_list.ConfirmationNumber);
+                    
                 }
 
                 return Json("Failed");
