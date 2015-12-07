@@ -7,14 +7,14 @@ namespace Admin.UI
 {
     public static class Constants
     {
-        public const string RegisterURL = "http://test.shipos.com/ID/api/register/";
-        public const string idServer = "http://localhost:63319/core/";
+        public static string RegisterURL = RegisterEndpoint;
+        public static string idServer = IDServerEndpoint;
         public const string clientID = "CA952280-3855-4A55-950A-B8BCA0079868";
 
         public const string clientSecret = "262148";
         public const string clientScope = "read write";
-        public const string APIURL = "http://localhost:49202/";
-        public const string Profile = "http://localhost:65417/MasterApi/";
+        public static string APIURL = ShippingEndpoint;
+        public static string Profile = ProfileEndpoint;
         public const string xmlns = "@xmlns:";
         public const string xsi = "@xsi:";
 
