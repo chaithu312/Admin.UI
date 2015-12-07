@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace Admin.UI
 {
-    public static class Constants
+    public class Constants
     {
-        public const string RegisterURL = "http://test.shipos.com/ID/api/register/";
-        public const string idServer = "http://localhost:63319/core/";
+        public static string RegisterURL = RegisterEndpoint;
+        public static string idServer = IDServerEndpoint;
         public const string clientID = "CA952280-3855-4A55-950A-B8BCA0079868";
 
         public const string clientSecret = "262148";
         public const string clientScope = "read write";
-        public const string APIURL = "http://localhost:49202/Shipping";
-        public const string Profile = "http://localhost:65417/Profile/";
+        public static string APIURL = ShippingEndpoint;
+        public static string Profile = ProfileEndpoint;
         public const string xmlns = "@xmlns:";
         public const string xsi = "@xsi:";
 
@@ -24,5 +24,10 @@ namespace Admin.UI
         public const long accountId = 2;
         public const string DomainKey = "CA952280-3855-4A55-950A-B8BCA0079890";
         public const string message = "Record saved successfully";
+
+        public static string ProfileEndpoint { get { return Startup.Configuration.GetSection("CDN:ProfileEndpoint").Value; } }
+        public static string RegisterEndpoint { get { return Startup.Configuration.GetSection("CDN:RegisterEndpoint").Value; } }
+        public static string IDServerEndpoint { get { return Startup.Configuration.GetSection("CDN:IDServerEndpoint").Value; } }
+        public static string ShippingEndpoint { get { return Startup.Configuration.GetSection("CDN:ShippingEndpoint").Value; } }
     }
 }
