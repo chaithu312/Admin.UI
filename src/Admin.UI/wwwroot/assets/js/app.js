@@ -714,7 +714,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.$watch('contact', function (newValue) {
             if ($scope.contact.CountryId != null)
                 $scope.GetCountryDetail($scope.contact.CountryId);
-            $scope.valResult = addressValidator.validate($scope.contact);
+            //$scope.valResult = addressValidator.validate($scope.contact);
         }, true);
 
         $scope.GetCountryDetail = function (CountryId) {
@@ -736,7 +736,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             var unregisterValidatorWatch =
          $scope.$watch(function () { return $scope.contact; },
                       function () {
-                          $scope.valResult = addressValidator.validate($scope.contact);
+                          //  $scope.valResult = addressValidator.validate($scope.contact);
                           if ($scope.contact.$isValid)
                               unregisterValidatorWatch();
                       }, true);
