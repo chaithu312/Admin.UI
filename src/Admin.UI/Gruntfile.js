@@ -44,8 +44,7 @@
                         'Assets/js/date-time/daterangepicker.js',
                         'Assets/js/bootstrap.min.js',
                         'Assets/js/date-time/moment.js',
-                        'Assets/js/date-time/bootstrap-datetimepicker.js',
-                        'Assets/js/ng-fluent-validation.js'
+                        'Assets/js/date-time/bootstrap-datetimepicker.js'
                     ],
                     'wwwroot/assets/js/app.js': [
                         'Assets/js/app.js',

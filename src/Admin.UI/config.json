@@ -1,5 +1,11 @@
 ﻿{
   "AppSettings": {
     "SiteTitle": "ShipOS Administration"
+  },
+  "CDN": {
+    "ProfileEndpoint": "http://192.168.1.30/Profile/",
+    "RegisterEndpoint": "http://192.168.1.30/ID/api/register/",
+    "IDServerEndpoint": "http://192.168.1.30/id/core/",
+    "ShippingEndpoint": "http://192.168.1.30/Shipping"
   }
 }

@@ -24,6 +24,11 @@ namespace Admin.UI.ShipmentArea
             return View();
         }
 
+        public IActionResult Shipment_wizard()
+        {
+            return View();
+        }
+
         [HttpPost]
         public JsonResult Shipments([FromBody] Shipments shipment)
         {
@@ -470,7 +475,6 @@ namespace Admin.UI.ShipmentArea
                         if (!routes_list.ErrorMessage.Contains("xml"))
                             return Json(routes_list.ErrorMessage);
                     }
-                    
                 }
 
                 return Json("Failed");

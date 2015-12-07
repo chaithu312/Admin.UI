@@ -1,7 +1,6 @@
 ﻿(function () {
     var app = angular.module('mainApp');
     app.factory('addressModels', function () {
-
         var addressModels = {};
         addressModels.Address = function () {
             this.AddressType = null;
@@ -20,62 +19,19 @@
             this.Address1 = null;
             this.Address2 = null;
             this.Address3 = null;
-            Address1Label=null
-            Address2Label=null
+            Address1Label = null
+            Address2Label = null
             isAddress3Visible = true
             CountryCode = null;
         }
         return addressModels;
     });
-    app.factory('addressValidator', function (validator) {
-        var s = new validator();
-        s.ruleFor('AddressType').notEmpty();
 
-        s.ruleFor('ShortName').notEmpty();
-        s.ruleFor('ShortName').length(2, 100);
-
-        s.ruleFor('Company').notEmpty();
-        s.ruleFor('Company').length(2,100);
-
-
-        s.ruleFor('FirstName').notEmpty();
-        s.ruleFor('FirstName').length(2,50);
-        
-        s.ruleFor('LastName').notEmpty();
-        s.ruleFor('LastName').length(2, 50);
-
-        s.ruleFor('Phone1').notEmpty();
-        s.ruleFor('Phone1').notNull();
-        s.ruleFor('Phone1').validatePhone();
-        
-        s.ruleFor('Phone2').validatePhone();
-
-        s.ruleFor('Email').notEmpty();
-        s.ruleFor('Email').emailAddress();
-        
-
-        s.ruleFor('CountryId').notEmpty();
-
-        s.ruleFor('PostalCode').notEmpty();
-        s.ruleFor('PostalCode').validatePostalCode();
-        
-        s.ruleFor('Division').notEmpty();
-        s.ruleFor('City').notEmpty();
-
-        s.ruleFor('Address1').notEmpty();
-        s.ruleFor('Address1').length(2, 100);
-
-        s.ruleFor('Address2').length(0, 100);
-
-        s.ruleFor('Address3').length(0, 100);
-        
-        return s;
-    });
     // create angular controller
-    app.controller('AddressBookController', function (addressModels, addressValidator,$scope, $http, $filter) {
+    app.controller('AddressBookController', function (addressModels, $scope, $http, $filter) {
         $scope.contact = addressModels.Address;
         $scope.contact = null;
-        $scope.contact = { AddressType: null, ShortName: null, Company: null, FirstName: null, LastName: null, Phone1: null, Phone2: null, Fax: null, Email: null, CountryId: null, PostalCode: null, Division: null, City: null, Address1: null, Address2: null, Address3: null, Address1Label: "Address Line 1", Address2Label: "Address Line 2", isAddress3Visible: true, CountryCode:null };
+        $scope.contact = { AddressType: null, ShortName: null, Company: null, FirstName: null, LastName: null, Phone1: null, Phone2: null, Fax: null, Email: null, CountryId: null, PostalCode: null, Division: null, City: null, Address1: null, Address2: null, Address3: null, Address1Label: "Address Line 1", Address2Label: "Address Line 2", isAddress3Visible: true, CountryCode: null };
         //HTTP REQUEST BELOW
         $http({
             method: 'GET',
@@ -98,7 +54,7 @@
                 //  $scope.message = 'Login Successfully';
             }
         }).error(function (data, status, headers, config) {
-            $scope.message = 'Unexpected Error';
+            $scope.message = 'Country url is not valid';
         });
 
         $scope.valResult = {};
@@ -106,7 +62,7 @@
         $scope.$watch('contact', function (newValue) {
             if ($scope.contact.CountryId != null)
                 $scope.GetCountryDetail($scope.contact.CountryId);
-            $scope.valResult =addressValidator.validate($scope.contact);
+            $scope.valResult = addressValidator.validate($scope.contact);
         }, true);
 
         $scope.GetCountryDetail = function (CountryId) {
@@ -140,7 +96,6 @@
             //    console.log($scope.AddressBook.$error);
             //}
             if ($scope.contact.$isValid) {
-
                 $http({
                     url: '/User/Home/AddressBook',
                     method: "POST",
@@ -152,7 +107,6 @@
                     $scope.message = data;
 
                     window.location.href = "/User/Home/ViewAddress";
-
                 }).error(function (data, status, headers, config) {
                     alert(data);
                 });
@@ -193,24 +147,21 @@
                     //  $scope.message = 'Login Successfully';
                 }
             }).error(function (data, status, headers, config) {
-                $scope.message = 'Unexpected Error';
+                $scope.message = 'state url is not valid';
             });
 
             //Ends here getting request of Http for getting states;
-
         }
         //Ends here getting country detail
-
     });
     var PHONE_REGEXP = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
-    
+
     app.directive('postalcode', ['$http', function ($http) {
         return {
             restrice: 'A',
             require: 'ngModel',
             link: function (scope, element, attrs, ctrl) {
                 angular.element(element).bind('blur', function () {
-                  
                 });
             }
         }

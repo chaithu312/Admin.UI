@@ -24,5 +24,10 @@ namespace Admin.UI
         public const long accountId = 2;
         public const string DomainKey = "CA952280-3855-4A55-950A-B8BCA0079890";
         public const string message = "Record saved successfully";
+
+        public static string ProfileEndpoint { get { return Startup.Configuration.GetSection("CDN:ProfileEndpoint").Value; } }
+        public static string RegisterEndpoint { get { return Startup.Configuration.GetSection("CDN:RegisterEndpoint").Value; } }
+        public static string IDServerEndpoint { get { return Startup.Configuration.GetSection("CDN:IDServerEndpoint").Value; } }
+        public static string ShippingEndpoint { get { return Startup.Configuration.GetSection("CDN:ShippingEndpoint").Value; } }
     }
 }

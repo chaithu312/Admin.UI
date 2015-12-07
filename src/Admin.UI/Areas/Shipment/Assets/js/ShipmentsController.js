@@ -1,6 +1,6 @@
 ﻿(function () {
     var app = angular.module('mainApp');
-    app.controller('shipmentsController', function (shippingModels, shippingValidator, $scope, $http, $filter) {
+    app.controller('shipmentsController', function (shippingModels, $scope, $http, $filter) {
         $scope.Shipments = shippingModels.Shipment;
         $scope.Parcel = shippingModels.Shipment.Parcel;
         $scope.Address = new Array();
@@ -313,60 +313,6 @@
 
         return shippingModels;
     });
-    app.factory('pacakageValidator', function (validator) {
-        var pacakageValidator = s = new validator();
-
-        s.ruleFor('Weight').notEmpty();
-        s.ruleFor('Width').notEmpty();
-        s.ruleFor('Height').notEmpty();
-        s.ruleFor('Length').notEmpty();
-        return pacakageValidator;
-    });
-    app.factory('shippingValidator', function (validator) {
-        var shippingValidator = s = new validator();
-        s.ruleFor('Company').notEmpty();
-        s.ruleFor('Name').notEmpty();
-        s.ruleFor('Phone').notEmpty().withMessage('Phone');
-        s.ruleFor('Email').notEmpty();
-        s.ruleFor('AddressType').notEmpty();
-        s.ruleFor('AddressCaption').notEmpty();
-        s.ruleFor('Address1').notEmpty();
-        s.ruleFor('City').notEmpty();
-        s.ruleFor('CountryId').notEmpty();
-        s.ruleFor('PostalCode').notEmpty();
-        s.ruleFor('Division').notEmpty();
-
-        s.ruleFor('RCompany').notEmpty();
-        s.ruleFor('Rname').notEmpty();
-        s.ruleFor('Rphone').notEmpty();
-        s.ruleFor('REmail').notEmpty();
-
-        s.ruleFor('RAddressType').notEmpty();
-        s.ruleFor('RaddressCaption').notEmpty();
-
-        s.ruleFor('Raddressline1').notEmpty();
-        s.ruleFor('Rcity').notEmpty();
-        s.ruleFor('RCountryId').notEmpty();
-        s.ruleFor('Rpostalcode').notEmpty();
-
-        s.ruleFor('RDivision').notEmpty();
-
-        s.ruleFor('shipmentdate').notEmpty();
-        s.ruleFor('unitsystem').notEmpty();
-        s.ruleFor('packagetype').notEmpty();
-        s.ruleFor('Insurance').notEmpty();
-        s.ruleFor('Declared').notEmpty();
-        debugger;
-        s.ruleFor('Parcel.items').notEmpty();
-        //s.ruleFor('Parcel.items').setCollectionValidator(pacakageValidator).withMessage('Invalid Parcel');
-
-        return shippingValidator;
-    });
-
-    app.factory('VendorTypeValidator', function (validator) {
-        var shippingValidator = s = new validator();
-        s.ruleFor('vendortype').notEmpty();
-    })
 
     app.factory('VendorTypeModels', function () {
         var VendorTypeModels = {};

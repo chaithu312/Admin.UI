@@ -1,8 +1,14 @@
 ﻿(function () {
     'use strict';
 
-    var app = angular.module("mainApp", ['navsServices', 'ngFluentValidation']);
+    var app = angular.module("mainApp", ['navsServices']);
 
+    app.directive('breadcrumb', function () {
+        return {
+            restrict: 'E',
+            template: '<ul class=\"breadcrumb\"><li><i class=\"ace-icon fa fa-home home-icon\"></i><a href=\"#\">Home</a></li><li><a href=\"#\">' + window.location.pathname.split('/')[1] + '</a></li><li class=\"active\">' + window.location.pathname.split('/')[2] + '</li></ul>'
+        }
+    })
     app.directive('toggleSidebar', function () {
         return {
             restrict: 'E',
@@ -63,11 +69,9 @@
         }
     });
 
-    var vendor=function($http)
-    {
+    var vendor = function ($http) {
         var vendor = {};
-        vendor.data = function ()
-        {
+        vendor.data = function () {
             return $http.get("http://test.shipos.com/Shipping/MasterApi/vendor");
         }
 
@@ -116,7 +120,6 @@ $('.date-picker').datepicker({
     autoclose: true,
     startDate: '-0m',
     dateFormat: "yyyy/mm/dd"
-
 })
 
 //show datepicker when clicking on the icon

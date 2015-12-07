@@ -10,9 +10,6 @@
         <link rel="stylesheet" href="/assets/css/ie9.min.css" class="main-stylesheet" />
     <![endif]-->
     @RenderSection("css_inline", required: false)
-    <!--[if lte IE 8]>
-        <script src="/assets/js/ie8.min.js"></script>
-    <![endif]-->
 </head>
 <body class="no-skin" ng-cloak>
 
@@ -34,19 +31,7 @@
                         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
                     </script>
 
-                    <ul class="breadcrumb">
-                        <li>
-                            <i class="ace-icon fa fa-home home-icon"></i>
-                            <a href="#">Home</a>
-                        </li>
-
-                        <li>
-                            <a href="#">Other Pages</a>
-                        </li>
-                        <li class="active">Blank Page</li>
-                    </ul><!-- /.breadcrumb -->
-                    <!-- #section:basics/content.searchbox -->
-
+                    <breadcrumb></breadcrumb>
                     <div class="nav-search" id="nav-search">
                         <form class="form-search">
                             <span class="input-icon">
@@ -61,13 +46,6 @@
                 <!-- /section:basics/content.breadcrumbs -->
                 <div class="page-content">
                     <div class="page-header">
-                        <h1>
-                            User
-                            <small>
-                                <i class="ace-icon fa fa-angle-double-right"></i>
-                                Registration
-                            </small>
-                        </h1>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">

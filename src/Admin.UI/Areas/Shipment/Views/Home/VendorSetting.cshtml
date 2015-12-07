@@ -9,7 +9,7 @@
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Nick Name </label>
 
         <div class="col-sm-9">
-            <input id="Name" class="form-control" name="Name" type="text" data-ng-model="vendor.Name" required />
+            <input id="Name" class="col-xs-10 col-sm-7" name="Name" type="text" data-ng-model="vendor.Name" required />
             <span class="help-inline col-xs-12 col-sm-7">
                 <span class="error" data-ng-show="mainForm.Name.$error.required">* </span>
             </span>
@@ -19,7 +19,7 @@
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Carrier</label>
 
         <div class="col-sm-9">
-            <select class="form-control" name="vendortype" ng-model="vendor.VendorType"
+            <select class="col-xs-10 col-sm-7" name="vendortype" ng-model="vendor.VendorType"
                     data-ng-options="vendor.Id as vendor.Name for vendor in Vendors track by vendor.Id" ng-dropdown required></select>
             <span class="help-inline col-xs-12 col-sm-7">
                 <span class="error" data-ng-show="mainForm.vendortype.$error.required">* </span>
@@ -37,7 +37,7 @@
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Third Party Account#</label>
 
             <div class="col-sm-9">
-                <input id="DHLAcc" class="form-control" name="DHLAcc" data-ng-model="vendor.DHLAcc" required />
+                <input id="DHLAcc" class="col-xs-10 col-sm-7" name="DHLAcc" data-ng-model="vendor.DHLAcc" required />
 
                 <span class="input-group-addon">
                     <span class="error" data-ng-show="mainForm.DHLAcc.$error.required">*</span>
@@ -51,7 +51,7 @@
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Account#</label>
 
             <div class="input-group col-sm-9">
-                <input id="EndiciaAcc" class="form-control" name="EndiciaAcc" type="number" data-ng-model="vendor.EndiciaAcc" required />
+                <input id="EndiciaAcc" class="col-xs-10 col-sm-7" name="EndiciaAcc" type="number" data-ng-model="vendor.EndiciaAcc" required />
                 <span class="help-inline col-xs-12 col-sm-7">
                     <span class="error" data-ng-show="mainForm.EndiciaAcc.$error.required">*</span>
                 </span>

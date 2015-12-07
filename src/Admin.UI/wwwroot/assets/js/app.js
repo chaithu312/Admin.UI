@@ -1,8 +1,14 @@
 (function () {
     'use strict';
 
-    var app = angular.module("mainApp", ['navsServices', 'ngFluentValidation']);
+    var app = angular.module("mainApp", ['navsServices']);
 
+    app.directive('breadcrumb', function () {
+        return {
+            restrict: 'E',
+            template: '<ul class=\"breadcrumb\"><li><i class=\"ace-icon fa fa-home home-icon\"></i><a href=\"#\">Home</a></li><li><a href=\"#\">' + window.location.pathname.split('/')[1] + '</a></li><li class=\"active\">' + window.location.pathname.split('/')[2] + '</li></ul>'
+        }
+    })
     app.directive('toggleSidebar', function () {
         return {
             restrict: 'E',
@@ -63,11 +69,9 @@
         }
     });
 
-    var vendor=function($http)
-    {
+    var vendor = function ($http) {
         var vendor = {};
-        vendor.data = function ()
-        {
+        vendor.data = function () {
             return $http.get("http://test.shipos.com/Shipping/MasterApi/vendor");
         }
 
@@ -116,7 +120,6 @@ $('.date-picker').datepicker({
     autoclose: true,
     startDate: '-0m',
     dateFormat: "yyyy/mm/dd"
-
 })
 
 //show datepicker when clicking on the icon
@@ -273,7 +276,6 @@ $(document).one('ajaxloadstart.page', function (e) {
 //jqGrid Required Methods Ends here
 
 $('[data-rel=popover]').popover({ container: 'body' });
-
 (function () {
     function SignUpController($scope) {
         alert("a");
@@ -363,58 +365,9 @@ $('[data-rel=popover]').popover({ container: 'body' });
 })();
 (function () {
     var app = angular.module('mainApp');
-    app.factory('pickupModels', function () {
 
-        var pickupModels = {};
-        pickupModels.Pickup = function () {
-            this.ContactName= null;
-            this.Phone = null;
-            this.AddressType = null;
-            this.AddressCaption = null;
-            this.Address1 = null;
-            this.Address2 = null;
-            this.City = null;
-            this.CountryId = null;
-            this.ZipCode = null;
-            this.Division = null;
-            this.Carrier = null;
-            this.PickupFrom = null;
-            this.PickupDate = null;
-            this.Destination = null;
-            this.ParcelType = null;
-            this.ReadyTime = null;
-            this.AvailableTime = null;
-            this.TotalPieces = null;
-            this.isDisabled = null;
-            this.notification=[];
-        }
-        return pickupModels;
-    });
-    app.factory('pickupValidator', function (validator) {
-        var pickupValidator = s = new validator();
-        s.ruleFor('Phone').notEmpty();
-        s.ruleFor('AddressType').notEmpty();
-        s.ruleFor('AddressCaption').notEmpty();
-        s.ruleFor('AddressType').notEmpty();
-        s.ruleFor('AddressCaption').notEmpty();
-        s.ruleFor('Address1').notEmpty();
-        s.ruleFor('City').notEmpty();
-        s.ruleFor('CountryId').notEmpty();
-        s.ruleFor('ZipCode').notEmpty();
-        s.ruleFor('Division').notEmpty();
-        s.ruleFor('Carrier').notEmpty();
-        s.ruleFor('PickupFrom').notEmpty();
-        s.ruleFor('PickupDate').notEmpty();
-        s.ruleFor('Destination').notEmpty();
-        s.ruleFor('ParcelType').notEmpty();
-        s.ruleFor('ReadyTime').notEmpty();
-        s.ruleFor('AvailableTime').notEmpty();
-        s.ruleFor('TotalPieces').notEmpty();
-        return pickupValidator;
-    });
-    
-    app.controller('PickupRequestController', function (pickupModels, pickupValidator,$scope, $http, $filter) {
-       $scope.pickupRequest = pickupModels.Pickup;
+    app.controller('PickupRequestController', function ($scope, $http) {
+        //$scope.pickupRequest = pickupModels.Pickup;
         $scope.notification = {
             Mobile: [{
                 Number: ""
@@ -496,7 +449,6 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 $scope.message = str;
             }
             else {
-                
                 $scope.Country = (JSON.parse(data));
 
                 $http({
@@ -515,10 +467,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 //  $scope.message = 'Login Successfully';
             }
         }).error(function (data, status, headers, config) {
-            $scope.message = 'Unexpected Error';
+            $scope.message = '';
         });
-
-       
 
         $scope.GetAddressValue = function (address) {
             var addressType = $scope.pickupRequest.AddressType;
@@ -567,8 +517,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             $scope.SetCountryAndCode();
         }
 
-        $scope.SetCountryAndCode = function ()
-        {
+        $scope.SetCountryAndCode = function () {
             var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.pickupRequest.CountryId); })[0];
             $scope.pickupRequest.Country = countryfiltered.Name;
             $scope.pickupRequest.CountryCode = countryfiltered.Code;
@@ -609,52 +558,10 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.PickupType = { Data: [{ Id: 0, Name: 'Package' }, { Id: 1, Name: 'Finance' }], selectedOption: { Id: 0, Name: 'Package' } };
         //HTTP REQUEST BELOW
 
-        //Getting selected Country Code and Country Name
-        $scope.GetValue = function () {
-            //Getting States list using HTTP Request from controller
-            $scope.SetCountryAndCode();
-            $http({
-                method: 'GET',
-                url: '/User/Home/State',
-                //data: $scope.SelectedCountry.CountryCode,
-                params: { countryId: $scope.pickupRequest.CountryId },
-                headers: {
-                    'RequestVerificationToken': $scope.antiForgeryToken
-                }
-            }).success(function (data, status, headers, config) {
-                $scope.message = '';
-                if (data.success == false) {
-                    var str = '';
-                    for (var error in data.errors) {
-                        str += data.errors[error] + '\n';
-                    }
-                    $scope.message = str;
-                }
-                else {
-                    $scope.States = JSON.parse(data);
-                    //  $scope.message = 'Login Successfully';
-                }
-            }).error(function (data, status, headers, config) {
-                $scope.message = 'Unexpected Error';
-            });
-
-            //Ends here getting request of Http for getting states;
-        }
         //Ends here getting country detail
         $scope.pickupRequest.notification.push($scope.notification);
         $scope.valResult = {};
         $scope.sendForm = function () {
-
-            var unregisterValidatorWatch =
-           $scope.$watch(function () { return $scope.pickupRequest; },
-                        function () {
-                            $scope.valResult = pickupValidator.validate($scope.pickupRequest);
-                            if ($scope.pickupRequest.$isValid)
-                                unregisterValidatorWatch();
-                        }, true);
-
-            
-            
             if ($scope.PickupForm.$valid) {
                 $http({
                     url: '/Shipment/PickupRequest',
@@ -670,10 +577,9 @@ $('[data-rel=popover]').popover({ container: 'body' });
                         //alert(data);
                         //window.location.href = "/User/Home/ViewAddress";
                     }).error(function (data, status, headers, config) {
-                        
                     });
             }
-            if ($scope.PickupForm.$invalid) { $scope.message = "Please check required fields." }
+            //if ($scope.PickupForm.$invalid) { $scope.message = "Please check required fields." }
         };
 
         $("#contactName").blur(function () {
@@ -696,12 +602,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 return false;
             }
         }
-
-
-        
     });
 })();
-
 (function () {
     var app = angular.module('mainApp')
     app.controller('TrackController', function ($scope, $http) {
@@ -751,7 +653,6 @@ $('[data-rel=popover]').popover({ container: 'body' });
 (function () {
     var app = angular.module('mainApp');
     app.factory('addressModels', function () {
-
         var addressModels = {};
         addressModels.Address = function () {
             this.AddressType = null;
@@ -770,62 +671,19 @@ $('[data-rel=popover]').popover({ container: 'body' });
             this.Address1 = null;
             this.Address2 = null;
             this.Address3 = null;
-            Address1Label=null
-            Address2Label=null
+            Address1Label = null
+            Address2Label = null
             isAddress3Visible = true
             CountryCode = null;
         }
         return addressModels;
     });
-    app.factory('addressValidator', function (validator) {
-        var s = new validator();
-        s.ruleFor('AddressType').notEmpty();
 
-        s.ruleFor('ShortName').notEmpty();
-        s.ruleFor('ShortName').length(2, 100);
-
-        s.ruleFor('Company').notEmpty();
-        s.ruleFor('Company').length(2,100);
-
-
-        s.ruleFor('FirstName').notEmpty();
-        s.ruleFor('FirstName').length(2,50);
-        
-        s.ruleFor('LastName').notEmpty();
-        s.ruleFor('LastName').length(2, 50);
-
-        s.ruleFor('Phone1').notEmpty();
-        s.ruleFor('Phone1').notNull();
-        s.ruleFor('Phone1').validatePhone();
-        
-        s.ruleFor('Phone2').validatePhone();
-
-        s.ruleFor('Email').notEmpty();
-        s.ruleFor('Email').emailAddress();
-        
-
-        s.ruleFor('CountryId').notEmpty();
-
-        s.ruleFor('PostalCode').notEmpty();
-        s.ruleFor('PostalCode').validatePostalCode();
-        
-        s.ruleFor('Division').notEmpty();
-        s.ruleFor('City').notEmpty();
-
-        s.ruleFor('Address1').notEmpty();
-        s.ruleFor('Address1').length(2, 100);
-
-        s.ruleFor('Address2').length(0, 100);
-
-        s.ruleFor('Address3').length(0, 100);
-        
-        return s;
-    });
     // create angular controller
-    app.controller('AddressBookController', function (addressModels, addressValidator,$scope, $http, $filter) {
+    app.controller('AddressBookController', function (addressModels, $scope, $http, $filter) {
         $scope.contact = addressModels.Address;
         $scope.contact = null;
-        $scope.contact = { AddressType: null, ShortName: null, Company: null, FirstName: null, LastName: null, Phone1: null, Phone2: null, Fax: null, Email: null, CountryId: null, PostalCode: null, Division: null, City: null, Address1: null, Address2: null, Address3: null, Address1Label: "Address Line 1", Address2Label: "Address Line 2", isAddress3Visible: true, CountryCode:null };
+        $scope.contact = { AddressType: null, ShortName: null, Company: null, FirstName: null, LastName: null, Phone1: null, Phone2: null, Fax: null, Email: null, CountryId: null, PostalCode: null, Division: null, City: null, Address1: null, Address2: null, Address3: null, Address1Label: "Address Line 1", Address2Label: "Address Line 2", isAddress3Visible: true, CountryCode: null };
         //HTTP REQUEST BELOW
         $http({
             method: 'GET',
@@ -848,7 +706,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 //  $scope.message = 'Login Successfully';
             }
         }).error(function (data, status, headers, config) {
-            $scope.message = 'Unexpected Error';
+            $scope.message = 'Country url is not valid';
         });
 
         $scope.valResult = {};
@@ -856,7 +714,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.$watch('contact', function (newValue) {
             if ($scope.contact.CountryId != null)
                 $scope.GetCountryDetail($scope.contact.CountryId);
-            $scope.valResult =addressValidator.validate($scope.contact);
+            $scope.valResult = addressValidator.validate($scope.contact);
         }, true);
 
         $scope.GetCountryDetail = function (CountryId) {
@@ -890,7 +748,6 @@ $('[data-rel=popover]').popover({ container: 'body' });
             //    console.log($scope.AddressBook.$error);
             //}
             if ($scope.contact.$isValid) {
-
                 $http({
                     url: '/User/Home/AddressBook',
                     method: "POST",
@@ -902,7 +759,6 @@ $('[data-rel=popover]').popover({ container: 'body' });
                     $scope.message = data;
 
                     window.location.href = "/User/Home/ViewAddress";
-
                 }).error(function (data, status, headers, config) {
                     alert(data);
                 });
@@ -943,24 +799,21 @@ $('[data-rel=popover]').popover({ container: 'body' });
                     //  $scope.message = 'Login Successfully';
                 }
             }).error(function (data, status, headers, config) {
-                $scope.message = 'Unexpected Error';
+                $scope.message = 'state url is not valid';
             });
 
             //Ends here getting request of Http for getting states;
-
         }
         //Ends here getting country detail
-
     });
     var PHONE_REGEXP = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
-    
+
     app.directive('postalcode', ['$http', function ($http) {
         return {
             restrice: 'A',
             require: 'ngModel',
             link: function (scope, element, attrs, ctrl) {
                 angular.element(element).bind('blur', function () {
-                  
                 });
             }
         }
@@ -1344,7 +1197,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
 (function () {
     var app = angular.module('mainApp');
-    app.controller('shipmentsController', function (shippingModels, shippingValidator, $scope, $http, $filter) {
+    app.controller('shipmentsController', function (shippingModels, $scope, $http, $filter) {
         $scope.Shipments = shippingModels.Shipment;
         $scope.Parcel = shippingModels.Shipment.Parcel;
         $scope.Address = new Array();
@@ -1657,60 +1510,6 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
         return shippingModels;
     });
-    app.factory('pacakageValidator', function (validator) {
-        var pacakageValidator = s = new validator();
-
-        s.ruleFor('Weight').notEmpty();
-        s.ruleFor('Width').notEmpty();
-        s.ruleFor('Height').notEmpty();
-        s.ruleFor('Length').notEmpty();
-        return pacakageValidator;
-    });
-    app.factory('shippingValidator', function (validator) {
-        var shippingValidator = s = new validator();
-        s.ruleFor('Company').notEmpty();
-        s.ruleFor('Name').notEmpty();
-        s.ruleFor('Phone').notEmpty().withMessage('Phone');
-        s.ruleFor('Email').notEmpty();
-        s.ruleFor('AddressType').notEmpty();
-        s.ruleFor('AddressCaption').notEmpty();
-        s.ruleFor('Address1').notEmpty();
-        s.ruleFor('City').notEmpty();
-        s.ruleFor('CountryId').notEmpty();
-        s.ruleFor('PostalCode').notEmpty();
-        s.ruleFor('Division').notEmpty();
-
-        s.ruleFor('RCompany').notEmpty();
-        s.ruleFor('Rname').notEmpty();
-        s.ruleFor('Rphone').notEmpty();
-        s.ruleFor('REmail').notEmpty();
-
-        s.ruleFor('RAddressType').notEmpty();
-        s.ruleFor('RaddressCaption').notEmpty();
-
-        s.ruleFor('Raddressline1').notEmpty();
-        s.ruleFor('Rcity').notEmpty();
-        s.ruleFor('RCountryId').notEmpty();
-        s.ruleFor('Rpostalcode').notEmpty();
-
-        s.ruleFor('RDivision').notEmpty();
-
-        s.ruleFor('shipmentdate').notEmpty();
-        s.ruleFor('unitsystem').notEmpty();
-        s.ruleFor('packagetype').notEmpty();
-        s.ruleFor('Insurance').notEmpty();
-        s.ruleFor('Declared').notEmpty();
-        debugger;
-        s.ruleFor('Parcel.items').notEmpty();
-        //s.ruleFor('Parcel.items').setCollectionValidator(pacakageValidator).withMessage('Invalid Parcel');
-
-        return shippingValidator;
-    });
-
-    app.factory('VendorTypeValidator', function (validator) {
-        var shippingValidator = s = new validator();
-        s.ruleFor('vendortype').notEmpty();
-    })
 
     app.factory('VendorTypeModels', function () {
         var VendorTypeModels = {};

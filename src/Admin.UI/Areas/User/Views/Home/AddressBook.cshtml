@@ -6,7 +6,7 @@
 <form name="AddressBook" data-ng-submit="submitForm()" data-ng-controller="AddressBookController" class="form-horizontal" role="form" novalidate>
     <div id="errorMessages" class="error">{{message}}</div>
 
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error':AddressBook.Type.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Address type </label>
 
         <div class="col-sm-9">
@@ -15,63 +15,80 @@
                 <option value="1">Shipper</option>
                 <option value="0">Recipient</option>
             </select>
-             &nbsp; <i ng-validation-icon="contact.$errors.AddressType"><label></label></i>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AddressBook.Type.$error.required">
+                Address Type  is required.
+            </span>
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error':AddressBook.sName.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
             Short name
         </label>
 
         <div class="col-sm-9">
             <input type="text" name="sName" id="sName" ng-model="contact.ShortName" class="col-xs-10 col-sm-5" ng-minlength="3" required="" />
-            &nbsp; <i ng-validation-icon="contact.$errors.ShortName"><label></label></i>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AddressBook.sName.$error.required">
+                Short Name is required.
+            </span>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AddressBook.sName.$error.minlength">
+                Short Name should be min 3 character.
+            </span>
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error':AddressBook.company.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Company</label>
 
         <div class="col-sm-9">
             <input type="text" name="company" id="company" ng-model="contact.Company" class="col-xs-10 col-sm-5" ng-maxlength="100" required="" />
-            &nbsp; <i ng-validation-icon="contact.$errors.Company"><label></label></i>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AddressBook.company.$error.required">
+                Company is required.
+            </span>
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error':AddressBook.firstname.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">First name</label>
 
         <div class="col-sm-9">
             <input type="text" name="firstname" id="firstname" ng-model="contact.FirstName" class="col-xs-10 col-sm-5" ng-maxlength="50" required="" />
-            &nbsp; <i ng-validation-icon="contact.$errors.FirstName"><label></label></i>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AddressBook.firstname.$error.required">
+                First Name  is required.
+            </span>
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error':AddressBook.lastname.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Last name</label>
 
         <div class="col-sm-9">
             <input type="text" name="lastname" id="lastname" ng-model="contact.LastName" class="col-xs-10 col-sm-5" ng-maxlength="50" required="" />
-            &nbsp; <i ng-validation-icon="contact.$errors.LastName"><label></label></i>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AddressBook.lastname.$error.required">
+                Last Name is required.
+            </span>
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error':AddressBook.phone1.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Phone 1</label>
 
         <div class="col-sm-9">
             <input type="text" name="phone1" id="phone1" data-ng-model="contact.Phone1" placeholder="" class="col-xs-10 col-sm-5" required />
-            &nbsp; <i ng-validation-icon="contact.$errors.Phone1"><label></label></i>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AddressBook.phone1.$error.required">
+                Phone 1 is required.
+            </span>
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error':AddressBook.phone2.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Phone 2</label>
 
         <div class="col-sm-9">
             <input type="text" name="phone2" id="phone2" ng-model="contact.Phone2" class="col-xs-10 col-sm-5" data-phone />
-            &nbsp; <i ng-validation-icon="contact.$errors.Phone2"><label></label></i>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AddressBook.phone2.$error.required">
+                Phone 2  is required.
+            </span>
         </div>
     </div>
 
@@ -82,78 +99,97 @@
             <input type="tel" name="fax" id="fax" ng-model="contact.Fax" class="col-xs-10 col-sm-5" data-phone />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error':AddressBook.Email.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Email</label>
 
         <div class="col-sm-9">
-            <input type="text" name="Email" id="Email" ng-model="contact.Email" class="col-xs-10 col-sm-5" required="" />
-            &nbsp; <i ng-validation-icon="contact.$errors.Email"><label></label></i>
+            <input type="email" name="Email" id="Email" ng-model="contact.Email" class="col-xs-10 col-sm-5" required>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AddressBook.Email.$error.required">
+                Email  is required.
+            </span>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AddressBook.Email.$invalid">
+                Email should be valid.
+            </span>
         </div>
     </div>
 
     <h3 class="header smaller lighter blue">
         Address Information
     </h3>
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error':AddressBook.Country.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Country</label>
 
         <div class="col-sm-9">
 
             <select id="Country" class="col-xs-10 col-sm-5" data-ng-model="contact.CountryId" name="Country"
                     data-ng-options="country.Id as country.Name for country in Country track by country.Id" data-ng-change="GetValue()" required></select>
-            &nbsp; <i ng-validation-icon="contact.$errors.CountryId"><label></label></i>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AddressBook.Country.$error.required">
+                Country is required.
+            </span>
         </div>
         <input type="hidden" ng-model="contact.CountryCode" />
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error':AddressBook.postalcode.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Postal Code</label>
 
         <div class="col-sm-9">
             <input type="text" name="postalcode" id="postalcode" ng-model="contact.PostalCode" class="col-xs-10 col-sm-5" required="" />
-            &nbsp; <i ng-validation-icon="contact.$errors.PostalCode"><label></label></i>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AddressBook.postalcode.$error.required">
+                Postal Code is required.
+            </span>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error':AddressBook.ddlState.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Province / State</label>
 
         <div class="col-sm-9">
             <select id="ddlState" class="col-xs-10 col-sm-5" data-ng-model="contact.Division" name="ddlState"
                     data-ng-options="state.Name as state.Name for state in States track by state.Id" required></select>
-            &nbsp; <i ng-validation-icon="contact.$errors.Division"><label></label></i>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AddressBook.ddlState.$error.required">
+                Province/State  is required.
+            </span>
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error':AddressBook.city.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Town / City</label>
 
         <div class="col-sm-9">
             <input type="text" name="city" id="city" ng-model="contact.City" class="col-xs-10 col-sm-5" required />
-            &nbsp; <i ng-validation-icon="contact.$errors.City"><label></label></i>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AddressBook.city.$error.required">
+                City  is required.
+            </span>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error':AddressBook.addressline1.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">{{contact.Address1Label}} </label>
 
         <div class="col-sm-9">
             <input type="text" name="addressline1" id="addressline1" ng-model="contact.Address1" class="col-xs-10 col-sm-5" required="" />
-            &nbsp; <i ng-validation-icon="contact.$errors.Address1"><label></label></i>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AddressBook.addressline1.$error.required">
+                Address line1  is required.
+            </span>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error':AddressBook.addressline2.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">{{contact.Address2Label}} </label>
 
         <div class="col-sm-9">
-            <input type="text" name="addressline2" id="addressline2" ng-model="contact.Address2" class="col-xs-10 col-sm-5"  />
-            &nbsp; <i ng-validation-icon="contact.$errors.Address2"><label></label></i>
+            <input type="text" name="addressline2" id="addressline2" ng-model="contact.Address2" class="col-xs-10 col-sm-5" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AddressBook.addressline2.$error.required">
+                {{contact.Address2Label}}  is required.
+            </span>
         </div>
     </div>
-    <div class="form-group" ng-show="contact.isAddress3Visible">
+    <div class="form-group" ng-show="contact.isAddress3Visible" ng-class="{ 'has-error':AddressBook.addressline3.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Address Line 3 </label>
 
         <div class="col-sm-9">
             <input type="text" name="addressline3" id="addressline3" ng-model="contact.Address3" class="col-xs-10 col-sm-5" />
-            &nbsp; <i ng-validation-icon="contact.$errors.Address3"><label></label></i>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AddressBook.addressline3.$error.required">
+                Address Line 3  is required.
+            </span>
         </div>
     </div>
 
