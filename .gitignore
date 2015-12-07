@@ -192,3 +192,5 @@ ModelManifest.xml
 # Added by onur
 .vs/
 /.vs/config/applicationhost.config
+/src/Admin.UI/Areas/Shipment/Views/Home/shipment_wizard.cshtml
+/src/Admin.UI/Properties/launchSettings.json

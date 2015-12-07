@@ -9,7 +9,7 @@ namespace Admin.UI
     public class Startup
     {
         //public static IConfiguration Configuration { get; set; }
-        public static IConfiguration Configuration { get; private set; }
+        public static IConfiguration Configuration { get; set; }
 
         //public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         //{
