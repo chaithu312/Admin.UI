@@ -69,6 +69,22 @@ namespace Admin.UI.UserArea
         {
             Login login = new Login();
             login.DomainKey = "B171F61C-8914-4C5D-AF88-C3B776D80916";
+
+
+            //TODO : MAKE CLIENT AS DYNAMIC AS PER USER
+            var client = new OAuth2Client(
+          new Uri("http://localhost:63319/core/connect/" + "token"),
+          Constants.clientID,
+          Constants.clientSecret, OAuth2Client.ClientAuthenticationStyle.PostValues);
+
+            var optional = new Dictionary<string, string>
+                      {
+                          { "acr_values", String.Format("DomainKey: {0}", login.DomainKey) }
+                      };
+            
+            TokenResponse x = client.RequestResourceOwnerPasswordAsync("mkumar@ishir.com", "manoj001", "read write", optional).Result;
+
+            //TokenResponse y = client.CreateImplicitFlowUrl()
             return View();
         }
 

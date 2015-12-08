@@ -9,9 +9,9 @@ namespace Admin.UI
     {
         public static string RegisterURL = RegisterEndpoint;
         public static string idServer = IDServerEndpoint;
-        public const string clientID = "CA952280-3855-4A55-950A-B8BCA0079868";
+        public const string clientID = "B171F61C-8914-4C5D-AF88-C3B776D90916";
 
-        public const string clientSecret = "262148";
+        public const string clientSecret = "secret";
         public const string clientScope = "read write";
         public static string APIURL = ShippingEndpoint;
         public static string Profile = ProfileEndpoint;
