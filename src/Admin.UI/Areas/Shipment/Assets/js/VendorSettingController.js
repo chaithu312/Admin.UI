@@ -1,7 +1,7 @@
 ﻿(function () {
     var app = angular.module('mainApp');
     
-    app.controller('vendorController', function ($scope, $http, vendor) {
+    app.controller('vendorController', function ($scope, $http, vendor, virtualDir) {
         $scope.vendor = { Detail:null};
         $scope.sendVendorForm = function () {
             if ($scope.mainForm.$valid) {
@@ -22,7 +22,7 @@
                 }
 
                 $http({
-                    url: '/Shipment/VendorSetting',
+                    url: virtualDir.AdminURL + '/Shipment/VendorSetting',
                     method: "POST",
                     data: JSON.stringify($scope.vendor),
                     contentType: "application/json;",

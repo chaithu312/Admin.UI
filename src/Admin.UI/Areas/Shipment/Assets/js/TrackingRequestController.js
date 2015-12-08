@@ -1,6 +1,6 @@
 ﻿(function () {
     var app = angular.module('mainApp')
-    app.controller('TrackController', function ($scope, $http) {
+    app.controller('TrackController', function ($scope, $http, virtualDir) {
         $scope.Status = {
             Data: [{ Id: 0, Name: 'All Non-Delivered' },
                 { Id: 1, Name: 'Pending (No Trk Data)' },
@@ -20,7 +20,7 @@
         $scope.sendForm = function () {
             $http({
                 method: 'POST',
-                url: '/Shipment/Tracking',
+                url: virtualDir.AdminURL + '/Shipment/Tracking',
                 data: $scope.person,
                 headers: {
                     'RequestVerificationToken': $scope.antiForgeryToken

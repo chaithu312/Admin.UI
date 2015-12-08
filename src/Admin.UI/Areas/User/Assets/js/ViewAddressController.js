@@ -2,11 +2,11 @@
 (function () {
     var validationApp = angular.module('mainApp');
     // create angular controller
-    validationApp.controller('ViewAddressController', function ($scope, $http) {
+    validationApp.controller('ViewAddressController', function ($scope, $http, virtualDir) {
 
         $http({
             method: 'GET',
-            url: '/User/Home/GetAllAddress',
+            url: virtualDir.AdminURL + '/User/Home/GetAllAddress',
             //data: $scope.SelectedCountry.CountryCode,
             //params: { countryId: $scope.contact.CountryId },
             headers: {
@@ -253,7 +253,7 @@
                                     }
                                     //alert("Deleting Row Id :" + selectedRow.Id);
                                     $http({
-                                        url: '/User/Home/DeleteAddress',
+                                        url: virtualDir.AdminURL + '/User/Home/DeleteAddress',
                                         method: "GET",
                                         params: { selectedIds: selectedIds },
                                         contentType: "application/json;",

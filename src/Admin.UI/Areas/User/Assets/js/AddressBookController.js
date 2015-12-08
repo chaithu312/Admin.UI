@@ -28,14 +28,14 @@
     });
 
     // create angular controller
-    app.controller('AddressBookController', function (addressModels, $scope, $http, $filter) {
+    app.controller('AddressBookController', function (addressModels, $scope, $http, $filter, virtualDir) {
         $scope.contact = addressModels.Address;
         $scope.contact = null;
         $scope.contact = { AddressType: null, ShortName: null, Company: null, FirstName: null, LastName: null, Phone1: null, Phone2: null, Fax: null, Email: null, CountryId: null, PostalCode: null, Division: null, City: null, Address1: null, Address2: null, Address3: null, Address1Label: "Address Line 1", Address2Label: "Address Line 2", isAddress3Visible: true, CountryCode: null };
         //HTTP REQUEST BELOW
         $http({
             method: 'GET',
-            url: '/User/Home/Country',
+            url: virtualDir.AdminURL+'/User/Home/Country',
             // data: $scope.person,
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
@@ -97,7 +97,7 @@
             //}
             if ($scope.contact.$isValid) {
                 $http({
-                    url: '/User/Home/AddressBook',
+                    url: virtualDir.AdminURL + '/User/Home/AddressBook',
                     method: "POST",
                     data: JSON.stringify($scope.contact),
                     contentType: "application/json;",
@@ -127,7 +127,7 @@
 
             $http({
                 method: 'GET',
-                url: '/User/Home/State',
+                url: virtualDir.AdminURL + '/User/Home/State',
                 //data: $scope.SelectedCountry.CountryCode,
                 params: { countryId: $scope.contact.CountryId },
                 headers: {

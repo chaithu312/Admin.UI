@@ -79,6 +79,13 @@
     }
 
     app.factory("vendor", vendor);
+
+    var virtualDir = function ($http) {
+        var virtualDirURL = {};
+        virtualDirURL.AdminURL = "";
+        return virtualDirURL;
+    }
+    app.factory("virtualDir", virtualDir);
 })();
 
 //-- Navigation Controller for left navigation
@@ -284,7 +291,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
     }
 
     var app = angular.module('mainApp')
-    app.controller('SignUpController', function ($scope, $http) {
+    app.controller('SignUpController', function ($scope, $http, virtualDir) {
         $scope.person = {};
         $scope.sendForm = function () {
             $http({
@@ -320,7 +327,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 elem.on('blur', function (evt) {
                     scope.$apply(function () {
                         var ajaxConfiguration = {
-                            method: 'GET', url: '/user/IsUserAvailable?userName=' + elem.val()
+                            method: 'GET', url: virtualDir.AdminURL + '/user/IsUserAvailable?userName=' + elem.val()
                         };
                         async(ajaxConfiguration)
                             .success(function (data, status, headers, config) {
@@ -334,12 +341,12 @@ $('[data-rel=popover]').popover({ container: 'body' });
 })();
 (function () {
     var app = angular.module('mainApp')
-    app.controller('LoginController', function ($scope, $http) {
+    app.controller('LoginController', function ($scope, $http, virtualDir) {
         $scope.person = {};
         $scope.sendForm = function () {
             $http({
                 method: 'POST',
-                url: '/user/Login',
+                url: virtualDir.AdminURL + '/user/Login',
                 data: $scope.person,
                 headers: {
                     'RequestVerificationToken': $scope.antiForgeryToken
@@ -366,7 +373,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 (function () {
     var app = angular.module('mainApp');
 
-    app.controller('PickupRequestController', function ($scope, $http) {
+    app.controller('PickupRequestController', function ($scope, $http, virtualDir) {
         //$scope.pickupRequest = pickupModels.Pickup;
         $scope.notification = {
             Mobile: [{
@@ -415,7 +422,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.Address.push(item);
         $http({
             method: 'GET',
-            url: '/User/Home/GetAllAddress',
+            url: virtualDir.AdminURL + '/User/Home/GetAllAddress',
             //data: $scope.SelectedCountry.CountryCode,
             //params: { countryId: $scope.contact.CountryId },
             headers: {
@@ -434,7 +441,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
         $http({
             method: 'GET',
-            url: '/User/Home/Country',
+            url: virtualDir.AdminURL + '/User/Home/Country',
             // data: $scope.person,
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
@@ -453,7 +460,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
                 $http({
                     method: 'GET',
-                    url: '/User/Home/Division',
+                    url: virtualDir.AdminURL + '/User/Home/Division',
                     //data: $scope.SelectedCountry.CountryCode,
                     headers: {
                         'RequestVerificationToken': $scope.antiForgeryToken
@@ -564,7 +571,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.sendForm = function () {
             if ($scope.PickupForm.$valid) {
                 $http({
-                    url: '/Shipment/PickupRequest',
+                    url: virtualDir.AdminURL + '/Shipment/PickupRequest',
                     method: "POST",
                     data: JSON.stringify($scope.pickupRequest),
                     contentType: "application/json;",
@@ -606,7 +613,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 })();
 (function () {
     var app = angular.module('mainApp')
-    app.controller('TrackController', function ($scope, $http) {
+    app.controller('TrackController', function ($scope, $http, virtualDir) {
         $scope.Status = {
             Data: [{ Id: 0, Name: 'All Non-Delivered' },
                 { Id: 1, Name: 'Pending (No Trk Data)' },
@@ -626,7 +633,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.sendForm = function () {
             $http({
                 method: 'POST',
-                url: '/Shipment/Tracking',
+                url: virtualDir.AdminURL + '/Shipment/Tracking',
                 data: $scope.person,
                 headers: {
                     'RequestVerificationToken': $scope.antiForgeryToken
@@ -680,14 +687,14 @@ $('[data-rel=popover]').popover({ container: 'body' });
     });
 
     // create angular controller
-    app.controller('AddressBookController', function (addressModels, $scope, $http, $filter) {
+    app.controller('AddressBookController', function (addressModels, $scope, $http, $filter, virtualDir) {
         $scope.contact = addressModels.Address;
         $scope.contact = null;
         $scope.contact = { AddressType: null, ShortName: null, Company: null, FirstName: null, LastName: null, Phone1: null, Phone2: null, Fax: null, Email: null, CountryId: null, PostalCode: null, Division: null, City: null, Address1: null, Address2: null, Address3: null, Address1Label: "Address Line 1", Address2Label: "Address Line 2", isAddress3Visible: true, CountryCode: null };
         //HTTP REQUEST BELOW
         $http({
             method: 'GET',
-            url: '/User/Home/Country',
+            url: virtualDir.AdminURL+'/User/Home/Country',
             // data: $scope.person,
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
@@ -749,7 +756,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             //}
             if ($scope.contact.$isValid) {
                 $http({
-                    url: '/User/Home/AddressBook',
+                    url: virtualDir.AdminURL + '/User/Home/AddressBook',
                     method: "POST",
                     data: JSON.stringify($scope.contact),
                     contentType: "application/json;",
@@ -779,7 +786,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
             $http({
                 method: 'GET',
-                url: '/User/Home/State',
+                url: virtualDir.AdminURL + '/User/Home/State',
                 //data: $scope.SelectedCountry.CountryCode,
                 params: { countryId: $scope.contact.CountryId },
                 headers: {
@@ -823,11 +830,11 @@ $('[data-rel=popover]').popover({ container: 'body' });
 (function () {
     var validationApp = angular.module('mainApp');
     // create angular controller
-    validationApp.controller('ViewAddressController', function ($scope, $http) {
+    validationApp.controller('ViewAddressController', function ($scope, $http, virtualDir) {
 
         $http({
             method: 'GET',
-            url: '/User/Home/GetAllAddress',
+            url: virtualDir.AdminURL + '/User/Home/GetAllAddress',
             //data: $scope.SelectedCountry.CountryCode,
             //params: { countryId: $scope.contact.CountryId },
             headers: {
@@ -1074,7 +1081,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                                     }
                                     //alert("Deleting Row Id :" + selectedRow.Id);
                                     $http({
-                                        url: '/User/Home/DeleteAddress',
+                                        url: virtualDir.AdminURL + '/User/Home/DeleteAddress',
                                         method: "GET",
                                         params: { selectedIds: selectedIds },
                                         contentType: "application/json;",
@@ -1113,10 +1120,10 @@ $('[data-rel=popover]').popover({ container: 'body' });
 (function () {
     var app = angular.module('mainApp');
     // create angular controller
-    app.controller('ViewPickupController', function ($scope, $http) {
+    app.controller('ViewPickupController', function ($scope, $http, virtualDir) {
         $http({
             method: 'GET',
-            url: '/Shipment/Home/GetAllPickup',
+            url: virtualDir.AdminURL + '/Shipment/Home/GetAllPickup',
             //data: $scope.SelectedCountry.CountryCode,
             //params: { countryId: $scope.contact.CountryId },
             headers: {
@@ -1145,7 +1152,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 (function () {
     var app = angular.module('mainApp');
     
-    app.controller('vendorController', function ($scope, $http, vendor) {
+    app.controller('vendorController', function ($scope, $http, vendor, virtualDir) {
         $scope.vendor = { Detail:null};
         $scope.sendVendorForm = function () {
             if ($scope.mainForm.$valid) {
@@ -1166,7 +1173,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 }
 
                 $http({
-                    url: '/Shipment/VendorSetting',
+                    url: virtualDir.AdminURL + '/Shipment/VendorSetting',
                     method: "POST",
                     data: JSON.stringify($scope.vendor),
                     contentType: "application/json;",
@@ -1197,7 +1204,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
 (function () {
     var app = angular.module('mainApp');
-    app.controller('shipmentsController', function (shippingModels, $scope, $http, $filter) {
+    app.controller('shipmentsController', function (shippingModels, $scope, $http, $filter, virtualDir) {
         $scope.Shipments = shippingModels.Shipment;
         $scope.Parcel = shippingModels.Shipment.Parcel;
         $scope.Address = new Array();
@@ -1210,7 +1217,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.Address.push(item);
         $http({
             method: 'GET',
-            url: '/User/Home/GetAllAddress',
+            url: virtualDir.AdminURL + '/User/Home/GetAllAddress',
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
             }
@@ -1226,8 +1233,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         });
         $http({
             method: 'GET',
-            //url: 'http://test.shipos.com/shipping/masterapi/division',
-            url: '/User/Home/Division',
+            url: virtualDir.AdminURL + '/User/Home/Division',
             //data: $scope.SelectedCountry.CountryCode,
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
@@ -1348,7 +1354,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         //HTTP REQUEST BELOW
         $http({
             method: 'GET',
-            url: '/User/Home/Country',
+            url: virtualDir.AdminURL + '/User/Home/Country',
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
             }
@@ -1374,7 +1380,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
             $http({
                 method: 'GET',
-                url: '/User/Home/State',
+                url: virtualDir.AdminURL + '/User/Home/State',
                 params: { countryId: CountryId },
                 headers: {
                     'RequestVerificationToken': $scope.antiForgeryToken
@@ -1437,7 +1443,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
             if ($scope.shipmentsForm.$valid) {
                 $http({
-                    url: '/Shipment/Shipments',
+                    url: virtualDir.AdminURL + '/Shipment/Shipments',
                     method: "POST",
                     data: JSON.stringify($scope.Shipments),
                     contentType: "application/json;",

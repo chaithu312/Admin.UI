@@ -6,7 +6,7 @@
     }
 
     var app = angular.module('mainApp')
-    app.controller('SignUpController', function ($scope, $http) {
+    app.controller('SignUpController', function ($scope, $http, virtualDir) {
         $scope.person = {};
         $scope.sendForm = function () {
             $http({
@@ -42,7 +42,7 @@
                 elem.on('blur', function (evt) {
                     scope.$apply(function () {
                         var ajaxConfiguration = {
-                            method: 'GET', url: '/user/IsUserAvailable?userName=' + elem.val()
+                            method: 'GET', url: virtualDir.AdminURL + '/user/IsUserAvailable?userName=' + elem.val()
                         };
                         async(ajaxConfiguration)
                             .success(function (data, status, headers, config) {

@@ -15,6 +15,7 @@ namespace Admin.UI
         public const string clientScope = "read write";
         public static string APIURL = ShippingEndpoint;
         public static string Profile = ProfileEndpoint;
+        public static string VirtualDir = VirtualDirectory;
         public const string xmlns = "@xmlns:";
         public const string xsi = "@xsi:";
 
@@ -29,5 +30,6 @@ namespace Admin.UI
         public static string RegisterEndpoint { get { return Startup.Configuration.GetSection("CDN:RegisterEndpoint").Value; } }
         public static string IDServerEndpoint { get { return Startup.Configuration.GetSection("CDN:IDServerEndpoint").Value; } }
         public static string ShippingEndpoint { get { return Startup.Configuration.GetSection("CDN:ShippingEndpoint").Value; } }
+        public static string VirtualDirectory { get { return Startup.Configuration.GetSection("CDN:AdminUI").Value; } }
     }
 }

@@ -1,7 +1,7 @@
 ﻿(function () {
     var app = angular.module('mainApp');
 
-    app.controller('PickupRequestController', function ($scope, $http) {
+    app.controller('PickupRequestController', function ($scope, $http, virtualDir) {
         //$scope.pickupRequest = pickupModels.Pickup;
         $scope.notification = {
             Mobile: [{
@@ -50,7 +50,7 @@
         $scope.Address.push(item);
         $http({
             method: 'GET',
-            url: '/User/Home/GetAllAddress',
+            url: virtualDir.AdminURL + '/User/Home/GetAllAddress',
             //data: $scope.SelectedCountry.CountryCode,
             //params: { countryId: $scope.contact.CountryId },
             headers: {
@@ -69,7 +69,7 @@
 
         $http({
             method: 'GET',
-            url: '/User/Home/Country',
+            url: virtualDir.AdminURL + '/User/Home/Country',
             // data: $scope.person,
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
@@ -88,7 +88,7 @@
 
                 $http({
                     method: 'GET',
-                    url: '/User/Home/Division',
+                    url: virtualDir.AdminURL + '/User/Home/Division',
                     //data: $scope.SelectedCountry.CountryCode,
                     headers: {
                         'RequestVerificationToken': $scope.antiForgeryToken
@@ -199,7 +199,7 @@
         $scope.sendForm = function () {
             if ($scope.PickupForm.$valid) {
                 $http({
-                    url: '/Shipment/PickupRequest',
+                    url: virtualDir.AdminURL + '/Shipment/PickupRequest',
                     method: "POST",
                     data: JSON.stringify($scope.pickupRequest),
                     contentType: "application/json;",

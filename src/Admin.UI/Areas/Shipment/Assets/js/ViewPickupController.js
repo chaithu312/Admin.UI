@@ -1,10 +1,10 @@
 ﻿(function () {
     var app = angular.module('mainApp');
     // create angular controller
-    app.controller('ViewPickupController', function ($scope, $http) {
+    app.controller('ViewPickupController', function ($scope, $http, virtualDir) {
         $http({
             method: 'GET',
-            url: '/Shipment/Home/GetAllPickup',
+            url: virtualDir.AdminURL + '/Shipment/Home/GetAllPickup',
             //data: $scope.SelectedCountry.CountryCode,
             //params: { countryId: $scope.contact.CountryId },
             headers: {

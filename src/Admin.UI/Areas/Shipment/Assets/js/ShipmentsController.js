@@ -1,6 +1,6 @@
 ﻿(function () {
     var app = angular.module('mainApp');
-    app.controller('shipmentsController', function (shippingModels, $scope, $http, $filter) {
+    app.controller('shipmentsController', function (shippingModels, $scope, $http, $filter, virtualDir) {
         $scope.Shipments = shippingModels.Shipment;
         $scope.Parcel = shippingModels.Shipment.Parcel;
         $scope.Address = new Array();
@@ -13,7 +13,7 @@
         $scope.Address.push(item);
         $http({
             method: 'GET',
-            url: '/User/Home/GetAllAddress',
+            url: virtualDir.AdminURL + '/User/Home/GetAllAddress',
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
             }
@@ -29,8 +29,7 @@
         });
         $http({
             method: 'GET',
-            //url: 'http://test.shipos.com/shipping/masterapi/division',
-            url: '/User/Home/Division',
+            url: virtualDir.AdminURL + '/User/Home/Division',
             //data: $scope.SelectedCountry.CountryCode,
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
@@ -151,7 +150,7 @@
         //HTTP REQUEST BELOW
         $http({
             method: 'GET',
-            url: '/User/Home/Country',
+            url: virtualDir.AdminURL + '/User/Home/Country',
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
             }
@@ -177,7 +176,7 @@
 
             $http({
                 method: 'GET',
-                url: '/User/Home/State',
+                url: virtualDir.AdminURL + '/User/Home/State',
                 params: { countryId: CountryId },
                 headers: {
                     'RequestVerificationToken': $scope.antiForgeryToken
@@ -240,7 +239,7 @@
 
             if ($scope.shipmentsForm.$valid) {
                 $http({
-                    url: '/Shipment/Shipments',
+                    url: virtualDir.AdminURL + '/Shipment/Shipments',
                     method: "POST",
                     data: JSON.stringify($scope.Shipments),
                     contentType: "application/json;",

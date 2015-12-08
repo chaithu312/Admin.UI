@@ -79,6 +79,13 @@
     }
 
     app.factory("vendor", vendor);
+
+    var virtualDir = function ($http) {
+        var virtualDirURL = {};
+        virtualDirURL.AdminURL = "";
+        return virtualDirURL;
+    }
+    app.factory("virtualDir", virtualDir);
 })();
 
 //-- Navigation Controller for left navigation
