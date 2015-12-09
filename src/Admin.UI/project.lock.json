@@ -1934,7 +1934,7 @@
           "lib/dnx451/Microsoft.Net.Http.Headers.dll": {}
         }
       },
-      "Microsoft.Owin/2.0.2": {
+      "Microsoft.Owin/3.0.1": {
         "type": "package",
         "dependencies": {
           "Owin": "1.0.0"
@@ -1944,6 +1944,34 @@
         },
         "runtime": {
           "lib/net45/Microsoft.Owin.dll": {}
+        }
+      },
+      "Microsoft.Owin.Security/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Owin": "3.0.0",
+          "Owin": "1.0.0"
+        },
+        "compile": {
+          "lib/net45/Microsoft.Owin.Security.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.Owin.Security.dll": {}
+        }
+      },
+      "Microsoft.Owin.Security.OAuth/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Owin": "3.0.0",
+          "Microsoft.Owin.Security": "3.0.0",
+          "Newtonsoft.Json": "6.0.4",
+          "Owin": "1.0.0"
+        },
+        "compile": {
+          "lib/net45/Microsoft.Owin.Security.OAuth.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.Owin.Security.OAuth.dll": {}
         }
       },
       "Microsoft.VisualStudio.Web.BrowserLink.Loader/14.0.0-beta8": {
@@ -4048,7 +4076,7 @@
           "lib/dnx451/Microsoft.Net.Http.Headers.dll": {}
         }
       },
-      "Microsoft.Owin/2.0.2": {
+      "Microsoft.Owin/3.0.1": {
         "type": "package",
         "dependencies": {
           "Owin": "1.0.0"
@@ -4058,6 +4086,34 @@
         },
         "runtime": {
           "lib/net45/Microsoft.Owin.dll": {}
+        }
+      },
+      "Microsoft.Owin.Security/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Owin": "3.0.0",
+          "Owin": "1.0.0"
+        },
+        "compile": {
+          "lib/net45/Microsoft.Owin.Security.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.Owin.Security.dll": {}
+        }
+      },
+      "Microsoft.Owin.Security.OAuth/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Owin": "3.0.0",
+          "Microsoft.Owin.Security": "3.0.0",
+          "Newtonsoft.Json": "6.0.4",
+          "Owin": "1.0.0"
+        },
+        "compile": {
+          "lib/net45/Microsoft.Owin.Security.OAuth.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.Owin.Security.OAuth.dll": {}
         }
       },
       "Microsoft.VisualStudio.Web.BrowserLink.Loader/14.0.0-beta8": {
@@ -6162,7 +6218,7 @@
           "lib/dnx451/Microsoft.Net.Http.Headers.dll": {}
         }
       },
-      "Microsoft.Owin/2.0.2": {
+      "Microsoft.Owin/3.0.1": {
         "type": "package",
         "dependencies": {
           "Owin": "1.0.0"
@@ -6172,6 +6228,34 @@
         },
         "runtime": {
           "lib/net45/Microsoft.Owin.dll": {}
+        }
+      },
+      "Microsoft.Owin.Security/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Owin": "3.0.0",
+          "Owin": "1.0.0"
+        },
+        "compile": {
+          "lib/net45/Microsoft.Owin.Security.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.Owin.Security.dll": {}
+        }
+      },
+      "Microsoft.Owin.Security.OAuth/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Owin": "3.0.0",
+          "Microsoft.Owin.Security": "3.0.0",
+          "Newtonsoft.Json": "6.0.4",
+          "Owin": "1.0.0"
+        },
+        "compile": {
+          "lib/net45/Microsoft.Owin.Security.OAuth.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.Owin.Security.OAuth.dll": {}
         }
       },
       "Microsoft.VisualStudio.Web.BrowserLink.Loader/14.0.0-beta8": {
@@ -7886,18 +7970,40 @@
         "Microsoft.Net.Http.Headers.nuspec"
       ]
     },
-    "Microsoft.Owin/2.0.2": {
+    "Microsoft.Owin/3.0.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "WVBkCUzmzuBJbOFSfonVLcErTaj0w0NLTwAFR6NB8K6L4099NdvtSBO29JlLQ+Dzkkr5tgvXdcb++mEijBlhpg==",
+      "sha512": "64yZsGN9uRnXNVAyAT4F6KWmdDUJ6yX4uqzxKTdGANKH1oMt0IKZ7THRRa3mXIOo8iSu4tq/DCBUycUY9pXZzw==",
       "files": [
-        "lib/net40/Microsoft.Owin.dll",
-        "lib/net40/Microsoft.Owin.XML",
         "lib/net45/Microsoft.Owin.dll",
         "lib/net45/Microsoft.Owin.XML",
-        "Microsoft.Owin.2.0.2.nupkg",
-        "Microsoft.Owin.2.0.2.nupkg.sha512",
+        "Microsoft.Owin.3.0.1.nupkg",
+        "Microsoft.Owin.3.0.1.nupkg.sha512",
         "Microsoft.Owin.nuspec"
+      ]
+    },
+    "Microsoft.Owin.Security/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "YkMVSORBS15sbFbNWOZBOe1JR295rKIy/N9Kym61taTOeqSqY0Uz0bCEZChC9+w5kFtw6gNPxKtD+Ytit4IDqA==",
+      "files": [
+        "lib/net45/Microsoft.Owin.Security.dll",
+        "lib/net45/Microsoft.Owin.Security.XML",
+        "Microsoft.Owin.Security.3.0.0.nupkg",
+        "Microsoft.Owin.Security.3.0.0.nupkg.sha512",
+        "Microsoft.Owin.Security.nuspec"
+      ]
+    },
+    "Microsoft.Owin.Security.OAuth/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "MM575KI7Y5iVRN6J0VlCEXEGDfkDZ9q3W+w62x0XpxhIGIMk/xtuVXEqWi3p/rNyl0+ZJAfKYX+s85a68MTbdg==",
+      "files": [
+        "lib/net45/Microsoft.Owin.Security.OAuth.dll",
+        "lib/net45/Microsoft.Owin.Security.OAuth.XML",
+        "Microsoft.Owin.Security.OAuth.3.0.0.nupkg",
+        "Microsoft.Owin.Security.OAuth.3.0.0.nupkg.sha512",
+        "Microsoft.Owin.Security.OAuth.nuspec"
       ]
     },
     "Microsoft.VisualStudio.Web.BrowserLink.Loader/14.0.0-beta8": {
@@ -8310,11 +8416,14 @@
       "Microsoft.Framework.Logging >= 1.0.0-beta8",
       "Microsoft.Framework.Logging.Console >= 1.0.0-beta8",
       "Microsoft.Framework.Logging.Debug >= 1.0.0-beta8",
-      "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0-beta8"
+      "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0-beta8",
+      "Microsoft.Owin >= 3.0.1",
+      "Microsoft.Owin.Security.OAuth >= 3.0.0"
     ],
     "DNX,Version=v4.5.1": [
       "fx/System.Web.Extensions >= 4.0.0",
-      "fx/Microsoft.Build >= 4.0.0"
+      "fx/Microsoft.Build >= 4.0.0",
+      "fx/System.Web >= 4.0.0"
     ]
   }
 }

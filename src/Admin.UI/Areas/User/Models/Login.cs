@@ -14,7 +14,7 @@ namespace Admin.UI.Areas.User.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "DomainKey is required")]
+        //[Required(ErrorMessage = "DomainKey is required")]
         // [StringLength(32, ErrorMessage = "Must be unique GUID", MinimumLength = 32)]
         public string DomainKey { get; set; }
     }

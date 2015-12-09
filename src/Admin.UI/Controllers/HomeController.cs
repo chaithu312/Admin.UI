@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Mvc;
 using Microsoft.Framework.OptionsModel;
 
 namespace Admin.UI.Controllers
@@ -21,8 +22,13 @@ namespace Admin.UI.Controllers
             else
                 return RedirectToAction("Index", "Home", new { area = "User" });
         }
+		[Authorize]
+		public IActionResult Dashboard()
+		{
+			return View();
+		}
 
-        public IActionResult Index2()
+		public IActionResult Index2()
         {
             return View();
         }

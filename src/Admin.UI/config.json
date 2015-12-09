@@ -5,7 +5,7 @@
   "CDN": {
     "ProfileEndpoint": "http://192.168.1.30/Profile/profile/",
     "RegisterEndpoint": "http://192.168.1.30/ID/api/register/",
-    "IDServerEndpoint": "http://localhost:63319/",
+    "IDServerEndpoint": "http://localhost:63319/core/connect/",
     "ShippingEndpoint": "http://192.168.1.30/Shipping",
     "VirtualDirectory": " "
   }
