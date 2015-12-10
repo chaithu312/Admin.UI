@@ -2,19 +2,39 @@
     Layout = "~/Views/shared/_layout.cshtml";
 }
 
-<div class="col-sm-7">
-    <div class="widget-box">
-        <div class="widget-header">
-            <h4 class="widget-title">View Address</h4>
-        </div>
-        <div class="widget-body">
-            <div class="widget-main">
+<div class="page-header">
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <div class="center">
+            <div class="row">
                 <form name="AddressBook" data-ng-submit="submitForm()" data-ng-controller="ViewAddressController" novalidate>
                     <div id="errorMessages" class="error">{{message}}</div>
                     <div class="row">
                         <div class="col-xs-10">
-                            <!-- PAGE CONTENT BEGINS -->
-                            <!-- PAGE CONTENT ENDS -->
+                            <table id="AddressBook" class="display" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Position</th>
+                                        <th>Office</th>
+                                        <th>Extn.</th>
+                                        <th>Start date</th>
+                                        <th>Salary</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Position</th>
+                                        <th>Office</th>
+                                        <th>Extn.</th>
+                                        <th>Start date</th>
+                                        <th>Salary</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 </form>
@@ -22,3 +42,27 @@
         </div>
     </div>
 </div>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css" />
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+@*<script>
+        $(document).ready(function () {
+            $('#AddressBook').DataTable({
+                "ajax": "http://192.168.1.30/profile/profile/Address/",
+                "columns": [
+               { "data": "name" },
+               { "data": "Phone1" },
+               { "data": "EMail" },
+               { "data": "Address1" },
+               { "data": "City" },
+               { "data": "Division" }
+                ],
+                "initComplete": function () {
+                    var api = this.api();
+                    api.$('td').click(function () {
+                        api.search(this.innerHTML).draw();
+                    });
+                }
+            });
+        });
+    </script>*@

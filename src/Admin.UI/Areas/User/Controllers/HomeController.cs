@@ -194,18 +194,14 @@ namespace Admin.UI.UserArea
             {
                 try
                 {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Constants.RegisterURL + "IsUserAvailable?Email=" + userName);
-                    request.ContentType = Constants.ContentType;
-                    request.Method = "GET";
-                    using (WebResponse response = request.GetResponse())
-                    {
-                        Stream responseStream = response.GetResponseStream();
-                        string responseString = new StreamReader(responseStream).ReadToEnd();
-                        if (responseString.ToString().ToLower().Equals("true") == true)
-                            return Json(new { result = false });
-                        else
-                            return Json(new { result = true });
-                    }
+                    HttpWebResponse response = ClientHttp.GetAsync(Constants.RegisterURL + "IsUserAvailable?Email=" + userName);
+
+                    Stream responseStream = response.GetResponseStream();
+                    string responseString = new StreamReader(responseStream).ReadToEnd();
+                    if (responseString.ToString().ToLower().Equals("true") == true)
+                        return Json(new { result = false });
+                    else
+                        return Json(new { result = true });
                 }
                 catch
                 {
@@ -236,16 +232,20 @@ namespace Admin.UI.UserArea
                 object result = string.Empty;
 
                 // Uses the System.Net.WebClient and not HttpClient, because .NET 2.0 must be supported.
-                using (var client = new WebClient())
-                {
-                    client.Headers[HttpRequestHeader.ContentType] = "application/json";
+                //using (var client = new WebClient())
+                //{
+                //    client.Headers[HttpRequestHeader.ContentType] = "application/json";
 
-                    string serialisedData = JsonConvert.SerializeObject(register);
+                //    string serialisedData = JsonConvert.SerializeObject(register);
 
-                    var response = client.UploadString(url, serialisedData);
+                //    var response = client.UploadString(url, serialisedData);
 
-                    result = JsonConvert.DeserializeObject(response);
-                }
+                //    HttpWebResponse response = ClientHttp.PostAsync(url, serialisedData);
+                //    result = JsonConvert.DeserializeObject(response);
+                //}
+                string serialisedData = JsonConvert.SerializeObject(register);
+                HttpWebResponse response = ClientHttp.PostAsync(url, serialisedData);
+                result = JsonConvert.DeserializeObject(response.ToString());
                 return Json(result);
             }
             catch
