@@ -60,17 +60,9 @@ namespace Admin.UI.ShipmentArea
 
                 var postData = JsonConvert.SerializeObject(shipment);
                 string strURL = Constants.APIURL + "Shipment/SaveShipment";
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(strURL);
-                byte[] bytes;
-                bytes = System.Text.Encoding.UTF8.GetBytes(postData);
-                request.ContentType = "application/json";
-                request.ContentLength = bytes.Length;
-                request.Method = "POST";
-                Stream requestStream = request.GetRequestStream();
-                requestStream.Write(bytes, 0, bytes.Length);
-                requestStream.Close();
-                HttpWebResponse response;
-                response = (HttpWebResponse)request.GetResponse();
+
+                HttpWebResponse response = ClientHttp.PostAsync(strURL, postData);
+
                 string responseString = string.Empty;
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
@@ -232,14 +224,16 @@ namespace Admin.UI.ShipmentArea
 
             string url = Constants.APIURL + "MasterApi/Address/Insert";
 
-            using (var client = new WebClient())
-            {
-                client.Headers[HttpRequestHeader.ContentType] = "application/json";
+            //using (var client = new WebClient())
+            //{
+            //    client.Headers[HttpRequestHeader.ContentType] = "application/json";
 
-                string serialisedData = JsonConvert.SerializeObject(register);
+            //    string serialisedData = JsonConvert.SerializeObject(register);
 
-                client.UploadString(url, serialisedData);
-            }
+            //    client.UploadString(url, serialisedData);
+            //}
+            string serialisedData = JsonConvert.SerializeObject(register);
+            HttpWebResponse Insertresponse = ClientHttp.PostAsync(url, serialisedData);
         }
 
         private void SaveConsigneeAddress(Shipments shipment)
@@ -263,14 +257,16 @@ namespace Admin.UI.ShipmentArea
 
             string url = Constants.APIURL + "MasterApi/Address/Insert";
 
-            using (var client = new WebClient())
-            {
-                client.Headers[HttpRequestHeader.ContentType] = "application/json";
+            //using (var client = new WebClient())
+            //{
+            //    client.Headers[HttpRequestHeader.ContentType] = "application/json";
 
-                string serialisedData = JsonConvert.SerializeObject(register);
+            //    string serialisedData = JsonConvert.SerializeObject(register);
 
-                client.UploadString(url, serialisedData);
-            }
+            //    client.UploadString(url, serialisedData);
+            //}
+            string serialisedData = JsonConvert.SerializeObject(register);
+            HttpWebResponse Insertresponse = ClientHttp.PostAsync(url, serialisedData);
         }
 
         [HttpPost]
@@ -316,7 +312,6 @@ namespace Admin.UI.ShipmentArea
             return View();
         }
 
-
         public IActionResult PickupRequest()
         {
             return View();
@@ -360,14 +355,16 @@ namespace Admin.UI.ShipmentArea
 
                     string url = Constants.Profile + "Address/Insert";
 
-                    using (var client = new WebClient())
-                    {
-                        client.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    //using (var client = new WebClient())
+                    //{
+                    //    client.Headers[HttpRequestHeader.ContentType] = "application/json";
 
-                        string serialisedData = JsonConvert.SerializeObject(register);
+                    //    string serialisedData = JsonConvert.SerializeObject(register);
 
-                        client.UploadString(url, serialisedData);
-                    }
+                    //    client.UploadString(url, serialisedData);
+                    //}
+                    string serialisedData = JsonConvert.SerializeObject(register);
+                    HttpWebResponse Insertresponse = ClientHttp.PostAsync(url, serialisedData);
                 }
 
                 string strURL = string.Empty;
@@ -429,19 +426,7 @@ namespace Admin.UI.ShipmentArea
                         break;
                 }
                 var postData = JsonConvert.SerializeObject(pickupRequest);
-                //var T = RestClient<PickupRequest>.PostRequest(strURL, pickupRequest);
-                ////Constants.ShippingURL + "Endicia/Pickup"
-                ////Constants.ShippingURL + "UPS/Pickup"
-                //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(strURL);
-                //byte[] bytes;
-                ////bytes = System.Text.Encoding.ASCII.un(requestXml);
-                //bytes = System.Text.Encoding.UTF8.GetBytes(postData);
-                //request.ContentType = "application/json";
-                //request.ContentLength = bytes.Length;
-                //request.Method = "POST";
-                //Stream requestStream = request.GetRequestStream();
-                //requestStream.Write(bytes, 0, bytes.Length);
-                //requestStream.Close();
+
                 HttpWebResponse response = ClientHttp.PostAsync(strURL, postData);
 
                 string responseString = string.Empty;
@@ -498,44 +483,27 @@ namespace Admin.UI.ShipmentArea
             string strPostData = "accountId=2&orderBy=[Pickup].[Created]&sortBy=DESC";
             string url = Constants.APIURL + "/DHL/accountId?" + strPostData;
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.ContentType = Constants.ContentType;
-            request.Method = "GET";
+            HttpWebResponse response = ClientHttp.GetAsync(url);
 
-            using (WebResponse response = request.GetResponse())
+            Stream responseStream = response.GetResponseStream();
+            string responseString = new StreamReader(responseStream).ReadToEnd();
+            var objData = JsonConvert.DeserializeObject(responseString);
+
+            JArray varPickUP = JArray.Parse(objData.ToString());
+            IList<ViewPickup> viewpickup = varPickUP.Select(p => new ViewPickup
             {
-                Stream responseStream = response.GetResponseStream();
-                string responseString = new StreamReader(responseStream).ReadToEnd();
-                var objData = JsonConvert.DeserializeObject(responseString);
+                Id = (string)p["Id"],
+                Detail = (string)p["Detail"],
+                Confirmation = (string)p["Confirmation"],
+                Destination = (string)p["Destination"],
+                Created = ((DateTime)p["Created"]).ToString("yyyy-MM-dd"),
+                Status = (string)p["Status"].ToString() == "1" ? "Success" : "Failed"
+            }).ToList();
 
-                //object result = string.Empty;
+            var result = JsonConvert.SerializeObject(viewpickup);
 
-                //using (var client = new WebClient())
-                //{
-                //    client.Headers[HttpRequestHeader.ContentType] = "application/json";
-
-                //    string serialisedData = JsonConvert.SerializeObject(strPostData);
-
-                //    var response = client.UploadString(url, serialisedData);
-
-                //    var objData = JsonConvert.DeserializeObject(response);
-
-                JArray varPickUP = JArray.Parse(objData.ToString());
-                IList<ViewPickup> viewpickup = varPickUP.Select(p => new ViewPickup
-                {
-                    Id = (string)p["Id"],
-                    Detail = (string)p["Detail"],
-                    Confirmation = (string)p["Confirmation"],
-                    Destination = (string)p["Destination"],
-                    Created = ((DateTime)p["Created"]).ToString("yyyy-MM-dd"),
-                    Status = (string)p["Status"].ToString() == "1" ? "Success" : "Failed"
-                }).ToList();
-
-                var result = JsonConvert.SerializeObject(viewpickup);
-
-                //result = JsonConvert.DeserializeObject(response);
-                return Json(result);
-            }
+            //result = JsonConvert.DeserializeObject(response);
+            return Json(result);
         }
 
         public JsonResult DeletePickup(string selectedIds)
@@ -555,16 +523,20 @@ namespace Admin.UI.ShipmentArea
 
             object result = string.Empty;
 
-            using (var client = new WebClient())
-            {
-                client.Headers[HttpRequestHeader.ContentType] = Constants.ContentType;
+            string serialisedData = JsonConvert.SerializeObject(addressType);
+            HttpWebResponse Insertresponse = ClientHttp.PostAsync(url, serialisedData);
 
-                string serialisedData = JsonConvert.SerializeObject(addressType);
+            result = JsonConvert.DeserializeObject(Insertresponse.ToString());
+            //using (var client = new WebClient())
+            //{
+            //    client.Headers[HttpRequestHeader.ContentType] = Constants.ContentType;
 
-                var response = client.UploadString(url, serialisedData);
+            //    string serialisedData = JsonConvert.SerializeObject(addressType);
 
-                result = JsonConvert.DeserializeObject(response);
-            }
+            //    var response = client.UploadString(url, serialisedData);
+
+            //    result = JsonConvert.DeserializeObject(response);
+            //}
             return Json(result);
         }
     }
