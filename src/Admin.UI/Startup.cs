@@ -3,7 +3,14 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.Dnx.Runtime;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
+using Microsoft.Owin;
+using Microsoft.Owin.Security.OAuth;
+using Owin;
+using System;
+using System.Web.Http;
 
+
+[assembly: OwinStartup(typeof(Admin.UI.Startup))]
 namespace Admin.UI
 {
     public class Startup
@@ -11,26 +18,26 @@ namespace Admin.UI
         //public static IConfiguration Configuration { get; set; }
         public static IConfiguration Configuration { get; set; }
 
-        //public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
-        //{
-        //    Configuration = new Configuration(appEnv.ApplicationBasePath)
-        //        .AddJsonFile("config.json")
-        //        .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true)
-        //        .AddEnvironmentVariables();
-        //}
-
-        public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
+		//public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
+		//{
+		//    Configuration = new Configuration(appEnv.ApplicationBasePath)
+		//        .AddJsonFile("config.json")
+		//        .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true)
+		//        .AddEnvironmentVariables();
+		//}
+		
+		public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
             var configBuilder = new ConfigurationBuilder()
                 .SetBasePath(appEnv.ApplicationBasePath)
                 .AddJsonFile("config.json")
                 .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
 
-            //configBuilder.AddJsonFile("config.json", optional: true);
-            //configBuilder.AddJsonFile($"config-{env.EnvironmentName}.json", optional: true);
-            //configBuilder.AddEnvironmentVariables();
+			//configBuilder.AddJsonFile("config.json", optional: true);
+			//configBuilder.AddJsonFile($"config-{env.EnvironmentName}.json", optional: true);
+			//configBuilder.AddEnvironmentVariables();
 
-            Configuration = configBuilder.Build();
+			Configuration = configBuilder.Build();
         }
 
         // This method gets called by a runtime.

@@ -6,7 +6,8 @@
     "ProfileEndpoint": "http://192.168.1.30/Profile/profile/",
     "RegisterEndpoint": "http://192.168.1.30/ID/api/register/",
     "IDServerEndpoint": "http://192.168.1.30/id/core/",
+    "IDServerEndpoint": "http://localhost:63319/core/connect/",
     "ShippingEndpoint": "http://192.168.1.30/shipping/",
-    "VirtualDirectory": ""
+    "VirtualDirectory": " "
   }
 }

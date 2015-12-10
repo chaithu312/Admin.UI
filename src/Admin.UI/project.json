@@ -37,7 +37,9 @@
     "Microsoft.Framework.Logging": "1.0.0-beta8",
     "Microsoft.Framework.Logging.Console": "1.0.0-beta8",
     "Microsoft.Framework.Logging.Debug": "1.0.0-beta8",
-    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-beta8"
+    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-beta8",
+    "Microsoft.Owin": "3.0.1",
+    "Microsoft.Owin.Security.OAuth": "3.0.0"
   },
   "commands": {
     "Kestrel": "Microsoft.AspNet.Server.Kestrel",
@@ -47,7 +49,8 @@
     "dnx451": {
       "frameworkAssemblies": {
         "System.Web.Extensions": "4.0.0.0",
-        "Microsoft.Build": "4.0.0.0"
+        "Microsoft.Build": "4.0.0.0",
+        "System.Web":"4.0.0.0" 
       }
     }
   },
