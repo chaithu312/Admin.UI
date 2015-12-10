@@ -322,7 +322,7 @@
         return VendorTypeModels;
     });
 
-    app.controller('VendorTypeController', function (vendorTypeModels, VendorTypeValidator, $scope, $http, $filter) {
+    app.controller('shipmentsController', function (vendorTypeModels, VendorTypeValidator, $scope, $http, $filter) {
         if ($scope.VendorType.$invalid) { $scope.message = "Please check required fields." }
     });
 })();

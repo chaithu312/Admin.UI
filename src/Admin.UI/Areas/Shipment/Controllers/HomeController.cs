@@ -428,21 +428,21 @@ namespace Admin.UI.ShipmentArea
                         break;
                 }
                 var postData = JsonConvert.SerializeObject(pickupRequest);
+                //var T = RestClient<PickupRequest>.PostRequest(strURL, pickupRequest);
+                ////Constants.ShippingURL + "Endicia/Pickup"
+                ////Constants.ShippingURL + "UPS/Pickup"
+                //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(strURL);
+                //byte[] bytes;
+                ////bytes = System.Text.Encoding.ASCII.un(requestXml);
+                //bytes = System.Text.Encoding.UTF8.GetBytes(postData);
+                //request.ContentType = "application/json";
+                //request.ContentLength = bytes.Length;
+                //request.Method = "POST";
+                //Stream requestStream = request.GetRequestStream();
+                //requestStream.Write(bytes, 0, bytes.Length);
+                //requestStream.Close();
+                HttpWebResponse response = ClientHttp.PostAsync(strURL, postData);
 
-                //Constants.ShippingURL + "Endicia/Pickup"
-                //Constants.ShippingURL + "UPS/Pickup"
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(strURL);
-                byte[] bytes;
-                //bytes = System.Text.Encoding.ASCII.un(requestXml);
-                bytes = System.Text.Encoding.UTF8.GetBytes(postData);
-                request.ContentType = "application/json";
-                request.ContentLength = bytes.Length;
-                request.Method = "POST";
-                Stream requestStream = request.GetRequestStream();
-                requestStream.Write(bytes, 0, bytes.Length);
-                requestStream.Close();
-                HttpWebResponse response;
-                response = (HttpWebResponse)request.GetResponse();
                 string responseString = string.Empty;
                 if (response.StatusCode == HttpStatusCode.OK)
                 {

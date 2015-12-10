@@ -9,6 +9,23 @@
             template: '<ul class=\"breadcrumb\"><li><i class=\"ace-icon fa fa-home home-icon\"></i><a href=\"#\">Home</a></li><li><a href=\"#\">' + window.location.pathname.split('/')[1] + '</a></li><li class=\"active\">' + window.location.pathname.split('/')[2] + '</li></ul>'
         }
     })
+
+    app.directive('loading', function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            template: '<div class="loading"><img src="..."/>LOADING...</div>',
+            link: function (scope, element, attr) {
+                scope.$watch('loading', function (val) {
+                    if (val)
+                        $(element).show();
+                    else
+                        $(element).hide();
+                });
+            }
+        }
+    })
+
     app.directive('toggleSidebar', function () {
         return {
             restrict: 'E',
@@ -448,6 +465,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             }
         }).success(function (data, status, headers, config) {
             $scope.message = '';
+            $scope.loading = true;
             if (data.success == false) {
                 var str = '';
                 for (var error in data.errors) {
@@ -472,6 +490,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                     $scope.message = 'Unexpected Error';
                 });
                 //  $scope.message = 'Login Successfully';
+                $scope.loading = false;
             }
         }).error(function (data, status, headers, config) {
             $scope.message = '';
@@ -1526,7 +1545,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         return VendorTypeModels;
     });
 
-    app.controller('VendorTypeController', function (vendorTypeModels, VendorTypeValidator, $scope, $http, $filter) {
+    app.controller('shipmentsController', function (vendorTypeModels, VendorTypeValidator, $scope, $http, $filter) {
         if ($scope.VendorType.$invalid) { $scope.message = "Please check required fields." }
     });
 })();

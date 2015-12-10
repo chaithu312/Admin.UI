@@ -76,6 +76,7 @@
             }
         }).success(function (data, status, headers, config) {
             $scope.message = '';
+            $scope.loading = true;
             if (data.success == false) {
                 var str = '';
                 for (var error in data.errors) {
@@ -100,6 +101,7 @@
                     $scope.message = 'Unexpected Error';
                 });
                 //  $scope.message = 'Login Successfully';
+                $scope.loading = false;
             }
         }).error(function (data, status, headers, config) {
             $scope.message = '';

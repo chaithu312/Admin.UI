@@ -9,6 +9,23 @@
             template: '<ul class=\"breadcrumb\"><li><i class=\"ace-icon fa fa-home home-icon\"></i><a href=\"#\">Home</a></li><li><a href=\"#\">' + window.location.pathname.split('/')[1] + '</a></li><li class=\"active\">' + window.location.pathname.split('/')[2] + '</li></ul>'
         }
     })
+
+    app.directive('loading', function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            template: '<div class="loading"><img src="..."/>LOADING...</div>',
+            link: function (scope, element, attr) {
+                scope.$watch('loading', function (val) {
+                    if (val)
+                        $(element).show();
+                    else
+                        $(element).hide();
+                });
+            }
+        }
+    })
+
     app.directive('toggleSidebar', function () {
         return {
             restrict: 'E',
