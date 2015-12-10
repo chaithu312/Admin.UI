@@ -114,11 +114,11 @@ namespace Admin.UI.UserArea
 				{
 					//var Decoded=Encoding.UTF8.GetString(Base64Url.Decode(x.AccessToken));
 
-					var clientx = new HttpClient();
-					clientx.SetBearerToken(x.AccessToken);
+					//var clientx = new HttpClient();
+					//clientx.SetBearerToken(x.AccessToken);
 
-					var result = clientx.GetStringAsync("http://localhost:49202/UPS").Result;
-					System.Web.HttpContext.Current.Session["AccessToken"] = x.AccessToken;
+					//var result = clientx.GetStringAsync("http://localhost:49202/UPS").Result;
+					//System.Web.HttpContext.Current.Session["AccessToken"] = x.AccessToken;
 					return RedirectToAction("Dashboard", "Home", new { area = "" });
 				}
 				else

@@ -22,7 +22,7 @@ namespace Admin.UI.Controllers
             else
                 return RedirectToAction("Index", "Home", new { area = "User" });
         }
-		[Authorize]
+		
 		public IActionResult Dashboard()
 		{
 			return View();
