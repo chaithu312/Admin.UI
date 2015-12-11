@@ -1,8 +1,62 @@
-﻿
-(function () {
+﻿(function () {
     var validationApp = angular.module('mainApp');
     // create angular controller
     validationApp.controller('ViewAddressController', function ($scope, $http, virtualDir) {
+        $scope.message = '';
+
+        $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            $('td:eq(2)', nRow).bind('click', function () {
+                $scope.$apply(function () {
+                    $scope.someClickHandler(aData);
+                });
+            });
+            return nRow;
+        };
+
+        $scope.someClickHandler = function (info) {
+            $scope.message = 'clicked: ' + info.price;
+        };
+
+        $scope.columnDefs = [{
+            "mDataProp": "Name",
+            "aTargets": [0]
+        }, {
+            "mDataProp": "Address1",
+            "aTargets": [1]
+        }, {
+            "mDataProp": "City",
+            "aTargets": [2]
+        }, {
+            "mDataProp": "Division",
+            "aTargets": [3]
+        }, {
+            "mDataProp": "PostalCode",
+            "aTargets": [4]
+        }, {
+            "mDataProp": "Phone1",
+            "aTargets": [5]
+        }, {
+            "mDataProp": "EMail",
+            "aTargets": [6]
+        }, {
+            "mDataProp": "AddressType",
+            "aTargets": [7]
+        }, {
+            "mDataProp": "Status",
+            "aTargets": [8]
+        }];
+
+        $scope.overrideOptions = {
+            "bStateSave": true,
+            "iCookieDuration": 2419200,
+            /* 1 month */
+            "bJQueryUI": true,
+            "bPaginate": true,
+            "bLengthChange": false,
+            "bFilter": true,
+            "bInfo": true,
+            "bDestroy": true
+        };
 
         $http({
             method: 'GET',
@@ -22,270 +76,12 @@
                 $scope.message = str;
             }
             else {
-                $scope.Users = JSON.parse(data);
-                var grid_data = $scope.Users.Result;
-                if ($scope.Users.length == 0)
-                    $scope.message = "No records to view";
-
-                jQuery(function ($) {
-                    var grid_selector = "#grid-table";
-                    var pager_selector = "#grid-pager";
-
-                    //resize to fit page size
-                    $(window).on('resize.jqGrid', function () {
-                        $(grid_selector).jqGrid('setGridWidth', $(".page-content").width());
-                    })
-                    //resize on sidebar collapse/expand
-                    var parent_column = $(grid_selector).closest('[class*="col-"]');
-                    $(document).on('settings.ace.jqGrid', function (ev, event_name, collapsed) {
-                        if (event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed') {
-                            //setTimeout is for webkit only to give time for DOM changes and then redraw!!!
-                            setTimeout(function () {
-                                $(grid_selector).jqGrid('setGridWidth', parent_column.width());
-                            }, 0);
-                        }
-                    })
-                    var selectedRow = null;
-                    //var deletingRow = null;
-                    jQuery(grid_selector).jqGrid({
-                        //direction: "rtl",
-
-                        data: grid_data,
-                        datatype: "local",
-                        height: 350,
-                        //colNames: [' ', 'ID', 'Last Sales', 'Name', 'Stock', 'Ship via', 'Notes'],
-                        colNames: ['Id', 'Name','Phone1', 'EMail', 'Division', 'City','Edit'],
-                        colModel: [
-                            //{
-                            //    name: 'myac', index: '', width: 80, fixed: true, sortable: false, resize: false,
-                            //    formatter: 'actions',
-                            //    formatoptions: {
-                            //        keys: true,
-                            //        delbutton: false,//disable delete button
-                            //       // delOptions: { recreateForm: true, beforeShowForm: beforeDeleteCallback },
-                            //        //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
-                            //    }
-                            //},
-                            { name: 'Id', index: 'Id', width: 30, editable: true,sortable:false },
-                            { name: 'Name', index: 'Name', width: 130, editable: true },
-                            { name: 'Phone1', index: 'Phone1', width: 130, editable: true, editoptions: { size: "20", maxlength: "30" } },
-                            { name: 'EMail', index: 'EMail', width: 180, editable: true },
-                            { name: 'Division', index: 'Division', width: 130, editable: true},
-                            { name: 'City', index: 'City', width: 130, editoptions: { rows: "2", cols: "10" } },
-                            { name: 'Edit', formatter: function (cellvalue, options, rowObject) {
-                                return '<a href="#' + $(grid_selector).getCell('Id') + '">' + "Edit" + '</a>';
-                            } }
-                        ],
-                        
-                        onSelectRow: function (id) {
-                            var data = null;
-                            data = $(grid_selector).find('tr[class*="ui-state-highlight"]');
-                            //deletingRow = this.rows[id];
-                            //var row = $(this).getLocalRow(id);
-                            ////selectedRow = row;
-                            selectedRow = data;
-                        },
-                        viewrecords: true,
-                        rowNum: 10,
-                        rowList: [10, 20, 30],
-                        pager: pager_selector,
-                        altRows: true,
-                       
-                        //toppager: true,
-
-                        multiselect: true,
-                        //multikey: "ctrlKey",
-                        multiboxonly: true,
-
-                        loadComplete: function () {
-                            var table = this;
-                            setTimeout(function () {
-                                styleCheckbox(table);
-
-                                updateActionIcons(table);
-                                updatePagerIcons(table);
-                                enableTooltips(table);
-                            }, 0);
-                        },
-
-                        editurl: "/dummy.html",//nothing is saved
-                        caption: "Address Listing"
-
-                        //,autowidth: true,
-
-
-                        /**
-                        ,
-                        grouping:true,
-                        groupingView : {
-                             groupField : ['name'],
-                             groupDataSorted : true,
-                             plusicon : 'fa fa-chevron-down bigger-110',
-                             minusicon : 'fa fa-chevron-up bigger-110'
-                        },
-                        caption: "Grouping"
-                        */
-
-                    });
-                    $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
-
-
-
-                    //enable search/filter toolbar
-                    //jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch:true,stringResult:true})
-                    //jQuery(grid_selector).filterToolbar({});
-
-
-                    //switch element when editing inline
-                    function aceSwitch(cellvalue, options, cell) {
-                        setTimeout(function () {
-                            $(cell).find('input[type=checkbox]')
-                                .addClass('ace ace-switch ace-switch-5')
-                                .after('<span class="lbl"></span>');
-                        }, 0);
-                    }
-                    //enable datepicker
-                    function pickDate(cellvalue, options, cell) {
-                        setTimeout(function () {
-                            $(cell).find('input[type=text]')
-                                    .datepicker({ format: 'yyyy-mm-dd', autoclose: true });
-                        }, 0);
-                    }
-
-
-                    //navButtons
-                    jQuery(grid_selector).jqGrid('navGrid', pager_selector,
-                        { 	//navbar options
-                            edit: false,
-                            editicon: 'ace-icon fa fa-pencil blue',
-                            add: true,
-                            addicon: 'ace-icon fa fa-plus-circle purple',
-                            del: false,
-                            delicon: 'ace-icon fa fa-trash-o red',
-                            search: true,
-                            searchicon: 'ace-icon fa fa-search orange',
-                            refresh: true,
-                            refreshicon: 'ace-icon fa fa-refresh green',
-                            view: true,
-                            viewicon: 'ace-icon fa fa-search-plus grey',
-                        },
-                        {
-                            //edit record form
-                            //closeAfterEdit: true,
-                            //width: 700,
-                            recreateForm: true,
-                            beforeShowForm: function (e) {
-                                var form = $(e[0]);
-                                form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-                                style_edit_form(form);
-                            }
-                        },
-                        {
-                            //new record form
-                            //width: 700,
-                            closeAfterAdd: true,
-                            recreateForm: true,
-                            viewPagerButtons: false,
-                            beforeShowForm: function (e) {
-                                var form = $(e[0]);
-                                form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar')
-                                .wrapInner('<div class="widget-header" />')
-                                style_edit_form(form);
-                            }
-                        },
-                        {
-                            //delete record form
-                            recreateForm: true,
-                            beforeShowForm: function (e) {
-                                var form = $(e[0]);
-                                if (form.data('styled')) return false;
-
-                                form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-                                style_delete_form(form);
-
-                                form.data('styled', true);
-                            },
-                            onClick: function (e) {
-
-                                //alert(1);
-                            }
-                        },
-                        {
-                            //search form
-                            recreateForm: true,
-                            afterShowSearch: function (e) {
-                                var form = $(e[0]);
-                                form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
-                                style_search_form(form);
-                            },
-                            afterRedraw: function () {
-                                style_search_filters($(this));
-                            }
-                            ,
-                            multipleSearch: true,
-                            /**
-                            multipleGroup:true,
-                            showQuery: true
-                            */
-                        },
-                        {
-                            //view record form
-                            recreateForm: true,
-                            beforeShowForm: function (e) {
-                                var form = $(e[0]);
-                                form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
-                            }
-                        }
-                    ).navButtonAdd(pager_selector, {
-                        caption: "",
-                        buttonicon: "ui-icon ui-icon-trash",
-                       
-                        onClickButton: function () {
-                            
-                            if (selectedRow == null)
-                                alert('Please select row to delete');
-                            else {
-                                if (confirm("Are you sure to delete?")) {
-                                    var selectedIds = "";
-                                    for (i = 1; i <= selectedRow.length; i++) {
-                                        
-                                        selectedIds += (selectedRow[i - 1].childNodes)[1].innerHTML+",";
-                                    }
-                                    //alert("Deleting Row Id :" + selectedRow.Id);
-                                    $http({
-                                        url: virtualDir.AdminURL + '/User/Home/DeleteAddress',
-                                        method: "GET",
-                                        params: { selectedIds: selectedIds },
-                                        contentType: "application/json;",
-                                        dataType: "json"
-                                    })
-                                  .success(function (data, status, headers, config) {
-                                      //deletingRow.remove();
-                                      $(grid_selector).find('tr[class*="ui-state-highlight"]').remove();
-                                      alert(data);
-
-                                  }).error(function (data, status, headers, config) {
-                                  });
-                                }
-                                else { }
-
-                            }
-                        },
-                        position: "last",
-                        id:"cusDelete"
-                    });
-                });
-                //Ending binding of jqGrid
-                jQuery("#grid-table").jqGrid('hideCol', ["Id"]);
+                $scope.datasrc = JSON.parse(data).Result;
             }
         }).error(function (data, status, headers, config) {
             $scope.message = 'Unexpected Error';
         });
 
-
-
-      
-
+        //$scope.sampleProductCategories = [{ "Id": 12, "AccountId": 2, "AddressType": 0, "ShortName": "BR-IND", "Name": "Sumit Validate", "Contact": null, "Phone1": "1232123478", "Phone2": "1232123478", "Fax": null, "EMail": "mr.shashikan@gmail.com", "Address1": "Ghaziabad India", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Texas", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-12-02T19:12:22.617", "Status": 1, "Account": null, "Claims": null }, { "Id": 13, "AccountId": 2, "AddressType": 0, "ShortName": "BR-IND", "Name": "Sumit Singh", "Contact": null, "Phone1": "1232123478", "Phone2": "1232123478", "Fax": null, "EMail": "mr.shashikan@gmail.com", "Address1": "Ghaziabad India", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Tennessee", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-12-03T20:04:30.133", "Status": 1, "Account": null, "Claims": null }, { "Id": 14, "AccountId": 2, "AddressType": 0, "ShortName": "BR-IND", "Name": "Sumit Kant", "Contact": null, "Phone1": "1232123478", "Phone2": "1232123478", "Fax": null, "EMail": "mr.shashikan@gmail.com", "Address1": "Ghaziabad India", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Georgia", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-12-03T18:17:36.64", "Status": 1, "Account": null, "Claims": null }, { "Id": 1, "AccountId": 2, "AddressType": 0, "ShortName": "New Caption", "Name": "Shashikant Pandit", "Contact": null, "Phone1": "2345678901", "Phone2": null, "Fax": null, "EMail": null, "Address1": "707 N 90th street", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Texas", "PostalCode": "75287", "CountryId": 840, "Detail": null, "Created": "2015-10-29T13:48:04.113", "Status": 1, "Account": null, "Claims": null }, { "Id": 4, "AccountId": 2, "AddressType": 0, "ShortName": "PanditJi", "Name": "Sumit Pandit", "Contact": null, "Phone1": "9015", "Phone2": "1232123478", "Fax": null, "EMail": "spandit@ishir.com", "Address1": "707 N 90th street", "Address2": null, "Address3": null, "City": "Noida", "Division": "Kentucky", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-11-16T04:37:23.727", "Status": 1, "Account": null, "Claims": null }, { "Id": 5, "AccountId": 2, "AddressType": 0, "ShortName": "PanditJi", "Name": " ", "Contact": null, "Phone1": "45454545454545", "Phone2": "1232123478", "Fax": null, "EMail": "spandit@ishir.com", "Address1": "707 N 90th street", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Idaho", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-11-16T04:45:21.82", "Status": 1, "Account": null, "Claims": null }, { "Id": 6, "AccountId": 2, "AddressType": 0, "ShortName": "PanditJi", "Name": " ", "Contact": null, "Phone1": null, "Phone2": "1232123478", "Fax": null, "EMail": "mr.shashikan@gmail.com", "Address1": "707 N 90th street", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Kansas", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-11-16T04:48:26.023", "Status": 1, "Account": null, "Claims": null }, { "Id": 7, "AccountId": 2, "AddressType": 0, "ShortName": "PanditJi", "Name": " ", "Contact": null, "Phone1": "1232123478", "Phone2": "1232123478", "Fax": null, "EMail": "mr.shashikan@gmail.com", "Address1": "707 N 90th street", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Alaska", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-11-16T04:50:09.4", "Status": 1, "Account": null, "Claims": null }, { "Id": 8, "AccountId": 2, "AddressType": 0, "ShortName": "PanditJi", "Name": " ", "Contact": null, "Phone1": "9015", "Phone2": "1232123478", "Fax": null, "EMail": "mr.shashikan@gmail.com", "Address1": "707 N 90th street", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Arizona", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-11-16T04:54:08.4", "Status": 1, "Account": null, "Claims": null }, { "Id": 9, "AccountId": 2, "AddressType": 0, "ShortName": "PanditJi", "Name": "Sumit Pandit", "Contact": null, "Phone1": "123212", "Phone2": null, "Fax": null, "EMail": "spandit@ishir.com", "Address1": "707 N 90th street", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Texas", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-11-16T05:06:17.4", "Status": 1, "Account": null, "Claims": null }, { "Id": 11, "AccountId": 2, "AddressType": 0, "ShortName": "PanditJi", "Name": "Sumit Pandit", "Contact": null, "Phone1": "1232123478", "Phone2": "1232123478", "Fax": null, "EMail": "mr.shashikan@gmail.com", "Address1": "Ghaziabad India", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Texas", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-12-02T18:48:26.31", "Status": 1, "Account": null, "Claims": null }, { "Id": 3, "AccountId": 2, "AddressType": 0, "ShortName": "Shipper Pandit", "Name": "Shashikant Pandit", "Contact": null, "Phone1": "9015658982", "Phone2": null, "Fax": null, "EMail": "mr.shashikan@gmail.com", "Address1": "707 N 90th street", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Texas", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-11-16T03:00:04.553", "Status": 1, "Account": null, "Claims": null }, { "Id": 10011, "AccountId": 2, "AddressType": 0, "ShortName": "test", "Name": "teste test", "Contact": null, "Phone1": "12312312", "Phone2": null, "Fax": null, "EMail": "asdf@asd.com", "Address1": "adsf", "Address2": "asdf", "Address3": null, "City": "asdf", "Division": "Kansas", "PostalCode": "12323", "CountryId": 840, "Detail": null, "Created": "2015-12-10T05:52:14.457", "Status": 1, "Account": null, "Claims": null }, { "Id": 2, "AccountId": 2, "AddressType": 0, "ShortName": "UPS Caption", "Name": "Shashikant Pandit", "Contact": null, "Phone1": "9015658982", "Phone2": null, "Fax": null, "EMail": null, "Address1": "707 N 90th street", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Texas", "PostalCode": "75287", "CountryId": 840, "Detail": null, "Created": "2015-10-29T15:11:20.037", "Status": 1, "Account": null, "Claims": null }];
     });
-    
 })();
