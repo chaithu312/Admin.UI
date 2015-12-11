@@ -112,6 +112,7 @@
             global: {
                 files: {
                     'wwwroot/assets/css/global.min.css': [
+
                         'Assets/ace/css/bootstrap.css',
                         'Assets/ace/css/datepicker.css',
                         'Assets/ace/css/bootstrap-timepicker.css',
@@ -121,7 +122,8 @@
                         'Assets/ace/css/jquery-ui.css',
                         'Assets/ace/css/ui.jqgrid.css',
                         'Assets/ace/css/ace-fonts.css',
-                        'Assets/ace/css/ace.css']
+                        'Assets/ace/css/ace.css'
+                    ]
                 }
             },
             ie9: {
