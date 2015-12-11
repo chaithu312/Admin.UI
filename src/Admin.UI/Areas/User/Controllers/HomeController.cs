@@ -8,6 +8,10 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using Thinktecture.IdentityModel.Client;
+using Admin.UI.Filter;
+using Admin.UI.Utility;
+using System.Threading;
+using System.Web;
 
 namespace Admin.UI.UserArea
 {
@@ -18,6 +22,13 @@ namespace Admin.UI.UserArea
 		{
 			return View();
 		}
+		
+
+		//public override void OnActionExecuting(ActionExecutingContext context)
+		//{
+		//	context.Result = RedirectToAction("Dashboard", "Home", new { area = "" });
+		//	return;
+		//}
 
 		[HttpPost]
 		public JsonResult Index([FromBody] Register register)
@@ -66,26 +77,9 @@ namespace Admin.UI.UserArea
 			return View();
 		}
 
+		[CustomAction]
 		public IActionResult Login()
 		{
-			Login login = new Login();
-			login.DomainKey = "B171F61C-8914-4C5D-AF88-C3B776D80916";
-
-
-			//  //TODO : MAKE CLIENT AS DYNAMIC AS PER USER
-			//  var client = new OAuth2Client(
-			//new Uri("http://localhost:63319/core/connect/" + "token"),
-			//Constants.clientID,
-			//Constants.clientSecret, OAuth2Client.ClientAuthenticationStyle.PostValues);
-
-			//  var optional = new Dictionary<string, string>
-			//            {
-			//                { "acr_values", String.Format("DomainKey: {0}", login.DomainKey) }
-			//            };
-
-			//  TokenResponse x = client.RequestResourceOwnerPasswordAsync("mkumar@ishir.com", "manoj001", "read write", optional).Result;
-
-			//  //TokenResponse y = client.CreateImplicitFlowUrl()
 			return View();
 		}
 
@@ -106,11 +100,9 @@ namespace Admin.UI.UserArea
 						  { "acr_values", String.Format("DomainKey: {0}", login.DomainKey) }
 					  };
 
-				TokenResponse x = client.RequestResourceOwnerPasswordAsync(login.UserName, login.Password, Constants.clientScope, optional).Result;
+				TokenResponse responseToken = client.RequestResourceOwnerPasswordAsync(login.UserName, login.Password, Constants.clientScope, optional).Result;
 
-				//TokenResponse y = client.CreateImplicitFlowUrl()
-
-				if (x.AccessToken != null)
+				if (responseToken.AccessToken != null)
 				{
 					//var Decoded=Encoding.UTF8.GetString(Base64Url.Decode(x.AccessToken));
 
@@ -118,7 +110,8 @@ namespace Admin.UI.UserArea
 					//clientx.SetBearerToken(x.AccessToken);
 
 					//var result = clientx.GetStringAsync("http://localhost:49202/UPS").Result;
-					//System.Web.HttpContext.Current.Session["AccessToken"] = x.AccessToken;
+					//System.Web.HttpContext.Current.Session["AccessToken"] = responseToken.AccessToken;
+					Global.AccessToken = responseToken.AccessToken;
 					return RedirectToAction("Dashboard", "Home", new { area = "" });
 				}
 				else
@@ -224,12 +217,13 @@ namespace Admin.UI.UserArea
 				}
 			}
 		}
-
+		[CustomAction]
 		public IActionResult AddressBook()
 		{
 			return View();
 		}
 
+		[CustomAction]
 		[HttpPost]
 		public JsonResult AddressBook([FromBody]Address register)
 		{

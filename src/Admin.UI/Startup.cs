@@ -17,14 +17,6 @@ namespace Admin.UI
     {
         //public static IConfiguration Configuration { get; set; }
         public static IConfiguration Configuration { get; set; }
-
-		//public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
-		//{
-		//    Configuration = new Configuration(appEnv.ApplicationBasePath)
-		//        .AddJsonFile("config.json")
-		//        .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true)
-		//        .AddEnvironmentVariables();
-		//}
 		
 		public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
@@ -35,7 +27,7 @@ namespace Admin.UI
 
 			//configBuilder.AddJsonFile("config.json", optional: true);
 			//configBuilder.AddJsonFile($"config-{env.EnvironmentName}.json", optional: true);
-			//configBuilder.AddEnvironmentVariables();
+			configBuilder.AddEnvironmentVariables();
 
 			Configuration = configBuilder.Build();
         }

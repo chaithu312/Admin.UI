@@ -56,7 +56,8 @@
                         'Areas/User/Assets/js/ViewAddressController.js',
                         'Areas/Shipment/Assets/js/ViewPickupController.js',
                         'Areas/Shipment/Assets/js/VendorSettingController.js',
-                        'Areas/Shipment/Assets/js/ShipmentsController.js'
+                        'Areas/Shipment/Assets/js/ShipmentsController.js',
+                        'Assets/js/angular-cookies.min.js',
 
                     ],
                     'wwwroot/assets/js/DataTable.js': [

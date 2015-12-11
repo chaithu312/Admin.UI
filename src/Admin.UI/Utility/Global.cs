@@ -63,6 +63,7 @@ namespace Admin.UI.Utility
         public static string ShipmentServiceType { get; set; } = "01";
         public static string ShipmentPackageType { get; set; } = "02";
         public static string ShipmentrequestOption { get; set; } = "nonvalidate";
+		public static string AccessToken { get; set; }
 
     }
 }
