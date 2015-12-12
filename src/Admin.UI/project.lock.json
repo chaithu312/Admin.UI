@@ -1446,6 +1446,21 @@
           "lib/dnx451/Microsoft.Dnx.Runtime.Abstractions.dll": {}
         }
       },
+      "Microsoft.Extensions.DependencyInjection.Abstractions/1.0.0-rc2-15855": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
+        }
+      },
       "Microsoft.Framework.Caching.Abstractions/1.0.0-beta8": {
         "type": "package",
         "dependencies": {
@@ -2051,15 +2066,6 @@
         },
         "runtime": {
           "lib/net45/_._": {}
-        }
-      },
-      "System.IdentityModel.Tokens.Jwt/4.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/net45/System.IdentityModel.Tokens.Jwt.dll": {}
-        },
-        "runtime": {
-          "lib/net45/System.IdentityModel.Tokens.Jwt.dll": {}
         }
       },
       "System.Numerics.Vectors/4.1.1-beta-23409": {
@@ -3588,6 +3594,21 @@
           "lib/dnx451/Microsoft.Dnx.Runtime.Abstractions.dll": {}
         }
       },
+      "Microsoft.Extensions.DependencyInjection.Abstractions/1.0.0-rc2-15855": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
+        }
+      },
       "Microsoft.Framework.Caching.Abstractions/1.0.0-beta8": {
         "type": "package",
         "dependencies": {
@@ -4193,15 +4214,6 @@
         },
         "runtime": {
           "lib/net45/_._": {}
-        }
-      },
-      "System.IdentityModel.Tokens.Jwt/4.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/net45/System.IdentityModel.Tokens.Jwt.dll": {}
-        },
-        "runtime": {
-          "lib/net45/System.IdentityModel.Tokens.Jwt.dll": {}
         }
       },
       "System.Numerics.Vectors/4.1.1-beta-23409": {
@@ -5730,6 +5742,21 @@
           "lib/dnx451/Microsoft.Dnx.Runtime.Abstractions.dll": {}
         }
       },
+      "Microsoft.Extensions.DependencyInjection.Abstractions/1.0.0-rc2-15855": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
+        }
+      },
       "Microsoft.Framework.Caching.Abstractions/1.0.0-beta8": {
         "type": "package",
         "dependencies": {
@@ -6335,15 +6362,6 @@
         },
         "runtime": {
           "lib/net45/_._": {}
-        }
-      },
-      "System.IdentityModel.Tokens.Jwt/4.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/net45/System.IdentityModel.Tokens.Jwt.dll": {}
-        },
-        "runtime": {
-          "lib/net45/System.IdentityModel.Tokens.Jwt.dll": {}
         }
       },
       "System.Numerics.Vectors/4.1.1-beta-23409": {
@@ -7496,6 +7514,22 @@
         "Microsoft.Dnx.Runtime.Abstractions.nuspec"
       ]
     },
+    "Microsoft.Extensions.DependencyInjection.Abstractions/1.0.0-rc2-15855": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "AFA8FOpgWr9O1faM+Ujj6Ko194zXoaVevl1DDFaHmuWHpp9Cg6XPL4+w+eof2JhKyKc4xePDinrdSI2C1eyVnw==",
+      "files": [
+        "lib/dotnet5.4/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/dotnet5.4/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/net451/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/net451/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/netcore50/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/netcore50/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0-rc2-15855.nupkg",
+        "Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0-rc2-15855.nupkg.sha512",
+        "Microsoft.Extensions.DependencyInjection.Abstractions.nuspec"
+      ]
+    },
     "Microsoft.Framework.Caching.Abstractions/1.0.0-beta8": {
       "type": "package",
       "serviceable": true,
@@ -8143,18 +8177,6 @@
         "System.Globalization.nuspec"
       ]
     },
-    "System.IdentityModel.Tokens.Jwt/4.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "gBq/+SI1aCgPoY397FTLtMRUhaZciIGIadzKf1hcxDixxsQPZAbs/VmcucU24b9umdw9unIkQV9efn3AeHxTHg==",
-      "files": [
-        "lib/net45/System.IdentityModel.Tokens.Jwt.dll",
-        "lib/net45/System.IdentityModel.Tokens.Jwt.Xml",
-        "System.IdentityModel.Tokens.Jwt.4.0.0.nupkg",
-        "System.IdentityModel.Tokens.Jwt.4.0.0.nupkg.sha512",
-        "System.IdentityModel.Tokens.Jwt.nuspec"
-      ]
-    },
     "System.Numerics.Vectors/4.1.1-beta-23409": {
       "type": "package",
       "serviceable": true,
@@ -8389,7 +8411,6 @@
       "Microsoft.AspNet.Mvc.TagHelpers >= 6.0.0-beta8",
       "Microsoft.Dnx.Runtime.Abstractions >= 1.0.0-beta8-*",
       "Microsoft.AspNet.Tooling.Razor >= 1.0.0-beta8",
-      "System.IdentityModel.Tokens.Jwt >= 4.0.0",
       "Owin >= 1.0.0",
       "Microsoft.AspNet.WebApi.Owin >= 5.2.3",
       "Thinktecture.IdentityModel.Client >= 4.0.1",
@@ -8418,7 +8439,8 @@
       "Microsoft.Framework.Logging.Debug >= 1.0.0-beta8",
       "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0-beta8",
       "Microsoft.Owin >= 3.0.1",
-      "Microsoft.Owin.Security.OAuth >= 3.0.0"
+      "Microsoft.Owin.Security.OAuth >= 3.0.0",
+      "Microsoft.Extensions.DependencyInjection.Abstractions >= 1.0.0-rc2-15855"
     ],
     "DNX,Version=v4.5.1": [
       "fx/System.Web.Extensions >= 4.0.0",

@@ -811,7 +811,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             "mDataProp": "AddressType",
             "aTargets": [7]
         }, {
-            "mDataProp": "Status",
+            "mDataProp": "Status" == 1 ? 'Active' : 'De-Active',
             "aTargets": [8]
         }];
 
@@ -941,7 +941,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
 (function () {
     var app = angular.module('mainApp');
-    app.controller('shipmentsController', function (shippingModels, $scope, $http, $filter, virtualDir) {
+    app.controller('shipmentsController', function (shippingModels, $scope, $http, virtualDir) {
         $scope.Shipments = shippingModels.Shipment;
         $scope.Parcel = shippingModels.Shipment.Parcel;
         $scope.Address = new Array();
@@ -1088,15 +1088,16 @@ $('[data-rel=popover]').popover({ container: 'body' });
             //$scope.Shipments.RCountryCode = countryfiltered.Code;
         };
 
-        //HTTP REQUEST BELOW
         $http({
             method: 'GET',
             url: virtualDir.AdminURL + '/User/Home/Country',
+            // data: $scope.person,
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
             }
         }).success(function (data, status, headers, config) {
             $scope.message = '';
+            $scope.loading = true;
             if (data.success == false) {
                 var str = '';
                 for (var error in data.errors) {
@@ -1105,40 +1106,28 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 $scope.message = str;
             }
             else {
-                $scope.Country = JSON.parse(data).Result;
+                $scope.Country = (JSON.parse(data));
+
+                $http({
+                    method: 'GET',
+                    url: virtualDir.AdminURL + '/User/Home/Division',
+                    //data: $scope.SelectedCountry.CountryCode,
+                    headers: {
+                        'RequestVerificationToken': $scope.antiForgeryToken
+                    }
+                }).success(function (data, status, headers, config) {
+                    $scope.message = '';
+                    $scope.States = JSON.parse(data);
+                }).error(function (data, status, headers, config) {
+                    $scope.message = 'Unexpected Error';
+                });
+                //  $scope.message = 'Login Successfully';
+                $scope.loading = false;
             }
         }).error(function (data, status, headers, config) {
-            $scope.message = 'Unexpected Error';
+            $scope.message = '';
         });
 
-        //Getting selected Country Code and Country Name
-        $scope.GetDivision = function (CountryId) {
-            //Getting States list using HTTP Request from controller
-
-            $http({
-                method: 'GET',
-                url: virtualDir.AdminURL + '/User/Home/State',
-                params: { countryId: CountryId },
-                headers: {
-                    'RequestVerificationToken': $scope.antiForgeryToken
-                }
-            }).success(function (data, status, headers, config) {
-                $scope.message = '';
-                if (data.success == false) {
-                    var str = '';
-                    for (var error in data.errors) {
-                        str += data.errors[error] + '\n';
-                    }
-                    $scope.message = str;
-                }
-                else {
-                    $scope.States = JSON.parse(data);
-                    //  $scope.message = 'Login Successfully';
-                }
-            }).error(function (data, status, headers, config) {
-                $scope.message = 'Unexpected Error';
-            });
-        };
         $scope.Parcel = {
             items: [{
                 Weight: 0,
@@ -1169,15 +1158,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.Shipments = { Parcel: [] };
         $scope.Shipments.Parcel.push($scope.Parcel);
         $scope.valResult = {};
-        $scope.sendShipmentsForm = function () {
-            var unregisterValidatorWatch =
-            $scope.$watch(function () { return $scope.Shipments; },
-                         function () {
-                             $scope.valResult = shippingValidator.validate($scope.Shipments);
-                             if ($scope.Shipments.$isValid)
-                                 unregisterValidatorWatch();
-                         }, true);
-
+        $scope.sendForm = function () {
             if ($scope.shipmentsForm.$valid) {
                 $http({
                     url: virtualDir.AdminURL + '/Shipment/Shipments',
@@ -1261,9 +1242,5 @@ $('[data-rel=popover]').popover({ container: 'body' });
         };
 
         return VendorTypeModels;
-    });
-
-    app.controller('shipmentsController', function (vendorTypeModels, VendorTypeValidator, $scope, $http, $filter) {
-        if ($scope.VendorType.$invalid) { $scope.message = "Please check required fields." }
     });
 })();

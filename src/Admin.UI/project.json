@@ -5,12 +5,10 @@
 
   "dependencies": {
     "Microsoft.AspNet.Mvc": "6.0.0-beta8",
-
     "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-beta8",
-
     "Microsoft.Dnx.Runtime.Abstractions": "1.0.0-beta8-*",
     "Microsoft.AspNet.Tooling.Razor": "1.0.0-beta8",
-    "System.IdentityModel.Tokens.Jwt": "4.0.0",
+
     "Owin": "1.0.0",
     "Microsoft.AspNet.WebApi.Owin": "5.2.3",
     "Thinktecture.IdentityModel.Client": "4.0.1",
@@ -39,7 +37,8 @@
     "Microsoft.Framework.Logging.Debug": "1.0.0-beta8",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-beta8",
     "Microsoft.Owin": "3.0.1",
-    "Microsoft.Owin.Security.OAuth": "3.0.0"
+    "Microsoft.Owin.Security.OAuth": "3.0.0",
+    "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc2-15855"
   },
   "commands": {
     "Kestrel": "Microsoft.AspNet.Server.Kestrel",
@@ -50,7 +49,7 @@
       "frameworkAssemblies": {
         "System.Web.Extensions": "4.0.0.0",
         "Microsoft.Build": "4.0.0.0",
-        "System.Web":"4.0.0.0" 
+        "System.Web": "4.0.0.0"
       }
     }
   },

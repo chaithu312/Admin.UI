@@ -9,8 +9,8 @@ using Owin;
 using System;
 using System.Web.Http;
 
-
 [assembly: OwinStartup(typeof(Admin.UI.Startup))]
+
 namespace Admin.UI
 {
     public class Startup
@@ -18,32 +18,34 @@ namespace Admin.UI
         //public static IConfiguration Configuration { get; set; }
         public static IConfiguration Configuration { get; set; }
 
-		//public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
-		//{
-		//    Configuration = new Configuration(appEnv.ApplicationBasePath)
-		//        .AddJsonFile("config.json")
-		//        .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true)
-		//        .AddEnvironmentVariables();
-		//}
-		
-		public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
+        //public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
+        //{
+        //    Configuration = new Configuration(appEnv.ApplicationBasePath)
+        //        .AddJsonFile("config.json")
+        //        .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true)
+        //        .AddEnvironmentVariables();
+        //}
+
+        public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
             var configBuilder = new ConfigurationBuilder()
                 .SetBasePath(appEnv.ApplicationBasePath)
                 .AddJsonFile("config.json")
                 .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
 
-			//configBuilder.AddJsonFile("config.json", optional: true);
-			//configBuilder.AddJsonFile($"config-{env.EnvironmentName}.json", optional: true);
-			//configBuilder.AddEnvironmentVariables();
+            //configBuilder.AddJsonFile("config.json", optional: true);
+            //configBuilder.AddJsonFile($"config-{env.EnvironmentName}.json", optional: true);
+            //configBuilder.AddEnvironmentVariables();
 
-			Configuration = configBuilder.Build();
+            Configuration = configBuilder.Build();
         }
 
         // This method gets called by a runtime.
         // Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCaching();
+
             services.AddMvc();
         }
 
@@ -54,6 +56,32 @@ namespace Admin.UI
 
             // Add static files to the request pipeline.
             app.UseStaticFiles();
+
+            app.UseCookieAuthentication(options =>
+            {
+                options.AuthenticationScheme = "Cookies";
+                options.AutomaticAuthentication = true;
+            });
+
+            app.UseOAuthAuthentication(options =>
+            {
+                options.AutomaticAuthentication = true;
+                options.AuthenticationScheme = "Oidc";
+                options.SignInScheme = "Cookies";
+
+                options.AuthorizationEndpoint = "http://localhost:63319";
+                options.TokenEndpoint = "http://localhost:63319/core/connect/token";
+
+                options.ClientId = "B171F61C-8914-4C5D-AF88-C3B776D90916";
+                options.ClientSecret = "secret";
+                //options.resp.ResponseType = "id_token token";
+
+                options.Scope.Add("openid");
+                options.Scope.Add("email");
+                options.Scope.Add("api1");
+                options.Scope.Add("read");
+                options.Scope.Add("write");
+            });
 
             // Add cookie-based authentication to the request pipeline.
             // Add and configure the options for authentication middleware to the request pipeline.

@@ -22,13 +22,14 @@ namespace Admin.UI.Controllers
             else
                 return RedirectToAction("Index", "Home", new { area = "User" });
         }
-		
-		public IActionResult Dashboard()
-		{
-			return View();
-		}
 
-		public IActionResult Index2()
+        public IActionResult Dashboard()
+        {
+            var claim = HttpContext.User?.FindFirst("access_token");
+            return View();
+        }
+
+        public IActionResult Index2()
         {
             return View();
         }

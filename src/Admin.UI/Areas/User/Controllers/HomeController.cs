@@ -1,5 +1,6 @@
 ﻿using Admin.UI.Areas.User.Models;
 using Admin.UI.Utility;
+using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -109,6 +110,7 @@ namespace Admin.UI.UserArea
 
                     //var result = clientx.GetStringAsync("http://localhost:49202/UPS").Result;
                     //System.Web.HttpContext.Current.Session["AccessToken"] = x.AccessToken;
+
                     return RedirectToAction("Dashboard", "Home", new { area = "" });
                 }
                 else
@@ -299,8 +301,12 @@ namespace Admin.UI.UserArea
         {
             try
             {
+                //HttpContext.Session.SetString("Test", "Ben Rules!");
+                var claim = HttpContext.User?.FindFirst("access_token");
                 var client = new HttpClient();
                 var result = client.GetStringAsync(Constants.Profile + "Address/").Result;
+
+                //var a = HttpContext.Session.GetString("Test");
                 return Json(result);
             }
             catch (Exception ex)
