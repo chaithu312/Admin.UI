@@ -33,10 +33,9 @@
         $scope.contact = null;
         $scope.contact = { AddressType: null, ShortName: null, Company: null, FirstName: null, LastName: null, Phone1: null, Phone2: null, Fax: null, Email: null, CountryId: null, PostalCode: null, Division: null, City: null, Address1: null, Address2: null, Address3: null, Address1Label: "Address Line 1", Address2Label: "Address Line 2", isAddress3Visible: true, CountryCode: null };
         //HTTP REQUEST BELOW
-
         $http({
             method: 'GET',
-            url: virtualDir.AdminURL + '/User/Home/Country',
+            url: virtualDir.AdminURL+'/User/Home/Country',
             // data: $scope.person,
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
@@ -58,6 +57,7 @@
             $scope.message = 'Country url is not valid';
         });
 
+        $scope.valResult = {};
         //HTTP REQUEST ABOVE
         $scope.$watch('contact', function (newValue) {
             if ($scope.contact.CountryId != null)
@@ -81,7 +81,21 @@
         }
         // function to submit the form after all validation has occurred
         $scope.submitForm = function () {
-            if ($scope.AddressBook.$valid) {
+            var unregisterValidatorWatch =
+         $scope.$watch(function () { return $scope.contact; },
+                      function () {
+                          //  $scope.valResult = addressValidator.validate($scope.contact);
+                          if ($scope.contact.$isValid)
+                              unregisterValidatorWatch();
+                      }, true);
+            // check to make sure the form is completely valid
+            //if (!$scope.contact.$isValid) {
+            //    console.clear();
+            //    console.log('valid');
+            //    console.log($scope.AddressBook);
+            //    console.log($scope.AddressBook.$error);
+            //}
+            if ($scope.contact.$isValid) {
                 $http({
                     url: virtualDir.AdminURL + '/User/Home/AddressBook',
                     method: "POST",
