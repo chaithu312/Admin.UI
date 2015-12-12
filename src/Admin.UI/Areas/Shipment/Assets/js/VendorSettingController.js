@@ -1,8 +1,8 @@
 ﻿(function () {
     var app = angular.module('mainApp');
-    
+
     app.controller('vendorController', function ($scope, $http, vendor, virtualDir) {
-        $scope.vendor = { Detail:null};
+        $scope.vendor = { Detail: null };
         $scope.sendVendorForm = function () {
             if ($scope.mainForm.$valid) {
                 $scope.vendor.isDisabled = true;
@@ -34,19 +34,14 @@
                     }).error(function (data, status, headers, config) {
                         $scope.message = data;
                     });
-
-                
             }
             if ($scope.mainForm.$invalid) { $scope.message = "Please check required fields." }
         };
 
-        vendor.data().success(function(Vendors){
+        vendor.data().success(function (Vendors) {
             $scope.Vendors = Vendors.Result;
         }).error(function (error) {
             $scope.message = 'Unable to load vendor data: ' + error.message;
-
         });
     });
-
 })();
-
