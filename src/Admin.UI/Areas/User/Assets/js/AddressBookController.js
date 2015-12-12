@@ -35,7 +35,7 @@
         //HTTP REQUEST BELOW
         $http({
             method: 'GET',
-            url: virtualDir.AdminURL+'/User/Home/Country',
+            url: virtualDir.AdminURL + '/User/Home/Country',
             // data: $scope.person,
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
@@ -81,21 +81,7 @@
         }
         // function to submit the form after all validation has occurred
         $scope.submitForm = function () {
-            var unregisterValidatorWatch =
-         $scope.$watch(function () { return $scope.contact; },
-                      function () {
-                          //  $scope.valResult = addressValidator.validate($scope.contact);
-                          if ($scope.contact.$isValid)
-                              unregisterValidatorWatch();
-                      }, true);
-            // check to make sure the form is completely valid
-            //if (!$scope.contact.$isValid) {
-            //    console.clear();
-            //    console.log('valid');
-            //    console.log($scope.AddressBook);
-            //    console.log($scope.AddressBook.$error);
-            //}
-            if ($scope.contact.$isValid) {
+            if ($scope.AddressBook.$valid) {
                 $http({
                     url: virtualDir.AdminURL + '/User/Home/AddressBook',
                     method: "POST",

@@ -37,11 +37,5 @@
             }
             if ($scope.mainForm.$invalid) { $scope.message = "Please check required fields." }
         };
-
-        vendor.data().success(function (Vendors) {
-            $scope.Vendors = Vendors.Result;
-        }).error(function (error) {
-            $scope.message = 'Unable to load vendor data: ' + error.message;
-        });
     });
 })();

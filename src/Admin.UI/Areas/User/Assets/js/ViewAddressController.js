@@ -42,7 +42,7 @@
             "mDataProp": "AddressType",
             "aTargets": [7]
         }, {
-            "mDataProp": "Status" == 1 ? 'Active' : 'De-Active',
+            "mDataProp": "Status",
             "aTargets": [8]
         }];
 
@@ -51,7 +51,7 @@
             "iCookieDuration": 2419200,
             /* 1 month */
             "bJQueryUI": true,
-            "bPaginate": true,
+            "bPaginate": false,
             "bLengthChange": false,
             "bFilter": true,
             "bInfo": true,

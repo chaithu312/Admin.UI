@@ -3,19 +3,19 @@
     Layout = "~/Views/shared/_layout.cshtml";
 }
 
-<form class="form-horizontal" role="form" name="mainForm" data-ng-submit="sendVendorForm()" data-ng-controller="vendorController" novalidate>
+<form class="form-horizontal" role="form" name="VendorForm" data-ng-submit="sendVendorForm()" data-ng-controller="vendorController" novalidate>
     <div id="errorMessages" class="error">{{message}}</div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error':VendorForm.Name.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Nick Name </label>
 
         <div class="col-sm-9">
             <input id="Name" class="col-xs-10 col-sm-7" name="Name" type="text" data-ng-model="vendor.Name" required />
             <span class="help-inline col-xs-12 col-sm-7">
-                <span class="error" data-ng-show="mainForm.Name.$error.required">* </span>
+                <span class="error" data-ng-show="mainForm.Name.$error.required">Vendor setting name is required </span>
             </span>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error':VendorForm.vendortype.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Carrier</label>
 
         <div class="col-sm-9">
@@ -26,7 +26,7 @@
                 <option value="4">UPS</option>
             </select>
             <span class="help-inline col-xs-12 col-sm-7">
-                <span class="error" data-ng-show="mainForm.vendortype.$error.required">* </span>
+                <span class="error" data-ng-show="mainForm.vendortype.$error.required">Vendor Type is required </span>
             </span>
         </div>
     </div>
@@ -37,64 +37,64 @@
 
     <div class="row" id="DHL" ng-if="vendor.VendorType == '1'">
 
-        <div class="form-group">
+        <div class="form-group" ng-class="{ 'has-error':VendorForm.DHLAcc.$invalid }">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Third Party Account#</label>
 
             <div class="col-sm-9">
                 <input id="DHLAcc" class="col-xs-10 col-sm-7" name="DHLAcc" data-ng-model="vendor.DHLAcc" required />
 
-                <span class="input-group-addon">
-                    <span class="error" data-ng-show="mainForm.DHLAcc.$error.required">*</span>
+                <span class="">
+                    <span class="error" data-ng-show="mainForm.DHLAcc.$error.required">Third party account is required</span>
                 </span>
             </div>
         </div>
     </div>
 
     <div class="row" id="Endicia" ng-if="vendor.VendorType == '2'">
-        <div class="form-group">
+        <div class="form-group" ng-class="{ 'has-error':VendorForm.EndiciaAcc.$invalid }">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Account#</label>
 
-            <div class="input-group col-sm-9">
+            <div class="col-sm-9">
                 <input id="EndiciaAcc" class="col-xs-10 col-sm-7" name="EndiciaAcc" type="number" data-ng-model="vendor.EndiciaAcc" required />
                 <span class="help-inline col-xs-12 col-sm-7">
-                    <span class="error" data-ng-show="mainForm.EndiciaAcc.$error.required">*</span>
+                    <span class="error" data-ng-show="mainForm.EndiciaAcc.$error.required">Account number is required</span>
                 </span>
             </div>
         </div>
     </div>
 
     <div class="row" id="FedEx" ng-if="vendor.VendorType == '3'">
-        <div class="form-group">
-            <label for="form-field-mask-1" class="col-sm-3">
+        <div class="form-group" ng-class="{ 'has-error':VendorForm.FedexAcc.$invalid }">
+            <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
                 Account#
             </label>
 
             <div class="col-sm-9">
-                <input id="FedexAcc" class="form-control" name="FedexAcc" type="number" data-ng-model="vendor.FedexAcc" required />
+                <input id="FedexAcc" class="col-xs-10 col-sm-7" name="FedexAcc" type="number" data-ng-model="vendor.FedexAcc" required />
                 <span class="help-inline col-xs-12 col-sm-7">
-                    <span class="error" data-ng-show="mainForm.FedexAcc.$error.required">*</span>
+                    <span class="error" data-ng-show="mainForm.FedexAcc.$error.required">Account number is required</span>
                 </span>
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="form-field-mask-1" class="col-sm-3">Meter#</label>
+        <div class="form-group" ng-class="{ 'has-error':VendorForm.FedexMeter.$invalid }">
+            <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">Meter#</label>
 
             <div class="col-sm-9">
-                <input id="FedexMeter" class="form-control" name="FedexMeter" type="number" data-ng-model="vendor.FedexMeter" required />
+                <input id="FedexMeter" class="col-xs-10 col-sm-7" name="FedexMeter" type="number" data-ng-model="vendor.FedexMeter" required />
                 <span class="help-inline col-xs-12 col-sm-7">
-                    <span class="error" data-ng-show="mainForm.FedexMeter.$error.required">*</span>
+                    <span class="error" data-ng-show="mainForm.FedexMeter.$error.required">Meter number is required</span>
                 </span>
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="form-field-mask-1" class="col-sm-3">Billing (Payment) Account#</label>
+        <div class="form-group" ng-class="{ 'has-error':VendorForm.FedexPayAcc.$invalid }">
+            <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">Billing (Payment) Account#</label>
 
             <div class="col-sm-9">
-                <input id="FedexPayAcc" class="form-control" name="FedexPayAcc" type="number" data-ng-model="vendor.FedexPayAcc" required />
+                <input id="FedexPayAcc" class="col-xs-10 col-sm-7" name="FedexPayAcc" type="number" data-ng-model="vendor.FedexPayAcc" required />
                 <span class="help-inline col-xs-12 col-sm-7">
-                    <span class="error" data-ng-show="mainForm.FedexPayAcc.$error.required">*</span>
+                    <span class="error" data-ng-show="mainForm.FedexPayAcc.$error.required">Payment account number is required</span>
                 </span>
             </div>
         </div>
@@ -102,76 +102,76 @@
 
     <div class="row" id="UPS" ng-if="vendor.VendorType == '4'">
 
-        <div class="form-group">
-            <label for="form-field-mask-1" class="col-sm-3">License#</label>
-
-            <div class="input-group col-sm-8">
-                <input id="UPSLicenseNo" class="form-control" name="UPSLicenseNo" type="number" data-ng-model="vendor.UPSLicenseNo" required />
-                <span class="help-inline col-xs-12 col-sm-7">
-                    <span class="error" data-ng-show="mainForm.UPSLicenseNo.$error.required">*</span>
-                </span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="form-field-mask-1" class="col-sm-3">User Name</label>
+        <div class="form-group" ng-class="{ 'has-error':VendorForm.UPSLicenseNo.$invalid }">
+            <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">License#</label>
 
             <div class="col-sm-9">
-                <input id="UPSUserName" class="form-control" name="UPSUserName" type="text" data-ng-model="vendor.UPSUserName" required />
+                <input id="UPSLicenseNo" class="col-xs-10 col-sm-7" name="UPSLicenseNo" type="number" data-ng-model="vendor.UPSLicenseNo" required />
                 <span class="help-inline col-xs-12 col-sm-7">
-                    <span class="error" data-ng-show="mainForm.UPSUserName.$error.required">*</span>
+                    <span class="error" data-ng-show="mainForm.UPSLicenseNo.$error.required">License number is required</span>
                 </span>
             </div>
         </div>
-        <div class="form-group">
-            <label for="form-field-mask-1" class="col-sm-3">Password</label>
+        <div class="form-group" ng-class="{ 'has-error':VendorForm.UPSUserName.$invalid }">
+            <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">User Name</label>
 
             <div class="col-sm-9">
-                <input id="UPSpassword" class="form-control" name="UPSpassword" type="password" data-ng-model="vendor.UPSpassword" required />
+                <input id="UPSUserName" class="col-xs-10 col-sm-7" name="UPSUserName" type="text" data-ng-model="vendor.UPSUserName" required />
                 <span class="help-inline col-xs-12 col-sm-7">
-                    <span class="error" data-ng-show="mainForm.UPSpassword.$error.required">*</span>
+                    <span class="error" data-ng-show="mainForm.UPSUserName.$error.required">User name is required</span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error':VendorForm.UPSpassword.$invalid }">
+            <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">Password</label>
+
+            <div class="col-sm-9">
+                <input id="UPSpassword" class="col-xs-10 col-sm-7" name="UPSpassword" type="password" data-ng-model="vendor.UPSpassword" required />
+                <span class="help-inline col-xs-12 col-sm-7">
+                    <span class="error" data-ng-show="mainForm.UPSpassword.$error.required">Password is required</span>
                 </span>
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="form-field-mask-1" class="col-sm-3">Third Party Account#</label>
+        <div class="form-group" ng-class="{ 'has-error':VendorForm.UPSAcc.$invalid }">
+            <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">Third Party Account#</label>
 
-            <div class="input-group col-sm-8">
-                <input id="UPSAcc" class="form-control" name="UPSAcc" type="number" data-ng-model="vendor.UPSAcc" required />
+            <div class="col-sm-9">
+                <input id="UPSAcc" class="col-xs-10 col-sm-7" name="UPSAcc" type="number" data-ng-model="vendor.UPSAcc" required />
                 <span class="help-inline col-xs-12 col-sm-7">
-                    <span class="error" data-ng-show="mainForm.UPSAcc.$error.required">*</span>
+                    <span class="error" data-ng-show="mainForm.UPSAcc.$error.required">Third party account number is required</span>
                 </span>
             </div>
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error':VendorForm.effectiveDate.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
             Effective Date
         </label>
 
         <div class="col-sm-9">
-            <input type="text" name="effectiveDate" data-date-format="dd-mm-yyyy" id="effectiveDate" ng-model="vendor.Effective" class="form-control date-picker" required>
+            <input type="text" name="effectiveDate" data-date-format="dd-mm-yyyy" id="effectiveDate" ng-model="vendor.Effective" class="col-xs-10 col-sm-7 date-picker" required>
             <span class="input-group-addon">
                 <i class="fa fa-calendar bigger-110"></i>
             </span>
             <span class="help-inline col-xs-12 col-sm-7">
-                <span class="error" data-ng-show="mainForm.effectiveDate.$error.required">*</span>
+                <span class="error" data-ng-show="mainForm.effectiveDate.$error.required">Effective date is required</span>
             </span>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error':VendorForm.expirationDate.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
             Expiration Date
         </label>
 
         <div class="col-sm-9">
-            <input type="text" data-date-format="dd-mm-yyyy" name="expirationDate" ng-model="vendor.Expiration" id="expirationDate" class="form-control date-picker" required>
+            <input type="text" data-date-format="dd-mm-yyyy" name="expirationDate" ng-model="vendor.Expiration" id="expirationDate" class="col-xs-10 col-sm-7 date-picker" required>
             <span class="input-group-addon">
                 <i class="fa fa-calendar bigger-110"></i>
             </span>
             <span class="help-inline col-xs-12 col-sm-7">
-                <span class="error" data-ng-show="mainForm.expirationDate.$error.required">*</span>
+                <span class="error" data-ng-show="mainForm.expirationDate.$error.required">Expiration date is required</span>
             </span>
         </div>
     </div>

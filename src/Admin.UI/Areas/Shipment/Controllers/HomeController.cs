@@ -500,7 +500,7 @@ namespace Admin.UI.ShipmentArea
                 Status = (string)p["Status"].ToString() == "1" ? "Success" : "Failed"
             }).ToList();
 
-            var result = JsonConvert.SerializeObject(viewpickup);
+            var result = JsonConvert.SerializeObject(objData);
 
             //result = JsonConvert.DeserializeObject(response);
             return Json(result);

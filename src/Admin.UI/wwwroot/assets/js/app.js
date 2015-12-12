@@ -3,6 +3,66 @@
 
     var app = angular.module("mainApp", ['navsServices']);
 
+    app.directive('myTable', function () {
+        return function (scope, element, attrs) {
+            // apply DataTable options, use defaults if none specified by user
+            var options = {};
+            if (attrs.myTable.length > 0) {
+                options = scope.$eval(attrs.myTable);
+            } else {
+                options = {
+                    "bStateSave": true,
+                    "iCookieDuration": 2419200,
+                    /* 1 month */
+                    "bJQueryUI": true,
+                    "bPaginate": false,
+                    "bLengthChange": false,
+                    "bFilter": false,
+                    "bInfo": false,
+                    "bDestroy": true,
+                    "buttons": [
+          { extend: "create", editor: editor },
+          { extend: "edit", editor: editor },
+          { extend: "remove", editor: editor }
+                    ]
+                };
+            }
+
+            // Tell the dataTables plugin what columns to use
+            // We can either derive them from the dom, or use setup from the controller
+            var explicitColumns = [];
+            element.find('th').each(function (index, elem) {
+                explicitColumns.push($(elem).text());
+            });
+            if (explicitColumns.length > 0) {
+                options["aoColumns"] = explicitColumns;
+            } else if (attrs.aoColumns) {
+                options["aoColumns"] = scope.$eval(attrs.aoColumns);
+            }
+
+            // aoColumnDefs is dataTables way of providing fine control over column config
+            if (attrs.aoColumnDefs) {
+                options["aoColumnDefs"] = scope.$eval(attrs.aoColumnDefs);
+            }
+
+            if (attrs.fnRowCallback) {
+                options["fnRowCallback"] = scope.$eval(attrs.fnRowCallback);
+            }
+
+            // apply the plugin
+            var dataTable = element.dataTable(options);
+
+            // watch for any changes to our data, rebuild the DataTable
+            scope.$watch(attrs.aaData, function (value) {
+                var val = value || null;
+                if (val) {
+                    dataTable.fnClearTable();
+                    dataTable.fnAddData(scope.$eval(attrs.aaData));
+                }
+            });
+        };
+    });
+
     app.directive('breadcrumb', function () {
         return {
             restrict: 'E',
@@ -86,41 +146,39 @@
         return virtualDirURL;
     }
     app.factory("virtualDir", virtualDir);
-
-
-    //-- Navigation Controller for left navigation
-    (function () {
-        'use strict';
-        app.module('mainApp').controller('navsController', navsController)
-        navsController.$inject = ['$scope', 'Navs'];
-        function navsController($scope, Navs) {
-            $scope.init = function () {
-                $scope.navs = Navs.query();
-            },
-            $scope.isActive = function (destination) {
-                console.log(window.location.pathname);
-                return destination == window.location.pathname;
-            }
-            $scope.isOpen = function (destination) {
-                console.log(window.location.pathname);
-                return destination == '/' + window.location.pathname.split('/')[1];
-            }
-        }
-
-        // in controller
-    })();
-    //-- Navigation Services for left navigation
-    (function () {
-        'use strict';
-        var navsServices = app.module('navsServices', ['ngResource']);
-        navsServices.factory('Navs', ['$resource', function ($resource) {
-            return $resource('/api/Navigation/', {}, {
-                query: { method: 'GET', params: {}, isArray: true }
-            });
-        }]);
-    })();
 })();
 
+//-- Navigation Controller for left navigation
+(function () {
+    'use strict';
+    angular.module('mainApp').controller('navsController', navsController)
+    navsController.$inject = ['$scope', 'Navs'];
+    function navsController($scope, Navs) {
+        $scope.init = function () {
+            $scope.navs = Navs.query();
+        },
+        $scope.isActive = function (destination) {
+            console.log(window.location.pathname);
+            return destination == window.location.pathname;
+        }
+        $scope.isOpen = function (destination) {
+            console.log(window.location.pathname);
+            return destination == '/' + window.location.pathname.split('/')[1];
+        }
+    }
+
+    // in controller
+})();
+//-- Navigation Services for left navigation
+(function () {
+    'use strict';
+    var navsServices = angular.module('navsServices', ['ngResource']);
+    navsServices.factory('Navs', ['$resource', function ($resource) {
+        return $resource('/api/Navigation/', {}, {
+            query: { method: 'GET', params: {}, isArray: true }
+        });
+    }]);
+})();
 
 //datepicker plugin
 //link
@@ -662,7 +720,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
     });
 })();
 (function () {
-    var app = angular.module('mainApp',['ngCookies']);
+    var app = angular.module('mainApp');
     app.factory('addressModels', function () {
         var addressModels = {};
         addressModels.Address = function () {
@@ -691,12 +749,11 @@ $('[data-rel=popover]').popover({ container: 'body' });
     });
 
     // create angular controller
-    app.controller('AddressBookController', function (addressModels, $scope, $http, $filter, virtualDir,$cookies) {
+    app.controller('AddressBookController', function (addressModels, $scope, $http, $filter, virtualDir) {
         $scope.contact = addressModels.Address;
         $scope.contact = null;
         $scope.contact = { AddressType: null, ShortName: null, Company: null, FirstName: null, LastName: null, Phone1: null, Phone2: null, Fax: null, Email: null, CountryId: null, PostalCode: null, Division: null, City: null, Address1: null, Address2: null, Address3: null, Address1Label: "Address Line 1", Address2Label: "Address Line 2", isAddress3Visible: true, CountryCode: null };
         //HTTP REQUEST BELOW
-
         $http({
             method: 'GET',
             url: virtualDir.AdminURL + '/User/Home/Country',
@@ -721,6 +778,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             $scope.message = 'Country url is not valid';
         });
 
+        $scope.valResult = {};
         //HTTP REQUEST ABOVE
         $scope.$watch('contact', function (newValue) {
             if ($scope.contact.CountryId != null)
@@ -860,7 +918,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             "mDataProp": "AddressType",
             "aTargets": [7]
         }, {
-            "mDataProp": "Status" == 1 ? 'Active' : 'De-Active',
+            "mDataProp": "Status",
             "aTargets": [8]
         }];
 
@@ -869,7 +927,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             "iCookieDuration": 2419200,
             /* 1 month */
             "bJQueryUI": true,
-            "bPaginate": true,
+            "bPaginate": false,
             "bLengthChange": false,
             "bFilter": true,
             "bInfo": true,
@@ -899,14 +957,80 @@ $('[data-rel=popover]').popover({ container: 'body' });
         }).error(function (data, status, headers, config) {
             $scope.message = 'Unexpected Error';
         });
-
-        //$scope.sampleProductCategories = [{ "Id": 12, "AccountId": 2, "AddressType": 0, "ShortName": "BR-IND", "Name": "Sumit Validate", "Contact": null, "Phone1": "1232123478", "Phone2": "1232123478", "Fax": null, "EMail": "mr.shashikan@gmail.com", "Address1": "Ghaziabad India", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Texas", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-12-02T19:12:22.617", "Status": 1, "Account": null, "Claims": null }, { "Id": 13, "AccountId": 2, "AddressType": 0, "ShortName": "BR-IND", "Name": "Sumit Singh", "Contact": null, "Phone1": "1232123478", "Phone2": "1232123478", "Fax": null, "EMail": "mr.shashikan@gmail.com", "Address1": "Ghaziabad India", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Tennessee", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-12-03T20:04:30.133", "Status": 1, "Account": null, "Claims": null }, { "Id": 14, "AccountId": 2, "AddressType": 0, "ShortName": "BR-IND", "Name": "Sumit Kant", "Contact": null, "Phone1": "1232123478", "Phone2": "1232123478", "Fax": null, "EMail": "mr.shashikan@gmail.com", "Address1": "Ghaziabad India", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Georgia", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-12-03T18:17:36.64", "Status": 1, "Account": null, "Claims": null }, { "Id": 1, "AccountId": 2, "AddressType": 0, "ShortName": "New Caption", "Name": "Shashikant Pandit", "Contact": null, "Phone1": "2345678901", "Phone2": null, "Fax": null, "EMail": null, "Address1": "707 N 90th street", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Texas", "PostalCode": "75287", "CountryId": 840, "Detail": null, "Created": "2015-10-29T13:48:04.113", "Status": 1, "Account": null, "Claims": null }, { "Id": 4, "AccountId": 2, "AddressType": 0, "ShortName": "PanditJi", "Name": "Sumit Pandit", "Contact": null, "Phone1": "9015", "Phone2": "1232123478", "Fax": null, "EMail": "spandit@ishir.com", "Address1": "707 N 90th street", "Address2": null, "Address3": null, "City": "Noida", "Division": "Kentucky", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-11-16T04:37:23.727", "Status": 1, "Account": null, "Claims": null }, { "Id": 5, "AccountId": 2, "AddressType": 0, "ShortName": "PanditJi", "Name": " ", "Contact": null, "Phone1": "45454545454545", "Phone2": "1232123478", "Fax": null, "EMail": "spandit@ishir.com", "Address1": "707 N 90th street", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Idaho", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-11-16T04:45:21.82", "Status": 1, "Account": null, "Claims": null }, { "Id": 6, "AccountId": 2, "AddressType": 0, "ShortName": "PanditJi", "Name": " ", "Contact": null, "Phone1": null, "Phone2": "1232123478", "Fax": null, "EMail": "mr.shashikan@gmail.com", "Address1": "707 N 90th street", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Kansas", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-11-16T04:48:26.023", "Status": 1, "Account": null, "Claims": null }, { "Id": 7, "AccountId": 2, "AddressType": 0, "ShortName": "PanditJi", "Name": " ", "Contact": null, "Phone1": "1232123478", "Phone2": "1232123478", "Fax": null, "EMail": "mr.shashikan@gmail.com", "Address1": "707 N 90th street", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Alaska", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-11-16T04:50:09.4", "Status": 1, "Account": null, "Claims": null }, { "Id": 8, "AccountId": 2, "AddressType": 0, "ShortName": "PanditJi", "Name": " ", "Contact": null, "Phone1": "9015", "Phone2": "1232123478", "Fax": null, "EMail": "mr.shashikan@gmail.com", "Address1": "707 N 90th street", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Arizona", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-11-16T04:54:08.4", "Status": 1, "Account": null, "Claims": null }, { "Id": 9, "AccountId": 2, "AddressType": 0, "ShortName": "PanditJi", "Name": "Sumit Pandit", "Contact": null, "Phone1": "123212", "Phone2": null, "Fax": null, "EMail": "spandit@ishir.com", "Address1": "707 N 90th street", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Texas", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-11-16T05:06:17.4", "Status": 1, "Account": null, "Claims": null }, { "Id": 11, "AccountId": 2, "AddressType": 0, "ShortName": "PanditJi", "Name": "Sumit Pandit", "Contact": null, "Phone1": "1232123478", "Phone2": "1232123478", "Fax": null, "EMail": "mr.shashikan@gmail.com", "Address1": "Ghaziabad India", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Texas", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-12-02T18:48:26.31", "Status": 1, "Account": null, "Claims": null }, { "Id": 3, "AccountId": 2, "AddressType": 0, "ShortName": "Shipper Pandit", "Name": "Shashikant Pandit", "Contact": null, "Phone1": "9015658982", "Phone2": null, "Fax": null, "EMail": "mr.shashikan@gmail.com", "Address1": "707 N 90th street", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Texas", "PostalCode": "85281", "CountryId": 840, "Detail": null, "Created": "2015-11-16T03:00:04.553", "Status": 1, "Account": null, "Claims": null }, { "Id": 10011, "AccountId": 2, "AddressType": 0, "ShortName": "test", "Name": "teste test", "Contact": null, "Phone1": "12312312", "Phone2": null, "Fax": null, "EMail": "asdf@asd.com", "Address1": "adsf", "Address2": "asdf", "Address3": null, "City": "asdf", "Division": "Kansas", "PostalCode": "12323", "CountryId": 840, "Detail": null, "Created": "2015-12-10T05:52:14.457", "Status": 1, "Account": null, "Claims": null }, { "Id": 2, "AccountId": 2, "AddressType": 0, "ShortName": "UPS Caption", "Name": "Shashikant Pandit", "Contact": null, "Phone1": "9015658982", "Phone2": null, "Fax": null, "EMail": null, "Address1": "707 N 90th street", "Address2": null, "Address3": null, "City": "Dallas", "Division": "Texas", "PostalCode": "75287", "CountryId": 840, "Detail": null, "Created": "2015-10-29T15:11:20.037", "Status": 1, "Account": null, "Claims": null }];
     });
 })();
 (function () {
     var app = angular.module('mainApp');
     // create angular controller
     app.controller('ViewPickupController', function ($scope, $http, virtualDir) {
+        $scope.message = '';
+        $scope.datasrc = '';
+        $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            $('td:eq(2)', nRow).bind('click', function () {
+                $scope.$apply(function () {
+                    $scope.someClickHandler(aData);
+                });
+            });
+            return nRow;
+        };
+
+        $scope.someClickHandler = function (info) {
+            $scope.message = 'clicked: ' + info.price;
+        };
+
+        $scope.columnDefs = [{
+            "mDataProp": "Name",
+            "aTargets": [0]
+        }, {
+            "mDataProp": "Phone",
+            "aTargets": [1]
+        }, {
+            "mDataProp": "EMail",
+            "aTargets": [2]
+        }, {
+            "mDataProp": "Address1",
+            "aTargets": [3]
+        }, {
+            "mDataProp": "City",
+            "aTargets": [4]
+        }, {
+            "mDataProp": "PickupFrom",
+            "aTargets": [5]
+        }, {
+            "mDataProp": "ReadyTime",
+            "aTargets": [6]
+        }, {
+            "mDataProp": "AvailableUntil",
+            "aTargets": [7]
+        }, {
+            "mDataProp": "TotalPieces",
+            "aTargets": [8]
+        }, {
+            "mDataProp": "Destination",
+            "aTargets": [9]
+        }, {
+            "mDataProp": "Instructions",
+            "aTargets": [10]
+        }, {
+            "mDataProp": "Detail",
+            "aTargets": [11]
+        }, {
+            "mDataProp": "Confirmation",
+            "aTargets": [12]
+        }, ];
+
+        $scope.overrideOptions = {
+            "bStateSave": true,
+            "iCookieDuration": 2419200,
+            /* 1 month */
+            "bJQueryUI": true,
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": true,
+            "bInfo": true,
+            "bDestroy": true
+        };
+
         $http({
             method: 'GET',
             url: virtualDir.AdminURL + '/Shipment/Home/GetAllPickup',
@@ -925,10 +1049,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 $scope.message = str;
             }
             else {
-                $scope.PickupData = JSON.parse(data);
-                //$scope.Users = [{ Id: 2, FirstName: "SHASHIKANT", LastName: "Pandit", Phone1: "", EMail: "", Division: "", City: "" }
-                //, { Id: 4, FirstName: "SHASHIKANT", LastName: "Pandit", Phone1: "", EMail: "", Division: "", City: "" }];
-                //Starting binding of jqGrid
+                $scope.datasrc = JSON.parse(data);
             }
         }).error(function (data, status, headers, config) {
             $scope.message = 'Unexpected Error';
@@ -937,9 +1058,9 @@ $('[data-rel=popover]').popover({ container: 'body' });
 })();
 (function () {
     var app = angular.module('mainApp');
-    
+
     app.controller('vendorController', function ($scope, $http, vendor, virtualDir) {
-        $scope.vendor = { Detail:null};
+        $scope.vendor = { Detail: null };
         $scope.sendVendorForm = function () {
             if ($scope.mainForm.$valid) {
                 $scope.vendor.isDisabled = true;
@@ -971,23 +1092,11 @@ $('[data-rel=popover]').popover({ container: 'body' });
                     }).error(function (data, status, headers, config) {
                         $scope.message = data;
                     });
-
-                
             }
             if ($scope.mainForm.$invalid) { $scope.message = "Please check required fields." }
         };
-
-        vendor.data().success(function(Vendors){
-            $scope.Vendors = Vendors.Result;
-        }).error(function (error) {
-            $scope.message = 'Unable to load vendor data: ' + error.message;
-
-        });
     });
-
 })();
-
-
 (function () {
     var app = angular.module('mainApp');
     app.controller('shipmentsController', function (shippingModels, $scope, $http, virtualDir) {
