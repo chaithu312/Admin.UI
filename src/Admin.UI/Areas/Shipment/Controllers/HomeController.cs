@@ -480,8 +480,8 @@ namespace Admin.UI.ShipmentArea
         [HttpGet]
         public JsonResult GetAllPickup()
         {
-            string strPostData = "accountId=2&orderBy=[Pickup].[Created]&sortBy=DESC";
-            string url = Constants.APIURL + "/DHL/accountId?" + strPostData;
+            string strPostData = "accountId=2";
+            string url = Constants.APIURL + "/DHL/Get?" + strPostData;
 
             HttpWebResponse response = ClientHttp.GetAsync(url);
 

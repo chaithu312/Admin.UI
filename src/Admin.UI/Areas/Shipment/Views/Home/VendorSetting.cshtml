@@ -9,8 +9,8 @@
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Nick Name </label>
 
         <div class="col-sm-9">
-            <input id="Name" class="col-xs-10 col-sm-7" name="Name" type="text" data-ng-model="vendor.Name" required />
-            <span class="help-inline col-xs-12 col-sm-7">
+            <input id="Name" class="col-xs-10 col-sm-5" name="Name" type="text" data-ng-model="vendor.Name" required />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="VendorForm.Name.$error.required">
                 <span class="error" data-ng-show="mainForm.Name.$error.required">Vendor setting name is required </span>
             </span>
         </div>
@@ -25,7 +25,7 @@
                 <option value="3">FedEx</option>
                 <option value="4">UPS</option>
             </select>
-            <span class="help-inline col-xs-12 col-sm-7">
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="VendorForm.vendortype.$error.required">
                 <span class="error" data-ng-show="mainForm.vendortype.$error.required">Vendor Type is required </span>
             </span>
         </div>
@@ -41,8 +41,8 @@
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Third Party Account#</label>
 
             <div class="col-sm-9">
-                <input id="DHLAcc" class="col-xs-10 col-sm-7" name="DHLAcc" data-ng-model="vendor.DHLAcc" required />
 
+                <input id="DHLAcc" class="col-xs-10 col-sm-7" name="DHLAcc" type="number" data-ng-model="vendor.DHLAcc" required />
                 <span class="">
                     <span class="error" data-ng-show="mainForm.DHLAcc.$error.required">Third party account is required</span>
                 </span>
