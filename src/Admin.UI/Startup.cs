@@ -41,6 +41,10 @@ namespace Admin.UI
 
         public void Configure(IApplicationBuilder app)
         {
+			app.UseCookieAuthentication(options => {
+				options.AuthenticationScheme = "Cookies";
+				options.AutomaticAuthentication = true;
+			});
             // Add the platform handler to the request pipeline.
             app.UseIISPlatformHandler();
 

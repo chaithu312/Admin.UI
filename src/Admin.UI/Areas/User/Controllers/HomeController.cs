@@ -101,7 +101,11 @@ namespace Admin.UI.UserArea
 					  };
 
 				TokenResponse responseToken = client.RequestResourceOwnerPasswordAsync(login.UserName, login.Password, Constants.clientScope, optional).Result;
+				HttpCookie c = new HttpCookie("AccessToken");
+				c.Value = Global.AccessToken;
+				c.Values["Token"] = responseToken.AccessToken;
 
+				
 				if (responseToken.AccessToken != null)
 				{
 					//var Decoded=Encoding.UTF8.GetString(Base64Url.Decode(x.AccessToken));

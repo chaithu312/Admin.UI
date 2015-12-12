@@ -14,6 +14,7 @@
                 files: {
                     'wwwroot/assets/js/global.min.js': [
                         'Assets/js/angular.js',
+                        'Assets/js/angular-cookies.js',
                         'Assets/js/angular-resource.js',
                         'Assets/ace/js/bootstrap.js',
                         'Assets/ace/js/ace-extra.js',
@@ -56,9 +57,7 @@
                         'Areas/User/Assets/js/ViewAddressController.js',
                         'Areas/Shipment/Assets/js/ViewPickupController.js',
                         'Areas/Shipment/Assets/js/VendorSettingController.js',
-                        'Areas/Shipment/Assets/js/ShipmentsController.js',
-                        'Assets/js/angular-cookies.min.js',
-
+                        'Areas/Shipment/Assets/js/ShipmentsController.js'
                     ],
                     'wwwroot/assets/js/DataTable.js': [
                         'Assets/ace/js/dataTables/jquery.dataTables.js',

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using Admin.UI.Utility;
-
+using System.Web;
 
 namespace Admin.UI.Filter
 {
@@ -25,10 +25,15 @@ namespace Admin.UI.Filter
 		{
 			if (Global.AccessToken==null)
 			{
-				
 			var x=	filterContext.HttpContext.Request.Cookies.Keys;
+				HttpCookie myCookie = new HttpCookie("AccessSToken");
+				
+                if (myCookie != null)
+				{
+					int userId = Convert.ToInt32(myCookie.Values["Token"]);
+				}
 				//filterContext.Result = new RedirectToActionResult("Index", "Home", null);
-                return;
+				return;
 			}
 		}
 	}
