@@ -88,7 +88,7 @@ namespace Admin.UI.UserArea
             {
                 //TODO : MAKE CLIENT AS DYNAMIC AS PER USER
                 var client = new OAuth2Client(
-              new Uri(Constants.idServer + "token"),
+              new Uri(Constants.idServer + "/Connect/token"),
               Constants.clientID,
               Constants.clientSecret, OAuth2Client.ClientAuthenticationStyle.PostValues);
 
@@ -302,7 +302,7 @@ namespace Admin.UI.UserArea
             try
             {
                 //HttpContext.Session.SetString("Test", "Ben Rules!");
-                var claim = HttpContext.User?.FindFirst("access_token");
+                // var claim = HttpContext.User?.FindFirst("access_token");
                 var client = new HttpClient();
                 var result = client.GetStringAsync(Constants.Profile + "Address/").Result;
 

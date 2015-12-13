@@ -283,7 +283,7 @@ namespace Admin.UI.ShipmentArea
 
                     vendorSetting.Expiration = DateTime.ParseExact(vendorSetting.Expiration, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
                     vendorSetting.Effective = DateTime.ParseExact(vendorSetting.Effective, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
-                    string url = Constants.APIURL + "VendorSetting/";
+                    string url = Constants.APIURL + "VendorSetting/Post";
 
                     object result = string.Empty;
 

@@ -4,7 +4,7 @@
     app.controller('vendorController', function ($scope, $http, vendor, virtualDir) {
         $scope.vendor = { Detail: null };
         $scope.sendVendorForm = function () {
-            if ($scope.mainForm.$valid) {
+            if ($scope.VendorForm.$valid) {
                 $scope.vendor.isDisabled = true;
                 switch ($scope.vendor.VendorType) {
                     case 1:
@@ -35,7 +35,7 @@
                         $scope.message = data;
                     });
             }
-            if ($scope.mainForm.$invalid) { $scope.message = "Please check required fields." }
+            if ($scope.VendorForm.$invalid) { $scope.message = "Please check required fields." }
         };
     });
 })();
