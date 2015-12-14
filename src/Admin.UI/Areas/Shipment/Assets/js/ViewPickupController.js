@@ -2,6 +2,8 @@
     var app = angular.module('mainApp');
     // create angular controller
     app.controller('ViewPickupController', function ($scope, $http, virtualDir) {
+        $("#veil").show();
+        $("#feedLoading").show();
         $scope.message = '';
         $scope.datasrc = '';
         $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
@@ -89,6 +91,8 @@
             }
             else {
                 $scope.datasrc = JSON.parse(data);
+                $("#veil").hide();
+                $("#feedLoading").hide();
             }
         }).error(function (data, status, headers, config) {
             $scope.message = 'Unexpected Error';

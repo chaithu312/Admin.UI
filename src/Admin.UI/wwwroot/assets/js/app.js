@@ -132,7 +132,7 @@
     var vendor = function ($http) {
         var vendor = {};
         vendor.data = function () {
-            return $http.get("http://test.shipos.com/Shipping/MasterApi/vendor");
+            return $http.get("http://test.shipos.com/shipping/VendorSetting/GetVendorByAccountId?accountId=2&orderby=AccountId&sortdir=ASC");
         }
 
         return vendor;
@@ -217,130 +217,6 @@ $('.input-daterange').datepicker({ autoclose: true });
 $('input[name=date-range-picker]').daterangepicker({
     'applyClass': 'btn-sm btn-success'
 });
-
-//jqGrid Required Methods starts
-
-function style_edit_form(form) {
-    //enable datepicker on "sdate" field and switches for "stock" field
-    form.find('input[name=sdate]').datepicker({ format: 'yyyy-mm-dd', autoclose: true })
-
-    form.find('input[name=stock]').addClass('ace ace-switch ace-switch-5').after('<span class="lbl"></span>');
-    //don't wrap inside a label element, the checkbox value won't be submitted (POST'ed)
-    //.addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
-
-    //update buttons classes
-    var buttons = form.next().find('.EditButton .fm-button');
-    buttons.addClass('btn btn-sm').find('[class*="-icon"]').hide();//ui-icon, s-icon
-    buttons.eq(0).addClass('btn-primary').prepend('<i class="ace-icon fa fa-check"></i>');
-    buttons.eq(1).prepend('<i class="ace-icon fa fa-times"></i>')
-
-    buttons = form.next().find('.navButton a');
-    buttons.find('.ui-icon').hide();
-    buttons.eq(0).append('<i class="ace-icon fa fa-chevron-left"></i>');
-    buttons.eq(1).append('<i class="ace-icon fa fa-chevron-right"></i>');
-}
-
-function style_delete_form(form) {
-    var buttons = form.next().find('.EditButton .fm-button');
-    buttons.addClass('btn btn-sm btn-white btn-round').find('[class*="-icon"]').hide();//ui-icon, s-icon
-    buttons.eq(0).addClass('btn-danger').prepend('<i class="ace-icon fa fa-trash-o"></i>');
-    buttons.eq(1).addClass('btn-default').prepend('<i class="ace-icon fa fa-times"></i>')
-}
-
-function style_search_filters(form) {
-    form.find('.delete-rule').val('X');
-    form.find('.add-rule').addClass('btn btn-xs btn-primary');
-    form.find('.add-group').addClass('btn btn-xs btn-success');
-    form.find('.delete-group').addClass('btn btn-xs btn-danger');
-}
-function style_search_form(form) {
-    var dialog = form.closest('.ui-jqdialog');
-    var buttons = dialog.find('.EditTable')
-    buttons.find('.EditButton a[id*="_reset"]').addClass('btn btn-sm btn-info').find('.ui-icon').attr('class', 'ace-icon fa fa-retweet');
-    buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'ace-icon fa fa-comment-o');
-    buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'ace-icon fa fa-search');
-}
-
-function beforeDeleteCallback(e) {
-    var form = $(e[0]);
-    if (form.data('styled')) return false;
-
-    form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-    style_delete_form(form);
-
-    form.data('styled', true);
-}
-
-function beforeEditCallback(e) {
-    var form = $(e[0]);
-    form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-    style_edit_form(form);
-}
-
-//it causes some flicker when reloading or navigating grid
-//it may be possible to have some custom formatter to do this as the grid is being created to prevent this
-//or go back to default browser checkbox styles for the grid
-function styleCheckbox(table) {
-    /**
-        $(table).find('input:checkbox').addClass('ace')
-        .wrap('<label />')
-        .after('<span class="lbl align-top" />')
-
-        $('.ui-jqgrid-labels th[id*="_cb"]:first-child')
-        .find('input.cbox[type=checkbox]').addClass('ace')
-        .wrap('<label />').after('<span class="lbl align-top" />');
-    */
-}
-
-//unlike navButtons icons, action icons in rows seem to be hard-coded
-//you can change them like this in here if you want
-function updateActionIcons(table) {
-    /**
-    var replacement =
-    {
-        'ui-ace-icon fa fa-pencil' : 'ace-icon fa fa-pencil blue',
-        'ui-ace-icon fa fa-trash-o' : 'ace-icon fa fa-trash-o red',
-        'ui-icon-disk' : 'ace-icon fa fa-check green',
-        'ui-icon-cancel' : 'ace-icon fa fa-times red'
-    };
-    $(table).find('.ui-pg-div span.ui-icon').each(function(){
-        var icon = $(this);
-        var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-        if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
-    })
-    */
-}
-
-//replace icons with FontAwesome icons like above
-function updatePagerIcons(table) {
-    var replacement =
-    {
-        'ui-icon-seek-first': 'ace-icon fa fa-angle-double-left bigger-140',
-        'ui-icon-seek-prev': 'ace-icon fa fa-angle-left bigger-140',
-        'ui-icon-seek-next': 'ace-icon fa fa-angle-right bigger-140',
-        'ui-icon-seek-end': 'ace-icon fa fa-angle-double-right bigger-140'
-    };
-    $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function () {
-        var icon = $(this);
-        var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-
-        if ($class in replacement) icon.attr('class', 'ui-icon ' + replacement[$class]);
-    })
-}
-
-function enableTooltips(table) {
-    $('.navtable .ui-pg-button').tooltip({ container: 'body' });
-    $(table).find('.ui-pg-div').tooltip({ container: 'body' });
-}
-
-//var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
-
-$(document).one('ajaxloadstart.page', function (e) {
-    $(grid_selector).jqGrid('GridUnload');
-    $('.ui-jqdialog').remove();
-});
-
-//jqGrid Required Methods Ends here
 
 $('[data-rel=popover]').popover({ container: 'body' });
 (function () {
@@ -631,6 +507,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.pickupRequest.notification.push($scope.notification);
         $scope.valResult = {};
         $scope.sendForm = function () {
+            $("#veil").show();
+            $("#feedLoading").show();
             if ($scope.PickupForm.$valid) {
                 $http({
                     url: virtualDir.AdminURL + '/Shipment/PickupRequest',
@@ -640,12 +518,35 @@ $('[data-rel=popover]').popover({ container: 'body' });
                     dataType: "json"
                 })
                     .success(function (data, status, headers, config) {
+                        $("#veil").hide();
+                        $("#feedLoading").hide();
                         $scope.message = data;
                         $("#divfrm").hide();
                         $("#divbtn").hide();
-                        //alert(data);
-                        //window.location.href = "/User/Home/ViewAddress";
+                        bootbox.dialog({
+                            message: data,
+                            buttons: {
+                                "success": {
+                                    "label": "OK",
+                                    "className": "btn-sm btn-primary",
+                                    callback: function () {
+                                        window.location.href = "/Shipment/ViewPickup";
+                                    }
+                                }
+                            }
+                        });
                     }).error(function (data, status, headers, config) {
+                        $("#veil").hide();
+                        $("#feedLoading").hide();
+                        bootbox.dialog({
+                            message: data,
+                            buttons: {
+                                "success": {
+                                    "label": "OK",
+                                    "className": "btn-sm btn-primary"
+                                }
+                            }
+                        });
                     });
             }
             //if ($scope.PickupForm.$invalid) { $scope.message = "Please check required fields." }
@@ -753,7 +654,10 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.contact = addressModels.Address;
         $scope.contact = null;
         $scope.contact = { AddressType: null, ShortName: null, Company: null, FirstName: null, LastName: null, Phone1: null, Phone2: null, Fax: null, Email: null, CountryId: null, PostalCode: null, Division: null, City: null, Address1: null, Address2: null, Address3: null, Address1Label: "Address Line 1", Address2Label: "Address Line 2", isAddress3Visible: true, CountryCode: null };
+
         //HTTP REQUEST BELOW
+        $("#veil").show();
+        $("#feedLoading").show();
         $http({
             method: 'GET',
             url: virtualDir.AdminURL + '/User/Home/Country',
@@ -772,10 +676,19 @@ $('[data-rel=popover]').popover({ container: 'body' });
             }
             else {
                 $scope.Country = (JSON.parse(data));
-                //  $scope.message = 'Login Successfully';
+                $("#veil").hide();
+                $("#feedLoading").hide();
             }
         }).error(function (data, status, headers, config) {
-            $scope.message = 'Country url is not valid';
+            bootbox.dialog({
+                message: "Country URL is invalid!",
+                buttons: {
+                    "success": {
+                        "label": "OK",
+                        "className": "btn-sm btn-primary"
+                    }
+                }
+            });
         });
 
         $scope.valResult = {};
@@ -803,6 +716,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
         // function to submit the form after all validation has occurred
         $scope.submitForm = function () {
             if ($scope.AddressBook.$valid) {
+                $("#veil").show();
+                $("#feedLoading").show();
                 $http({
                     url: virtualDir.AdminURL + '/User/Home/AddressBook',
                     method: "POST",
@@ -812,8 +727,18 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 })
                 .success(function (data, status, headers, config) {
                     $scope.message = data;
-
-                    window.location.href = "/User/Home/ViewAddress";
+                    bootbox.dialog({
+                        message: "Thank you! Your information was successfully saved!",
+                        buttons: {
+                            "success": {
+                                "label": "OK",
+                                "className": "btn-sm btn-primary",
+                                callback: function () {
+                                    window.location.href = "/User/ViewAddress";
+                                }
+                            }
+                        }
+                    });
                 }).error(function (data, status, headers, config) {
                     alert(data);
                 });
@@ -851,6 +776,10 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 }
                 else {
                     $scope.States = JSON.parse(data);
+
+                    if (JSON.parse(data).length == 0)
+                        $scope.States = [{ "Id": 0, "CountryId": "a", "DivisionType": 1, "Code": "a", "Name": "Others", "LocalName": "", "Detail": "", "Created": "2015-09-01T00:00:00", "Status": 0 }];
+
                     //  $scope.message = 'Login Successfully';
                 }
             }).error(function (data, status, headers, config) {
@@ -879,7 +808,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
     // create angular controller
     validationApp.controller('ViewAddressController', function ($scope, $http, virtualDir) {
         $scope.message = '';
-
+        $("#veil").show();
+        $("#feedLoading").show();
         $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             $('td:eq(2)', nRow).bind('click', function () {
                 $scope.$apply(function () {
@@ -950,9 +880,20 @@ $('[data-rel=popover]').popover({ container: 'body' });
                     str += data.errors[error] + '\n';
                 }
                 $scope.message = str;
+                bootbox.dialog({
+                    message: str,
+                    buttons: {
+                        "success": {
+                            "label": "OK",
+                            "className": "btn-sm btn-primary"
+                        }
+                    }
+                });
             }
             else {
                 $scope.datasrc = JSON.parse(data).Result;
+                $("#veil").hide();
+                $("#feedLoading").hide();
             }
         }).error(function (data, status, headers, config) {
             $scope.message = 'Unexpected Error';
@@ -963,6 +904,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
     var app = angular.module('mainApp');
     // create angular controller
     app.controller('ViewPickupController', function ($scope, $http, virtualDir) {
+        $("#veil").show();
+        $("#feedLoading").show();
         $scope.message = '';
         $scope.datasrc = '';
         $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
@@ -1050,6 +993,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
             }
             else {
                 $scope.datasrc = JSON.parse(data);
+                $("#veil").hide();
+                $("#feedLoading").hide();
             }
         }).error(function (data, status, headers, config) {
             $scope.message = 'Unexpected Error';
@@ -1102,6 +1047,20 @@ $('[data-rel=popover]').popover({ container: 'body' });
     app.controller('shipmentsController', function (shippingModels, $scope, $http, virtualDir) {
         $scope.Shipments = shippingModels.Shipment;
         $scope.Parcel = shippingModels.Shipment.Parcel;
+
+        //$scope.Vendors; = new Array();
+        $http({
+            method: 'GET',
+            url: virtualDir.AdminURL + '/Shipment/GetAllVendor',
+            headers: {
+                'RequestVerificationToken': $scope.antiForgeryToken
+            }
+        }).success(function (data, status, headers, config) {
+            $scope.message = '';
+            //$scope.Vendors.push((JSON.parse(data)));
+            $scope.Vendors = (JSON.parse(data));
+        });
+
         $scope.Address = new Array();
         var selectedShipperAddress = null;
         var item =
@@ -1255,7 +1214,6 @@ $('[data-rel=popover]').popover({ container: 'body' });
             }
         }).success(function (data, status, headers, config) {
             $scope.message = '';
-            $scope.loading = true;
             if (data.success == false) {
                 var str = '';
                 for (var error in data.errors) {

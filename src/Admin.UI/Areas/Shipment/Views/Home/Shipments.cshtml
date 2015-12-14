@@ -11,7 +11,7 @@
         </label>
         <div class="col-sm-9">
             <select name="vendortype" ng-model="vendor.VendorType"
-                    data-ng-options="vendor.Id as vendor.Name for vendor in Vendors track by vendor.Id" class="col-xs-10 col-sm-7" ng-dropdown></select>
+                    data-ng-options="vendor.Id as vendor.Name for vendor in Vendors track by vendor.Id" class="col-xs-10 col-sm-7" ng-dropdown required></select>
             <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentcarrier.vendortype.$error.required">
                 Carrier is required.
             </span>

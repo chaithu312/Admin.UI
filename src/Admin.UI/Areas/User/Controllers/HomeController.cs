@@ -267,8 +267,8 @@ namespace Admin.UI.UserArea
         {
             var client = new HttpClient();
             string strPostData = "orderby=Name&sortdir=ASC";
-            //var result = client.GetStringAsync(Constants.Profile + "Country?" + strPostData).Result;
-            var result = client.GetStringAsync(Constants.Profile + "Country").Result;
+            var result = client.GetStringAsync(Constants.Profile + "Country?" + strPostData).Result;
+            //var result = client.GetStringAsync(Constants.Profile + "Country").Result;
             return Json(result);
         }
 

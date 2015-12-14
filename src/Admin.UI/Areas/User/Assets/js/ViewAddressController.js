@@ -3,7 +3,8 @@
     // create angular controller
     validationApp.controller('ViewAddressController', function ($scope, $http, virtualDir) {
         $scope.message = '';
-
+        $("#veil").show();
+        $("#feedLoading").show();
         $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             $('td:eq(2)', nRow).bind('click', function () {
                 $scope.$apply(function () {
@@ -74,9 +75,20 @@
                     str += data.errors[error] + '\n';
                 }
                 $scope.message = str;
+                bootbox.dialog({
+                    message: str,
+                    buttons: {
+                        "success": {
+                            "label": "OK",
+                            "className": "btn-sm btn-primary"
+                        }
+                    }
+                });
             }
             else {
                 $scope.datasrc = JSON.parse(data).Result;
+                $("#veil").hide();
+                $("#feedLoading").hide();
             }
         }).error(function (data, status, headers, config) {
             $scope.message = 'Unexpected Error';

@@ -32,7 +32,10 @@
         $scope.contact = addressModels.Address;
         $scope.contact = null;
         $scope.contact = { AddressType: null, ShortName: null, Company: null, FirstName: null, LastName: null, Phone1: null, Phone2: null, Fax: null, Email: null, CountryId: null, PostalCode: null, Division: null, City: null, Address1: null, Address2: null, Address3: null, Address1Label: "Address Line 1", Address2Label: "Address Line 2", isAddress3Visible: true, CountryCode: null };
+
         //HTTP REQUEST BELOW
+        $("#veil").show();
+        $("#feedLoading").show();
         $http({
             method: 'GET',
             url: virtualDir.AdminURL + '/User/Home/Country',
@@ -51,10 +54,19 @@
             }
             else {
                 $scope.Country = (JSON.parse(data));
-                //  $scope.message = 'Login Successfully';
+                $("#veil").hide();
+                $("#feedLoading").hide();
             }
         }).error(function (data, status, headers, config) {
-            $scope.message = 'Country url is not valid';
+            bootbox.dialog({
+                message: "Country URL is invalid!",
+                buttons: {
+                    "success": {
+                        "label": "OK",
+                        "className": "btn-sm btn-primary"
+                    }
+                }
+            });
         });
 
         $scope.valResult = {};
@@ -82,6 +94,8 @@
         // function to submit the form after all validation has occurred
         $scope.submitForm = function () {
             if ($scope.AddressBook.$valid) {
+                $("#veil").show();
+                $("#feedLoading").show();
                 $http({
                     url: virtualDir.AdminURL + '/User/Home/AddressBook',
                     method: "POST",
@@ -91,8 +105,18 @@
                 })
                 .success(function (data, status, headers, config) {
                     $scope.message = data;
-
-                    window.location.href = "/User/Home/ViewAddress";
+                    bootbox.dialog({
+                        message: "Thank you! Your information was successfully saved!",
+                        buttons: {
+                            "success": {
+                                "label": "OK",
+                                "className": "btn-sm btn-primary",
+                                callback: function () {
+                                    window.location.href = "/User/ViewAddress";
+                                }
+                            }
+                        }
+                    });
                 }).error(function (data, status, headers, config) {
                     alert(data);
                 });
@@ -130,6 +154,10 @@
                 }
                 else {
                     $scope.States = JSON.parse(data);
+
+                    if (JSON.parse(data).length == 0)
+                        $scope.States = [{ "Id": 0, "CountryId": "a", "DivisionType": 1, "Code": "a", "Name": "Others", "LocalName": "", "Detail": "", "Created": "2015-09-01T00:00:00", "Status": 0 }];
+
                     //  $scope.message = 'Login Successfully';
                 }
             }).error(function (data, status, headers, config) {

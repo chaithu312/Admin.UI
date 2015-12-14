@@ -3,6 +3,20 @@
     app.controller('shipmentsController', function (shippingModels, $scope, $http, virtualDir) {
         $scope.Shipments = shippingModels.Shipment;
         $scope.Parcel = shippingModels.Shipment.Parcel;
+
+        //$scope.Vendors; = new Array();
+        $http({
+            method: 'GET',
+            url: virtualDir.AdminURL + '/Shipment/GetAllVendor',
+            headers: {
+                'RequestVerificationToken': $scope.antiForgeryToken
+            }
+        }).success(function (data, status, headers, config) {
+            $scope.message = '';
+            //$scope.Vendors.push((JSON.parse(data)));
+            $scope.Vendors = (JSON.parse(data));
+        });
+
         $scope.Address = new Array();
         var selectedShipperAddress = null;
         var item =
@@ -156,7 +170,6 @@
             }
         }).success(function (data, status, headers, config) {
             $scope.message = '';
-            $scope.loading = true;
             if (data.success == false) {
                 var str = '';
                 for (var error in data.errors) {

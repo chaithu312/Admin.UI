@@ -17,6 +17,7 @@
                         'Assets/js/angular-cookies.js',
                         'Assets/js/angular-resource.js',
                         'Assets/ace/js/bootstrap.js',
+                        'Assets/ace/js/bootbox.js',
                         'Assets/ace/js/ace-extra.js',
                         'Assets/ace/js/ace/elements.scroller.js',
                         'Assets/ace/js/ace/elements.colorpicker.js',
@@ -64,18 +65,6 @@
                         'Assets/ace/js/dataTables/jquery.dataTables.bootstrap.js',
                         'Assets/ace/js/dataTables/extensions/TableTools/js/dataTables.tableTools.js',
                         'Assets/ace/js/dataTables/extensions/ColVis/js/dataTables.colVis.js'],
-
-                    'wwwroot/assets/js/jqGrid.js':
-                        [
-
-                            'Assets/js/jquery-1.9.1.min.js',
-                            'Assets/js/jquery-ui-1.10.1.custom.min.js',
-                            'Assets/js/jquery.jqGrid.js',
-                            'Assets/ace/js/jqGrid/i18n/grid.locale-en.js',
-                            'Assets/ace/js/jqGrid/jquery.jqGrid.src.js',
-
-                            //'Assets/ace/js/jqGrid/jquery.jqGrid.src.js',
-                        ]
                 }
             },
             ie8: {

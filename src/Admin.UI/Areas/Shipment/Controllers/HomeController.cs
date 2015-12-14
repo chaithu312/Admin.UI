@@ -10,6 +10,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web.Script.Serialization;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -280,23 +281,62 @@ namespace Admin.UI.ShipmentArea
                     vendorSetting.AccountId = Constants.accountId;
                     vendorSetting.DomainKey = Constants.DomainKey;
                     vendorSetting.VendorId = (long)vendorSetting.VendorType;
-
+                    if (vendorSetting.VendorType == VendorType.DHL)
+                    {
+                        vendorSetting.Detail = "{ThirdPartyAccount:" + vendorSetting.DHLAcc + "}";
+                    }
+                    else if (vendorSetting.VendorType == VendorType.Endicia)
+                    {
+                        vendorSetting.Detail = "{AccountNumber:" + vendorSetting.EndiciaAcc + "}";
+                    }
+                    else if (vendorSetting.VendorType == VendorType.FedEx)
+                    {
+                        vendorSetting.Detail = "{AccountNumber:" + vendorSetting.FedexAcc + ",FedexMeter:" + vendorSetting.FedexMeter + ",FedexPayAcc:" + vendorSetting.FedexPayAcc + "}";
+                    }
+                    else if (vendorSetting.VendorType == VendorType.UPS)
+                    {
+                        vendorSetting.Detail = "{UPSLicenseNo:" + vendorSetting.UPSLicenseNo + ",UPSUserName:" + vendorSetting.UPSUserName + ",UPSpassword:" + vendorSetting.UPSpassword + ",UPSAcc:" + vendorSetting.UPSAcc + "}";
+                    }
+                    else
+                    {
+                        vendorSetting.Detail = "{}";
+                    }
                     vendorSetting.Expiration = DateTime.ParseExact(vendorSetting.Expiration, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
                     vendorSetting.Effective = DateTime.ParseExact(vendorSetting.Effective, "dd-MM-yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
-                    string url = Constants.APIURL + "VendorSetting/Post";
+                    string url = Constants.APIURL + "VendorSetting/Vendor";
 
                     object result = string.Empty;
+                    Vendor objVendor = new Vendor();
+                    objVendor.AccountId = vendorSetting.AccountId;
+                    objVendor.DomainKey = vendorSetting.DomainKey;
+                    objVendor.Name = vendorSetting.Name;
+                    objVendor.VendorId = (long)vendorSetting.VendorType;
 
-                    using (var client = new WebClient())
+                    objVendor.Detail = vendorSetting.Detail;
+                    objVendor.Expiration = vendorSetting.Expiration;
+                    objVendor.Effective = vendorSetting.Effective;
+
+                    string serialisedData = JsonConvert.SerializeObject(objVendor);
+
+                    HttpWebResponse response = ClientHttp.PostAsync(url, serialisedData);
+
+                    string responseString = string.Empty;
+                    if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        client.Headers[HttpRequestHeader.ContentType] = Constants.ContentType;
-
-                        string serialisedData = JsonConvert.SerializeObject(vendorSetting);
-
-                        var response = client.UploadString(url, serialisedData);
-
-                        result = JsonConvert.DeserializeObject(response);
+                        Stream responseStream = response.GetResponseStream();
+                        responseString = new StreamReader(responseStream).ReadToEnd();
+                        message = responseString;
                     }
+                    //using (var client = new WebClient())
+                    //{
+                    //    client.Headers[HttpRequestHeader.ContentType] = Constants.ContentType;
+
+                    //    string serialisedData = JsonConvert.SerializeObject(vendorSetting);
+
+                    //    var response = client.UploadString(url, serialisedData);
+
+                    //    result = JsonConvert.DeserializeObject(response);
+                    //}
                 }
             }
             catch (Exception ex)
@@ -305,6 +345,17 @@ namespace Admin.UI.ShipmentArea
             }
 
             return Json(message);
+        }
+
+        [HttpGet]
+        public JsonResult GetAllVendor()
+        {
+            string strPostData = "accountId=2&orderby=Name&sortdir=ASC";
+            string url = Constants.APIURL + "/vendorsetting/GetVendorByAccountId?" + strPostData;
+            var client = new HttpClient();
+            var result = client.GetStringAsync(url).Result;
+
+            return Json(result);
         }
 
         public IActionResult AWBWithprice()
@@ -454,7 +505,12 @@ namespace Admin.UI.ShipmentArea
                     }
 
                     if (errorResponse == null)
-                        return Json("PRN:-" + routes_list.ConfirmationNumber);
+                    {
+                        if (routes_list.ConfirmationNumber == null)
+                            return Json("Error:-" + routes_list.ErrorMessage);
+                        else
+                            return Json("PRN:-" + routes_list.ConfirmationNumber);
+                    }
 
                     if (routes_list.ErrorMessage != null && !routes_list.ErrorMessage.Contains("xml"))
                     {

@@ -199,6 +199,8 @@
         $scope.pickupRequest.notification.push($scope.notification);
         $scope.valResult = {};
         $scope.sendForm = function () {
+            $("#veil").show();
+            $("#feedLoading").show();
             if ($scope.PickupForm.$valid) {
                 $http({
                     url: virtualDir.AdminURL + '/Shipment/PickupRequest',
@@ -208,12 +210,35 @@
                     dataType: "json"
                 })
                     .success(function (data, status, headers, config) {
+                        $("#veil").hide();
+                        $("#feedLoading").hide();
                         $scope.message = data;
                         $("#divfrm").hide();
                         $("#divbtn").hide();
-                        //alert(data);
-                        //window.location.href = "/User/Home/ViewAddress";
+                        bootbox.dialog({
+                            message: data,
+                            buttons: {
+                                "success": {
+                                    "label": "OK",
+                                    "className": "btn-sm btn-primary",
+                                    callback: function () {
+                                        window.location.href = "/Shipment/ViewPickup";
+                                    }
+                                }
+                            }
+                        });
                     }).error(function (data, status, headers, config) {
+                        $("#veil").hide();
+                        $("#feedLoading").hide();
+                        bootbox.dialog({
+                            message: data,
+                            buttons: {
+                                "success": {
+                                    "label": "OK",
+                                    "className": "btn-sm btn-primary"
+                                }
+                            }
+                        });
                     });
             }
             //if ($scope.PickupForm.$invalid) { $scope.message = "Please check required fields." }

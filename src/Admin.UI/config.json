@@ -3,11 +3,11 @@
     "SiteTitle": "ShipOS Administration"
   },
   "CDN": {
-    "ProfileEndpoint": "http://192.168.1.30/Profile/profile/",
-    "RegisterEndpoint": "http://192.168.1.30/ID/api/register/",
-    "IDServerEndpoint": "http://192.168.1.30/id/core/",
+    "ProfileEndpoint": "http://test.shipos.com/Profile/profile/",
+    "RegisterEndpoint": "http://test.shipos.com/ID/api/register/",
+    "IDServerEndpoint": "http://test.shipos.com/id/core/",
 
-    "ShippingEndpoint": "http://192.168.1.30/shipping/",
-    "VirtualDirectory": "/adminui"
+    "ShippingEndpoint": "http://test.shipos.com/shipping/",
+    "VirtualDirectory": ""
   }
 }
