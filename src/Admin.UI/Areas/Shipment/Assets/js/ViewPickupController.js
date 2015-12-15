@@ -91,7 +91,19 @@
                 $scope.message = str;
             }
             else {
-                $scope.datasrc = JSON.parse(data);
+                var viewpickup = JSON.parse(data);
+                var lim = viewpickup.length;
+                for (var i = 0; i < lim; i++) {
+                    if (viewpickup[i].Destination == 1) {
+                        viewpickup[i].Destination = 'Domestic';
+                    } else {
+                        if (viewpickup[i].Destination == 2) {
+                            viewpickup[i].Destination = 'International';
+                        } else { viewpickup[i].Destination = 'International multiple packages with mixed destinations' }
+                    }
+                }
+
+                $scope.datasrc = viewpickup;
                 $("#veil").hide();
                 $("#feedLoading").hide();
             }

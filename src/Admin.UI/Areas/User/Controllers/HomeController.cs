@@ -1,6 +1,7 @@
 ﻿using Admin.UI.Areas.User.Models;
 using Admin.UI.Filter;
 using Admin.UI.Utility;
+using Admin.UI.Utility.Enumerations;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
 using Newtonsoft.Json;
@@ -124,6 +125,7 @@ namespace Admin.UI.UserArea
             return View();
         }
 
+        [CustomAction]
         public IActionResult ChangePassword(TokenResponse response)
         {
             var client = new HttpClient();
@@ -135,6 +137,7 @@ namespace Admin.UI.UserArea
         }
 
         [HttpPost]
+        [CustomAction]
         public JsonResult ChangePassword(ChangePassword login)
         {
             return Json("failed");
@@ -222,7 +225,7 @@ namespace Admin.UI.UserArea
                 if (register != null)
                 {
                     register.AccountId = 2;
-                    register.Status = 1;
+                    register.Status = Status.Active;
                     register.Created = DateTime.Now;
                     register.Name = register.FirstName + " " + register.LastName;
                 }
@@ -277,18 +280,21 @@ namespace Admin.UI.UserArea
             return Json(result);
         }
 
+        [CustomAction]
         public IActionResult ViewAddress()
         {
             return View();
         }
 
         [HttpGet]
+        [CustomAction]
         public JsonResult GetAllAddress()
         {
             try
             {
                 var client = new HttpClient();
-                string url = Constants.Profile + "Address/";
+
+                string url = Constants.Profile + "Address/GetAllAddress?AccountID=2";
 
                 HttpWebResponse response = ClientHttp.GetAsync(url);
 
@@ -308,11 +314,11 @@ namespace Admin.UI.UserArea
                     Phone1 = (string)p["Phone1"].ToString(),
                     EMail = (string)p["EMail"].ToString(),
                     AddressType = (Utility.Enumerations.AddressTypes)(int)p["AddressType"],
-                    Status = (sbyte)p["Status"],
-                    Detail = "<a href='/User/AddressBook/" + (string)p["Id"] + "'>Edit</a> <a href = '/User/AddressBookDelete/" + (string)p["Id"] + "' > Delete </a> "
+                    Status = (Utility.Enumerations.Status)(int)p["Status"],
+                    Detail = "<a href='/adminui/User/AddressBook/" + (string)p["Id"] + "'>Edit</a> <a href = '/adminui/User/AddressBookDelete/" + (string)p["Id"] + "' > Delete </a> "
                 }).ToList();
 
-                return Json(JsonConvert.SerializeObject(viewAddress));
+                return Json(viewAddress);
             }
             catch (Exception ex)
             {
@@ -321,6 +327,7 @@ namespace Admin.UI.UserArea
         }
 
         [HttpGet]
+        [CustomAction]
         public JsonResult DeleteAddress(string selectedIds)
         {
             selectedIds = selectedIds.TrimEnd(new char[] { ',' });
@@ -341,6 +348,14 @@ namespace Admin.UI.UserArea
             }
 
             return Json(result);
+        }
+
+        public IActionResult LogOut()
+        {
+            HttpContext.Session.Clear();
+            HttpContext.Session.Remove("AccessToken");
+
+            return RedirectToAction("Index", "Home", new { area = "User" });
         }
     }
 }

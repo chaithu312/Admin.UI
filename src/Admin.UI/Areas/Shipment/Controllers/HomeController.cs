@@ -1,4 +1,5 @@
 ﻿using Admin.UI.Areas.Shipment.Models;
+using Admin.UI.Filter;
 using Admin.UI.Utility;
 using Admin.UI.Utility.Enumerations;
 using Microsoft.AspNet.Mvc;
@@ -20,6 +21,7 @@ namespace Admin.UI.ShipmentArea
     [Area("Shipment")]
     public class HomeController : Controller
     {
+        [CustomAction]
         public IActionResult Shipments()
         {
             return View();
@@ -31,6 +33,7 @@ namespace Admin.UI.ShipmentArea
         }
 
         [HttpPost]
+        [CustomAction]
         public JsonResult Shipments([FromBody] Shipments shipment)
         {
             LabelImageResponse labelresponse = null;
@@ -84,6 +87,7 @@ namespace Admin.UI.ShipmentArea
             return Json(labelresponse);
         }
 
+        [CustomAction]
         public IActionResult VendorSetting()
         {
             return View();
@@ -210,7 +214,7 @@ namespace Admin.UI.ShipmentArea
 
             register.FirstName = shipment.Name;
             register.AccountId = 2;
-            register.Status = 1;
+            register.Status = Utility.Enumerations.Status.Active;
             register.Created = DateTime.Now;
             register.AddressType = AddressTypes.Sender;
             register.ShortName = shipment.AddressCaption;
@@ -243,7 +247,7 @@ namespace Admin.UI.ShipmentArea
 
             register.FirstName = shipment.Rname;
             register.AccountId = 2;
-            register.Status = 1;
+            register.Status = Utility.Enumerations.Status.Active;
             register.Created = DateTime.Now;
             register.AddressType = AddressTypes.Recipient;
             register.ShortName = shipment.RaddressCaption;
@@ -271,6 +275,7 @@ namespace Admin.UI.ShipmentArea
         }
 
         [HttpPost]
+        [CustomAction]
         public JsonResult VendorSetting([FromBody]VendorSetting vendorSetting)
         {
             var message = Constants.message;
@@ -349,6 +354,7 @@ namespace Admin.UI.ShipmentArea
         }
 
         [HttpGet]
+        [CustomAction]
         public JsonResult GetAllVendor()
         {
             string strPostData = "accountId=2&orderby=Name&sortdir=ASC";
@@ -359,17 +365,20 @@ namespace Admin.UI.ShipmentArea
             return Json(result);
         }
 
+        [CustomAction]
         public IActionResult AWBWithprice()
         {
             return View();
         }
 
+        [CustomAction]
         public IActionResult PickupRequest()
         {
             return View();
         }
 
         [HttpPost]
+        [CustomAction]
         public JsonResult PickupRequest([FromBody]PickupRequest pickupRequest)
         {
             try
@@ -392,7 +401,7 @@ namespace Admin.UI.ShipmentArea
 
                     register.Name = pickupRequest.ContactName;
                     register.AccountId = 2;
-                    register.Status = 1;
+                    register.Status = Utility.Enumerations.Status.Active;
                     register.Created = DateTime.Now;
                     register.AddressType = AddressTypes.Recipient;
                     register.ShortName = pickupRequest.AddressCaption;
@@ -531,10 +540,12 @@ namespace Admin.UI.ShipmentArea
             }
         }
 
+        [CustomAction]
         public ActionResult ViewPickup()
         { return View(); }
 
         [HttpGet]
+        [CustomAction]
         public JsonResult GetAllPickup()
         {
             string strPostData = "accountId=2";
@@ -562,7 +573,7 @@ namespace Admin.UI.ShipmentArea
                 AdditionalsInstructions = (string)p["Instructions"],
                 PickUpNotificationPersonalizedMessage = (string)p["Detail"],
                 RatePickupIndicator = (string)p["Confirmation"],
-                RequestID = "<a href='/Shipment/PickUpRequest/" + (string)p["Id"] + "'>Edit</a> <a href = '/Shipment/PickUpRequestDelete/" + (string)p["Id"] + "' > Delete </a> "
+                RequestID = "<a href='/adminui/Shipment/PickUpRequest/" + (string)p["Id"] + "'>Edit</a> <a href = '/adminui/Shipment/PickUpRequestDelete/" + (string)p["Id"] + "' > Delete </a> "
             }).ToList();
 
             var result = JsonConvert.SerializeObject(viewpickup);
@@ -571,17 +582,20 @@ namespace Admin.UI.ShipmentArea
             return Json(result);
         }
 
+        [CustomAction]
         public JsonResult DeletePickup(string selectedIds)
         {
             return Json("Deleted Successfully");
         }
 
+        [CustomAction]
         public IActionResult Tracking()
         {
             return View();
         }
 
         [HttpGet]
+        [CustomAction]
         public JsonResult GetAddressById(long addressType)
         {
             string url = Constants.APIURL + "MasterApi/Address/Id";

@@ -7,6 +7,7 @@ namespace Admin.UI.Controllers
     public class HomeController : Controller
     {
         private IOptions<AppSettings> AppSettings;
+        private static readonly object filterContext;
 
         public HomeController(IOptions<AppSettings> appSettings)
         {
@@ -25,7 +26,6 @@ namespace Admin.UI.Controllers
 
         public IActionResult Dashboard()
         {
-            var claim = HttpContext.User?.FindFirst("access_token");
             return View();
         }
 

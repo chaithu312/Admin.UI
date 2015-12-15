@@ -358,7 +358,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.Address.push(item);
         $http({
             method: 'GET',
-            url: virtualDir.AdminURL + '/User/Home/GetAllAddress',
+            url: virtualDir.AdminURL + '/User/GetAllAddress',
             //data: $scope.SelectedCountry.CountryCode,
             //params: { countryId: $scope.contact.CountryId },
             headers: {
@@ -571,6 +571,49 @@ $('[data-rel=popover]').popover({ container: 'body' });
             else {
                 return false;
             }
+        }
+
+        $scope.GetValue = function (country) {
+            var countryId = $scope.pickupRequest.CountryId;
+
+            var CountryName = $.grep($scope.Country, function (country) {
+                return country.Id == countryId;
+            })[0].Name;
+            $scope.SelectedCountry = {};
+            $scope.SelectedCountry.Id = countryId;
+            $scope.SelectedCountry.Name = CountryName;
+            //Getting States list using HTTP Request from controller
+
+            $http({
+                method: 'GET',
+                url: virtualDir.AdminURL + '/User/State',
+                //data: $scope.SelectedCountry.CountryCode,
+                params: { countryId: $scope.pickupRequest.CountryId },
+                headers: {
+                    'RequestVerificationToken': $scope.antiForgeryToken
+                }
+            }).success(function (data, status, headers, config) {
+                $scope.message = '';
+                if (data.success == false) {
+                    var str = '';
+                    for (var error in data.errors) {
+                        str += data.errors[error] + '\n';
+                    }
+                    $scope.message = str;
+                }
+                else {
+                    $scope.States = JSON.parse(data);
+
+                    if (JSON.parse(data).length == 0)
+                        $scope.States = [{ "Id": 0, "CountryId": "a", "DivisionType": 1, "Code": "a", "Name": "Others", "LocalName": "", "Detail": "", "Created": "2015-09-01T00:00:00", "Status": 0 }];
+
+                    //  $scope.message = 'Login Successfully';
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.message = 'state url is not valid';
+            });
+
+            //Ends here getting request of Http for getting states;
         }
     });
 })();
@@ -836,13 +879,13 @@ $('[data-rel=popover]').popover({ container: 'body' });
             "mDataProp": "Division",
             "aTargets": [3]
         }, {
-            "mDataProp": "PostalCode",
+            "mDataProp": "CountryId",
             "aTargets": [4]
         }, {
-            "mDataProp": "Phone1",
+            "mDataProp": "PostalCode",
             "aTargets": [5]
         }, {
-            "mDataProp": "EMail",
+            "mDataProp": "Phone1",
             "aTargets": [6]
         }, {
             "mDataProp": "AddressType",
@@ -850,6 +893,9 @@ $('[data-rel=popover]').popover({ container: 'body' });
         }, {
             "mDataProp": "Status",
             "aTargets": [8]
+        }, {
+            "mDataProp": "Detail",
+            "aTargets": [9]
         }];
 
         $scope.overrideOptions = {
@@ -891,7 +937,18 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 });
             }
             else {
-                $scope.datasrc = JSON.parse(data).Result;
+                var lim = data.length;
+                for (var i = 0; i < lim; i++) {
+                    if (data[i].AddressType == 0) {
+                        data[i].AddressType = 'Recipient';
+                    } else { data[i].AddressType = 'Sender'; }
+
+                    if (data[i].Status == 0) {
+                        data[i].Status = 'De-Active';
+                    } else { data[i].Status = 'Active'; }
+                }
+
+                $scope.datasrc = data;
                 $("#veil").hide();
                 $("#feedLoading").hide();
             }
@@ -993,7 +1050,19 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 $scope.message = str;
             }
             else {
-                $scope.datasrc = JSON.parse(data);
+                var viewpickup = JSON.parse(data);
+                var lim = viewpickup.length;
+                for (var i = 0; i < lim; i++) {
+                    if (viewpickup[i].Destination == 1) {
+                        viewpickup[i].Destination = 'Domestic';
+                    } else {
+                        if (viewpickup[i].Destination == 2) {
+                            viewpickup[i].Destination = 'International';
+                        } else { viewpickup[i].Destination = 'International multiple packages with mixed destinations' }
+                    }
+                }
+
+                $scope.datasrc = viewpickup;
                 $("#veil").hide();
                 $("#feedLoading").hide();
             }
@@ -1077,12 +1146,13 @@ $('[data-rel=popover]').popover({ container: 'body' });
         var selectedShipperAddress = null;
         var item =
             {
-                Edit: "<a href='#'>Edit</a>",
+                Id: 0,
+                ShortName: "New Address",
             };
         $scope.Address.push(item);
         $http({
             method: 'GET',
-            url: virtualDir.AdminURL + '/User/Home/GetAllAddress',
+            url: virtualDir.AdminURL + '/User/GetAllAddress',
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
             }
@@ -1098,7 +1168,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         });
         $http({
             method: 'GET',
-            url: virtualDir.AdminURL + '/User/Home/Division',
+            url: virtualDir.AdminURL + '/User/Division',
             //data: $scope.SelectedCountry.CountryCode,
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
@@ -1218,7 +1288,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
         $http({
             method: 'GET',
-            url: virtualDir.AdminURL + '/User/Home/Country',
+            url: virtualDir.AdminURL + '/User/Country',
             // data: $scope.person,
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
@@ -1237,7 +1307,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
                 $http({
                     method: 'GET',
-                    url: virtualDir.AdminURL + '/User/Home/Division',
+                    url: virtualDir.AdminURL + '/User/Division',
                     //data: $scope.SelectedCountry.CountryCode,
                     headers: {
                         'RequestVerificationToken': $scope.antiForgeryToken
@@ -1309,7 +1379,6 @@ $('[data-rel=popover]').popover({ container: 'body' });
                     }).error(function (data, status, headers, config) {
                     });
             }
-            if ($scope.shipmentsForm.$invalid) { $scope.message = "Please check required fields." }
         };
     });
 

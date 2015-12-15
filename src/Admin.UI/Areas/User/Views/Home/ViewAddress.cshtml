@@ -8,8 +8,8 @@
         <div class="center">
 
             <form name="AddressBook" data-ng-controller="ViewAddressController" novalidate>
-                <div id="errorMessages" class="error">{{message}}</div>
-  <div class="pull-right tableTools-container">
+
+                <div class="pull-right tableTools-container">
                     <a class="btn-new-mail" href="/adminui/User/AddressBook">
                         <span class="btn btn-purple no-border">
                             <i class="ace-icon fa  bigger-130"></i>
@@ -36,6 +36,7 @@
                                 <th style="width:100px">Email</th>
                                 <th style="width:100px">Address Type</th>
                                 <th style="width:100px">Status</th>
+                                <th style="width:100px"></th>
                             </tr>
                         </thead>
                     </table>
@@ -43,6 +44,7 @@
             </form>
         </div>
     </div>
+    <div id="errorMessages" class="error">{{message}}</div>
 </div>
 
 <script type="text/javascript" src="~/assets/js/jquery.min.js"></script>

@@ -33,4 +33,7 @@ namespace Admin.UI.Utility.Enumerations
         Endicia,
         UPS
     }
+
+    public enum Status : byte
+    { Active = 1, DeActive = 0 }
 }

@@ -4,7 +4,6 @@
 }
 
 <form name="PickupForm" data-ng-submit="sendForm()" data-ng-controller="PickupRequestController" class="form-horizontal" role="form" novalidate>
-    <div id="errorMessages" class="error">{{message}}</div>
 
     <div class="form-group" ng-class="{ 'has-error':PickupForm.contactName.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">  Contact Name</label>
@@ -79,7 +78,7 @@
         </label>
         <div class="col-sm-9">
 
-            <input type="text" class="col-xs-10 col-sm-5" placeholder="" id="addressLine2" name="addressLine2" data-ng-model="pickupRequest.Address2" required>
+            <input type="text" class="col-xs-10 col-sm-5" placeholder="" id="addressLine2" name="addressLine2" data-ng-model="pickupRequest.Address2">
             <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.addressLine2.$error.required">
                 Address line2  is required.
             </span>
@@ -417,4 +416,5 @@
             </button>
         </div>
     </div>
+    <div id="errorMessages" ng-hide="" class="error">{{message}}</div>
 </form>

@@ -21,12 +21,13 @@
         var selectedShipperAddress = null;
         var item =
             {
-                Edit: "<a href='#'>Edit</a>",
+                Id: 0,
+                ShortName: "New Address",
             };
         $scope.Address.push(item);
         $http({
             method: 'GET',
-            url: virtualDir.AdminURL + '/User/Home/GetAllAddress',
+            url: virtualDir.AdminURL + '/User/GetAllAddress',
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
             }
@@ -42,7 +43,7 @@
         });
         $http({
             method: 'GET',
-            url: virtualDir.AdminURL + '/User/Home/Division',
+            url: virtualDir.AdminURL + '/User/Division',
             //data: $scope.SelectedCountry.CountryCode,
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
@@ -162,7 +163,7 @@
 
         $http({
             method: 'GET',
-            url: virtualDir.AdminURL + '/User/Home/Country',
+            url: virtualDir.AdminURL + '/User/Country',
             // data: $scope.person,
             headers: {
                 'RequestVerificationToken': $scope.antiForgeryToken
@@ -181,7 +182,7 @@
 
                 $http({
                     method: 'GET',
-                    url: virtualDir.AdminURL + '/User/Home/Division',
+                    url: virtualDir.AdminURL + '/User/Division',
                     //data: $scope.SelectedCountry.CountryCode,
                     headers: {
                         'RequestVerificationToken': $scope.antiForgeryToken
@@ -253,7 +254,6 @@
                     }).error(function (data, status, headers, config) {
                     });
             }
-            if ($scope.shipmentsForm.$invalid) { $scope.message = "Please check required fields." }
         };
     });
 

@@ -31,13 +31,13 @@
             "mDataProp": "Division",
             "aTargets": [3]
         }, {
-            "mDataProp": "PostalCode",
+            "mDataProp": "CountryId",
             "aTargets": [4]
         }, {
-            "mDataProp": "Phone1",
+            "mDataProp": "PostalCode",
             "aTargets": [5]
         }, {
-            "mDataProp": "EMail",
+            "mDataProp": "Phone1",
             "aTargets": [6]
         }, {
             "mDataProp": "AddressType",
@@ -45,6 +45,9 @@
         }, {
             "mDataProp": "Status",
             "aTargets": [8]
+        }, {
+            "mDataProp": "Detail",
+            "aTargets": [9]
         }];
 
         $scope.overrideOptions = {
@@ -86,7 +89,18 @@
                 });
             }
             else {
-                $scope.datasrc = JSON.parse(data).Result;
+                var lim = data.length;
+                for (var i = 0; i < lim; i++) {
+                    if (data[i].AddressType == 0) {
+                        data[i].AddressType = 'Recipient';
+                    } else { data[i].AddressType = 'Sender'; }
+
+                    if (data[i].Status == 0) {
+                        data[i].Status = 'De-Active';
+                    } else { data[i].Status = 'Active'; }
+                }
+
+                $scope.datasrc = data;
                 $("#veil").hide();
                 $("#feedLoading").hide();
             }

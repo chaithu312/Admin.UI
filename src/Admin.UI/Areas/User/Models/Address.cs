@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Admin.UI.Utility.Enumerations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Admin.UI.Utility.Enumerations;
 
 namespace Admin.UI.Areas.User.Models
 {
@@ -50,8 +50,6 @@ namespace Admin.UI.Areas.User.Models
 
         public DateTime Created { get; set; }
 
-        public sbyte Status { get; set; }
-
-        
+        public Status Status { get; set; }
     }
 }

@@ -50,7 +50,7 @@
         $scope.Address.push(item);
         $http({
             method: 'GET',
-            url: virtualDir.AdminURL + '/User/Home/GetAllAddress',
+            url: virtualDir.AdminURL + '/User/GetAllAddress',
             //data: $scope.SelectedCountry.CountryCode,
             //params: { countryId: $scope.contact.CountryId },
             headers: {
@@ -263,6 +263,49 @@
             else {
                 return false;
             }
+        }
+
+        $scope.GetValue = function (country) {
+            var countryId = $scope.pickupRequest.CountryId;
+
+            var CountryName = $.grep($scope.Country, function (country) {
+                return country.Id == countryId;
+            })[0].Name;
+            $scope.SelectedCountry = {};
+            $scope.SelectedCountry.Id = countryId;
+            $scope.SelectedCountry.Name = CountryName;
+            //Getting States list using HTTP Request from controller
+
+            $http({
+                method: 'GET',
+                url: virtualDir.AdminURL + '/User/State',
+                //data: $scope.SelectedCountry.CountryCode,
+                params: { countryId: $scope.pickupRequest.CountryId },
+                headers: {
+                    'RequestVerificationToken': $scope.antiForgeryToken
+                }
+            }).success(function (data, status, headers, config) {
+                $scope.message = '';
+                if (data.success == false) {
+                    var str = '';
+                    for (var error in data.errors) {
+                        str += data.errors[error] + '\n';
+                    }
+                    $scope.message = str;
+                }
+                else {
+                    $scope.States = JSON.parse(data);
+
+                    if (JSON.parse(data).length == 0)
+                        $scope.States = [{ "Id": 0, "CountryId": "a", "DivisionType": 1, "Code": "a", "Name": "Others", "LocalName": "", "Detail": "", "Created": "2015-09-01T00:00:00", "Status": 0 }];
+
+                    //  $scope.message = 'Login Successfully';
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.message = 'state url is not valid';
+            });
+
+            //Ends here getting request of Http for getting states;
         }
     });
 })();
