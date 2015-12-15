@@ -20,45 +20,46 @@
         };
 
         $scope.columnDefs = [{
-            "mDataProp": "Name",
+            "mDataProp": "ContactName",
             "aTargets": [0]
         }, {
             "mDataProp": "Phone",
             "aTargets": [1]
         }, {
-            "mDataProp": "EMail",
+            "mDataProp": "Address1",
             "aTargets": [2]
         }, {
-            "mDataProp": "Address1",
+            "mDataProp": "City",
             "aTargets": [3]
         }, {
-            "mDataProp": "City",
+            "mDataProp": "PickupFrom",
             "aTargets": [4]
         }, {
-            "mDataProp": "PickupFrom",
+            "mDataProp": "ReadyTime",
             "aTargets": [5]
         }, {
-            "mDataProp": "ReadyTime",
+            "mDataProp": "AvailableTime",
             "aTargets": [6]
         }, {
-            "mDataProp": "AvailableUntil",
+            "mDataProp": "TotalPieces",
             "aTargets": [7]
         }, {
-            "mDataProp": "TotalPieces",
+            "mDataProp": "Destination",
             "aTargets": [8]
         }, {
-            "mDataProp": "Destination",
+            "mDataProp": "AdditionalsInstructions",
             "aTargets": [9]
         }, {
-            "mDataProp": "Instructions",
+            "mDataProp": "PickUpNotificationPersonalizedMessage",
             "aTargets": [10]
         }, {
-            "mDataProp": "Detail",
+            "mDataProp": "RatePickupIndicator",
             "aTargets": [11]
-        }, {
-            "mDataProp": "Confirmation",
+        },
+        {
+            "mDataProp": "RequestID",
             "aTargets": [12]
-        }, ];
+        }];
 
         $scope.overrideOptions = {
             "bStateSave": true,

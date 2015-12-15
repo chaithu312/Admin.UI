@@ -30,7 +30,18 @@
                 })
                     .success(function (data, status, headers, config) {
                         $scope.vendor = null;
-                        $scope.message = data;
+                        bootbox.dialog({
+                            message: "Thank you! Your information was successfully saved!",
+                            buttons: {
+                                "success": {
+                                    "label": "OK",
+                                    "className": "btn-sm btn-primary",
+                                    callback: function () {
+                                        window.location.href = "/Shipment/VendorSetting";
+                                    }
+                                }
+                            }
+                        });
                     }).error(function (data, status, headers, config) {
                         $scope.message = data;
                     });

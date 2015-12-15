@@ -281,6 +281,7 @@ namespace Admin.UI.ShipmentArea
                     vendorSetting.AccountId = Constants.accountId;
                     vendorSetting.DomainKey = Constants.DomainKey;
                     vendorSetting.VendorId = (long)vendorSetting.VendorType;
+                    vendorSetting.Status = "1";
                     if (vendorSetting.VendorType == VendorType.DHL)
                     {
                         vendorSetting.Detail = "{ThirdPartyAccount:" + vendorSetting.DHLAcc + "}";
@@ -311,7 +312,7 @@ namespace Admin.UI.ShipmentArea
                     objVendor.DomainKey = vendorSetting.DomainKey;
                     objVendor.Name = vendorSetting.Name;
                     objVendor.VendorId = (long)vendorSetting.VendorType;
-
+                    objVendor.Status = vendorSetting.Status;
                     objVendor.Detail = vendorSetting.Detail;
                     objVendor.Expiration = vendorSetting.Expiration;
                     objVendor.Effective = vendorSetting.Effective;
@@ -546,17 +547,25 @@ namespace Admin.UI.ShipmentArea
             var objData = JsonConvert.DeserializeObject(responseString);
 
             JArray varPickUP = JArray.Parse(objData.ToString());
-            IList<ViewPickup> viewpickup = varPickUP.Select(p => new ViewPickup
+            IList<PickupRequest> viewpickup = varPickUP.Select(p => new PickupRequest
             {
-                Id = (string)p["Id"],
-                Detail = (string)p["Detail"],
-                Confirmation = (string)p["Confirmation"],
+                ContactName = (string)p["Name"],
+                Phone = (string)p["Phone"],
+                PickUpNotificationEmail = (string)p["EMail"],
+                Address1 = (string)p["Address1"],
+                City = (string)p["City"],
+                PickupFrom = (string)p["PickupFrom"],
+                ReadyTime = (string)p["ReadyTime"].ToString().Substring(p["ReadyTime"].ToString().Length - 11, 5),
+                AvailableTime = (string)p["AvailableUntil"].ToString().Substring(p["AvailableUntil"].ToString().Length - 11, 5),
+                TotalPieces = (int)p["TotalPieces"],
                 Destination = (string)p["Destination"],
-                Created = ((DateTime)p["Created"]).ToString("yyyy-MM-dd"),
-                Status = (string)p["Status"].ToString() == "1" ? "Success" : "Failed"
+                AdditionalsInstructions = (string)p["Instructions"],
+                PickUpNotificationPersonalizedMessage = (string)p["Detail"],
+                RatePickupIndicator = (string)p["Confirmation"],
+                RequestID = "<a href='/Shipment/PickUpRequest/" + (string)p["Id"] + "'>Edit</a> <a href = '/Shipment/PickUpRequestDelete/" + (string)p["Id"] + "' > Delete </a> "
             }).ToList();
 
-            var result = JsonConvert.SerializeObject(objData);
+            var result = JsonConvert.SerializeObject(viewpickup);
 
             //result = JsonConvert.DeserializeObject(response);
             return Json(result);

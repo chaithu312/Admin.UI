@@ -1,11 +1,14 @@
 ﻿using Admin.UI.Areas.User.Models;
+using Admin.UI.Filter;
 using Admin.UI.Utility;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -99,17 +102,9 @@ namespace Admin.UI.UserArea
 
                 TokenResponse x = client.RequestResourceOwnerPasswordAsync(login.UserName, login.Password, Constants.clientScope, optional).Result;
 
-                //TokenResponse y = client.CreateImplicitFlowUrl()
-
                 if (x.AccessToken != null)
                 {
-                    //var Decoded=Encoding.UTF8.GetString(Base64Url.Decode(x.AccessToken));
-
-                    //var clientx = new HttpClient();
-                    //clientx.SetBearerToken(x.AccessToken);
-
-                    //var result = clientx.GetStringAsync("http://localhost:49202/UPS").Result;
-                    //System.Web.HttpContext.Current.Session["AccessToken"] = x.AccessToken;
+                    HttpContext.Session.SetString("AccessToken", x.AccessToken);
 
                     return RedirectToAction("Dashboard", "Home", new { area = "" });
                 }
@@ -212,12 +207,14 @@ namespace Admin.UI.UserArea
             }
         }
 
+        [CustomAction]
         public IActionResult AddressBook()
         {
             return View();
         }
 
         [HttpPost]
+        [CustomAction]
         public JsonResult AddressBook([FromBody]Address register)
         {
             try
@@ -233,18 +230,6 @@ namespace Admin.UI.UserArea
                 string url = Constants.Profile + "Address/Insert";
                 object result = string.Empty;
 
-                // Uses the System.Net.WebClient and not HttpClient, because .NET 2.0 must be supported.
-                //using (var client = new WebClient())
-                //{
-                //    client.Headers[HttpRequestHeader.ContentType] = "application/json";
-
-                //    string serialisedData = JsonConvert.SerializeObject(register);
-
-                //    var response = client.UploadString(url, serialisedData);
-
-                //    HttpWebResponse response = ClientHttp.PostAsync(url, serialisedData);
-                //    result = JsonConvert.DeserializeObject(response);
-                //}
                 string serialisedData = JsonConvert.SerializeObject(register);
                 HttpWebResponse response = ClientHttp.PostAsync(url, serialisedData);
                 result = JsonConvert.DeserializeObject(response.ToString());
@@ -257,11 +242,6 @@ namespace Admin.UI.UserArea
             }
         }
 
-        public IActionResult ViewAddress()
-        {
-            return View();
-        }
-
         [HttpGet]
         public JsonResult Country()
         {
@@ -269,6 +249,7 @@ namespace Admin.UI.UserArea
             string strPostData = "orderby=Name&sortdir=ASC";
             var result = client.GetStringAsync(Constants.Profile + "Country?" + strPostData).Result;
             //var result = client.GetStringAsync(Constants.Profile + "Country").Result;
+
             return Json(result);
         }
 
@@ -296,18 +277,42 @@ namespace Admin.UI.UserArea
             return Json(result);
         }
 
+        public IActionResult ViewAddress()
+        {
+            return View();
+        }
+
         [HttpGet]
         public JsonResult GetAllAddress()
         {
             try
             {
-                //HttpContext.Session.SetString("Test", "Ben Rules!");
-                // var claim = HttpContext.User?.FindFirst("access_token");
                 var client = new HttpClient();
-                var result = client.GetStringAsync(Constants.Profile + "Address/").Result;
+                string url = Constants.Profile + "Address/";
 
-                //var a = HttpContext.Session.GetString("Test");
-                return Json(result);
+                HttpWebResponse response = ClientHttp.GetAsync(url);
+
+                Stream responseStream = response.GetResponseStream();
+                string responseString = new StreamReader(responseStream).ReadToEnd();
+                var objData = JsonConvert.DeserializeObject(responseString);
+
+                JArray varAddress = JArray.Parse(objData.ToString());
+                IList<Address> viewAddress = varAddress.Select(p => new Address
+                {
+                    Name = (string)p["Name"],
+                    Address1 = (string)p["Address1"],
+                    City = (string)p["City"],
+                    Division = (string)p["Division"],
+                    CountryId = (string)p["CountryId"],
+                    PostalCode = (string)p["PostalCode"],
+                    Phone1 = (string)p["Phone1"].ToString(),
+                    EMail = (string)p["EMail"].ToString(),
+                    AddressType = (Utility.Enumerations.AddressTypes)(int)p["AddressType"],
+                    Status = (sbyte)p["Status"],
+                    Detail = "<a href='/User/AddressBook/" + (string)p["Id"] + "'>Edit</a> <a href = '/User/AddressBookDelete/" + (string)p["Id"] + "' > Delete </a> "
+                }).ToList();
+
+                return Json(JsonConvert.SerializeObject(viewAddress));
             }
             catch (Exception ex)
             {

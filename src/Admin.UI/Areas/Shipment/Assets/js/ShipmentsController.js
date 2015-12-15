@@ -21,8 +21,7 @@
         var selectedShipperAddress = null;
         var item =
             {
-                Id: 0,
-                ShortName: "New Address",
+                Edit: "<a href='#'>Edit</a>",
             };
         $scope.Address.push(item);
         $http({

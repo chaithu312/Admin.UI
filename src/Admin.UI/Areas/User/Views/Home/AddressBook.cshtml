@@ -5,7 +5,17 @@
 
 <form name="AddressBook" data-ng-submit="submitForm()" data-ng-controller="AddressBookController" class="form-horizontal" role="form" novalidate>
     <div id="errorMessages" class="error">{{message}}</div>
-
+    <div class="pull-right tableTools-container">
+        <a class="btn-new-mail" href="/adminui/User/ViewAddress">
+            <span class="btn btn-purple no-border">
+                <i class="ace-icon fa  bigger-130"></i>
+                <span class="bigger-110">View Address</span>
+            </span>
+        </a>
+    </div>
+    <div class="clearfix">
+        <div class="pull-right tableTools-container"></div>
+    </div>
     <div class="form-group" ng-class="{ 'has-error':AddressBook.Type.$invalid }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Address type </label>
 

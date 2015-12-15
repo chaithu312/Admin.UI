@@ -45,7 +45,7 @@ namespace Admin.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCaching();
-
+            services.AddSession();
             services.AddMvc();
         }
 
@@ -54,6 +54,7 @@ namespace Admin.UI
             // Add the platform handler to the request pipeline.
             app.UseIISPlatformHandler();
 
+            app.UseSession();
             // Add static files to the request pipeline.
             app.UseStaticFiles();
 
