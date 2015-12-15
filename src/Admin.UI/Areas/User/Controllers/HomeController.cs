@@ -87,36 +87,53 @@ namespace Admin.UI.UserArea
         [HttpPost]
         public ActionResult Login(Login login)
         {
+            // ViewBag.MyProperty = 1;
             login.DomainKey = "B171F61C-8914-4C5D-AF88-C3B776D80916";
             if (ModelState.IsValid)
             {
                 //TODO : MAKE CLIENT AS DYNAMIC AS PER USER
-                var client = new OAuth2Client(
-              new Uri(Constants.idServer + "/Connect/token"),
-              Constants.clientID,
-              Constants.clientSecret, OAuth2Client.ClientAuthenticationStyle.PostValues);
-
-                var optional = new Dictionary<string, string>
-                      {
-                          { "acr_values", String.Format("DomainKey: {0}", login.DomainKey) }
-                      };
-
-                TokenResponse x = client.RequestResourceOwnerPasswordAsync(login.UserName, login.Password, Constants.clientScope, optional).Result;
-
-                if (x.AccessToken != null)
+                try
                 {
-                    HttpContext.Session.SetString("AccessToken", x.AccessToken);
+                    var client = new OAuth2Client(
+                  new Uri(Constants.idServer + "/Connect/token"),
+                  Constants.clientID,
+                  Constants.clientSecret, OAuth2Client.ClientAuthenticationStyle.PostValues);
 
-                    return RedirectToAction("Dashboard", "Home", new { area = "" });
+                    var optional = new Dictionary<string, string>
+                        {
+                            { "acr_values", String.Format("DomainKey: {0}", login.DomainKey) }
+                        };
+                    try
+                    {
+                        TokenResponse x = client.RequestResourceOwnerPasswordAsync(login.UserName, login.Password, Constants.clientScope, optional).Result;
+
+                        if (x.AccessToken != null)
+                        {
+                            HttpContext.Session.SetString("Welcome", "Cooming Soon");
+                            HttpContext.Session.SetString("AccessToken", x.AccessToken);
+
+                            return RedirectToAction("Dashboard", "Home", new { area = "" });
+                        }
+                        else
+                        {
+                            return View("Index");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        HttpContext.Session.SetString("Welcome", ex.Message + ex.InnerException + ex.StackTrace);
+                        return RedirectToAction("Dashboard", "Home", new { area = "" });
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    return RedirectToAction("Index", "Home", new { area = "User" });
+                    HttpContext.Session.SetString("Welcome", ex.Message + ex.InnerException + ex.StackTrace);
+                    return RedirectToAction("Dashboard", "Home", new { area = "" });
                 }
             }
             else
             {
-                return RedirectToAction("Index", "Home", new { area = "User" });
+                return View("Index");
             }
         }
 

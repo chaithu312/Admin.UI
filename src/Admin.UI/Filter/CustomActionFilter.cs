@@ -35,11 +35,11 @@ namespace Admin.UI.Filter
             }
             else
             {
-                string response = isLogin.ToString();
-                var parts = response.Split('.');
-                var claims = parts[1];
+                //string response = isLogin.ToString();
+                //var parts = response.Split('.');
+                //var claims = parts[1];
 
-                var UserInfo = JObject.Parse(Encoding.UTF8.GetString(Base64Url.Decode(claims)));
+                //var UserInfo = JObject.Parse(Encoding.UTF8.GetString(Base64Url.Decode(claims)));
             }
         }
     }

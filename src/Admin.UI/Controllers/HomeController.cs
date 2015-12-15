@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Framework.OptionsModel;
 
@@ -16,16 +17,12 @@ namespace Admin.UI.Controllers
 
         public IActionResult Index()
         {
-            string siteName = AppSettings.Value.SiteTitle;
-
-            if (User.Identity.IsAuthenticated)
-                return View();
-            else
-                return RedirectToAction("Index", "Home", new { area = "User" });
+            return View();
         }
 
         public IActionResult Dashboard()
         {
+            ViewBag.t = HttpContext.Session.GetString("Welcome");
             return View();
         }
 
