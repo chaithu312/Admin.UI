@@ -33,7 +33,7 @@
             }
         }).success(function (data, status, headers, config) {
             $scope.message = '';
-            var successresult = (JSON.parse(data)).Result;
+            var successresult = data;
             if (data != "One or more errors occurred.") {
                 for (var i = 0; i < successresult.length; i++) {
                     $scope.Address.push(successresult[i]);

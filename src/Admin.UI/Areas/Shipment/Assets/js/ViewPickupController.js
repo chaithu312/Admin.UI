@@ -59,6 +59,8 @@
         }];
 
         $scope.overrideOptions = {
+            "scrollY": "200px",
+            "scrollCollapse": true,
             "bStateSave": true,
             "iCookieDuration": 2419200,
             /* 1 month */

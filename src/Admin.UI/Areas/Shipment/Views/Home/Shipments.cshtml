@@ -3,466 +3,571 @@
     Layout = "~/Views/shared/_layout.cshtml";
 }
 
-<form ng-controller="shipmentsController" name="shipmentsForm" data-ng-submit="sendForm()" class="form-horizontal" role="form" novalidate>
-    <div id="errorMessages" class="error">{{message}}</div>
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.vendortype.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Carrier</label>
-        </label>
-        <div class="col-sm-9">
-            <select name="vendortype" ng-model="vendor.VendorType"
-                    data-ng-options="vendor.Id as vendor.Name for vendor in Vendors track by vendor.Id" class="col-xs-10 col-sm-7" ng-dropdown required></select>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentcarrier.vendortype.$error.required">
-                Carrier is required.
-            </span>
+<div class="widget-main" ng-controller="shipmentsController">
+
+    <!-- #section:plugins/fuelux.wizard -->
+    <div id="fuelux-wizard-container">
+        <div>
+            <!-- #section:plugins/fuelux.wizard.steps -->
+            <ul class="steps">
+                <li data-step="1" class="active">
+                    <span class="step">1</span>
+                    <span class="title"> Shipping Vendor (Carrier)</span>
+                </li>
+
+                <li data-step="2">
+                    <span class="step">2</span>
+                    <span class="title">Where is the shipment going?</span>
+                </li>
+
+                <li data-step="3">
+                    <span class="step">3</span>
+                    <span class="title">Where is the shipment coming from?</span>
+                </li>
+
+                <li data-step="4">
+                    <span class="step">4</span>
+                    <span class="title">Shipment and Package Details</span>
+                </li>
+            </ul>
+
+            <!-- /section:plugins/fuelux.wizard.steps -->
         </div>
+
+        <hr />
+
+        <!-- #section:plugins/fuelux.wizard.container -->
+        <div class="step-content pos-rel">
+            <div class="step-pane active" data-step="1">
+                <form class="form-horizontal" name="shipmentcarrier" role="form" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error':shipmentcarrier.vendortype.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Carrier</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <select name="vendortype" ng-model="vendor.VendorType"
+                                    data-ng-options="vendor.Id as vendor.Name for vendor in Vendors track by vendor.Id" class="col-xs-10 col-sm-7" ng-dropdown required></select>
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentcarrier.vendortype.$error.required">
+                                Carrier is required.
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="step-pane" data-step="2">
+                <form class="form-horizontal" name="shipmentcomng" role="form" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error':shipmentcomng.RCompany.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Company </label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="RCompany" id="RCompany" ng-model="Shipments.RCompany" class="col-xs-10 col-sm-7" ng-maxlength="100" required />
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentcomng.RCompany.$error.required">
+                                Company is required.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error':shipmentcomng.Rname.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Receiver's Name</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="Rname" id="Rname" ng-model="Shipments.Rname" class="col-xs-10 col-sm-7" ng-maxlength="50" required />
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentcomng.Rname.$error.required">
+                                Receiver's Name is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error':shipmentcomng.Rphone.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Phone</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="Rphone" id="Rphone" ng-model="Shipments.Rphone" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isRDisabled" required />
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentcomng.RCompany.$error.required">
+                                Phone is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error':shipmentcomng.Remail.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Email</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="email" name="Remail" id="Remail" ng-model="Shipments.REmail" class="col-xs-10 col-sm-7" required />
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentcomng.Remail.$error.required">
+                                Email is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error':shipmentcomng.Raddress.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Address Type</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <select name="Raddress" ng-model="Shipments.RAddressType" class="col-xs-10 col-sm-7" data-ng-options="address.Id as address.ShortName for address in Address track by address.Id" data-ng-change="GetConsigeeAddressValue()" required></select>
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentcomng.Raddress.$error.required">
+                                Address Type is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div ng-if="Shipments.RAddressType == 0" class="form-group" ng-class="{ 'has-error':shipmentcomng.raddressCaption.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Address Caption</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="col-xs-10 col-sm-7" placeholder="" id="raddressCaption" name="raddressCaption" data-ng-model="Shipments.RaddressCaption" required>
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentcomng.raddressCaption.$error.required">
+                                Address Caption is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error':shipmentcomng.Raddressline1.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Address Line 1</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="Raddressline1" id="Raddressline1" ng-model="Shipments.Raddressline1" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isRDisabled" required />
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentcomng.Raddressline1.$error.required">
+                                Address Line 1 is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error':shipmentcomng.Raddressline1.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Address Line 2</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="Raddressline2" id="Raddressline2" ng-model="Shipments.Rcity" class="col-xs-10 col-sm-7" required />
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentcomng.Raddressline1.$error.required">
+                                Address Line 2 is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Address Line 3</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="Raddressline3" id="Raddressline3" ng-model="Shipments.Raddressline3" class="col-xs-10 col-sm-7" />
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error':shipmentcomng.Rcity.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>City</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="Rcity" id="Rcity" ng-model="Shipments.Rcity" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isRDisabled" required />
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentcomng.Rcity.$error.required">
+                                City is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error':shipmentcomng.RCompany.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Country</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <select id="RCountry" class="col-xs-10 col-sm-7" data-ng-model="Shipments.RCountryId" name="RCountry"
+                                    data-ng-options="country.Id as country.Name for country in Country track by country.Id" ng-disabled="Shipments.isRDisabled" data-ng-change="GetDivision(Shipments.RCountryId)" required></select>
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentcomng.RCompany.$error.required">
+                                Country is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error':shipmentcomng.Rpostalcode.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Postal Code</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="Rpostalcode" id="Rpostalcode" ng-model="Shipments.Rpostalcode" ng-disabled="Shipments.isRDisabled" class="col-xs-10 col-sm-7" required />
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentcomng.Rpostalcode.$error.required">
+                                Postal Code is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error':shipmentcomng.RDivision.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Division</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <select id="RDivision" class="col-xs-10 col-sm-7" data-ng-model="Shipments.RDivision" name="RDivision"
+                                    data-ng-options="state.Name as state.Name for state in States track by state.Id" ng-disabled="Shipments.isRDisabled" required></select>
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentcomng.RDivision.$error.required">
+                                Division is required.
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="step-pane" data-step="3">
+                <form class="form-horizontal" novalidate name="shipmentgo">
+                    <div class="form-group" ng-class="{ 'has-error':shipmentgo.company.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Company </label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="company" id="company" ng-model="Shipments.Company" class="col-xs-10 col-sm-7" ng-maxlength="100" required />
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentgo.company.$error.required">
+                                Company is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error':shipmentgo.name.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Sent By</label>
+                        </label>
+
+                        <div class="col-sm-9">
+                            <input type="text" name="name" id="name" ng-model="Shipments.Name" class="col-xs-10 col-sm-7" ng-maxlength="50" required />
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentgo.name.$error.required">
+                                Send by is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error':shipmentgo.phone.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Phone</label>
+                        </label>
+
+                        <div class="col-sm-9">
+                            <input type="text" name="phone" id="phone" ng-model="Shipments.Phone" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isDisabled" required />
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentgo.phone.$error.required">
+                                Phone is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error':shipmentgo.email.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Email</label>
+                        </label>
+
+                        <div class="col-sm-9">
+                            <input type="email" name="email" id="email" ng-model="Shipments.Email" class="col-xs-10 col-sm-7" required />
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentgo.email.$error.required">
+                                Email is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error':shipmentgo.address.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Address</label>
+                        </label>
+
+                        <div class="col-sm-9">
+                            <select name="address" ng-model="Shipments.AddressType" class="col-xs-10 col-sm-7" data-ng-options="address.Id as address.ShortName for address in Address track by address.Id" data-ng-change="GetShipperAddressValue()" required></select>
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentgo.address.$error.required">
+                                Address is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div ng-if="Shipments.AddressType == 0" class="form-group" ng-class="{ 'has-error':shipmentgo.addressCaption.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Address Caption</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="col-xs-10 col-sm-7" placeholder="" id="addressCaption" name="addressCaption" data-ng-model="Shipments.AddressCaption" required>
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentgo.addressCaption.$error.required">
+                                Address Caption is required.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error':shipmentgo.addressline1.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Address Line 1</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="addressline1" class="col-xs-10 col-sm-7" id="addressline1" ng-model="Shipments.Address1" ng-disabled="Shipments.isDisabled" required />
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentgo.addressline1.$error.required">
+                                Address Line 1 is required.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error':shipmentgo.addressline2.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Address Line 2</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="addressline2" id="addressline2" ng-model="Shipments.Address2" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isDisabled" />
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentgo.addressline2.$error.required">
+                                Address Line2 is required.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Address Line 3</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="addressline3" id="addressline3" ng-model="Shipments.Address3" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isDisabled" />
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error':shipmentgo.city.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>City</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="city" id="city" ng-model="Shipments.City" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isDisabled" required />
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentgo.city.$error.required">
+                                City is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error':shipmentgo.CountryId.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Country</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <select id="CountryId" class="col-xs-10 col-sm-7" data-ng-model="Shipments.CountryId" name="CountryId"
+                                    data-ng-options="country.Id as country.Name for country in Country track by country.Id" ng-disabled="Shipments.isDisabled" data-ng-change="GetDivision(Shipments.CountryId)" required></select>
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentgo.CountryId.$error.required">
+                                Country is required.
+                                <input type="hidden" ng-model="Shipments.CountryName" />
+                                <input type="hidden" ng-model="Shipments.CountryCode" />
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error':shipmentgo.postalcode.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Postal Code</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="postalcode" id="postalcode" ng-model="Shipments.PostalCode" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isDisabled" required />
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentgo.postalcode.$error.required">
+                                Postal Code is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error':shipmentgo.Division.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Division</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <select id="Division" class="col-xs-10 col-sm-7" data-ng-model="Shipments.Division" name="Division"
+                                    data-ng-options="state.Name as state.Name for state in States track by state.Id" ng-disabled="Shipments.isDisabled" required></select>
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentgo.Division.$error.required">
+                                Division is required.
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="step-pane" data-step="4">
+                <form class="form-horizontal" name="shipmentpkg" role="form" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error':shipmentpkg.shipmentdate.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Shipment Date</label>
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" data-date-format="dd-mm-yyyy" class="col-sm-10 date-picker" id="shipmentdate" name="shipmentdate" data-ng-model="Shipments.shipmentdate" required>
+                            <span class="input-group-addon" style="height:34px;">
+                                <i class="fa fa-calendar bigger-110"></i>
+                            </span>
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentpkg.shipmentdate.$error.required">
+                                Shipment Date is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-field-mask-1" class="col-md-3 control-label no-padding-right">
+                            <label>Weight & Dimensions</label>
+                        </label>
+
+                        <div class="col-md-6">
+
+                            <table class="table">
+                                <tr>
+
+                                    <th>Weight</th>
+                                    <th>Length</th>
+                                    <th>Width</th>
+                                    <th>Height</th>
+                                </tr>
+                                <tr ng:repeat="item in Parcel.items">
+                                    <td ng-class="{ 'has-error':shipmentpkg.weight.$invalid }">
+                                        <input type="number" min="0" ng:model="item.Weight" name="weight" required class="form-control col-md-1">
+                                        <span class="help-inline col-xs-12 col-sm-5" data-ng-show="shipmentpkg.weight.$error.required">
+                                            Weight is required.
+                                        </span>
+                                    </td>
+                                    <td ng-class="{ 'has-error':shipmentpkg.length.$invalid }">
+                                        <input type="number" min="0" ng:model="item.Length" required class="form-control col-md-1" name="length">
+                                        <span class="help-inline col-xs-12 col-sm-5" data-ng-show="shipmentpkg.length.$error.required">
+                                            Length is required.
+                                        </span>
+                                    </td>
+                                    <td ng-class="{ 'has-error':shipmentpkg.width.$invalid }">
+                                        <input type="number" min="0" ng:model="item.Width" required class="form-control col-md-1" name="width">
+                                        <span class="help-inline col-xs-12 col-sm-5" data-ng-show="shipmentpkg.width.$error.required">
+                                            Width is required.
+                                        </span>
+                                    </td>
+                                    <td ng-class="{ 'has-error':shipmentpkg.height.$invalid }">
+                                        <input type="number" min="0" ng:model="item.Height" required class="form-control col-md-1" name="height">
+                                        <span class="help-inline col-xs-12 col-sm-5" data-ng-show="shipmentpkg.height.$error.required">
+                                            Height is required.
+                                        </span>
+                                    </td>
+                                    <td ng-if="item.IsRemoveActive == '1'">
+
+                                        <button type="button" class="btn btn-info btn-xs" ng-click="removeItem($index)">Remove Packet</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5"><button type="button" class="btn btn-info btn-xs" ng-click="addItem()">Add Packet</button></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error':shipmentpkg.packagetype.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Package Type</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <select name="packagetype" ng-model="Shipments.packagetype" class="col-xs-10 col-sm-7" required>
+                                <option ng-option value="1">Document</option>
+                                <option ng-option value="2">Standard Package</option>
+                                <option ng-option value="3">Has Heavy Piece(s)</option>
+                                <option ng-option value="4">Has Bulky Piece(s)</option>
+                            </select>
+                            <span class="help-button" data-rel="popover" data-trigger="hover" data-placement="left" data-content="Standard Package (Can be carrier by one person).Has Heavy Piece(s) weight is more than 35 lbs. Has Bulky Piece(s) at least one dimension is larger than 40 inches" title="Info">?</span>
+                            <span class="help-inline col-xs-12 col-sm-5" data-ng-show="shipmentpkg.packagetype.$error.required">
+                                Package Type is required.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error':shipmentpkg.unitsystem.$invalid }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Unit System</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <select name="unitsystem" ng-model="Shipments.unitsystem" class="col-xs-10 col-sm-7" required>
+                                <option value="us" selected="selected">Imperial (lb-inch)</option>
+                                <option value="eu">Metric (kg-cm)</option>
+                            </select>
+                            <span class="help-inline col-xs-12 col-sm-5" data-ng-show="shipmentpkg.unitsystem.$error.required">
+                                Unit System is required.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Insurance</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="checkbox" name="insurance" id="insurance" ng-model="Shipments.Insurance" class="col-md-1 col-sm-1 input-sm pull-left" required="" />
+                            <span class="help-inline col-md-5 col-sm-5">
+                                <i ng-validation-icon="Shipments.$errors.Insurance"><label></label></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Declared Value</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="Declared" id="Declared" ng-model="Shipments.Declared" class="col-xs-10 col-sm-7" required="" />
+
+                            <span class="help-inline col-xs-12 col-sm-5">
+                                <i ng-validation-icon="Shipments.$errors.Declared"><label></label></i>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- /section:plugins/fuelux.wizard.container -->
     </div>
 
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.RCompany.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Company </label>
-        </label>
-        <div class="col-sm-9">
-            <input type="text" name="RCompany" id="RCompany" ng-model="Shipments.RCompany" class="col-xs-10 col-sm-7" ng-maxlength="100" required />
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.RCompany.$error.required">
-                Company is required.
-            </span>
-        </div>
-    </div>
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.Rname.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Receiver's Name</label>
-        </label>
-        <div class="col-sm-9">
-            <input type="text" name="Rname" id="Rname" ng-model="Shipments.Rname" class="col-xs-10 col-sm-7" ng-maxlength="50" required />
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.Rname.$error.required">
-                Receiver's Name is required.
-            </span>
-        </div>
+    <hr />
+    <div class="wizard-actions">
+        <!-- #section:plugins/fuelux.wizard.buttons -->
+        <button class="btn btn-prev">
+            <i class="ace-icon fa fa-arrow-left"></i>
+            Prev
+        </button>
+
+        <button class="btn btn-success btn-next" data-last="Finish" ng-disabled="shipmentcarrier.vendortype.$invalid">
+            Next
+            <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+        </button>
+
+        <!-- /section:plugins/fuelux.wizard.buttons -->
     </div>
 
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.Rphone.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Phone</label>
-        </label>
-        <div class="col-sm-9">
-            <input type="text" name="Rphone" id="Rphone" ng-model="Shipments.Rphone" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isRDisabled" required />
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.RCompany.$error.required">
-                Phone is required.
-            </span>
-        </div>
-    </div>
+    <!-- /section:plugins/fuelux.wizard -->
+</div>
 
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.Remail.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Email</label>
-        </label>
-        <div class="col-sm-9">
-            <input type="email" name="Remail" id="Remail" ng-model="Shipments.REmail" class="col-xs-10 col-sm-7" required />
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.Remail.$error.required">
-                Email is required.
-            </span>
-        </div>
-    </div>
+<script src="~/assets/js/jquery.min.js"></script>
 
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.Raddress.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Address Type</label>
-        </label>
-        <div class="col-sm-9">
-            <select name="Raddress" ng-model="Shipments.RAddressType" class="col-xs-10 col-sm-7" data-ng-options="address.Id as address.ShortName for address in Address track by address.Id" data-ng-change="GetConsigeeAddressValue()" required></select>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.Raddress.$error.required">
-                Address Type is required.
-            </span>
-        </div>
-    </div>
+<script src="~/assets/js/global.min.js"></script>
+<script src="/assets/js/fuelux/fuelux.wizard.js"></script>
 
-    <div ng-if="Shipments.RAddressType == 0" class="form-group" ng-class="{ 'has-error':shipmentsForm.raddressCaption.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Address Caption</label>
-        </label>
-        <div class="col-sm-9">
-            <input type="text" class="col-xs-10 col-sm-7" placeholder="" id="raddressCaption" name="raddressCaption" data-ng-model="Shipments.RaddressCaption" required>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.raddressCaption.$error.required">
-                Address Caption is required.
-            </span>
-        </div>
-    </div>
+<script type="text/javascript">
+    jQuery(function ($) {
 
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.Raddressline1.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Address Line 1</label>
-        </label>
-        <div class="col-sm-9">
-            <input type="text" name="Raddressline1" id="Raddressline1" ng-model="Shipments.Raddressline1" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isRDisabled" required />
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.Raddressline1.$error.required">
-                Address Line 1 is required.
-            </span>
-        </div>
-    </div>
+        $('[data-rel=tooltip]').tooltip();
 
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.Raddressline1.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Address Line 2</label>
-        </label>
-        <div class="col-sm-9">
-            <input type="text" name="Raddressline2" id="Raddressline2" ng-model="Shipments.Rcity" class="col-xs-10 col-sm-7" required />
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.Raddressline1.$error.required">
-                Address Line 2 is required.
-            </span>
-        </div>
-    </div>
+        var $validation = false;
+        $('#fuelux-wizard-container')
+        .ace_wizard({
+            //step: 2 //optional argument. wizard will jump to step "2" at first
+            //buttons: '.wizard-actions:eq(0)'
+        })
+        .on('actionclicked.fu.wizard', function (e, info) {
+            if (info.step == 1 && shipmentcarrier.$invalid) {
+                if (!$('#validation-form').valid()) e.preventDefault();
+            }
+        })
+        .on('finished.fu.wizard', function (e) {
+            bootbox.dialog({
+                message: "Thank you! Your information was successfully saved!",
+                buttons: {
+                    "success": {
+                        "label": "OK",
+                        "className": "btn-sm btn-primary"
+                    }
+                }
+            });
+        }).on('stepclick.fu.wizard', function (e) {
 
-    <div class="form-group">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Address Line 3</label>
-        </label>
-        <div class="col-sm-9">
-            <input type="text" name="Raddressline3" id="Raddressline3" ng-model="Shipments.Raddressline3" class="col-xs-10 col-sm-7" />
-        </div>
-    </div>
+            //e.preventDefault();//this will prevent clicking and selecting steps
+        });
 
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.Rcity.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>City</label>
-        </label>
-        <div class="col-sm-9">
-            <input type="text" name="Rcity" id="Rcity" ng-model="Shipments.Rcity" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isRDisabled" required />
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.Rcity.$error.required">
-                City is required.
-            </span>
-        </div>
-    </div>
+        //jump to a step
+        /**
+        var wizard = $('#fuelux-wizard-container').data('fu.wizard')
+        wizard.currentStep = 3;
+        wizard.setState();
+        */
 
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.RCompany.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Country</label>
-        </label>
-        <div class="col-sm-9">
-            <select id="RCountry" class="col-xs-10 col-sm-7" data-ng-model="Shipments.RCountryId" name="RCountry"
-                    data-ng-options="country.Id as country.Name for country in Country track by country.Id" ng-disabled="Shipments.isRDisabled" data-ng-change="GetDivision(Shipments.RCountryId)" required></select>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.RCompany.$error.required">
-                Country is required.
-            </span>
-        </div>
-    </div>
+        //determine selected step
+        //wizard.selectedItem().step
 
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.Rpostalcode.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Postal Code</label>
-        </label>
-        <div class="col-sm-9">
-            <input type="text" name="Rpostalcode" id="Rpostalcode" ng-model="Shipments.Rpostalcode" ng-disabled="Shipments.isRDisabled" class="col-xs-10 col-sm-7" required />
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.Rpostalcode.$error.required">
-                Postal Code is required.
-            </span>
-        </div>
-    </div>
-
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.RDivision.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Division</label>
-        </label>
-        <div class="col-sm-9">
-            <select id="RDivision" class="col-xs-10 col-sm-7" data-ng-model="Shipments.RDivision" name="RDivision"
-                    data-ng-options="state.Name as state.Name for state in States track by state.Id" ng-disabled="Shipments.isRDisabled" required></select>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.RDivision.$error.required">
-                Division is required.
-            </span>
-        </div>
-    </div>
-
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.company.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Company </label>
-        </label>
-        <div class="col-sm-9">
-            <input type="text" name="company" id="company" ng-model="Shipments.Company" class="col-xs-10 col-sm-7" ng-maxlength="100" required />
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.company.$error.required">
-                Company is required.
-            </span>
-        </div>
-    </div>
-
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.name.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Sent By</label>
-        </label>
-
-        <div class="col-sm-9">
-            <input type="text" name="name" id="name" ng-model="Shipments.Name" class="col-xs-10 col-sm-7" ng-maxlength="50" required />
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.name.$error.required">
-                Send by is required.
-            </span>
-        </div>
-    </div>
-
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.phone.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Phone</label>
-        </label>
-
-        <div class="col-sm-9">
-            <input type="text" name="phone" id="phone" ng-model="Shipments.Phone" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isDisabled" required />
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.phone.$error.required">
-                Phone is required.
-            </span>
-        </div>
-    </div>
-
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.email.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Email</label>
-        </label>
-
-        <div class="col-sm-9">
-            <input type="email" name="email" id="email" ng-model="Shipments.Email" class="col-xs-10 col-sm-7" required />
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.email.$error.required">
-                Email is required.
-            </span>
-        </div>
-    </div>
-
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.address.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Address</label>
-        </label>
-
-        <div class="col-sm-9">
-            <select name="address" ng-model="Shipments.AddressType" class="col-xs-10 col-sm-7" data-ng-options="address.Id as address.ShortName for address in Address track by address.Id" data-ng-change="GetShipperAddressValue()" required></select>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.address.$error.required">
-                Address is required.
-            </span>
-        </div>
-    </div>
-
-    <div ng-if="Shipments.AddressType == 0" class="form-group" ng-class="{ 'has-error':shipmentsForm.addressCaption.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Address Caption</label>
-        </label>
-        <div class="col-sm-9">
-            <input type="text" class="col-xs-10 col-sm-7" placeholder="" id="addressCaption" name="addressCaption" data-ng-model="Shipments.AddressCaption" required>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.addressCaption.$error.required">
-                Address Caption is required.
-            </span>
-        </div>
-    </div>
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.addressline1.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Address Line 1</label>
-        </label>
-        <div class="col-sm-9">
-            <input type="text" name="addressline1" class="col-xs-10 col-sm-7" id="addressline1" ng-model="Shipments.Address1" ng-disabled="Shipments.isDisabled" required />
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.addressline1.$error.required">
-                Address Line 1 is required.
-            </span>
-        </div>
-    </div>
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.addressline2.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Address Line 2</label>
-        </label>
-        <div class="col-sm-9">
-            <input type="text" name="addressline2" id="addressline2" ng-model="Shipments.Address2" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isDisabled" />
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.addressline2.$error.required">
-                Address Line2 is required.
-            </span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Address Line 3</label>
-        </label>
-        <div class="col-sm-9">
-            <input type="text" name="addressline3" id="addressline3" ng-model="Shipments.Address3" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isDisabled" />
-        </div>
-    </div>
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.city.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>City</label>
-        </label>
-        <div class="col-sm-9">
-            <input type="text" name="city" id="city" ng-model="Shipments.City" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isDisabled" required />
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.city.$error.required">
-                City is required.
-            </span>
-        </div>
-    </div>
-
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.CountryId.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Country</label>
-        </label>
-        <div class="col-sm-9">
-            <select id="CountryId" class="col-xs-10 col-sm-7" data-ng-model="Shipments.CountryId" name="CountryId"
-                    data-ng-options="country.Id as country.Name for country in Country track by country.Id" ng-disabled="Shipments.isDisabled" data-ng-change="GetDivision(Shipments.CountryId)" required></select>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.CountryId.$error.required">
-                Country is required.
-                <input type="hidden" ng-model="Shipments.CountryName" />
-                <input type="hidden" ng-model="Shipments.CountryCode" />
-            </span>
-        </div>
-    </div>
-
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.postalcode.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Postal Code</label>
-        </label>
-        <div class="col-sm-9">
-            <input type="text" name="postalcode" id="postalcode" ng-model="Shipments.PostalCode" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isDisabled" required />
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.postalcode.$error.required">
-                Postal Code is required.
-            </span>
-        </div>
-    </div>
-
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.Division.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Division</label>
-        </label>
-        <div class="col-sm-9">
-            <select id="Division" class="col-xs-10 col-sm-7" data-ng-model="Shipments.Division" name="Division"
-                    data-ng-options="state.Name as state.Name for state in States track by state.Id" ng-disabled="Shipments.isDisabled" required></select>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.Division.$error.required">
-                Division is required.
-            </span>
-        </div>
-    </div>
-
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.shipmentdate.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Shipment Date</label>
-        </label>
-        <div class="col-sm-3">
-            <input type="text" data-date-format="dd-mm-yyyy" class="col-sm-10 date-picker" id="shipmentdate" name="shipmentdate" data-ng-model="Shipments.shipmentdate" required>
-            <span class="input-group-addon" style="height:34px;">
-                <i class="fa fa-calendar bigger-110"></i>
-            </span>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipmentsForm.shipmentdate.$error.required">
-                Shipment Date is required.
-            </span>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="form-field-mask-1" class="col-md-3 control-label no-padding-right">
-            <label>Weight & Dimensions</label>
-        </label>
-
-        <div class="col-md-6">
-
-            <table class="table">
-                <tr>
-
-                    <th>Weight</th>
-                    <th>Length</th>
-                    <th>Width</th>
-                    <th>Height</th>
-                </tr>
-                <tr ng:repeat="item in Parcel.items">
-                    <td ng-class="{ 'has-error':shipmentsForm.weight.$invalid }">
-                        <input type="number" min="0" ng:model="item.Weight" name="weight" required class="form-control col-md-1">
-                        <span class="help-inline col-xs-12 col-sm-5" data-ng-show="shipmentsForm.weight.$error.required">
-                            Weight is required.
-                        </span>
-                    </td>
-                    <td ng-class="{ 'has-error':shipmentsForm.length.$invalid }">
-                        <input type="number" min="0" ng:model="item.Length" required class="form-control col-md-1" name="length">
-                        <span class="help-inline col-xs-12 col-sm-5" data-ng-show="shipmentsForm.length.$error.required">
-                            Length is required.
-                        </span>
-                    </td>
-                    <td ng-class="{ 'has-error':shipmentsForm.width.$invalid }">
-                        <input type="number" min="0" ng:model="item.Width" required class="form-control col-md-1" name="width">
-                        <span class="help-inline col-xs-12 col-sm-5" data-ng-show="shipmentsForm.width.$error.required">
-                            Width is required.
-                        </span>
-                    </td>
-                    <td ng-class="{ 'has-error':shipmentsForm.height.$invalid }">
-                        <input type="number" min="0" ng:model="item.Height" required class="form-control col-md-1" name="height">
-                        <span class="help-inline col-xs-12 col-sm-5" data-ng-show="shipmentsForm.height.$error.required">
-                            Height is required.
-                        </span>
-                    </td>
-                    <td ng-if="item.IsRemoveActive == '1'">
-
-                        <button type="button" class="btn btn-info btn-xs" ng-click="removeItem($index)">Remove Packet</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="5"><button type="button" class="btn btn-info btn-xs" ng-click="addItem()">Add Packet</button></td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.packagetype.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Package Type</label>
-        </label>
-        <div class="col-sm-9">
-            <select name="packagetype" ng-model="Shipments.packagetype" class="col-xs-10 col-sm-7" required>
-                <option ng-option value="1">Document</option>
-                <option ng-option value="2">Standard Package</option>
-                <option ng-option value="3">Has Heavy Piece(s)</option>
-                <option ng-option value="4">Has Bulky Piece(s)</option>
-            </select>
-            <span class="help-button" data-rel="popover" data-trigger="hover" data-placement="left" data-content="Standard Package (Can be carrier by one person).Has Heavy Piece(s) weight is more than 35 lbs. Has Bulky Piece(s) at least one dimension is larger than 40 inches" title="Info">?</span>
-            <span class="help-inline col-xs-12 col-sm-5" data-ng-show="shipmentsForm.packagetype.$error.required">
-                Package Type is required.
-            </span>
-        </div>
-    </div>
-    <div class="form-group" ng-class="{ 'has-error':shipmentsForm.unitsystem.$invalid }">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Unit System</label>
-        </label>
-        <div class="col-sm-9">
-            <select name="unitsystem" ng-model="Shipments.unitsystem" class="col-xs-10 col-sm-7" required>
-                <option value="us" selected="selected">Imperial (lb-inch)</option>
-                <option value="eu">Metric (kg-cm)</option>
-            </select>
-            <span class="help-inline col-xs-12 col-sm-5" data-ng-show="shipmentsForm.unitsystem.$error.required">
-                Unit System is required.
-            </span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Insurance</label>
-        </label>
-        <div class="col-sm-9">
-            <input type="checkbox" name="insurance" id="insurance" ng-model="Shipments.Insurance" class="col-md-1 col-sm-1 input-sm pull-left" required="" />
-            <span class="help-inline col-md-5 col-sm-5">
-                <i ng-validation-icon="Shipments.$errors.Insurance"><label></label></i>
-            </span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-            <label>Declared Value</label>
-        </label>
-        <div class="col-sm-9">
-            <input type="text" name="Declared" id="Declared" ng-model="Shipments.Declared" class="col-xs-10 col-sm-7" required="" />
-
-            <span class="help-inline col-xs-12 col-sm-5">
-                <i ng-validation-icon="Shipments.$errors.Declared"><label></label></i>
-            </span>
-        </div>
-    </div>
-
-    <div class="clearfix form-actions">
-        <div class="col-md-offset-3 col-md-9">
-            <button type="submit" class="btn btn-info">
-                <i class="ace-icon fa fa-check bigger-110"></i>
-                Save
-            </button>
-
-            &nbsp; &nbsp; &nbsp;
-            <button type="reset" class="btn">
-                <i class="ace-icon fa fa-undo bigger-110"></i>
-                Reset
-            </button>
-        </div>
-    </div>
-</form>
+    })
+</script>
