@@ -393,6 +393,7 @@ namespace Admin.UI.ShipmentArea
                     pickupRequest.PickupDate = CarrierSpecificValueConversion.GetDate(pickupRequest.PickupDate, (Carrier)Convert.ToInt16(pickupRequest.Carrier));
                     pickupRequest.ReadyTime = CarrierSpecificValueConversion.GetTime(pickupRequest.ReadyTime, (Carrier)Convert.ToInt16(pickupRequest.Carrier));
                     pickupRequest.AvailableTime = CarrierSpecificValueConversion.GetTime(pickupRequest.AvailableTime, (Carrier)Convert.ToInt16(pickupRequest.Carrier));
+                    pickupRequest.NotificationJSONData = GetNotification(pickupRequest);
                 }
 
                 if (pickupRequest.AddressType == "0")
@@ -541,6 +542,15 @@ namespace Admin.UI.ShipmentArea
             }
         }
 
+        private string GetNotification(PickupRequest request)
+        {
+            NotificationData notificationData = new NotificationData();
+            notificationData.Notification = request.notification;
+            notificationData.PickUpNotificationPersonalizedMessage = request.PickUpNotificationPersonalizedMessage;
+            notificationData.PickUpNotificationYourEmail = request.PickUpNotificationYourEmail;
+            return new JavaScriptSerializer().Serialize(notificationData);
+        }
+
         [CustomAction]
         public ActionResult ViewPickup()
         { return View(); }
@@ -574,7 +584,7 @@ namespace Admin.UI.ShipmentArea
                 AdditionalsInstructions = (string)p["Instructions"],
                 PickUpNotificationPersonalizedMessage = "<span class=\"help-inline col-xs-12 col-sm-7\"> <span class=\"help-button\" data-rel=\"popover\" data-trigger=\"hover\" data-placement=\"left\" data-content='" + (string)p["Detail"] + "' title=\"\" data-original-title=\"Info\">?</span></span>",
                 RatePickupIndicator = (string)p["Confirmation"],
-                RequestID = "<div class=\"hidden-sm hidden-xs btn-group\"><button id=\"btnedit\" type=\"button\" onclick=\"editForm('" + (long)p["Id"] + "')\" class=\"btn btn-xs btn-info\"><i class=\"ace-icon fa fa-pencil bigger-120\"></i></button><button  id=\"btndelete\" type=\"button\" class=\"btn btn-xs btn-danger\" ng-click=\"ViewAddressController.deleteForm(" + (long)p["Id"] + ")\"><i class=\"ace-icon fa fa-trash-o bigger-120\"></i></button></div>"
+                RequestID = "<div class=\"hidden-sm hidden-xs btn-group\"><button id=\"btnedit\" type=\"button\" onclick=\"editPickupForm('" + (long)p["Id"] + "')\" class=\"btn btn-xs btn-info\"><i class=\"ace-icon fa fa-pencil bigger-120\"></i></button><button  id=\"btndelete\" type=\"button\" class=\"btn btn-xs btn-danger\" ng-click=\"ViewAddressController.deleteForm(" + (long)p["Id"] + ")\"><i class=\"ace-icon fa fa-trash-o bigger-120\"></i></button></div>"
             }).ToList();
 
             var result = JsonConvert.SerializeObject(viewpickup);

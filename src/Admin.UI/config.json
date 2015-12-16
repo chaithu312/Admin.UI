@@ -5,7 +5,7 @@
   "CDN": {
     "ProfileEndpoint": "http://localhost:65433/profile/",
     "RegisterEndpoint": "http://test.shipos.com/ID/api/register/",
-    "IDServerEndpoint": "http://id-test.shipos.com:8080/core",
+    "IDServerEndpoint": "http://192.168.1.30:8080/core",
 
     "ShippingEndpoint": "http://localhost:49202/",
     "VirtualDirectory": ""

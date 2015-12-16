@@ -133,6 +133,17 @@ function deleteForm(addressId) {
         callback: function (result) {
             if (result === false) {
             } else {
+                $.ajax({
+                    type: "GET",
+                    url: "/User/DeleteAddress",
+                    data: { "selectedIds": addressId },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        // Replace the div's content with the page method's return.
+                        $("#Result").text(msg.d);
+                    }
+                });
             }
         }
     })

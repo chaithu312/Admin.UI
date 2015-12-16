@@ -108,7 +108,7 @@
                 .success(function (data, status, headers, config) {
                     $scope.message = data;
                     bootbox.dialog({
-                        message: "Thank you! Your information was successfully saved!",
+                        message: "New contact added!",
                         buttons: {
                             "success": {
                                 "label": "OK",
@@ -123,6 +123,9 @@
                     alert(data);
                 });
                 //Ends herefor saving addresssbook record.
+            }
+            else {
+                $scope.message = "Invalid";
             }
         }
         //Getting selected Country Code and Country Name

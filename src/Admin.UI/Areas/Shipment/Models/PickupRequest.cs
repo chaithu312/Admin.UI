@@ -67,6 +67,7 @@ namespace Admin.UI.Areas.Shipment.Models
         public string PickUpNotificationEmail { get; set; }
         public string PickUpNotificationYourEmail { get; set; }
         public string PickUpNotificationPersonalizedMessage { get; set; }
+        public string NotificationJSONData { get; set; }
 
         public List<Notification> notification { get; set; }
 
@@ -98,6 +99,15 @@ namespace Admin.UI.Areas.Shipment.Models
     {
         public List<email> Email { get; set; }
         public List<mobile> Mobile { get; set; }
+    }
+
+    public class NotificationData
+    {
+        public List<Notification> Notification { get; set; }
+
+        public string PickUpNotificationYourEmail { get; set; }
+
+        public string PickUpNotificationPersonalizedMessage { get; set; }
     }
 
     public class mobile

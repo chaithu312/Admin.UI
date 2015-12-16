@@ -534,9 +534,9 @@ function getUrlParameter(param, dummyPath) {
         $scope.pickupRequest.notification.push($scope.notification);
         $scope.valResult = {};
         $scope.sendForm = function () {
-            $("#veil").show();
-            $("#feedLoading").show();
             if ($scope.PickupForm.$valid) {
+                $("#veil").show();
+                $("#feedLoading").show();
                 $http({
                     url: virtualDir.AdminURL + '/Shipment/PickupRequest',
                     method: "POST",
@@ -800,7 +800,7 @@ function getUrlParameter(param, dummyPath) {
                 .success(function (data, status, headers, config) {
                     $scope.message = data;
                     bootbox.dialog({
-                        message: "Thank you! Your information was successfully saved!",
+                        message: "New contact added!",
                         buttons: {
                             "success": {
                                 "label": "OK",
@@ -815,6 +815,9 @@ function getUrlParameter(param, dummyPath) {
                     alert(data);
                 });
                 //Ends herefor saving addresssbook record.
+            }
+            else {
+                $scope.message = "Invalid";
             }
         }
         //Getting selected Country Code and Country Name
@@ -1010,6 +1013,17 @@ function deleteForm(addressId) {
         callback: function (result) {
             if (result === false) {
             } else {
+                $.ajax({
+                    type: "GET",
+                    url: "/User/DeleteAddress",
+                    data: { "selectedIds": addressId },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        // Replace the div's content with the page method's return.
+                        $("#Result").text(msg.d);
+                    }
+                });
             }
         }
     })

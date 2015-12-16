@@ -2,6 +2,7 @@
 using Admin.UI.Filter;
 using Admin.UI.Utility;
 using Admin.UI.Utility.Enumerations;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
 using Newtonsoft.Json;
@@ -234,8 +235,6 @@ namespace Admin.UI.UserArea
         {
             return View();
         }
-
-       
 
         [HttpPost]
         [CustomAction]

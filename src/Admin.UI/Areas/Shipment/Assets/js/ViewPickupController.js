@@ -6,6 +6,7 @@
         $("#feedLoading").show();
         $scope.message = '';
         $scope.datasrc = '';
+
         $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             $('td:eq(2)', nRow).bind('click', function () {
                 $scope.$apply(function () {

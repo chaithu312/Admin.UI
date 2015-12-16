@@ -199,9 +199,9 @@
         $scope.pickupRequest.notification.push($scope.notification);
         $scope.valResult = {};
         $scope.sendForm = function () {
-            $("#veil").show();
-            $("#feedLoading").show();
             if ($scope.PickupForm.$valid) {
+                $("#veil").show();
+                $("#feedLoading").show();
                 $http({
                     url: virtualDir.AdminURL + '/Shipment/PickupRequest',
                     method: "POST",

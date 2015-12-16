@@ -5,17 +5,17 @@
 
 <form class="form-horizontal" role="form" name="VendorForm" data-ng-submit="sendVendorForm()" data-ng-controller="vendorController" novalidate>
 
-    <div class="form-group" ng-class="{ 'has-error':VendorForm.Name.$invalid  && VendorForm.Name.$dirty }">
+    <div class="form-group" ng-class="{ 'has-error':VendorForm.Name.$invalid  && submitted }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Nick Name </label>
 
         <div class="col-sm-9">
             <input id="Name" class="col-xs-10 col-sm-7" name="Name" type="text" data-ng-model="vendor.Name" required placeholder="Enter Name" />
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="VendorForm.Name.$error.required && VendorForm.Name.$dirty">
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="VendorForm.Name.$error.required && submitted">
                 <span class="error" data-ng-show="VendorForm.Name.$error.required">Vendor setting name is required </span>
             </span>
         </div>
     </div>
-    <div class="form-group" ng-class="{ 'has-error':VendorForm.vendortype.$invalid  && VendorForm.vendortype.$dirty}">
+    <div class="form-group" ng-class="{ 'has-error':VendorForm.vendortype.$invalid  && submitted}">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Carrier</label>
 
         <div class="col-sm-9">
@@ -26,7 +26,7 @@
                 <option value="3">FedEx</option>
                 <option value="4">UPS</option>
             </select>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="VendorForm.vendortype.$error.required && VendorForm.vendortype.$dirty">
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="VendorForm.vendortype.$error.required && submitted">
                 <span class="error" data-ng-show="VendorForm.vendortype.$error.required">Vendor Type is required </span>
             </span>
         </div>
@@ -38,34 +38,34 @@
 
     <div class="row" id="DHL" ng-if="vendor.VendorType == '1'">
 
-        <div class="form-group" ng-class="{ 'has-error':VendorForm.DHLAcc.$invalid && VendorForm.DHLAcc.$dirty }">
+        <div class="form-group" ng-class="{ 'has-error':VendorForm.DHLAcc.$invalid && submitted }">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Third Party Account#</label>
 
             <div class="col-sm-9">
 
                 <input id="DHLAcc" class="col-xs-10 col-sm-7" name="DHLAcc" type="number" data-ng-model="vendor.DHLAcc" required placeholder="Enter Third Party Account# " />
                 <span class="">
-                    <span class="error" data-ng-show="VendorForm.DHLAcc.$error.required && VendorForm.DHLAcc.$dirty">Third party account is required</span>
+                    <span class="error" data-ng-show="VendorForm.DHLAcc.$error.required && submitted">Third party account is required</span>
                 </span>
             </div>
         </div>
     </div>
 
     <div class="row" id="Endicia" ng-if="vendor.VendorType == '2'">
-        <div class="form-group" ng-class="{ 'has-error':VendorForm.EndiciaAcc.$invalid && VendorForm.EndiciaAcc.$dirty }">
+        <div class="form-group" ng-class="{ 'has-error':VendorForm.EndiciaAcc.$invalid && submitted }">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Account#</label>
 
             <div class="col-sm-9">
                 <input id="EndiciaAcc" class="col-xs-10 col-sm-7" name="EndiciaAcc" type="number" data-ng-model="vendor.EndiciaAcc" required placeholder="Enter Account#" />
                 <span class="help-inline col-xs-12 col-sm-7">
-                    <span class="error" data-ng-show="VendorForm.EndiciaAcc.$error.required && VendorForm.EndiciaAcc.$dirty">Account number is required</span>
+                    <span class="error" data-ng-show="VendorForm.EndiciaAcc.$error.required && submitted">Account number is required</span>
                 </span>
             </div>
         </div>
     </div>
 
     <div class="row" id="FedEx" ng-if="vendor.VendorType == '3'">
-        <div class="form-group" ng-class="{ 'has-error':VendorForm.FedexAcc.$invalid && VendorForm.FedexAcc.$dirty }">
+        <div class="form-group" ng-class="{ 'has-error':VendorForm.FedexAcc.$invalid && submitted }">
             <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
                 Account#
             </label>
@@ -73,18 +73,18 @@
             <div class="col-sm-9">
                 <input id="FedexAcc" class="col-xs-10 col-sm-7" name="FedexAcc" type="number" data-ng-model="vendor.FedexAcc" required placeholder="Enter Account#" />
                 <span class="help-inline col-xs-12 col-sm-7">
-                    <span class="error" data-ng-show="VendorForm.FedexAcc.$error.required && VendorForm.FedexAcc.$dirty">Account number is required</span>
+                    <span class="error" data-ng-show="VendorForm.FedexAcc.$error.required && submitted">Account number is required</span>
                 </span>
             </div>
         </div>
 
-        <div class="form-group" ng-class="{ 'has-error':VendorForm.FedexMeter.$invalid && VendorForm.FedexMeter.$dirty }">
+        <div class="form-group" ng-class="{ 'has-error':VendorForm.FedexMeter.$invalid && submitted }">
             <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">Meter#</label>
 
             <div class="col-sm-9">
                 <input id="FedexMeter" class="col-xs-10 col-sm-7" name="FedexMeter" type="number" data-ng-model="vendor.FedexMeter" required placeholder="Enter Meter#" />
                 <span class="help-inline col-xs-12 col-sm-7">
-                    <span class="error" data-ng-show="VendorForm.FedexMeter.$error.required && VendorForm.FedexMeter.$dirty">Meter number is required</span>
+                    <span class="error" data-ng-show="VendorForm.FedexMeter.$error.required && submitted">Meter number is required</span>
                 </span>
             </div>
         </div>
@@ -103,50 +103,50 @@
 
     <div class="row" id="UPS" ng-if="vendor.VendorType == '4'">
 
-        <div class="form-group" ng-class="{ 'has-error':VendorForm.UPSLicenseNo.$invalid && VendorForm.UPSLicenseNo.$dirty }">
+        <div class="form-group" ng-class="{ 'has-error':VendorForm.UPSLicenseNo.$invalid && submitted }">
             <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">License#</label>
 
             <div class="col-sm-9">
                 <input id="UPSLicenseNo" class="col-xs-10 col-sm-7" name="UPSLicenseNo" type="number" data-ng-model="vendor.UPSLicenseNo" required placeholder="Enter Licensce#" />
                 <span class="help-inline col-xs-12 col-sm-7">
-                    <span class="error" data-ng-show="VendorForm.UPSLicenseNo.$error.required && VendorForm.UPSLicenseNo.$dirty">License number is required</span>
+                    <span class="error" data-ng-show="VendorForm.UPSLicenseNo.$error.required && submitted">License number is required</span>
                 </span>
             </div>
         </div>
-        <div class="form-group" ng-class="{ 'has-error':VendorForm.UPSUserName.$invalid && VendorForm.UPSUserName.$dirty }">
+        <div class="form-group" ng-class="{ 'has-error':VendorForm.UPSUserName.$invalid && submitted }">
             <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">User Name</label>
 
             <div class="col-sm-9">
                 <input id="UPSUserName" class="col-xs-10 col-sm-7" name="UPSUserName" type="text" data-ng-model="vendor.UPSUserName" required placeholder="Enter User Name" />
                 <span class="help-inline col-xs-12 col-sm-7">
-                    <span class="error" data-ng-show="VendorForm.UPSUserName.$error.required && VendorForm.UPSUserName.$dirty">User name is required</span>
+                    <span class="error" data-ng-show="VendorForm.UPSUserName.$error.required && submitted">User name is required</span>
                 </span>
             </div>
         </div>
-        <div class="form-group" ng-class="{ 'has-error':VendorForm.UPSpassword.$invalid && VendorForm.UPSpassword.$dirty }">
+        <div class="form-group" ng-class="{ 'has-error':VendorForm.UPSpassword.$invalid && submitted }">
             <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">Password</label>
 
             <div class="col-sm-9">
                 <input id="UPSpassword" class="col-xs-10 col-sm-7" name="UPSpassword" type="password" data-ng-model="vendor.UPSpassword" required placeholder="Enter Password" />
                 <span class="help-inline col-xs-12 col-sm-7">
-                    <span class="error" data-ng-show="VendorForm.UPSpassword.$error.required && VendorForm.UPSpassword.$dirty">Password is required</span>
+                    <span class="error" data-ng-show="VendorForm.UPSpassword.$error.required && submitted">Password is required</span>
                 </span>
             </div>
         </div>
 
-        <div class="form-group" ng-class="{ 'has-error':VendorForm.UPSAcc.$invalid && VendorForm.UPSAcc.$dirty }">
+        <div class="form-group" ng-class="{ 'has-error':VendorForm.UPSAcc.$invalid && submitted }">
             <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">Third Party Account#</label>
 
             <div class="col-sm-9">
                 <input id="UPSAcc" class="col-xs-10 col-sm-7" name="UPSAcc" type="number" data-ng-model="vendor.UPSAcc" required placeholder="Enter Third Party Account#" />
                 <span class="help-inline col-xs-12 col-sm-7">
-                    <span class="error" data-ng-show="VendorForm.UPSAcc.$error.required && VendorForm.UPSAcc.$dirty">Third party account number is required</span>
+                    <span class="error" data-ng-show="VendorForm.UPSAcc.$error.required && submitted">Third party account number is required</span>
                 </span>
             </div>
         </div>
     </div>
 
-    <div class="form-group" ng-class="{ 'has-error':VendorForm.effectiveDate.$invalid && VendorForm.effectiveDate.$dirty }">
+    <div class="form-group" ng-class="{ 'has-error':VendorForm.effectiveDate.$invalid && submitted }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
             Effective Date
         </label>
@@ -157,12 +157,12 @@
                     <i class="fa fa-calendar bigger-110"></i>
                 </span>
                 <span class="help-inline col-xs-12 col-sm-7">
-                    <span class="error" data-ng-show="VendorForm.effectiveDate.$error.required && VendorForm.effectiveDate.$dirty">Effective date is required</span>
+                    <span class="error" data-ng-show="VendorForm.effectiveDate.$error.required && submittedy">Effective date is required</span>
                 </span>
             </div>
         </div>
     </div>
-    <div class="form-group" ng-class="{ 'has-error':VendorForm.expirationDate.$invalid && VendorForm.expirationDate.$dirty }">
+    <div class="form-group" ng-class="{ 'has-error':VendorForm.expirationDate.$invalid && submitted }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
             Expiration Date
         </label>
@@ -173,14 +173,14 @@
                     <i class="fa fa-calendar bigger-110"></i>
                 </span>
                 <span class="help-inline col-xs-12 col-sm-7">
-                    <span class="error" data-ng-show="VendorForm.expirationDate.$error.required && VendorForm.expirationDate.$dirty">Expiration date is required</span>
+                    <span class="error" data-ng-show="VendorForm.expirationDate.$error.required && submitted">Expiration date is required</span>
                 </span>
             </div>
         </div>
     </div>
     <div class="clearfix form-actions">
         <div class="col-md-offset-3 col-md-9">
-            <button type="submit" class="btn btn-info">
+            <button type="submit" class="btn btn-info" ng-click="submitted=true">
                 <i class="ace-icon fa fa-check bigger-110"></i>
                 Save
             </button>
