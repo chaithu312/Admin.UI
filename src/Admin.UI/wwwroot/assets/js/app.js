@@ -867,6 +867,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
             console.log('deleting user ');
         }
 
+        $("#veil").show();
+        $("#feedLoading").show();
         $scope.message = '';
         $("#veil").show();
         $("#feedLoading").show();
@@ -1023,10 +1025,10 @@ $('[data-rel=popover]').popover({ container: 'body' });
             "mDataProp": "Destination",
             "aTargets": [8]
         }, {
-            "mDataProp": "PickUpNotificationPersonalizedMessage",
+            "mDataProp": "RatePickupIndicator",
             "aTargets": [9]
         }, {
-            "mDataProp": "RatePickupIndicator",
+            "mDataProp": "PickUpNotificationPersonalizedMessage",
             "aTargets": [10]
         },
         {

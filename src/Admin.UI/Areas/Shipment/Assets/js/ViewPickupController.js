@@ -47,10 +47,10 @@
             "mDataProp": "Destination",
             "aTargets": [8]
         }, {
-            "mDataProp": "PickUpNotificationPersonalizedMessage",
+            "mDataProp": "RatePickupIndicator",
             "aTargets": [9]
         }, {
-            "mDataProp": "RatePickupIndicator",
+            "mDataProp": "PickUpNotificationPersonalizedMessage",
             "aTargets": [10]
         },
         {

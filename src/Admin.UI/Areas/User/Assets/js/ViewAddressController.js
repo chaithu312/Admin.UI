@@ -11,6 +11,8 @@
             console.log('deleting user ');
         }
 
+        $("#veil").show();
+        $("#feedLoading").show();
         $scope.message = '';
         $("#veil").show();
         $("#feedLoading").show();

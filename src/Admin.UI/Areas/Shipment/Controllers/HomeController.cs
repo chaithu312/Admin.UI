@@ -572,7 +572,7 @@ namespace Admin.UI.ShipmentArea
                 TotalPieces = (int)p["TotalPieces"],
                 Destination = (string)p["Destination"],
                 AdditionalsInstructions = (string)p["Instructions"],
-                PickUpNotificationPersonalizedMessage = (string)p["Detail"],
+                PickUpNotificationPersonalizedMessage = "<span class=\"help-inline col-xs-12 col-sm-7\"> <span class=\"help-button\" data-rel=\"popover\" data-trigger=\"hover\" data-placement=\"left\" data-content=\"" + (string)p["Detail"] + "\" title=\"\" data-original-title=\"Info\">?</span></span>",
                 RatePickupIndicator = (string)p["Confirmation"],
                 RequestID = "<div class=\"hidden-sm hidden-xs btn-group\"><button type=\"button\" onclick=\"editForm('" + (long)p["Id"] + "')\" class=\"btn btn-xs btn-info\"><i class=\"ace-icon fa fa-pencil bigger-120\"></i></button><button type=\"button\" class=\"btn btn-xs btn-danger\" ng-click=\"ViewAddressController.deleteForm(" + (long)p["Id"] + ")\"><i class=\"ace-icon fa fa-trash-o bigger-120\"></i></button></div>"
             }).ToList();
