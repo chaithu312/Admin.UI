@@ -3,7 +3,7 @@
     "SiteTitle": "ShipOS Administration"
   },
   "CDN": {
-    "ProfileEndpoint": "http://test.shipos.com/Profile/profile/",
+    "ProfileEndpoint": "http://localhost:65433/profile/",
     "RegisterEndpoint": "http://test.shipos.com/ID/api/register/",
     "IDServerEndpoint": "http://id-test.shipos.com:8080/core",
 

@@ -33,6 +33,8 @@
         $scope.contact = null;
         $scope.contact = { AddressType: null, ShortName: null, Company: null, FirstName: null, LastName: null, Phone1: null, Phone2: null, Fax: null, Email: null, CountryId: null, PostalCode: null, Division: null, City: null, Address1: null, Address2: null, Address3: null, Address1Label: "Address Line 1", Address2Label: "Address Line 2", isAddress3Visible: true, CountryCode: null };
 
+        var Id = getUrlParameter('Id');
+        console.log(Id);
         //HTTP REQUEST BELOW
         $("#veil").show();
         $("#feedLoading").show();

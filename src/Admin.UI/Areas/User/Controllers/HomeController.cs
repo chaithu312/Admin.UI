@@ -235,6 +235,8 @@ namespace Admin.UI.UserArea
             return View();
         }
 
+       
+
         [HttpPost]
         [CustomAction]
         public JsonResult AddressBook([FromBody]Address register)
@@ -337,7 +339,7 @@ namespace Admin.UI.UserArea
                     AddressType = (Utility.Enumerations.AddressTypes)(int)p["AddressType"],
                     Status = (Utility.Enumerations.Status)(int)p["Status"],
 
-                    Detail = " <div class=\"hidden-sm hidden-xs btn-group\"><button type=\"button\" onclick=\"editForm('" + (long)p["Id"] + "')\" class=\"btn btn-xs btn-info\"><i class=\"ace-icon fa fa-pencil bigger-120\"></i></button><button type=\"button\" class=\"btn btn-xs btn-danger\" ng-click=\"ViewAddressController.deleteForm(" + (long)p["Id"] + ")\"><i class=\"ace-icon fa fa-trash-o bigger-120\"></i></button></div>"
+                    Detail = " <div class=\"hidden-sm hidden-xs btn-group\"><button id=\"btnedit\" type=\"button\" onclick=\"editForm('" + (long)p["Id"] + "')\" class=\"btn btn-xs btn-info\"><i class=\"ace-icon fa fa-pencil bigger-120\"></i></button><button id=\"btndelete\" type=\"button\" class=\"btn btn-xs btn-danger\" ><i class=\"ace-icon fa fa-trash-o bigger-120\"></i></button></div>"
                 }).ToList();
 
                 return Json(viewAddress);

@@ -229,6 +229,23 @@ $('input[name=date-range-picker]').daterangepicker({
 });
 
 $('[data-rel=popover]').popover({ container: 'body' });
+
+function getUrlParameter(param, dummyPath) {
+    var sPageURL = dummyPath || window.location.search.substring(1),
+        sURLVariables = sPageURL.split(/[&||?]/),
+        res;
+
+    for (var i = 0; i < sURLVariables.length; i += 1) {
+        var paramName = sURLVariables[i],
+            sParameterName = (paramName || '').split('=');
+
+        if (sParameterName[0] === param) {
+            res = sParameterName[1];
+        }
+    }
+
+    return res;
+}
 (function () {
     function SignUpController($scope) {
         alert("a");
@@ -708,6 +725,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.contact = null;
         $scope.contact = { AddressType: null, ShortName: null, Company: null, FirstName: null, LastName: null, Phone1: null, Phone2: null, Fax: null, Email: null, CountryId: null, PostalCode: null, Division: null, City: null, Address1: null, Address2: null, Address3: null, Address1Label: "Address Line 1", Address2Label: "Address Line 2", isAddress3Visible: true, CountryCode: null };
 
+        var Id = getUrlParameter('Id');
+        console.log(Id);
         //HTTP REQUEST BELOW
         $("#veil").show();
         $("#feedLoading").show();
@@ -863,12 +882,16 @@ $('[data-rel=popover]').popover({ container: 'body' });
         $scope.myName = function (name) {
             alert('Hello ' + name);
         }
+
         console.log('deleting ');
         $scope.deleteForm = function () {
             alert('Hello ');
             console.log('deleting user ');
         }
 
+        $("#btndelete").on("click", function () {
+            alert("The paragraph was clicked.");
+        });
         $("#veil").show();
         $("#feedLoading").show();
         $scope.message = '';
@@ -960,6 +983,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             else {
                 var lim = data.length;
                 for (var i = 0; i < lim; i++) {
+                    data[i].Detail = '<div class=' + '"hidden-sm hidden-xs btn-gro/up"' + '><button i type="button"  class="btn btn-xs btn-info"><i class="ace-icon fa fa-pencil bigger-120" onclick="editForm(' + data[i].Id + ')"\ ></i></button><button type="button" class="btn btn-xs btn-danger"' + ' onclick="deleteForm(' + data[i].Id + ')"\><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div>';
                     if (data[i].AddressType == 0) {
                         data[i].AddressType = 'Recipient';
                     } else { data[i].AddressType = 'Sender'; }
@@ -978,6 +1002,22 @@ $('[data-rel=popover]').popover({ container: 'body' });
         });
     });
 })();
+
+function deleteForm(addressId) {
+    bootbox.confirm({
+        size: 'small',
+        message: "Are you sure want to delete record#?" + addressId,
+        callback: function (result) {
+            if (result === false) {
+            } else {
+            }
+        }
+    })
+}
+
+function editForm(addressId) {
+    window.location.href = "/user/addressbook?id=" + addressId;
+}
 (function () {
     var app = angular.module('mainApp');
     // create angular controller

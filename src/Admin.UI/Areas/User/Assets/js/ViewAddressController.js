@@ -5,12 +5,16 @@
         $scope.myName = function (name) {
             alert('Hello ' + name);
         }
+
         console.log('deleting ');
         $scope.deleteForm = function () {
             alert('Hello ');
             console.log('deleting user ');
         }
 
+        $("#btndelete").on("click", function () {
+            alert("The paragraph was clicked.");
+        });
         $("#veil").show();
         $("#feedLoading").show();
         $scope.message = '';
@@ -102,6 +106,7 @@
             else {
                 var lim = data.length;
                 for (var i = 0; i < lim; i++) {
+                    data[i].Detail = '<div class=' + '"hidden-sm hidden-xs btn-gro/up"' + '><button i type="button"  class="btn btn-xs btn-info"><i class="ace-icon fa fa-pencil bigger-120" onclick="editForm(' + data[i].Id + ')"\ ></i></button><button type="button" class="btn btn-xs btn-danger"' + ' onclick="deleteForm(' + data[i].Id + ')"\><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div>';
                     if (data[i].AddressType == 0) {
                         data[i].AddressType = 'Recipient';
                     } else { data[i].AddressType = 'Sender'; }
@@ -120,3 +125,19 @@
         });
     });
 })();
+
+function deleteForm(addressId) {
+    bootbox.confirm({
+        size: 'small',
+        message: "Are you sure want to delete record#?" + addressId,
+        callback: function (result) {
+            if (result === false) {
+            } else {
+            }
+        }
+    })
+}
+
+function editForm(addressId) {
+    window.location.href = "/user/addressbook?id=" + addressId;
+}
