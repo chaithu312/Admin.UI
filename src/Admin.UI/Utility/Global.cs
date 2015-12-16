@@ -8,8 +8,8 @@ namespace Admin.UI.Utility
     internal static class Global
     {
         public static string UserID { get; set; } = "4";
-
-        public static string AccountID { get; set; } = "2504051";
+        public static string AccountID { get; set; } = "2";
+        public static string PickupAccountID { get; set; } = "2504051";
         public static string VendorAccountID { get; set; } = "1";
         public static string RatePickupIndicator { get; set; } = "Y";
         public static string AccountNumber { get; set; } = "0412E6";
@@ -63,7 +63,6 @@ namespace Admin.UI.Utility
         public static string ShipmentServiceType { get; set; } = "01";
         public static string ShipmentPackageType { get; set; } = "02";
         public static string ShipmentrequestOption { get; set; } = "nonvalidate";
-		public static string AccessToken { get; set; }
-
+        public static string AccessToken { get; set; }
     }
 }

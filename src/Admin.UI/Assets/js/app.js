@@ -69,6 +69,14 @@
             template: '<ul class=\"breadcrumb\"><li><i class=\"ace-icon fa fa-home home-icon\"></i><a href=\"#\">Home</a></li><li><a href=\"#\">' + window.location.pathname.split('/')[1] + '</a></li><li class=\"active\">' + window.location.pathname.split('/')[2] + '</li></ul>'
         }
     })
+
+    app.directive('header', function () {
+        return {
+            restrict: 'E',
+            template: '<h1>' + window.location.pathname.split('/')[2] + '</h1>'
+        }
+    })
+
     app.directive('toggleSidebar', function () {
         return {
             restrict: 'E',

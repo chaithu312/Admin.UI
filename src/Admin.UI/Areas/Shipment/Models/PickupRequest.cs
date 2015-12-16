@@ -11,6 +11,7 @@ namespace Admin.UI.Areas.Shipment.Models
     {
         public string UserID { get; set; }
         public string AccountID { get; set; }
+        public string PickupAccountID { get; set; }
         public string PassPhrase { get; set; }
         public string MailClass { get; set; }
         public string RequesterID { get; set; }
@@ -128,7 +129,6 @@ namespace Admin.UI.Areas.Shipment.Models
         public string CarrierRoute { get; set; }
     }
 
-  
     public class ServiceHeader
     {
         public string MessageTime { get; set; }
@@ -148,7 +148,6 @@ namespace Admin.UI.Areas.Shipment.Models
         public Condition Condition { get; set; }
     }
 
-
     public class ResponseMessage
     {
         public string res { get; set; }
@@ -162,6 +161,7 @@ namespace Admin.UI.Areas.Shipment.Models
         public ServiceHeader ServiceHeader { get; set; }
         public Status Status { get; set; }
     }
+
     public class ViewPickup
     {
         public string Id { get; set; }

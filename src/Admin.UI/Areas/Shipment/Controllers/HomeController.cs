@@ -456,7 +456,8 @@ namespace Admin.UI.ShipmentArea
 
                         pickupRequest.PackageLocation = Global.PackageLocation;//TODO:
                         pickupRequest.RequesterID = Global.RequesterID;
-                        pickupRequest.AccountID = Global.AccountID;
+                        pickupRequest.PickupAccountID = Global.PickupAccountID;
+
                         pickupRequest.PassPhrase = Global.PassPhrase;
                         pickupRequest.RequestID = Global.RequestID;
                         pickupRequest.UseAddressOnFile = Global.UseAddressOnFile;
@@ -517,7 +518,7 @@ namespace Admin.UI.ShipmentArea
                     if (errorResponse == null)
                     {
                         if (routes_list.ConfirmationNumber == null)
-                            return Json("Error:-" + routes_list.ErrorMessage);
+                            return Json(routes_list.ErrorMessage);
                         else
                             return Json("PRN:-" + routes_list.ConfirmationNumber);
                     }
@@ -548,7 +549,7 @@ namespace Admin.UI.ShipmentArea
         [CustomAction]
         public JsonResult GetAllPickup()
         {
-            string strPostData = "accountId=2";
+            string strPostData = "accountId=2&orderby=Created&sortdir=DESC";
             string url = Constants.APIURL + "/DHL/Get?" + strPostData;
 
             HttpWebResponse response = ClientHttp.GetAsync(url);
@@ -573,7 +574,7 @@ namespace Admin.UI.ShipmentArea
                 AdditionalsInstructions = (string)p["Instructions"],
                 PickUpNotificationPersonalizedMessage = (string)p["Detail"],
                 RatePickupIndicator = (string)p["Confirmation"],
-                RequestID = "<a href='/adminui/Shipment/PickUpRequest/" + (string)p["Id"] + "'>Edit</a> <a href = '/adminui/Shipment/PickUpRequestDelete/" + (string)p["Id"] + "' > Delete </a> "
+                RequestID = "<div class=\"hidden-sm hidden-xs btn-group\"><button type=\"button\" onclick=\"editForm('" + (long)p["Id"] + "')\" class=\"btn btn-xs btn-info\"><i class=\"ace-icon fa fa-pencil bigger-120\"></i></button><button type=\"button\" class=\"btn btn-xs btn-danger\" ng-click=\"ViewAddressController.deleteForm(" + (long)p["Id"] + ")\"><i class=\"ace-icon fa fa-trash-o bigger-120\"></i></button></div>"
             }).ToList();
 
             var result = JsonConvert.SerializeObject(viewpickup);

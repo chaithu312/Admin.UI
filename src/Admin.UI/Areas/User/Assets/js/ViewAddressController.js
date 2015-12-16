@@ -1,7 +1,16 @@
 ﻿(function () {
     var validationApp = angular.module('mainApp');
     // create angular controller
-    validationApp.controller('ViewAddressController', function ($scope, $http, virtualDir) {
+    validationApp.controller('ViewAddressController', function ($scope, $http) {
+        $scope.myName = function (name) {
+            alert('Hello ' + name);
+        }
+        console.log('deleting ');
+        $scope.deleteForm = function () {
+            alert('Hello ');
+            console.log('deleting user ');
+        }
+
         $scope.message = '';
         $("#veil").show();
         $("#feedLoading").show();
@@ -64,7 +73,7 @@
 
         $http({
             method: 'GET',
-            url: virtualDir.AdminURL + '/User/Home/GetAllAddress',
+            url: '/User/Home/GetAllAddress',
             //data: $scope.SelectedCountry.CountryCode,
             //params: { countryId: $scope.contact.CountryId },
             headers: {

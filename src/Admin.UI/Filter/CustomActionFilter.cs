@@ -31,7 +31,7 @@ namespace Admin.UI.Filter
             var isLogin = filterContext.HttpContext.Session.GetString("AccessToken");
             if (isLogin == null)
             {
-                filterContext.Result = new RedirectToActionResult("Index", "Home", null);
+                //  filterContext.Result = new RedirectToActionResult("Index", "Home", null);
             }
             else
             {

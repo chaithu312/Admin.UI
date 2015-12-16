@@ -22,6 +22,7 @@ namespace Admin.UI.UserArea
     {
         public IActionResult Index()
         {
+            ViewBag.t = HttpContext.Session.GetString("Welcome");
             return View();
         }
 
@@ -116,6 +117,7 @@ namespace Admin.UI.UserArea
                         }
                         else
                         {
+                            HttpContext.Session.SetString("Welcome", x.HttpErrorReason + x.HttpErrorStatusCode);
                             return View("Index");
                         }
                     }
@@ -266,8 +268,8 @@ namespace Admin.UI.UserArea
         public JsonResult Country()
         {
             var client = new HttpClient();
-            string strPostData = "orderby=Name&sortdir=ASC";
-            var result = client.GetStringAsync(Constants.Profile + "Country?" + strPostData).Result;
+            string PostData = "orderby=Name&sortdir=ASC";
+            var result = client.GetStringAsync(Constants.Profile + "Country?" + PostData).Result;
             //var result = client.GetStringAsync(Constants.Profile + "Country").Result;
 
             return Json(result);
@@ -322,17 +324,20 @@ namespace Admin.UI.UserArea
                 JArray varAddress = JArray.Parse(objData.ToString());
                 IList<Address> viewAddress = varAddress.Select(p => new Address
                 {
+                    Id = (long)p["Id"],
                     Name = (string)p["Name"],
                     Address1 = (string)p["Address1"],
                     City = (string)p["City"],
                     Division = (string)p["Division"],
+                    ShortName = (string)p["ShortName"],
                     CountryId = (string)p["CountryId"],
                     PostalCode = (string)p["PostalCode"],
                     Phone1 = (string)p["Phone1"].ToString(),
                     EMail = (string)p["EMail"].ToString(),
                     AddressType = (Utility.Enumerations.AddressTypes)(int)p["AddressType"],
                     Status = (Utility.Enumerations.Status)(int)p["Status"],
-                    Detail = "<a href='/adminui/User/AddressBook/" + (string)p["Id"] + "'>Edit</a> <a href = '/adminui/User/AddressBookDelete/" + (string)p["Id"] + "' > Delete </a> "
+
+                    Detail = " <div class=\"hidden-sm hidden-xs btn-group\"><button type=\"button\" onclick=\"editForm('" + (long)p["Id"] + "')\" class=\"btn btn-xs btn-info\"><i class=\"ace-icon fa fa-pencil bigger-120\"></i></button><button type=\"button\" class=\"btn btn-xs btn-danger\" ng-click=\"ViewAddressController.deleteForm(" + (long)p["Id"] + ")\"><i class=\"ace-icon fa fa-trash-o bigger-120\"></i></button></div>"
                 }).ToList();
 
                 return Json(viewAddress);

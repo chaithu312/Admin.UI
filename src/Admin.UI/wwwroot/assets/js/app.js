@@ -69,6 +69,14 @@
             template: '<ul class=\"breadcrumb\"><li><i class=\"ace-icon fa fa-home home-icon\"></i><a href=\"#\">Home</a></li><li><a href=\"#\">' + window.location.pathname.split('/')[1] + '</a></li><li class=\"active\">' + window.location.pathname.split('/')[2] + '</li></ul>'
         }
     })
+
+    app.directive('header', function () {
+        return {
+            restrict: 'E',
+            template: '<h1>' + window.location.pathname.split('/')[2] + '</h1>'
+        }
+    })
+
     app.directive('toggleSidebar', function () {
         return {
             restrict: 'E',
@@ -309,7 +317,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 (function () {
     var app = angular.module('mainApp');
 
-    app.controller('PickupRequestController', function ($scope, $http, virtualDir) {
+    app.controller('PickupRequestController', function ($scope, $http, virtualDir, $filter) {
         //$scope.pickupRequest = pickupModels.Pickup;
         $scope.notification = {
             Mobile: [{
@@ -366,7 +374,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             }
         }).success(function (data, status, headers, config) {
             $scope.message = '';
-            var successresult = (JSON.parse(data)).Result;
+            var successresult = data;
             if (data != "One or more errors occurred.") {
                 for (var i = 0; i < successresult.length; i++) {
                     $scope.Address.push(successresult[i]);
@@ -415,7 +423,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             $scope.message = '';
         });
 
-        $scope.GetAddressValue = function (address) {
+        $scope.GetAddressValue = function () {
             var addressType = $scope.pickupRequest.AddressType;
             if (addressType == "0") {
                 $scope.pickupRequest.ContactName = null
@@ -463,7 +471,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         }
 
         $scope.SetCountryAndCode = function () {
-            var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.pickupRequest.CountryId); })[0];
+            var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id == Number($scope.pickupRequest.CountryId); })[0];
             $scope.pickupRequest.Country = countryfiltered.Name;
             $scope.pickupRequest.CountryCode = countryfiltered.Code;
         }
@@ -849,7 +857,16 @@ $('[data-rel=popover]').popover({ container: 'body' });
 (function () {
     var validationApp = angular.module('mainApp');
     // create angular controller
-    validationApp.controller('ViewAddressController', function ($scope, $http, virtualDir) {
+    validationApp.controller('ViewAddressController', function ($scope, $http) {
+        $scope.myName = function (name) {
+            alert('Hello ' + name);
+        }
+        console.log('deleting ');
+        $scope.deleteForm = function () {
+            alert('Hello ');
+            console.log('deleting user ');
+        }
+
         $scope.message = '';
         $("#veil").show();
         $("#feedLoading").show();
@@ -912,7 +929,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
         $http({
             method: 'GET',
-            url: virtualDir.AdminURL + '/User/Home/GetAllAddress',
+            url: '/User/Home/GetAllAddress',
             //data: $scope.SelectedCountry.CountryCode,
             //params: { countryId: $scope.contact.CountryId },
             headers: {
@@ -1006,18 +1023,15 @@ $('[data-rel=popover]').popover({ container: 'body' });
             "mDataProp": "Destination",
             "aTargets": [8]
         }, {
-            "mDataProp": "AdditionalsInstructions",
+            "mDataProp": "PickUpNotificationPersonalizedMessage",
             "aTargets": [9]
         }, {
-            "mDataProp": "PickUpNotificationPersonalizedMessage",
-            "aTargets": [10]
-        }, {
             "mDataProp": "RatePickupIndicator",
-            "aTargets": [11]
+            "aTargets": [10]
         },
         {
             "mDataProp": "RequestID",
-            "aTargets": [12]
+            "aTargets": [11]
         }];
 
         $scope.overrideOptions = {
@@ -1025,7 +1039,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
             "iCookieDuration": 2419200,
             /* 1 month */
             "bJQueryUI": true,
-            "bPaginate": false,
+            "bPaginate": true,
             "bLengthChange": false,
             "bFilter": true,
             "bInfo": true,

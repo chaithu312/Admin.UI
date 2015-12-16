@@ -47,18 +47,15 @@
             "mDataProp": "Destination",
             "aTargets": [8]
         }, {
-            "mDataProp": "AdditionalsInstructions",
+            "mDataProp": "PickUpNotificationPersonalizedMessage",
             "aTargets": [9]
         }, {
-            "mDataProp": "PickUpNotificationPersonalizedMessage",
-            "aTargets": [10]
-        }, {
             "mDataProp": "RatePickupIndicator",
-            "aTargets": [11]
+            "aTargets": [10]
         },
         {
             "mDataProp": "RequestID",
-            "aTargets": [12]
+            "aTargets": [11]
         }];
 
         $scope.overrideOptions = {
@@ -66,7 +63,7 @@
             "iCookieDuration": 2419200,
             /* 1 month */
             "bJQueryUI": true,
-            "bPaginate": false,
+            "bPaginate": true,
             "bLengthChange": false,
             "bFilter": true,
             "bInfo": true,

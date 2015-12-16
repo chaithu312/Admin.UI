@@ -1,7 +1,7 @@
 ﻿(function () {
     var app = angular.module('mainApp');
 
-    app.controller('PickupRequestController', function ($scope, $http, virtualDir) {
+    app.controller('PickupRequestController', function ($scope, $http, virtualDir, $filter) {
         //$scope.pickupRequest = pickupModels.Pickup;
         $scope.notification = {
             Mobile: [{
@@ -58,7 +58,7 @@
             }
         }).success(function (data, status, headers, config) {
             $scope.message = '';
-            var successresult = (JSON.parse(data)).Result;
+            var successresult = data;
             if (data != "One or more errors occurred.") {
                 for (var i = 0; i < successresult.length; i++) {
                     $scope.Address.push(successresult[i]);
@@ -107,7 +107,7 @@
             $scope.message = '';
         });
 
-        $scope.GetAddressValue = function (address) {
+        $scope.GetAddressValue = function () {
             var addressType = $scope.pickupRequest.AddressType;
             if (addressType == "0") {
                 $scope.pickupRequest.ContactName = null
@@ -155,7 +155,7 @@
         }
 
         $scope.SetCountryAndCode = function () {
-            var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id === Number($scope.pickupRequest.CountryId); })[0];
+            var countryfiltered = $filter('filter')($scope.Country, function (d) { return d.Id == Number($scope.pickupRequest.CountryId); })[0];
             $scope.pickupRequest.Country = countryfiltered.Name;
             $scope.pickupRequest.CountryCode = countryfiltered.Code;
         }

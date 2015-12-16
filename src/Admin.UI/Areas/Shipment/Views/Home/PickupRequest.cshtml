@@ -3,32 +3,32 @@
     Layout = "~/Views/shared/_layout.cshtml";
 }
 
-<form name="PickupForm" data-ng-submit="sendForm()" data-ng-controller="PickupRequestController" class="form-horizontal" role="form" novalidate>
+<form name="PickupForm" data-ng-submit="sendForm()" data-ng-controller="PickupRequestController" class="form-horizontal" novalidate>
 
-    <div class="form-group" ng-class="{ 'has-error':PickupForm.contactName.$invalid }">
+    <div class="form-group" ng-class="{ 'has-error':PickupForm.contactName.$invalid && PickupForm.contactName.$dirty }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">  Contact Name</label>
 
         <div class="col-sm-9">
 
-            <input type="text" class="col-xs-10 col-sm-5" id="contactName" name="contactName" data-ng-model="pickupRequest.ContactName" required>
+            <input type="text" class="col-xs-10 col-sm-5" id="contactName" name="contactName" data-ng-model="pickupRequest.ContactName" required placeholder="Enter Contact Name">
 
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.contactName.$error.required">
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.contactName.$error.required && PickupForm.contactName.$dirty">
                 Contact Name is required.
             </span>
         </div>
     </div>
 
-    <div class="form-group" ng-class="{ 'has-error':PickupForm.phone.$invalid }">
+    <div class="form-group" ng-class="{ 'has-error':PickupForm.phone.$invalid && PickupForm.phone.$dirty }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
             Phone
         </label>
 
         <div class="col-sm-9">
-            <input type="number" class="col-xs-10 col-sm-5" placeholder="" id="phone" name="phone" data-ng-model="pickupRequest.Phone" required>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.phone.$error.required">
+            <input type="number" class="col-xs-10 col-sm-5" placeholder="Enter Phone" id="phone" name="phone" data-ng-model="pickupRequest.Phone" required>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.phone.$error.required && PickupForm.phone.$dirty">
                 Phone is required.
             </span>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.phone.$invalid">
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.phone.$invalid && PickupForm.phone.$dirty">
             </span>
         </div>
     </div>
@@ -41,32 +41,34 @@
         <div class="col-sm-9">
 
             <select id="AddressType" class="col-xs-10 col-sm-5" data-ng-model="pickupRequest.AddressType" name="AddressType"
-                    data-ng-options="address.Id as address.ShortName for address in Address track by address.Id" data-ng-change="GetAddressValue()" required></select>
+                    data-ng-options="address.Id as address.ShortName for address in Address track by address.Id" data-ng-change="GetAddressValue()" required>
+                <option value='' disabled selected>Please Choose</option>
+            </select>
             &nbsp; <i ngValidationResult="pickupRequest.$errors.AddressType"><label></label></i>
         </div>
     </div>
-    <div ng-if="pickupRequest.AddressType == 0" class="form-group" ng-class="{ 'has-error':PickupForm.addressCaption.$invalid }">
+    <div ng-if="pickupRequest.AddressType == 0" class="form-group" ng-class="{ 'has-error':PickupForm.addressCaption.$invalid && PickupForm.addressCaption.$dirty }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
             Address Caption
         </label>
 
         <div class="col-sm-9">
-            <input type="text" class="col-xs-10 col-sm-5" placeholder="" id="addressCaption" name="addressCaption" data-ng-model="pickupRequest.AddressCaption" required>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.addressCaption.$error.required">
+            <input type="text" class="col-xs-10 col-sm-5" placeholder="Enter Address Caption" id="addressCaption" name="addressCaption" data-ng-model="pickupRequest.AddressCaption" required>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.addressCaption.$error.required && PickupForm.addressCaption.$dirty">
                 Address Caption is required.
             </span>
         </div>
     </div>
 
-    <div class="form-group" ng-class="{ 'has-error':PickupForm.addressLine1.$invalid }">
+    <div class="form-group" ng-class="{ 'has-error':PickupForm.addressLine1.$invalid && PickupForm.addressLine1.$dirty }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
             Address Line 1
         </label>
 
         <!-- #section:plugins/input.masked-input -->
         <div class="col-sm-9">
-            <input type="text" class="col-xs-10 col-sm-5" placeholder="" id="addressLine1" name="addressLine1" data-ng-model="pickupRequest.Address1" ng-disabled="pickupRequest.isDisabled" required>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.addressLine1.$error.required">
+            <input type="text" class="col-xs-10 col-sm-5" placeholder="Enter Address" id="addressLine1" name="addressLine1" data-ng-model="pickupRequest.Address1" ng-disabled="pickupRequest.isDisabled" required>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.addressLine1.$error.required && PickupForm.addressLine1.$dirty">
                 Address line1  is required.
             </span>
         </div>
@@ -85,34 +87,36 @@
         </div>
     </div>
 
-    <div class="form-group" ng-class="{ 'has-error':PickupForm.city.$invalid }">
+    <div class="form-group" ng-class="{ 'has-error':PickupForm.city.$invalid && PickupForm.city.$dirty }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
             City
         </label>
         <!-- #section:plugins/input.masked-input -->
         <div class="col-sm-9">
-            <input type="text" class="col-xs-10 col-sm-5" placeholder="" id="city" name="city" data-ng-model="pickupRequest.City" ng-disabled="pickupRequest.isDisabled" required>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.addressLine2.$error.required">
+            <input type="text" class="col-xs-10 col-sm-5" placeholder="Enter City" id="city" name="city" data-ng-model="pickupRequest.City" ng-disabled="pickupRequest.isDisabled" required>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.city.$error.required && PickupForm.city.$dirty">
                 city  is required.
             </span>
         </div>
     </div>
 
-    <div class="form-group" ng-class="{ 'has-error':PickupForm.CountryId.$invalid }">
+    <div class="form-group" ng-class="{ 'has-error':PickupForm.CountryId.$invalid && PickupForm.CountryId.$dirty }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
             Country
         </label>
         <!-- #section:plugins/input.masked-input -->
         <div class="col-sm-9">
             <select id="CountryId" class="col-xs-10 col-sm-5" data-ng-model="pickupRequest.CountryId" name="CountryId"
-                    data-ng-options="country.Id as country.Name for country in Country track by country.Id" data-ng-change="GetValue()" ng-disabled="pickupRequest.isDisabled" required></select>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.addressLine2.$error.required">
+                    data-ng-options="country.Id as country.Name for country in Country track by country.Id" data-ng-change="GetValue()" ng-disabled="pickupRequest.isDisabled" required>
+                <option value='' disabled selected>Please Choose</option>
+            </select>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.CountryId.$error.required  && PickupForm.CountryId.$dirty">
                 CountryId is required.
             </span>
         </div>
     </div>
 
-    <div class="form-group" ng-class="{ 'has-error':PickupForm.Division.$invalid }">
+    <div class="form-group" ng-class="{ 'has-error':PickupForm.Division.$invalid && PickupForm.Division.$dirty }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
             Division
         </label>
@@ -120,22 +124,24 @@
         <div class="col-sm-9">
 
             <select id="Division" class="col-xs-10 col-sm-5" data-ng-model="pickupRequest.Division" name="Division"
-                    data-ng-options="state.Id as state.Name for state in States track by state.Id" ng-disabled="pickupRequest.isDisabled" required></select>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.addressLine2.$error.required">
+                    data-ng-options="state.Id as state.Name for state in States track by state.Id" ng-disabled="pickupRequest.isDisabled" required>
+                <option value='' disabled selected>Please Choose</option>
+            </select>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.Division.$error.required && PickupForm.Division.$dirty">
                 Division  is required.
             </span>
         </div>
     </div>
 
-    <div class="form-group" ng-class="{ 'has-error':PickupForm.zipCode.$invalid }">
+    <div class="form-group" ng-class="{ 'has-error':PickupForm.zipCode.$invalid && PickupForm.zipCode.$dirty }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
-            Zip Code
+            Postal Code
         </label>
         <!-- #section:plugins/input.masked-input -->
         <div class="col-sm-9">
-            <input type="text" class="col-xs-10 col-sm-5" placeholder="" id="zipCode" name="zipCode" data-ng-model="pickupRequest.ZipCode" ng-disabled="pickupRequest.isDisabled" required>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.addressLine2.$error.required">
-                zipCode  is required.
+            <input type="text" class="col-xs-10 col-sm-5" placeholder="Enter Postal Code" id="zipCode" name="zipCode" data-ng-model="pickupRequest.ZipCode" ng-disabled="pickupRequest.isDisabled" required>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.zipCode.$error.required && PickupForm.zipCode.$dirty">
+                Postal Code  is required.
             </span>
         </div>
     </div>
@@ -167,77 +173,82 @@
     <div class="row">
         <div class="col-xs-12 col-sm-5">
             <div class="control-group">
-                <div class="form-group" ng-class="{ 'has-error':PickupForm.ddlCarrier.$invalid }">
+                <div class="form-group" ng-class="{ 'has-error':PickupForm.ddlCarrier.$invalid && PickupForm.ddlCarrier.$dirty }">
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
                         Carrier
                     </label>
 
                     <div class="col-sm-9">
                         <select id="ddlCarrier" class="form-control" data-ng-model="pickupRequest.Carrier" name="ddlCarrier"
-                                data-ng-options="carrier.Id as carrier.Name for carrier in Carriers.Data track by carrier.Id" required></select>
-                        <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.ddlCarrier.$error.required">
+                                data-ng-options="carrier.Id as carrier.Name for carrier in Carriers.Data track by carrier.Id" required>
+                            <option value='' disabled selected>Please Choose</option>
+                        </select>
+                        <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.ddlCarrier.$error.required && PickupForm.ddlCarrier.$dirty">
                             Carrier is required.
                         </span>
                     </div>
                 </div>
 
-                <div class="form-group" ng-class="{ 'has-error':PickupForm.pickupfrom.$invalid }">
+                <div class="form-group" ng-class="{ 'has-error':PickupForm.pickupfrom.$invalid && PickupForm.pickupfrom.$dirty }">
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
                         Pickup From
                     </label>
 
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" placeholder="" id="pickupfrom" name="pickupfrom" data-ng-model="pickupRequest.PickupFrom" required>
+                        <input type="text" class="form-control" placeholder="Enter Pickup From" id="pickupfrom" name="pickupfrom" data-ng-model="pickupRequest.PickupFrom" required>
                         <span class="help-inline col-xs-12 col-sm-7">
                             <span class="help-button" data-rel="popover" data-trigger="hover" data-placement="left" data-content="If different than the contact name" title="Info">?</span>
-                        </span> <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.pickupfrom.$error.required">
+                        </span> <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.pickupfrom.$error.required && PickupForm.pickupfrom.$dirty">
                             Pickup From  is required.
                         </span>
                     </div>
                 </div>
-                <div class="form-group" ng-class="{ 'has-error':PickupForm.datepicker.$invalid }">
+                <div class="form-group" ng-class="{ 'has-error':PickupForm.datepicker.$invalid && PickupForm.datepicker.$dirty }">
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
                         Pickup Date
                     </label>
 
                     <div class="col-sm-9">
                         <div class="input-group">
-                            <input type="text" data-date-format="dd-mm-yyyy" id="datepicker" name="datepicker" data-ng-model="pickupRequest.PickupDate" class="form-control date-picker" required>
+                            <input type="text" data-date-format="dd-mm-yyyy" id="datepicker" name="datepicker" data-ng-model="pickupRequest.PickupDate" class="form-control date-picker" required placeholder="Enter Pickup Date">
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
                         </div>
-                        <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.datepicker.$error.required">
+                        <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.datepicker.$error.required && PickupForm.datepicker.$dirty">
                             Pickup Date  is required.
                         </span>
                     </div>
                 </div>
-                <div class="form-group" ng-class="{ 'has-error':PickupForm.ddldestination.$invalid }">
+                <div class="form-group" ng-class="{ 'has-error':PickupForm.ddldestination.$invalid && PickupForm.ddldestination.$dirty }">
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
                         Destination
                     </label>
                     <!-- #section:plugins/input.masked-input -->
                     <div class="col-sm-9">
                         <select id="ddldestination" class="form-control" data-ng-model="pickupRequest.Destination" name="ddldestination"
-                                data-ng-options="destination.Id as destination.Name  for destination in Destination.Data track by destination.Id" required></select>
-                        <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.ddldestination.$error.required">
+                                data-ng-options="destination.Id as destination.Name  for destination in Destination.Data track by destination.Id" required>
+                            <option value='' disabled selected>Please Choose</option>
+                        </select>
+                        <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.ddldestination.$error.required && PickupForm.ddldestination.$dirty">
                             Destination  is required.
                         </span>
                     </div>
                 </div>
-                <div class="form-group" ng-class="{ 'has-error':PickupForm.parcelType.$invalid }">
+                <div class="form-group" ng-class="{ 'has-error':PickupForm.parcelType.$invalid && PickupForm.parcelType.$dirty }">
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
                         Parcel type
                     </label>
 
                     <div class="col-sm-9">
                         <select name="parcelType" id="parcelType" class="form-control" ng-model="pickupRequest.ParcelType" ng-dropdown required>
+                            <option value='' disabled selected>Please Choose</option>
                             <option ng-option value="1">Document</option>
                             <option ng-option value="2">Standard Package (Can be carrier by one person)</option>
                             <option ng-option value="3">Has Heavy Piece(s) weight is more than 35 lbs</option>
                             <option ng-option value="4">Has Bulky Piece(s) at least one dimension is larger than 40 inches</option>
                         </select>
-                        <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.parcelType.$error.required">
+                        <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.parcelType.$error.required && PickupForm.parcelType.$dirty">
                             Parcel Type is required.
                         </span>
                     </div>
@@ -246,29 +257,29 @@
         </div>
         <div class="col-xs-12 col-sm-5">
             <div class="control-group">
-                <div class="form-group" ng-class="{ 'has-error':PickupForm.timepicker2.$invalid }">
+                <div class="form-group" ng-class="{ 'has-error':PickupForm.timepicker2.$invalid && PickupForm.timepicker2.$dirty }">
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
                         Ready Time
                     </label>
 
                     <div class="col-sm-9">
                         <div class="bootstrap-timepicker input-group">
-                            <input type="text" class="form-control" data-ng-model="pickupRequest.ReadyTime" data-format="hh:mm" id="timepicker2" name="timepicker2" required>
+                            <input type="text" class="form-control" data-ng-model="pickupRequest.ReadyTime" data-format="hh:mm" id="timepicker2" name="timepicker2" required placeholder="Enter Ready Time">
                             <span class="input-group-addon">
                                 <i class="fa fa-clock-o bigger-110"></i>
                             </span>
                         </div>
-                        <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.timepicker2.$error.required">
+                        <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.timepicker2.$error.required && PickupForm.timepicker2.$dirty">
                             Ready Time is required.
                         </span>
                     </div>
                 </div>
-                <div class="form-group" ng-class="{ 'has-error':PickupForm.timepicker1.$invalid }">
-                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Last Available Time <span class="error" data-ng-show="PickupForm.timepicker1.$error.required">*</span></label>
+                <div class="form-group" ng-class="{ 'has-error':PickupForm.timepicker1.$invalid && PickupForm.timepicker1.$dirty }">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Last Available Time <span class="error" data-ng-show="PickupForm.timepicker1.$error.required && PickupForm.timepicker1.$dirty">*</span></label>
                     <!-- #section:plugins/input.masked-input -->
                     <div class="col-sm-9">
                         <div class="bootstrap-timepicker input-group">
-                            <input type="text" class="form-control" data-ng-model="pickupRequest.AvailableTime" id="timepicker1" name="timepicker1" data-format="hh:mm" required>
+                            <input type="text" class="form-control" data-ng-model="pickupRequest.AvailableTime" id="timepicker1" name="timepicker1" data-format="hh:mm" required placeholder="Enter Available Time">
 
                             <span class="input-group-addon">
                                 <i class="fa fa-clock-o bigger-110"></i>
@@ -278,20 +289,20 @@
                                 Invalid last available time!
                             </span>
                         </div>
-                        <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.timepicker1.$error.required">
+                        <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.timepicker1.$error.required && PickupForm.timepicker1.$dirty">
                             Last Available Time is required.
                         </span>
                     </div>
                 </div>
 
-                <div class="form-group" ng-class="{ 'has-error':PickupForm.totalPieces.$invalid }">
+                <div class="form-group" ng-class="{ 'has-error':PickupForm.totalPieces.$invalid && PickupForm.totalPieces.$dirty }">
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
                         Total Pieces
                     </label>
 
                     <div class="col-sm-9">
-                        <input type="number" class="form-control" placeholder="" id="totalPieces" name="totalPieces" data-ng-model="pickupRequest.TotalPieces" min="1" required>
-                        <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.totalPieces.$error.required">
+                        <input type="number" class="form-control" placeholder="Enter Total # of Pieces" id="totalPieces" name="totalPieces" data-ng-model="pickupRequest.TotalPieces" min="1" required>
+                        <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.totalPieces.$error.required && PickupForm.totalPieces.$dirty">
                             Total Pieces  is required.
                         </span>
                     </div>
