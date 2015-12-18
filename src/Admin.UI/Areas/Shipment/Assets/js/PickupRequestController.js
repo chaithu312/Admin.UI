@@ -1,7 +1,7 @@
 ﻿(function () {
     var app = angular.module('mainApp');
 
-    app.controller('PickupRequestController', function ($scope, $http, virtualDir, $filter) {
+    app.controller('PickupRequestController', function ($scope, $http, $location,virtualDir, $filter) {
         //$scope.pickupRequest = pickupModels.Pickup;
         $scope.notification = {
             Mobile: [{
@@ -37,7 +37,7 @@
 
         $scope.pickupRequest = null;
 
-        $scope.pickupRequest = { ContactName: null, Phone: null, PickupFrom: null, Address1: null, Address2: null, City: null, ZipCode: null, CountryId: null, Division: null, isDisabled: null, notification: [] }
+        $scope.pickupRequest = {ContactName: null, Phone: null, PickupFrom: null, Address1: null, Address2: null, City: null, ZipCode: null, CountryId: null, Division: null, isDisabled: null, notification: [] }
 
         var AllAddress = new Array();
         var selectedAddress = null;
@@ -160,6 +160,74 @@
             $scope.pickupRequest.CountryCode = countryfiltered.Code;
         }
 
+        //Editing of Pickup working here
+        if ($location.absUrl().split("?").length > 1) {
+            var selectedAddress = [];
+            var Id = $location.absUrl().split("/");
+            var editdata = Id[5];
+            var editrow = editdata.split("?");
+            $http({
+                method: 'GET',
+                url: virtualDir.AdminURL + '/Shipment/Home/GetAllPickup',
+                //data: $scope.SelectedCountry.CountryCode,
+                //params: { countryId: $scope.contact.CountryId },
+                headers: {
+                    'RequestVerificationToken': $scope.antiForgeryToken
+                }
+            }).success(function (data, status, headers, config) {
+                $scope.message = '';
+                if (data.success == false) {
+                    var str = '';
+                    for (var error in data.errors) {
+                        str += data.errors[error] + '\n';
+                    }
+                    $scope.message = str;
+                }
+                else {
+                    var viewpickup = JSON.parse(data);
+                    var selectedPickup = $filter('filter')(viewpickup, function (d) { return d.Id == editrow[1] })[0];
+                    $scope.bindPickupAddress(selectedPickup);
+                    $("#veil").hide();
+                    $("#feedLoading").hide();
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.message = 'Unexpected Error';
+            });
+        }
+
+        $scope.bindPickupAddress = function (pickup)
+        {
+            $scope.pickupRequest.Id = pickup.Id;
+            $scope.pickupRequest.ContactName = pickup.ContactName;
+            $scope.pickupRequest.Phone = parseInt(pickup.Phone);
+            $scope.pickupRequest.Address1 = pickup.Address1;
+            $scope.pickupRequest.Address2 = pickup.Address2;
+            $scope.pickupRequest.City = pickup.City;
+            $scope.pickupRequest.ZipCode = pickup.ZipCode;
+            $scope.pickupRequest.CountryId = pickup.CountryID;
+            $scope.pickupRequest.Division = pickup.Division;
+
+            $scope.pickupRequest.PickupFrom = pickup.PickupFrom;
+            $scope.pickupRequest.ReadyTime = pickup.ReadyTime;
+            $scope.pickupRequest.AvailableTime = pickup.AvailableTime;
+            $scope.pickupRequest.PickupDate = pickup.PickupDate;
+
+            $scope.pickupRequest.TotalPieces = pickup.TotalPieces;
+            $scope.pickupRequest.Destination = pickup.Destination;
+
+            $scope.pickupRequest.ParcelType = pickup.ParcelType;
+            $scope.pickupRequest.isDisabled = true;
+            $scope.$apply();
+
+            $("#CountryId").find('option[value=' + pickup.CountryID + ']').attr('selected', 'selected');
+
+            $("#Division").find('option[label=' + pickup.Division + ']').attr('selected', 'selected');
+
+            $("#ddldestination").find('option[value=' + pickup.Destination + ']').attr('selected', 'selected');
+
+            $("#parcelType").find('option[value=' + pickup.ParcelType + ']').attr('selected', 'selected');
+        }
+        //Ends here editing of pickup
         //Cut above
         //Ends here getting country detail
 

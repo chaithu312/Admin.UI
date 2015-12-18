@@ -571,20 +571,27 @@ namespace Admin.UI.ShipmentArea
             JArray varPickUP = JArray.Parse(objData.ToString());
             IList<PickupRequest> viewpickup = varPickUP.Select(p => new PickupRequest
             {
-                ContactName = (string)p["Name"],
+				Id= (long)p["Id"],
+				ContactName = (string)p["Name"],
                 Phone = (string)p["Phone"],
                 PickUpNotificationEmail = (string)p["EMail"],
                 Address1 = (string)p["Address1"],
-                City = (string)p["City"],
-                PickupFrom = (string)p["PickupFrom"],
+				Address2 = (string)p["Address2"],
+				City = (string)p["City"],
+				ZipCode= (string)p["PostalCode"],
+				CountryID= (string)p["CountryId"],
+				Division = (string)p["Division"],
+				PickupFrom = (string)p["PickupFrom"],
                 ReadyTime = (string)p["ReadyTime"].ToString().Substring(p["ReadyTime"].ToString().Length - 11, 5),
                 AvailableTime = (string)p["AvailableUntil"].ToString().Substring(p["AvailableUntil"].ToString().Length - 11, 5),
                 TotalPieces = (int)p["TotalPieces"],
                 Destination = (string)p["Destination"],
-                AdditionalsInstructions = (string)p["Instructions"],
+				ParcelType = (int)p["ParcelType"],
+				//PickupDate = DateTime.ParseExact((string)p["Created"], "MM-dd-yyyy", null).ToString("dd-MM-yyyy"),
+				AdditionalsInstructions = (string)p["Instructions"],
                 PickUpNotificationPersonalizedMessage = "<span class=\"help-inline col-xs-12 col-sm-7\"> <span class=\"help-button\" data-rel=\"popover\" data-trigger=\"hover\" data-placement=\"left\" data-content='" + (string)p["Detail"] + "' title=\"\" data-original-title=\"Info\">?</span></span>",
                 RatePickupIndicator = (string)p["Confirmation"],
-                RequestID = "<div class=\"hidden-sm hidden-xs btn-group\"><button id=\"btnedit\" type=\"button\" onclick=\"editPickupForm('" + (long)p["Id"] + "')\" class=\"btn btn-xs btn-info\"><i class=\"ace-icon fa fa-pencil bigger-120\"></i></button><button  id=\"btndelete\" type=\"button\" class=\"btn btn-xs btn-danger\" ng-click=\"ViewAddressController.deleteForm(" + (long)p["Id"] + ")\"><i class=\"ace-icon fa fa-trash-o bigger-120\"></i></button></div>"
+                RequestID = ""
             }).ToList();
 
             var result = JsonConvert.SerializeObject(viewpickup);
@@ -594,10 +601,22 @@ namespace Admin.UI.ShipmentArea
         }
 
         [CustomAction]
-        public JsonResult DeletePickup(string selectedIds)
+        public JsonResult DeleteById(string id)
         {
-            return Json("Deleted Successfully");
-        }
+			string url = Constants.APIURL + "DHL/DeleteById";
+			object result = string.Empty;
+
+			using (var client = new WebClient())
+			{
+				client.Headers[HttpRequestHeader.ContentType] = Constants.ContentType;
+
+				var response = client.UploadString(url, JsonConvert.SerializeObject(id));
+
+				result = JsonConvert.DeserializeObject(response);
+			}
+
+			return Json(result);
+		}
 
         [CustomAction]
         public IActionResult Tracking()

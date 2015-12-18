@@ -1,8 +1,134 @@
 ﻿(function () {
     var app = angular.module('mainApp');
+
     app.controller('shipmentsController', function (shippingModels, $scope, $http, virtualDir) {
         $scope.Shipments = shippingModels.Shipment;
         $scope.Parcel = shippingModels.Shipment.Parcel;
+        $scope.submitted = false;
+        $scope.step = 1;
+        $scope.step1Done = false;
+        $scope.step2Done = false;
+        $scope.step3Done = false;
+        $scope.step4Done = false;
+
+   
+
+        $scope.Step1Click = function () {
+             $scope.submitted = true;
+            $scope.step = 1;
+            if ($scope.shipment.vendortype.$valid) {
+                $scope.step1Done = true;
+                $scope.step = 2;
+                $scope.submitted = false;
+            }
+
+        }
+
+        $scope.PreStep2Click = function () {
+            $scope.step2Done = false;
+            $scope.step = 1;
+            $scope.submitted = false;
+        }
+
+        $scope.Step2Click = function () {
+            
+            $scope.submitted = true;
+            $scope.step = 2;
+
+            if ($scope.shipment.RCompany.$valid &&
+            $scope.shipment.Rname.$valid &&
+            $scope.shipment.Rphone.$valid &&
+            $scope.shipment.Remail.$valid &&
+            $scope.shipment.Raddressline1.$valid &&
+            $scope.shipment.Raddressline2.$valid &&
+            $scope.shipment.Rcity.$valid &&
+            $scope.shipment.Rpostalcode.$valid &&
+            $scope.shipment.RCountry.$valid &&
+            $scope.shipment.RDivision.$valid)
+            {
+                $scope.step2Done = true;
+                $scope.step = 3;
+                $scope.submitted = false;
+            }
+           
+        }
+
+
+        $scope.PreStep3Click = function () {
+            $scope.step3Done = false;
+            $scope.step = 2;
+            $scope.submitted = false;
+        }
+        $scope.Step3Click = function () {
+
+            $scope.submitted = true;
+            $scope.step = 3;
+
+            if ($scope.shipment.company.$valid &&
+            $scope.shipment.name.$valid &&
+            $scope.shipment.phone.$valid &&
+            $scope.shipment.email.$valid &&
+            $scope.shipment.addressline1.$valid &&
+            $scope.shipment.addressline2.$valid &&
+            $scope.shipment.city.$valid &&
+            $scope.shipment.postalcode.$valid &&
+            $scope.shipment.CountryId.$valid &&
+            $scope.shipment.Division.$valid) {
+                $scope.step3Done = true;
+                $scope.step = 4;
+                $scope.submitted = false;
+            }
+
+        }
+
+
+        $scope.PreStep4Click = function () {
+            $scope.step3Done = false;
+            $scope.step = 3;
+            $scope.submitted = false;
+        }
+        $scope.Step4Click = function () {
+
+            $scope.submitted = true;
+            $scope.step = 4;
+
+            if ($scope.shipment.shipmentdate.$valid &&
+            $scope.shipment.packagetype.$valid &&
+            $scope.shipment.unitsystem.$valid )
+            {
+                if ($scope.shipment.$valid) {
+                    $scope.step4Done = true;
+                    $("#veil").show();
+                    $("#feedLoading").show();
+                    $http({
+                        url: virtualDir.AdminURL + '/Shipment/Shipments',
+                        method: "POST",
+                        data: JSON.stringify($scope.Shipments),
+                        contentType: "application/json;",
+                        dataType: "json"
+                    })
+                        .success(function (data, status, headers, config) {
+                            $("#veil").hide();
+                            $("#feedLoading").hide();
+                            if (data == null)
+                                $scope.message = "Failed";
+                            else if (data.ErrorMessage != null) {
+                                $scope.message = data.ErrorMessage;
+                                $("#frmShipments").hide();
+                            }
+                            else {
+                                $("#veil").hide();
+                                $("#feedLoading").hide();
+                                window.open("http://" + data.LabelImage.OutputImage.replace("10.0.0.124", "test.shipos.com/shipping"), "_blank");
+                                $scope.message = "Label Generated Successfully";
+                                $("#frmShipments").hide();
+                            }
+                        }).error(function (data, status, headers, config) {
+                        });
+                }
+            }
+
+        }
 
         //$scope.Vendors; = new Array();
         $http({
@@ -231,7 +357,7 @@
         $scope.Shipments.Parcel.push($scope.Parcel);
         $scope.valResult = {};
         $scope.sendForm = function () {
-            if ($scope.shipmentsForm.$valid) {
+            if ($scope.shipment.$valid) {
                 $http({
                     url: virtualDir.AdminURL + '/Shipment/Shipments',
                     method: "POST",
@@ -286,7 +412,7 @@
             this.Rpostalcode = null;
             this.RDivision = null;
 
-            this.shipmentdate = null;
+            this.shipmentdate = '01/01/1900';
             this.unitsystem = null;
             this.packagetype = null;
             this.Insurance = null;

@@ -188,9 +188,9 @@
                     dataType: "json"
                 })
                 .success(function (data, status, headers, config) {
-                    $scope.message = data;
+                    $scope.message= $scope.contact.Id > 0 ? "Contact updated successfully!" : "New contact added!"
                     bootbox.dialog({
-                        message: "New contact added!",
+                        message: $scope.message,
                         buttons: {
                             "success": {
                                 "label": "OK",

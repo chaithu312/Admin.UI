@@ -28,15 +28,15 @@
             <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.phone.$error.required && submitted">
                 Phone is required.
             </span>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.phone.$error.minlength || submitted">
+            @*<span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.phone.$error.minlength || submitted">
                 Phone should be min 10 digit.
-            </span>
+            </span>*@
             <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.phone.$invalid && submitted">
             </span>
         </div>
     </div>
 
-    <div class="form-group" ng-class="{ 'has-error':PickupForm.AddressType.$invalid && submitted }">
+    <div class="form-group">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
             Address
         </label>
@@ -44,10 +44,10 @@
         <div class="col-sm-9">
 
             <select id="AddressType" class="col-xs-10 col-sm-5" data-ng-model="pickupRequest.AddressType" name="AddressType"
-                    data-ng-options="address.Id as address.ShortName for address in Address track by address.Id" data-ng-change="GetAddressValue()" required>
+                    data-ng-options="address.Id as address.ShortName for address in Address track by address.Id" data-ng-change="GetAddressValue()">
                 <option value='' disabled selected>Please Choose</option>
             </select>
-            &nbsp; <i ngValidationResult="pickupRequest.$errors.AddressType"><label></label></i>
+            @*&nbsp; <i ngValidationResult="pickupRequest.$errors.AddressType"><label></label></i>*@
         </div>
     </div>
     <div ng-if="pickupRequest.AddressType == 0" class="form-group" ng-class="{ 'has-error':PickupForm.addressCaption.$invalid && submitted }">
@@ -431,4 +431,5 @@
         </div>
     </div>
     <div id="errorMessages" ng-hide="" class="error">{{message}}</div>
+    <input type="hidden" ng-model="pickupRequest.Id"/>
 </form>

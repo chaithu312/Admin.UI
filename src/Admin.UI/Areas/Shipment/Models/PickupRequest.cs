@@ -9,6 +9,7 @@ namespace Admin.UI.Areas.Shipment.Models
 {
     public class PickupRequest
     {
+		public long Id { get; set; }
         public string UserID { get; set; }
         public string AccountID { get; set; }
         public string PickupAccountID { get; set; }
@@ -58,7 +59,7 @@ namespace Admin.UI.Areas.Shipment.Models
 
         public string ReadyTime { get; set; }
         public string AvailableTime { get; set; }
-        public int? ParcelType { get; set; }
+        public int ParcelType { get; set; }
         public int TotalPieces { get; set; }
 
         public string AdditionalsInstructions { get; set; }
