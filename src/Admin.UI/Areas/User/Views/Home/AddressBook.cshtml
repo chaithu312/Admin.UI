@@ -21,7 +21,7 @@
 
         <div class="col-sm-9">
 
-            <select name="Type" ng-model="contact.AddressType" required class="col-xs-10 col-sm-5" placeholder="Select Address Type">
+            <select name="Type" id="Type" ng-model="contact.AddressType" required class="col-xs-10 col-sm-5" placeholder="Select Address Type">
                 <option value='' disabled selected>Please Choose</option>
                 <option value="1">Shipper</option>
                 <option value="0">Recipient</option>
@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <div class="form-group" ng-class="{ 'has-error':AddressBook.company.$invalid && submitted }">
+    @*<div class="form-group" ng-class="{ 'has-error':AddressBook.company.$invalid && submitted }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Company</label>
 
         <div class="col-sm-9">
@@ -57,7 +57,7 @@
                 Company is required.
             </span>
         </div>
-    </div>
+    </div>*@
 
     <div class="form-group" ng-class="{ 'has-error':AddressBook.firstname.$invalid && submitted }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">First name</label>

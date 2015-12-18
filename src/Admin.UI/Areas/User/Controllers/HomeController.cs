@@ -242,21 +242,24 @@ namespace Admin.UI.UserArea
         {
             try
             {
-                if (register != null)
-                {
-                    register.AccountId = 2;
-                    register.Status = Status.Active;
-                    register.Created = DateTime.Now;
-                    register.Name = register.FirstName + " " + register.LastName;
-                }
+				if (register != null)
+				{
+					register.AccountId = 2;
+					register.Status = Status.Active;
+					register.Created = DateTime.Now;
+					register.Name = register.FirstName + " " + register.LastName;
+					string url = register.Id == 0 ? Constants.Profile + "Address/Insert" : Constants.Profile + "Address/Update";
 
-                string url = Constants.Profile + "Address/Insert";
-                object result = string.Empty;
+					object result = string.Empty;
 
-                string serialisedData = JsonConvert.SerializeObject(register);
-                HttpWebResponse response = ClientHttp.PostAsync(url, serialisedData);
-                result = JsonConvert.DeserializeObject(response.ToString());
-                return Json(result);
+					string serialisedData = JsonConvert.SerializeObject(register);
+					HttpWebResponse response = ClientHttp.PostAsync(url, serialisedData);
+					result = JsonConvert.DeserializeObject(response.ToString());
+					return Json(result);
+				}
+				else
+					return Json("Check required fields");
+                
             }
             catch
 
@@ -334,7 +337,8 @@ namespace Admin.UI.UserArea
                     CountryId = (string)p["CountryId"],
                     PostalCode = (string)p["PostalCode"],
                     Phone1 = (string)p["Phone1"].ToString(),
-                    EMail = (string)p["EMail"].ToString(),
+					Phone2 = (string)p["Phone2"].ToString(),
+					EMail = (string)p["EMail"].ToString(),
                     AddressType = (Utility.Enumerations.AddressTypes)(int)p["AddressType"],
                     Status = (Utility.Enumerations.Status)(int)p["Status"],
 
@@ -351,21 +355,16 @@ namespace Admin.UI.UserArea
 
         [HttpGet]
         [CustomAction]
-        public JsonResult DeleteAddress(string selectedIds)
+        public JsonResult DeleteAddressById(string id)
         {
-            selectedIds = selectedIds.TrimEnd(new char[] { ',' });
-            string[] ids = selectedIds.Split(',');
-
-            string url = Constants.APIURL + "MasterApi/Address/DeleteByIds";
+            string url = Constants.Profile + "Address/DeleteById";
             object result = string.Empty;
 
             using (var client = new WebClient())
             {
                 client.Headers[HttpRequestHeader.ContentType] = Constants.ContentType;
-
-                string serialisedData = JsonConvert.SerializeObject(ids);
-
-                var response = client.UploadString(url, serialisedData);
+				
+                var response = client.UploadString(url, JsonConvert.SerializeObject(id));
 
                 result = JsonConvert.DeserializeObject(response);
             }
