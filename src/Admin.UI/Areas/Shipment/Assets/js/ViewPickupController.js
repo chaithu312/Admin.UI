@@ -18,7 +18,7 @@
         $scope.deletePickupForm = function (id) {
             bootbox.confirm({
                 size: 'small',
-                message: "Are you sure want to delete record#? " + id,
+                message: "Pickup will be cancelled. Continue?</br>After saving this action; the record may disappear from the list",
                 callback: function (result) {
                     if (result === false) {
                     } else {

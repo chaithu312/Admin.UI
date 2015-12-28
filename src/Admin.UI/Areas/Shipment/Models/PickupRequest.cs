@@ -11,6 +11,7 @@ namespace Admin.UI.Areas.Shipment.Models
     {
 		public long Id { get; set; }
         public string UserID { get; set; }
+		public string DomainKey { get; set; }
         public string AccountID { get; set; }
         public string PickupAccountID { get; set; }
         public string PassPhrase { get; set; }
@@ -70,7 +71,7 @@ namespace Admin.UI.Areas.Shipment.Models
         public string PickUpNotificationPersonalizedMessage { get; set; }
         public string NotificationJSONData { get; set; }
 
-        public List<Notification> notification { get; set; }
+        public List<Notification> Notification { get; set; }
 
         public string RatePickupIndicator { get; set; }
         public string AccountNumber { get; set; }
@@ -94,9 +95,18 @@ namespace Admin.UI.Areas.Shipment.Models
         public string CompanyName { get; set; }
         public Admin.UI.Utility.Enumerations.ContainerCode ContainerCode { get; set; }
         public string ServiceCode { get; set; }
-    }
+		public string Detail { get; set; }
+	}
 
-    public class Notification
+	public class Detail
+	{
+		public string AdditionalNotes { get; set; }
+		public bool IsResidential { get; set; }
+		public string Carrier { get; set; }
+		public string PickupDate { get; set; }
+	}
+
+	public class Notification
     {
         public List<email> Email { get; set; }
         public List<mobile> Mobile { get; set; }

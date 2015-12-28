@@ -162,6 +162,8 @@
 
         //Editing of Pickup working here
         if ($location.absUrl().split("?").length > 1) {
+            $("#veil").show();
+            $("#feedLoading").show();
             var selectedAddress = [];
             var Id = $location.absUrl().split("/");
             var editdata = Id[5];
@@ -217,15 +219,24 @@
 
             $scope.pickupRequest.ParcelType = pickup.ParcelType;
             $scope.pickupRequest.isDisabled = true;
+            if (JSON.parse(pickup.Detail).PickupDetail != null) {
+                var pickupDetail = JSON.parse(JSON.parse(pickup.Detail).PickupDetail)
+                $scope.pickupRequest.AddressNotes = pickupDetail.AdditionalNotes;
+                $scope.pickupRequest.isResidential = pickupDetail.IsResidential;
+                $scope.pickupRequest.Carrier = pickupDetail.Carrier;
+                var date = new Date(pickupDetail.PickupDate);
+                var day = date.getDate().toString().length == 1 ? ('0' + date.getDate().toString()) : date.getDate();
+                var month = (date.getMonth() + 1).toString().length == 1 ? '0' + (date.getMonth() + 1).toString() : (date.getMonth() + 1);
+                var year = date.getFullYear().toString().length == 1 ? '0' + (date.getFullYear()).toString() : date.getFullYear();
+                $scope.pickupRequest.PickupDate =  day+ '-'+ month + '-'+year;
+            }
+            $scope.SetCountryAndCode();
             $scope.$apply();
 
             $("#CountryId").find('option[value=' + pickup.CountryID + ']').attr('selected', 'selected');
-
-            $("#Division").find('option[label=' + pickup.Division + ']').attr('selected', 'selected');
-
             $("#ddldestination").find('option[value=' + pickup.Destination + ']').attr('selected', 'selected');
-
             $("#parcelType").find('option[value=' + pickup.ParcelType + ']').attr('selected', 'selected');
+            $("#Division").find('option[label=' + pickup.Division + ']').attr('selected', 'selected');
         }
         //Ends here editing of pickup
         //Cut above

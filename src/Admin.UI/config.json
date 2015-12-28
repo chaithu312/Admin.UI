@@ -7,7 +7,7 @@
     "RegisterEndpoint": "http://test.shipos.com/ID/api/register/",
     "IDServerEndpoint": "http://192.168.1.30:8080/core",
 
-    "ShippingEndpoint": "http://localhost:49202/",
+    "ShippingEndpoint": "http://localhost:49203/",
     "VirtualDirectory": ""
   }
 }
