@@ -1,32 +1,21 @@
 ﻿(function () {
-    var app = angular.module('mainApp');
+    var validationApp = angular.module('mainApp');
     // create angular controller
-    app.controller('ViewPickupController', function ($scope, $http, $window, virtualDir) {
-        $("#veil").show();
-        $("#feedLoading").show();
-        $scope.message = '';
-        $scope.datasrc = '';
+    validationApp.controller('ViewAgentServiceController', function ($scope, $window, $http) {
 
-        $scope.editPickupForm = function (id) {
-            var url = "http://" + $window.location.host + "/Shipment/PickupRequest/?" + id;
-            //$log.log(url);
-            $window.location.href = url;
 
-            console.log('deleting user ');
-        };
-
-        $scope.deletePickupForm = function (id) {
+        $scope.deleteForm = function (Id,Name) {
             bootbox.confirm({
                 size: 'small',
-                message: "Pickup will be cancelled. Continue?</br>After saving this action; the record may disappear from the list",
+                message: "Are you sure want to delete record#? " + Name,
                 callback: function (result) {
                     if (result === false) {
                     } else {
                         $http({
                             method: 'GET',
-                            url: '/Shipment/Home/DeleteById',
+                            url: '/ServiceRate/DeleteAgents',
                             //data: $scope.SelectedCountry.CountryCode,
-                            params: { id: id },
+                            params: { id: Id },
                             headers: {
                                 'RequestVerificationToken': $scope.antiForgeryToken
                             }
@@ -45,54 +34,35 @@
                             $scope.someClickHandler = function (info) {
                                 $scope.message = 'clicked: ' + info.price;
                             };
-
                             $scope.columnDefs = [{
-                                "mDataProp": "ContactName",
+                                "mDataProp": "CountryId",
                                 "aTargets": [0]
                             }, {
-                                "mDataProp": "Phone",
+                                "mDataProp": "AgentName",
                                 "aTargets": [1]
                             }, {
-                                "mDataProp": "Address1",
+                                "mDataProp": "LabelAPI",
                                 "aTargets": [2]
                             }, {
-                                "mDataProp": "City",
+                                "mDataProp": "PickupCharge",
                                 "aTargets": [3]
                             }, {
-                                "mDataProp": "PickupFrom",
+                                "mDataProp": "SaturdayPickupCharge",
                                 "aTargets": [4]
                             }, {
-                                "mDataProp": "ReadyTime",
+                                "mDataProp": "TrackingURL",
                                 "aTargets": [5]
                             }, {
-                                "mDataProp": "AvailableTime",
+                                "mDataProp": "Detail",
                                 "aTargets": [6]
-                            }, {
-                                "mDataProp": "TotalPieces",
-                                "aTargets": [7]
-                            }, {
-                                "mDataProp": "Destination",
-                                "aTargets": [8]
-                            }, {
-                                "mDataProp": "RatePickupIndicator",
-                                "aTargets": [9]
-                            }, {
-                                "mDataProp": "PickUpNotificationPersonalizedMessage",
-                                "aTargets": [10]
-                            },
-                            {
-                                "mDataProp": "RequestID",
-                                "aTargets": [11]
                             }];
 
                             $scope.overrideOptions = {
-                                "scrollY": "200px",
-                                "scrollCollapse": true,
                                 "bStateSave": true,
                                 "iCookieDuration": 2419200,
                                 /* 1 month */
                                 "bJQueryUI": true,
-                                "bPaginate": true,
+                                "bPaginate": false,
                                 "bLengthChange": false,
                                 "bFilter": true,
                                 "bInfo": true,
@@ -101,7 +71,7 @@
 
                             $http({
                                 method: 'GET',
-                                url: virtualDir.AdminURL + '/Shipment/Home/GetAllPickup',
+                                url: '/ServiceRate/GetAllAgents',
                                 //data: $scope.SelectedCountry.CountryCode,
                                 //params: { countryId: $scope.contact.CountryId },
                                 headers: {
@@ -115,22 +85,30 @@
                                         str += data.errors[error] + '\n';
                                     }
                                     $scope.message = str;
+                                    bootbox.dialog({
+                                        message: str,
+                                        buttons: {
+                                            "success": {
+                                                "label": "OK",
+                                                "className": "btn-sm btn-primary"
+                                            }
+                                        }
+                                    });
                                 }
                                 else {
-                                    var viewpickup = JSON.parse(data);
-                                    var lim = viewpickup.length;
+                                    var lim = data.length;
                                     for (var i = 0; i < lim; i++) {
-                                        viewpickup[i].RequestID = '<div class="hidden-sm hidden-xs btn-group"><button id="btnedit" type="button" onclick="angular.element(this).scope().editPickupForm(' + viewpickup[i].Id + ')" class="btn btn-xs btn-info"><i class="ace-icon fa fa-pencil bigger-120"></i></button><button  id="btndelete" type="button" class="btn btn-xs btn-danger" onclick="angular.element(this).scope().deletePickupForm(' + viewpickup[i].Id + ')"><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div>';
-                                        if (viewpickup[i].Destination == 1) {
-                                            viewpickup[i].Destination = 'Domestic';
-                                        } else {
-                                            if (viewpickup[i].Destination == 2) {
-                                                viewpickup[i].Destination = 'International';
-                                            } else { viewpickup[i].Destination = 'International multiple packages with mixed destinations' }
-                                        }
+                                        data[i].Detail = '<div class=' + '"hidden-sm hidden-xs btn-gro/up"' + '><button i type="button"  class="btn btn-xs btn-info"><i class="ace-icon fa fa-pencil bigger-120" onclick="angular.element(this).scope().editForm(' + data[i].Id + ')" ></i></button><button type="button" class="btn btn-xs btn-danger"' + ' onclick="angular.element(this).scope().deleteForm(' + data[i].Id + ',' + data[i].AgentName + ')" ><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div>';
+                                        if (data[i].AddressType == 0) {
+                                            data[i].AddressType = 'Recipient';
+                                        } else { data[i].AddressType = 'Sender'; }
+
+                                        if (data[i].Status == 0) {
+                                            data[i].Status = 'De-Active';
+                                        } else { data[i].Status = 'Active'; }
                                     }
 
-                                    $scope.datasrc = viewpickup;
+                                    $scope.datasrc = data;
                                     $("#veil").hide();
                                     $("#feedLoading").hide();
                                 }
@@ -145,7 +123,19 @@
                 }
             })
         }
+        $scope.editForm = function (Id) {
+            var url = "http://" + $window.location.host + "/ServiceRate/Agents/?" + Id;
+            //$log.log(url);
+            $window.location.href = url;
+      }
 
+
+    
+
+
+        $("#veil").show();
+        $("#feedLoading").show();
+        $scope.message = '';
         $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             $('td:eq(2)', nRow).bind('click', function () {
                 $scope.$apply(function () {
@@ -160,52 +150,34 @@
         };
 
         $scope.columnDefs = [{
-            "mDataProp": "ContactName",
+            "mDataProp": "CountryId",
             "aTargets": [0]
         }, {
-            "mDataProp": "Phone",
+            "mDataProp": "AgentName",
             "aTargets": [1]
         }, {
-            "mDataProp": "Address1",
+            "mDataProp": "LabelAPI",
             "aTargets": [2]
         }, {
-            "mDataProp": "City",
+            "mDataProp": "PickupCharge",
             "aTargets": [3]
         }, {
-            "mDataProp": "PickupFrom",
+            "mDataProp": "SaturdayPickupCharge",
             "aTargets": [4]
         }, {
-            "mDataProp": "ReadyTime",
+            "mDataProp": "TrackingURL",
             "aTargets": [5]
         }, {
-            "mDataProp": "AvailableTime",
+            "mDataProp": "Detail",
             "aTargets": [6]
-        }, {
-            "mDataProp": "TotalPieces",
-            "aTargets": [7]
-        }, {
-            "mDataProp": "Destination",
-            "aTargets": [8]
-        }, {
-            "mDataProp": "RatePickupIndicator",
-            "aTargets": [9]
-        }, {
-            "mDataProp": "PickUpNotificationPersonalizedMessage",
-            "aTargets": [10]
-        },
-        {
-            "mDataProp": "RequestID",
-            "aTargets": [11]
         }];
 
         $scope.overrideOptions = {
-            "scrollY": "200px",
-            "scrollCollapse": true,
             "bStateSave": true,
             "iCookieDuration": 2419200,
             /* 1 month */
             "bJQueryUI": true,
-            "bPaginate": true,
+            "bPaginate": false,
             "bLengthChange": false,
             "bFilter": true,
             "bInfo": true,
@@ -214,7 +186,7 @@
 
         $http({
             method: 'GET',
-            url: virtualDir.AdminURL + '/Shipment/Home/GetAllPickup',
+            url: '/ServiceRate/GetAllAgents',
             //data: $scope.SelectedCountry.CountryCode,
             //params: { countryId: $scope.contact.CountryId },
             headers: {
@@ -228,22 +200,24 @@
                     str += data.errors[error] + '\n';
                 }
                 $scope.message = str;
+                bootbox.dialog({
+                    message: str,
+                    buttons: {
+                        "success": {
+                            "label": "OK",
+                            "className": "btn-sm btn-primary"
+                        }
+                    }
+                });
             }
             else {
-                var viewpickup = JSON.parse(data);
-                var lim = viewpickup.length;
+                var lim = data.length;
                 for (var i = 0; i < lim; i++) {
-                    viewpickup[i].RequestID = '<div class="hidden-sm hidden-xs btn-group"><button id="btnedit" type="button" onclick="angular.element(this).scope().editPickupForm(' + viewpickup[i].Id + ')" class="btn btn-xs btn-info"><i class="ace-icon fa fa-pencil bigger-120"></i></button><button  id="btndelete" type="button" class="btn btn-xs btn-danger" onclick="angular.element(this).scope().deletePickupForm(' + viewpickup[i].Id + ')"><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div>';
-                    if (viewpickup[i].Destination == 1) {
-                        viewpickup[i].Destination = 'Domestic';
-                    } else {
-                        if (viewpickup[i].Destination == 2) {
-                            viewpickup[i].Destination = 'International';
-                        } else { viewpickup[i].Destination = 'International multiple packages with mixed destinations' }
-                    }
+                    data[i].Detail = '<div class=' + '"hidden-sm hidden-xs btn-gro/up"' + '><button i type="button"  class="btn btn-xs btn-info" onclick="angular.element(this).scope().editForm(' + data[i].Id + ')"><i class="ace-icon fa fa-pencil bigger-120"></i></button><button type="button" class="btn btn-xs btn-danger"' + ' onclick="angular.element(this).scope().deleteForm(' + data[i].Id + ','+"'" + data[i].AgentName +"'"+ ')" ><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div>';
+
                 }
 
-                $scope.datasrc = viewpickup;
+                $scope.datasrc = data;
                 $("#veil").hide();
                 $("#feedLoading").hide();
             }

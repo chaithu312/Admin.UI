@@ -229,3 +229,5 @@ $('input[name=date-range-picker]').daterangepicker({
 });
 
 $('[data-rel=popover]').popover({ container: 'body' });
+
+

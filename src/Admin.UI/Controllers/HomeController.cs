@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Authorization;
+﻿using Admin.UI.Filter;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Framework.OptionsModel;
@@ -14,15 +15,18 @@ namespace Admin.UI.Controllers
         {
             AppSettings = appSettings;
         }
-
-        public IActionResult Index()
+		
+		public IActionResult Index()
         {
-            return View();
+			ViewBag.User = HttpContext.Session.GetString("User");
+			return RedirectToAction("Index", "Home", new { area = "User" });
         }
 
+		[CustomAction]
         public IActionResult Dashboard()
         {
-            ViewBag.t = HttpContext.Session.GetString("Welcome");
+			ViewBag.User = HttpContext.Session.GetString("User");
+			ViewBag.t = HttpContext.Session.GetString("Welcome");
             return View();
         }
 

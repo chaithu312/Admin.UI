@@ -13,11 +13,11 @@ namespace Admin.UI.Controllers
         {
             return new List<Navigation>
             {
-                //Parent Navigation
-
-                new Navigation { Id = 1, Title = "Dashboard", ParentId = 0, Type = "", NavURL = "/Index" },
+          
+            new Navigation { Id = 1, Title = "Dashboard", ParentId = 0, Type = "", NavURL = "/Index" },
                 new Navigation { Id = 2, Title = "Shipments ", ParentId = 0, Type = "", NavURL = "/Shipment" },
                 new Navigation { Id = 3, Title = "User", ParentId = 0, Type = "", NavURL = "/User" } ,
+                new Navigation { Id = 4, Title = "Service & Rate", ParentId = 0, Type = "", NavURL = "/ServiceRate" } ,
 
                 //Child Navigation
 
@@ -34,6 +34,16 @@ namespace Admin.UI.Controllers
                 new Navigation { Id = 13, Title = "View Address", ParentId = 3, Type = "", NavURL = "/User/ViewAddress" },
 
                 new Navigation { Id = 14, Title = "Home", ParentId = 1, Type = "", NavURL = "/home/Dashboard" },
+
+
+                new Navigation { Id = 15, Title = "Agents", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewAgents" },
+                new Navigation { Id = 16, Title = "Agent Service ", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewAgentService" },
+                new Navigation { Id = 17, Title = "Country", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewCountries" },
+                new Navigation { Id = 18, Title = "State", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewStates" },
+                new Navigation { Id = 19, Title = "Postal Code", ParentId = 4, Type = "", NavURL = "/ServiceRate/PostCode" },
+
+
+                
             };
         }
     }

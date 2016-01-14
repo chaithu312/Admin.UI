@@ -132,7 +132,7 @@
             }
 
             $scope.pickupRequest.ContactName = selectedAddress.Name;
-            $scope.pickupRequest.Phone = selectedAddress.Phone1;
+            $scope.pickupRequest.Phone =parseInt(selectedAddress.Phone1);
             $scope.pickupRequest.Address1 = selectedAddress.Address1;
             $scope.pickupRequest.Address2 = selectedAddress.Address2;
             $scope.pickupRequest.City = selectedAddress.City;
@@ -140,7 +140,7 @@
             $scope.pickupRequest.CountryId = selectedAddress.CountryId;
             $scope.pickupRequest.Division = selectedAddress.Division;
 
-            $scope.pickupRequest.PickupFrom = $scope.pickupRequest.PickupFrom;
+            $scope.pickupRequest.PickupFrom = selectedAddress.Name;
             $scope.pickupRequest.isDisabled = true;
             $scope.$apply();
 
@@ -162,6 +162,8 @@
 
         //Editing of Pickup working here
         if ($location.absUrl().split("?").length > 1) {
+            $("#veil").show();
+            $("#feedLoading").show();
             var selectedAddress = [];
             var Id = $location.absUrl().split("/");
             var editdata = Id[5];
@@ -217,15 +219,23 @@
 
             $scope.pickupRequest.ParcelType = pickup.ParcelType;
             $scope.pickupRequest.isDisabled = true;
+            if (JSON.parse(pickup.Detail).PickupDetail != null) {
+                var pickupDetail = JSON.parse(JSON.parse(pickup.Detail).PickupDetail)
+                $scope.pickupRequest.AddressNotes = pickupDetail.AdditionalNotes;
+                $scope.pickupRequest.isResidential = pickupDetail.IsResidential;
+                $scope.pickupRequest.Carrier = pickupDetail.Carrier;
+                var date = new Date(pickupDetail.PickupDate);
+                var datearray= pickupDetail.PickupDate.split("-");
+                $scope.pickupRequest.PickupDate = datearray[0] + '-' + datearray[1] + '-' + datearray[2];
+            }
+            $scope.SetCountryAndCode();
             $scope.$apply();
 
             $("#CountryId").find('option[value=' + pickup.CountryID + ']').attr('selected', 'selected');
-
-            $("#Division").find('option[label=' + pickup.Division + ']').attr('selected', 'selected');
-
             $("#ddldestination").find('option[value=' + pickup.Destination + ']').attr('selected', 'selected');
-
             $("#parcelType").find('option[value=' + pickup.ParcelType + ']').attr('selected', 'selected');
+            $("#Division").find('option[label=' + pickup.Division + ']').attr('selected', 'selected');
+            $("#ddlCarrier").find('option[value=' + $scope.pickupRequest.Carrier + ']').attr('selected', 'selected');
         }
         //Ends here editing of pickup
         //Cut above

@@ -1,0 +1,269 @@
+﻿@{
+
+    Layout = "~/Views/shared/_layout.cshtml";
+}
+
+<form name="AgentService" data-ng-submit="submitForm()" data-ng-controller="AgentServiceController" class="form-horizontal" role="form" novalidate>
+
+    <div class="pull-right tableTools-container">
+        <a class="btn-new-mail" href="/ServiceRate/ViewAgentService">
+            <span class="btn btn-purple no-border">
+                <i class="ace-icon fa  bigger-130"></i>
+                <span class="bigger-110">View Agent Service</span>
+            </span>
+        </a>
+    </div>
+    <div class="clearfix">
+        <div class="pull-right tableTools-container"></div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':AgentService.Agent.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Agent</label>
+
+        <div class="col-sm-9">
+
+            <select id="Agent" class="col-xs-10 col-sm-5" data-ng-model="model.AgentId" name="Agent"
+                    data-ng-options="agent.Id as agent.Name for agent in Agent track by agent.Id" data-ng-change="GetValue()" required>
+                <option value=''  selected>Please Choose</option>
+            </select>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AgentService.Agent.$error.required && submitted">
+                Agent is required.
+            </span>
+        </div>
+        <input type="hidden" ng-model="contact.CountryCode" />
+    </div>
+
+
+    <div class="form-group" ng-class="{ 'has-error':AgentService.Scope.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Scope</label>
+
+        <div class="col-sm-9">
+
+            <select id="Scope" class="col-xs-10 col-sm-5" data-ng-model="model.Scope" name="Scope" required>
+                <option value='' selected>Please Choose</option>
+                <option value='1'>Domestic</option>
+                <option value='2'>International</option>
+            </select>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AgentService.Scope.$error.required && submitted">
+                Scope is required.
+            </span>
+        </div>
+        
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':AgentService.Direction.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Scope</label>
+
+        <div class="col-sm-9">
+
+            <select id="Direction" class="col-xs-10 col-sm-5" data-ng-model="model.Direction" name="Direction" required>
+                <option value='' selected>Please Choose</option>
+                <option value='1'>Outbound</option>
+                <option value='2'>Inbound</option>
+            </select>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AgentService.Direction.$error.required && submitted">
+                Direction is required.
+            </span>
+        </div>
+        
+    </div>
+
+
+    <div class="form-group" ng-class="{ 'has-error':AgentService.Code.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+            Code
+        </label>
+
+        <div class="col-sm-9">
+            <input type="text" name="Code" id="Code" ng-model="model.Code" class="col-xs-10 col-sm-5" ng-minlength="3" required placeholder="Enter Code" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AgentService.Code.$error.required && submitted">
+                Code is required.
+            </span>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AgentService.Code.$error.minlength && submitted">
+                Code should be min 3 character.
+            </span>
+        </div>
+    </div>
+
+
+    <div class="form-group" ng-class="{ 'has-error':AgentService.Name.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Name</label>
+
+        <div class="col-sm-9">
+            <input type="text" name="Name" id="Name" ng-model="model.Name" class="col-xs-10 col-sm-5" ng-maxlength="50" required="" placeholder="Enter Name" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AgentService.Name.$error.required && submitted">
+                Name  is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':AgentService.minWeight.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Min Weight</label>
+
+        <div class="col-sm-9">
+            <input type="text" name="minWeight" id="minWeight" ng-model="model.minWeight" class="col-xs-10 col-sm-5" ng-maxlength="50" required="" placeholder="Enter min weight" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AgentService.minWeight.$error.required && submitted">
+                minWeight is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':AgentService.maxWeight.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Max Weight</label>
+
+        <div class="col-sm-9">
+            <input type="text" name="maxWeight" id="maxWeight" ng-model="model.maxWeight" class="col-xs-10 col-sm-5" ng-maxlength="50" required="" placeholder="Enter max weight" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AgentService.maxWeight.$error.required && submitted">
+                maxWeight is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':AgentService.maxLength.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Max Length</label>
+
+        <div class="col-sm-9">
+            <input type="text" name="maxLength" id="maxLength" ng-model="model.maxLength" class="col-xs-10 col-sm-5" ng-maxlength="50" required="" placeholder="Enter max length" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AgentService.maxLength.$error.required && submitted">
+                maxLength is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':AgentService.maxLengthGirth.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Max Length + Girth</label>
+
+        <div class="col-sm-9">
+            <input type="text" name="maxLengthGirth" id="maxLengthGirth" ng-model="model.maxLengthGirth" class="col-xs-10 col-sm-5" ng-maxlength="50" required="" placeholder="Enter max Length + Girth" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AgentService.maxLengthGirth.$error.required && submitted">
+                maxLength + Girth is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':AgentService.OversizeLength.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Oversize Length</label>
+
+        <div class="col-sm-9">
+            <input type="text" name="OversizeLength" id="OversizeLength" ng-model="model.OversizeLength" class="col-xs-10 col-sm-5" ng-maxlength="50" required="" placeholder="Enter Oversize Length" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AgentService.OversizeLength.$error.required && submitted">
+                Oversize Length is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':AgentService.OversizeLengthGirth.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Oversize Length + Girth</label>
+
+        <div class="col-sm-9">
+            <input type="text" name="OversizeLengthGirth" id="OversizeLengthGirth" ng-model="model.OversizeLengthGirth" class="col-xs-10 col-sm-5" ng-maxlength="50" required="" placeholder="Enter Oversize Length + Girth" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AgentService.OversizeLengthGirth.$error.required && submitted">
+                Oversize Length + Girth is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':AgentService.OversizeCharge.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Oversize Charge</label>
+
+        <div class="col-sm-9">
+            <input type="text" name="OversizeCharge" id="OversizeCharge" ng-model="model.OversizeCharge" class="col-xs-10 col-sm-5" ng-maxlength="50" required="" placeholder="Enter Oversize Charge" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AgentService.OversizeCharge.$error.required && submitted">
+                Oversize Charge is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':AgentService.RateType.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Rate Type</label>
+
+        <div class="col-sm-9">
+
+            <select id="RateType" class="col-xs-10 col-sm-5" data-ng-model="model.RateType" name="RateType" required>
+                <option value='' selected>Please Choose</option>
+                <option value='1'>Exact</option>
+                <option value='2'>Per Weight</option>
+            </select>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AgentService.RateType.$error.required && submitted">
+                Rate Type is required.
+            </span>
+        </div>
+        
+    </div>
+
+
+    <div class="form-group" ng-class="{ 'has-error':AgentService.Unit.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Unit</label>
+
+        <div class="col-sm-9">
+
+            <select id="Unit" class="col-xs-10 col-sm-5" data-ng-model="model.Unit" name="Unit" required>
+                <option value='' selected>Please Choose</option>
+                <option value='1'>American</option>
+                <option value='2'>Metric</option>
+            </select>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AgentService.Unit.$error.required && submitted">
+                Unit is required.
+            </span>
+        </div>
+
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':AgentService.Currency.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Scope</label>
+
+        <div class="col-sm-9">
+
+            <select id="Currency" class="col-xs-10 col-sm-5" data-ng-model="model.Currency" name="Currency" required>
+                <option value='' selected>Please Choose</option>
+                <option value='1'>Outbound</option>
+                <option value='2'>Inbound</option>
+            </select>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AgentService.Currency.$error.required && submitted">
+                Currency is required.
+            </span>
+        </div>
+
+    </div>
+
+
+    <div class="form-group" ng-class="{ 'has-error':AgentService.ResidentialAreaCharge.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Residential Area Charge</label>
+
+        <div class="col-sm-9">
+            <input type="text" name="ResidentialAreaCharge" id="ResidentialAreaCharge" ng-model="model.ResidentialAreaCharge" class="col-xs-10 col-sm-5" ng-maxlength="50" required="" placeholder="Enter ChargeResidential Area Charge" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AgentService.ResidentialAreaCharge.$error.required && submitted">
+                Residential Area Charge is required.
+            </span>
+        </div>
+    </div>
+
+
+    <div class="form-group" ng-class="{ 'has-error':AgentService.RemoteAreaCharge.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Remote Area Charge</label>
+
+        <div class="col-sm-9">
+            <input type="text" name="RemoteAreaCharge" id="RemoteAreaCharge" ng-model="model.RemoteAreaCharge" class="col-xs-10 col-sm-5" ng-maxlength="50" required="" placeholder="Enter Remote Area Charge" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AgentService.RemoteAreaCharge.$error.required && submitted">
+                Remote Area Charge is required.
+            </span>
+        </div>
+    </div>
+    <hr />
+
+    <div class="clearfix form-actions">
+        <div class="col-md-offset-3 col-md-9">
+            <button type="submit" class="btn btn-info" ng-click="submitted=true">
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                Save
+            </button>
+
+            &nbsp; &nbsp; &nbsp;
+            <button type="reset" class="btn">
+                <i class="ace-icon fa fa-undo bigger-110"></i>
+                Reset
+            </button>
+        </div>
+    </div>
+    <div id="errorMessages" class="error">{{message}}</div>
+</form>

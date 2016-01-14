@@ -16,7 +16,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
-    <DevelopmentServerPort>59410</DevelopmentServerPort>
+    <DevelopmentServerPort>59491</DevelopmentServerPort>
     <IISExpressAnonymousAuthentication>Enabled</IISExpressAnonymousAuthentication>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

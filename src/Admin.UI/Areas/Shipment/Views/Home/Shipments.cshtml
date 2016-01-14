@@ -71,6 +71,30 @@
 
                 <div class="step-pane" data-step="2" ng-class="{'active':step == 2 && step1Done }" >
 
+                    <div class="form-group" ng-class="{ 'has-error':shipment.Raddress.$invalid && submitted  }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Address Type</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <select name="Raddress" ng-model="Shipments.RAddressType" class="col-xs-10 col-sm-7" data-ng-options="address.Id as address.ShortName for address in Address track by address.Id" data-ng-change="GetConsigeeAddressValue()" required></select>
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipment.Raddress.$error.required && submitted ">
+                                Address Type is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div ng-if="Shipments.RAddressType == 0" class="form-group" ng-class="{ 'has-error':shipment.raddressCaption.$invalid && submitted  }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Address Caption</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="col-xs-10 col-sm-7" placeholder="" id="raddressCaption" name="raddressCaption" data-ng-model="Shipments.RaddressCaption" required>
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipment.raddressCaption.$error.required && submitted ">
+                                Address Caption is required.
+                            </span>
+                        </div>
+                    </div>
+
                     <div class="form-group" ng-class="{ 'has-error':shipment.RCompany.$invalid && submitted  }">
                         <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
                             <label>Company </label>
@@ -99,7 +123,7 @@
                             <label>Phone</label>
                         </label>
                         <div class="col-sm-9">
-                            <input type="text" name="Rphone" id="Rphone" ng-model="Shipments.Rphone" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isRDisabled" required />
+                            <input type="text" name="Rphone" id="Rphone" ng-model="Shipments.Rphone" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isRDisabled" required ng-minlength="10" ng-maxlength="15" />
                             <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipment.RCompany.$error.required && submitted ">
                                 Phone is required.
                             </span>
@@ -118,29 +142,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group" ng-class="{ 'has-error':shipment.Raddress.$invalid && submitted  }">
-                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-                            <label>Address Type</label>
-                        </label>
-                        <div class="col-sm-9">
-                            <select name="Raddress" ng-model="Shipments.RAddressType" class="col-xs-10 col-sm-7" data-ng-options="address.Id as address.ShortName for address in Address track by address.Id" data-ng-change="GetConsigeeAddressValue()" required></select>
-                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipment.Raddress.$error.required && submitted ">
-                                Address Type is required.
-                            </span>
-                        </div>
-                    </div>
-
-                    <div ng-if="Shipments.RAddressType == 0" class="form-group" ng-class="{ 'has-error':shipment.raddressCaption.$invalid && submitted  }">
-                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-                            <label>Address Caption</label>
-                        </label>
-                        <div class="col-sm-9">
-                            <input type="text" class="col-xs-10 col-sm-7" placeholder="" id="raddressCaption" name="raddressCaption" data-ng-model="Shipments.RaddressCaption" required>
-                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipment.raddressCaption.$error.required && submitted ">
-                                Address Caption is required.
-                            </span>
-                        </div>
-                    </div>
+                  
 
                     <div class="form-group" ng-class="{ 'has-error':shipment.Raddressline1.$invalid && submitted  }">
                         <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
@@ -242,6 +244,30 @@
 
                 <div class="step-pane" data-step="3" ng-class="{'active':step == 3 }" >
 
+                    <div class="form-group" ng-class="{ 'has-error':shipment.address.$invalid && submitted }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Address</label>
+                        </label>
+
+                        <div class="col-sm-9">
+                            <select name="address" ng-model="Shipments.AddressType" class="col-xs-10 col-sm-7" data-ng-options="address.Id as address.ShortName for address in Address track by address.Id" data-ng-change="GetShipperAddressValue()" required></select>
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipment.address.$error.required && submitted">
+                                Address is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div ng-if="Shipments.AddressType == 0" class="form-group" ng-class="{ 'has-error':shipment.addressCaption.$invalid && submitted }">
+                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
+                            <label>Address Caption</label>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="col-xs-10 col-sm-7" placeholder="" id="addressCaption" name="addressCaption" data-ng-model="Shipments.AddressCaption" required>
+                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipment.addressCaption.$error.required && submitted">
+                                Address Caption is required.
+                            </span>
+                        </div>
+                    </div>
                     <div class="form-group" ng-class="{ 'has-error':shipment.company.$invalid  && submitted}">
                         <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
                             <label>Company </label>
@@ -273,7 +299,7 @@
                         </label>
 
                         <div class="col-sm-9">
-                            <input type="text" name="phone" id="phone" ng-model="Shipments.Phone" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isDisabled" required />
+                            <input type="text" name="phone" id="phone" ng-model="Shipments.Phone" class="col-xs-10 col-sm-7" ng-disabled="Shipments.isDisabled" required ng-minlength="10" ng-maxlength="15" />
                             <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipment.phone.$error.required && submitted">
                                 Phone is required.
                             </span>
@@ -293,30 +319,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group" ng-class="{ 'has-error':shipment.address.$invalid && submitted }">
-                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-                            <label>Address</label>
-                        </label>
-
-                        <div class="col-sm-9">
-                            <select name="address" ng-model="Shipments.AddressType" class="col-xs-10 col-sm-7" data-ng-options="address.Id as address.ShortName for address in Address track by address.Id" data-ng-change="GetShipperAddressValue()" required></select>
-                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipment.address.$error.required && submitted">
-                                Address is required.
-                            </span>
-                        </div>
-                    </div>
-
-                    <div ng-if="Shipments.AddressType == 0" class="form-group" ng-class="{ 'has-error':shipment.addressCaption.$invalid && submitted }">
-                        <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
-                            <label>Address Caption</label>
-                        </label>
-                        <div class="col-sm-9">
-                            <input type="text" class="col-xs-10 col-sm-7" placeholder="" id="addressCaption" name="addressCaption" data-ng-model="Shipments.AddressCaption" required>
-                            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="shipment.addressCaption.$error.required && submitted">
-                                Address Caption is required.
-                            </span>
-                        </div>
-                    </div>
+                  
                     <div class="form-group" ng-class="{ 'has-error':shipment.addressline1.$invalid && submitted }">
                         <label for="form-field-mask-1" class="col-sm-3 control-label no-padding-right">
                             <label>Address Line 1</label>

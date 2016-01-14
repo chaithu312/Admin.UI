@@ -5,37 +5,6 @@
 
 <form name="PickupForm" data-ng-submit="sendForm()" data-ng-controller="PickupRequestController" class="form-horizontal" novalidate>
 
-    <div class="form-group" ng-class="{ 'has-error':PickupForm.contactName.$invalid && submitted }">
-        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">  Contact Name</label>
-
-        <div class="col-sm-9">
-
-            <input type="text" class="col-xs-10 col-sm-5" id="contactName" name="contactName" data-ng-model="pickupRequest.ContactName" required placeholder="Enter Contact Name">
-
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.contactName.$error.required && submitted">
-                Contact Name is required.
-            </span>
-        </div>
-    </div>
-
-    <div class="form-group" ng-class="{ 'has-error':PickupForm.phone.$invalid && submitted }">
-        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
-            Phone
-        </label>
-
-        <div class="col-sm-9">
-            <input type="number" ng-minlength="10" class="col-xs-10 col-sm-5" placeholder="Enter Phone" id="phone" name="phone" data-ng-model="pickupRequest.Phone" required>
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.phone.$error.required && submitted">
-                Phone is required.
-            </span>
-            @*<span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.phone.$error.minlength || submitted">
-                Phone should be min 10 digit.
-            </span>*@
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.phone.$invalid && submitted">
-            </span>
-        </div>
-    </div>
-
     <div class="form-group">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
             Address
@@ -62,6 +31,40 @@
             </span>
         </div>
     </div>
+
+    <div class="form-group" ng-class="{ 'has-error':PickupForm.contactName.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">  Contact Name</label>
+
+        <div class="col-sm-9">
+
+            <input type="text" class="col-xs-10 col-sm-5" id="contactName" name="contactName" data-ng-model="pickupRequest.ContactName" required placeholder="Enter Contact Name">
+
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.contactName.$error.required && submitted">
+                Contact Name is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':PickupForm.phone.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+            Phone
+        </label>
+
+        <div class="col-sm-9">
+            <input type="number" ng-minlength="10" ng-maxlength="15" class="col-xs-10 col-sm-5" placeholder="Enter Phone" id="phone" name="phone" data-ng-model="pickupRequest.Phone" required>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.phone.$error.required && submitted">
+                Phone is required.
+            </span>
+            @*<span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.phone.$error.minlength || submitted">
+                Phone should be min 10 digit.
+            </span>*@
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.phone.$invalid && submitted">
+            </span>
+        </div>
+    </div>
+
+   
+    
 
     <div class="form-group" ng-class="{ 'has-error':PickupForm.addressLine1.$invalid && submitted }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
@@ -288,10 +291,11 @@
                                 <i class="fa fa-clock-o bigger-110"></i>
                             </span>
 
-                            <span ng-if="CheckTime(pickupRequest.ReadyTime.replace(':',''),pickupRequest.AvailableTime.replace(':',''))" class="error">
-                                Invalid last available time!
-                            </span>
+                          
                         </div>
+                        <span class="help-inline col-xs-12 col-sm-7 error" ng-if="CheckTime(pickupRequest.ReadyTime.replace(':',''),pickupRequest.AvailableTime.replace(':',''))">
+                            Invalid last available time!
+                        </span>
                         <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PickupForm.timepicker1.$error.required && submitted">
                             Last Available Time is required.
                         </span>
@@ -430,6 +434,6 @@
             </button>
         </div>
     </div>
-    <div id="errorMessages" ng-hide="" class="error">{{message}}</div>
+    <div id="errorMessages" ng-hide="" class="error" style="visibility:hidden">{{message}}</div>
     <input type="hidden" ng-model="pickupRequest.Id"/>
 </form>

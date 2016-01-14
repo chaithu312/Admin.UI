@@ -119,7 +119,7 @@
                             else {
                                 $("#veil").hide();
                                 $("#feedLoading").hide();
-                                window.open("http://" + data.LabelImage.OutputImage.replace("10.0.0.124", "test.shipos.com/shipping"), "_blank");
+                                window.open("http://" + data.LabelImage.OutputImage.replace("10.0.0.124", "localhost"), "_blank");
                                 $scope.message = "Label Generated Successfully";
                                 $("#frmShipments").hide();
                             }
@@ -373,7 +373,7 @@
                             $("#frmShipments").hide();
                         }
                         else {
-                            window.open("http://" + data.LabelImage.OutputImage.replace("10.0.0.124", "test.shipos.com/shipping"), "_blank");
+                            window.open("http://" + data.LabelImage.OutputImage.replace("10.0.0.124", "localhost"), "_blank");
                             $scope.message = "Label Generated Successfully";
                             $("#frmShipments").hide();
                         }

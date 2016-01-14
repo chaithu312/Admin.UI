@@ -26,7 +26,7 @@
                             </h1>
                             <h4 class="blue" id="id-company-text">&copy; ShipNex</h4>
                         </div>
-                        <h1>@ViewBag.t</h1>
+
                         <div class="space-6"></div>
 
                         <div class="position-relative">
@@ -42,6 +42,10 @@
 
                                         @using (Html.BeginForm("Login", "Home", FormMethod.Post))
                                         {
+
+                                            <div id="Error" style="color:red">
+                                                @ViewBag.t
+                                            </div>
                                             <fieldset>
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
@@ -74,8 +78,7 @@
                                                 </div>
 
                                                 <div class="space-4"></div>
-                                            </fieldset>
-                                        }
+                                            </fieldset>}
                                         <div class="social-or-login center">
                                             <span class="bigger-110">Or Login Using</span>
                                         </div>
@@ -233,7 +236,7 @@
                             </div><!-- /.signup-box -->
                         </div><!-- /.position-relative -->
 
-                        <div class="navbar-fixed-top align-right">
+                        <div class="navbar-fixed-top align-right" style="visibility:hidden">
                             <br />
                             &nbsp;
                             <a id="btn-login-dark" href="#">Dark</a>
@@ -303,6 +306,7 @@
                 e.preventDefault();
             });
 
+            $("#Error").delay(1000).fadeOut('slow');
         });
     </script>
 </body>

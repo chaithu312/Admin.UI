@@ -1,0 +1,241 @@
+﻿@{
+
+    Layout = "~/Views/shared/_layout.cshtml";
+}
+
+<form name="CountryForm" data-ng-submit="submitCountryForm()"  data-ng-controller="CountryController" class="form-horizontal" role="form" novalidate>
+
+    <div class="pull-right tableTools-container">
+        <a class="btn-new-mail" href="/ServiceRate/ViewCountries">
+            <span class="btn btn-purple no-border">
+                <i class="ace-icon fa  bigger-130"></i>
+                <span class="bigger-110">View Countries</span>
+            </span>
+        </a>
+    </div>
+    <div class="clearfix">
+        <div class="pull-right tableTools-container"></div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':CountryForm.Name.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Country</label>
+
+        <div class="col-sm-9">
+            <input type="text" name="Name" id="Name" ng-model="Country.Name" class="col-xs-10 col-sm-5" required placeholder="Enter Country" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="CountryForm.Name.$error.required && submitted">
+                Country is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':CountryForm.ISOCode.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">ISO Code</label>
+
+        <div class="col-sm-9">
+            <input type="text" name="ISOCode" id="ISOCode" ng-model="Country.ISOCode" class="col-xs-10 col-sm-5" required placeholder="Enter ISO Code" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="CountryForm.ISOCode.$error.required && submitted">
+                ISO Code is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':CountryForm.TopLevelDomain.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Top Level Domain</label>
+
+        <div class="col-sm-9">
+            <input type="text" name="TopLevelDomain" id="TopLevelDomain" ng-model="Country.TopLevelDomain" class="col-xs-10 col-sm-5" required placeholder="Enter Top Level Domain" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="CountryForm.TopLevelDomain.$error.required && submitted">
+                Top Level Domain is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':CountryForm.DialingCode.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Dialing Code</label>
+
+        <div class="col-sm-9">
+            <input type="text" name="DialingCode" id="DialingCode" ng-model="Country.DialingCode" class="col-xs-10 col-sm-5" required placeholder="Enter Dialing Code" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="CountryForm.DialingCode.$error.required && submitted">
+                Dialing Code is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Delivery</label>
+
+        <div class="col-sm-9">
+            <select data-ng-model="Country.Delivery" id="Delivery" name="Delivery" class="col-xs-10 col-sm-5" ng-init="Country.Delivery='1'" bs-selectbox>
+                <option value="1" ng-selected="true">Available</option>
+                <option value="2">Not Available</option>
+            </select> 
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Membership</label>
+
+        <div class="col-sm-9">
+            <select data-ng-model="Country.Membership" id="Membership" name="Membership" class="col-xs-10 col-sm-5" ng-init="Country.Membership='1'" bs-selectbox>
+                <option value="1" ng-selected="true">Allowed</option>
+                <option value="2">Not Allowed</option>
+            </select> 
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Default Time Zone</label>
+
+        <div class="col-sm-9">
+            <select name="TimeZone" id="TimeZone"  class="col-xs-10 col-sm-5" data-ng-model="Country.TimeZone" ng-init="Country.TimeZone='Eastern Time (US &amp; Canada)'">
+                <option value="International Date Line West">(UTC-12:00)  International Date Line West</option>
+                <option value="Coordinated Universal Time-11">(UTC-11:00)  Coordinated Universal Time-11</option>
+                <option value="Hawaii">(UTC-10:00)  Hawaii</option>
+                <option value="Alaska">(UTC-9:00)  Alaska</option>
+                <option value="Pacific Time (US &amp; Canada)">(UTC-8:00)  Pacific Time (US &amp; Canada)</option>
+                <option value="Baja California">(UTC-8:00)  Baja California</option>
+                <option value="Arizona">(UTC-7:00)  Arizona</option>
+                <option value="Chihuahua, La Paz, Mazatlan">(UTC-7:00)  Chihuahua, La Paz, Mazatlan</option>
+                <option value="Mountain Time (US &amp; Canada)">(UTC-7:00)  Mountain Time (US &amp; Canada)</option>
+                <option value="Central Time (US &amp; Canada)">(UTC-6:00)  Central Time (US &amp; Canada)</option>
+                <option value="Guadalajara, Mexico City, Monterrey">(UTC-6:00)  Guadalajara, Mexico City, Monterrey</option>
+                <option value="Saskatchewan">(UTC-6:00)  Saskatchewan</option>
+                <option value="Central America">(UTC-6:00)  Central America</option>
+                <option selected="selected" value="Eastern Time (US &amp; Canada)">(UTC-5:00)  Eastern Time (US &amp; Canada)</option>
+                <option value="Bogota, Lima, Quito, Rio Branco">(UTC-5:00)  Bogota, Lima, Quito, Rio Branco</option>
+                <option value="Indiana (East)">(UTC-5:00)  Indiana (East)</option>
+                <option value="Caracas">(UTC-4:-30)  Caracas</option>
+                <option value="Cuiaba">(UTC-4:00)  Cuiaba</option>
+                <option value="Santiago">(UTC-4:00)  Santiago</option>
+                <option value="Atlantic Time (Canada)">(UTC-4:00)  Atlantic Time (Canada)</option>
+                <option value="Asuncion">(UTC-4:00)  Asuncion</option>
+                <option value="Georgetown, La Paz, Manaus, San Juan">(UTC-4:00)  Georgetown, La Paz, Manaus, San Juan</option>
+                <option value="Newfoundland">(UTC-3:-30)  Newfoundland</option>
+                <option value="Cayenne, Fortaleza">(UTC-3:00)  Cayenne, Fortaleza</option>
+                <option value="Salvador">(UTC-3:00)  Salvador</option>
+                <option value="Greenland">(UTC-3:00)  Greenland</option>
+                <option value="Montevideo">(UTC-3:00)  Montevideo</option>
+                <option value="Buenos Aires">(UTC-3:00)  Buenos Aires</option>
+                <option value="Brasilia">(UTC-3:00)  Brasilia</option>
+                <option value="Coordinated Universal Time-02">(UTC-2:00)  Coordinated Universal Time-02</option>
+                <option value="Mid-Atlantic - Old">(UTC-2:00)  Mid-Atlantic - Old</option>
+                <option value="Azores">(UTC-1:00)  Azores</option>
+                <option value="Cabo Verde Is.">(UTC-1:00)  Cabo Verde Is.</option>
+                <option value="Dublin, Edinburgh, Lisbon, London">(UTC)  Dublin, Edinburgh, Lisbon, London</option>
+                <option value="Monrovia, Reykjavik">(UTC)  Monrovia, Reykjavik</option>
+                <option value="Coordinated Universal Time">(UTC)  Coordinated Universal Time</option>
+                <option value="Casablanca">(UTC)  Casablanca</option>
+                <option value="West Central Africa">(UTC+01:00)  West Central Africa</option>
+                <option value="Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna">(UTC+01:00)  Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna</option>
+                <option value="Windhoek">(UTC+01:00)  Windhoek</option>
+                <option value="Brussels, Copenhagen, Madrid, Paris">(UTC+01:00)  Brussels, Copenhagen, Madrid, Paris</option>
+                <option value="Sarajevo, Skopje, Warsaw, Zagreb">(UTC+01:00)  Sarajevo, Skopje, Warsaw, Zagreb</option>
+                <option value="Belgrade, Bratislava, Budapest, Ljubljana, Prague">(UTC+01:00)  Belgrade, Bratislava, Budapest, Ljubljana, Prague</option>
+                <option value="Kaliningrad (RTZ 1)">(UTC+02:00)  Kaliningrad (RTZ 1)</option>
+                <option value="Beirut">(UTC+02:00)  Beirut</option>
+                <option value="Tripoli">(UTC+02:00)  Tripoli</option>
+                <option value="Amman">(UTC+02:00)  Amman</option>
+                <option value="Damascus">(UTC+02:00)  Damascus</option>
+                <option value="Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius">(UTC+02:00)  Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius</option>
+                <option value="Istanbul">(UTC+02:00)  Istanbul</option>
+                <option value="E. Europe">(UTC+02:00)  E. Europe</option>
+                <option value="Cairo">(UTC+02:00)  Cairo</option>
+                <option value="Jerusalem">(UTC+02:00)  Jerusalem</option>
+                <option value="Harare, Pretoria">(UTC+02:00)  Harare, Pretoria</option>
+                <option value="Athens, Bucharest">(UTC+02:00)  Athens, Bucharest</option>
+                <option value="Nairobi">(UTC+03:00)  Nairobi</option>
+                <option value="Kuwait, Riyadh">(UTC+03:00)  Kuwait, Riyadh</option>
+                <option value="Baghdad">(UTC+03:00)  Baghdad</option>
+                <option value="Minsk">(UTC+03:00)  Minsk</option>
+                <option value="Moscow, St. Petersburg, Volgograd (RTZ 2)">(UTC+03:00)  Moscow, St. Petersburg, Volgograd (RTZ 2)</option>
+                <option value="Tehran">(UTC+03:30)  Tehran</option>
+                <option value="Abu Dhabi, Muscat">(UTC+04:00)  Abu Dhabi, Muscat</option>
+                <option value="Port Louis">(UTC+04:00)  Port Louis</option>
+                <option value="Izhevsk, Samara (RTZ 3)">(UTC+04:00)  Izhevsk, Samara (RTZ 3)</option>
+                <option value="Yerevan">(UTC+04:00)  Yerevan</option>
+                <option value="Tbilisi">(UTC+04:00)  Tbilisi</option>
+                <option value="Baku">(UTC+04:00)  Baku</option>
+                <option value="Kabul">(UTC+04:30)  Kabul</option>
+                <option value="Islamabad, Karachi">(UTC+05:00)  Islamabad, Karachi</option>
+                <option value="Ekaterinburg (RTZ 4)">(UTC+05:00)  Ekaterinburg (RTZ 4)</option>
+                <option value="Ashgabat, Tashkent">(UTC+05:00)  Ashgabat, Tashkent</option>
+                <option value="Sri Jayawardenepura">(UTC+05:30)  Sri Jayawardenepura</option>
+                <option value="Chennai, Kolkata, Mumbai, New Delhi">(UTC+05:30)  Chennai, Kolkata, Mumbai, New Delhi</option>
+                <option value="Kathmandu">(UTC+05:45)  Kathmandu</option>
+                <option value="Astana">(UTC+06:00)  Astana</option>
+                <option value="Dhaka">(UTC+06:00)  Dhaka</option>
+                <option value="Novosibirsk (RTZ 5)">(UTC+06:00)  Novosibirsk (RTZ 5)</option>
+                <option value="Yangon (Rangoon)">(UTC+06:30)  Yangon (Rangoon)</option>
+                <option value="Bangkok, Hanoi, Jakarta">(UTC+07:00)  Bangkok, Hanoi, Jakarta</option>
+                <option value="Krasnoyarsk (RTZ 6)">(UTC+07:00)  Krasnoyarsk (RTZ 6)</option>
+                <option value="Perth">(UTC+08:00)  Perth</option>
+                <option value="Irkutsk (RTZ 7)">(UTC+08:00)  Irkutsk (RTZ 7)</option>
+                <option value="Taipei">(UTC+08:00)  Taipei</option>
+                <option value="Kuala Lumpur, Singapore">(UTC+08:00)  Kuala Lumpur, Singapore</option>
+                <option value="Beijing, Chongqing, Hong Kong, Urumqi">(UTC+08:00)  Beijing, Chongqing, Hong Kong, Urumqi</option>
+                <option value="Ulaanbaatar">(UTC+08:00)  Ulaanbaatar</option>
+                <option value="Osaka, Sapporo, Tokyo">(UTC+09:00)  Osaka, Sapporo, Tokyo</option>
+                <option value="Seoul">(UTC+09:00)  Seoul</option>
+                <option value="Yakutsk (RTZ 8)">(UTC+09:00)  Yakutsk (RTZ 8)</option>
+                <option value="Darwin">(UTC+09:30)  Darwin</option>
+                <option value="Adelaide">(UTC+09:30)  Adelaide</option>
+                <option value="Magadan">(UTC+10:00)  Magadan</option>
+                <option value="Vladivostok, Magadan (RTZ 9)">(UTC+10:00)  Vladivostok, Magadan (RTZ 9)</option>
+                <option value="Canberra, Melbourne, Sydney">(UTC+10:00)  Canberra, Melbourne, Sydney</option>
+                <option value="Guam, Port Moresby">(UTC+10:00)  Guam, Port Moresby</option>
+                <option value="Hobart">(UTC+10:00)  Hobart</option>
+                <option value="Brisbane">(UTC+10:00)  Brisbane</option>
+                <option value="Chokurdakh (RTZ 10)">(UTC+11:00)  Chokurdakh (RTZ 10)</option>
+                <option value="Solomon Is., New Caledonia">(UTC+11:00)  Solomon Is., New Caledonia</option>
+                <option value="Auckland, Wellington">(UTC+12:00)  Auckland, Wellington</option>
+                <option value="Fiji">(UTC+12:00)  Fiji</option>
+                <option value="Petropavlovsk-Kamchatsky - Old">(UTC+12:00)  Petropavlovsk-Kamchatsky - Old</option>
+                <option value="Coordinated Universal Time+12">(UTC+12:00)  Coordinated Universal Time+12</option>
+                <option value="Anadyr, Petropavlovsk-Kamchatsky (RTZ 11)">(UTC+12:00)  Anadyr, Petropavlovsk-Kamchatsky (RTZ 11)</option>
+                <option value="Nuku'alofa">(UTC+13:00)  Nuku'alofa</option>
+                <option value="Samoa">(UTC+13:00)  Samoa</option>
+                <option value="Kiritimati Island">(UTC+14:00)  Kiritimati Island</option>
+
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Status</label>
+
+        <div class="col-sm-9">
+            <select data-ng-model="Country.Status" ng-init="Country.Status='1'" id="Status" name="Status" class="col-xs-10 col-sm-5" bs-selectbox>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select> 
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Security Charge</label>
+        <div class="col-sm-9">
+            <select data-ng-model="Country.SecurityCharge" ng-init="Country.SecurityCharge='1'" id="SecurityCharge" name="SecurityCharge" class="col-xs-10 col-sm-5" bs-selectbox>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select> 
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="clearfix form-actions">
+        <div class="col-md-offset-3 col-md-9">
+            <button type="submit" class="btn btn-info" ng-click="submitted=true">
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                Save
+            </button>
+
+            &nbsp; &nbsp; &nbsp;
+            <button type="reset" class="btn">
+                <i class="ace-icon fa fa-undo bigger-110"></i>
+                Reset
+            </button>
+        </div>
+    </div>
+    <div id="errorMessages" class="error">{{message}}</div>
+</form>

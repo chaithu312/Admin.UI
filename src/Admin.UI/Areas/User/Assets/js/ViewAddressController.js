@@ -177,13 +177,13 @@
             "mDataProp": "Division",
             "aTargets": [3]
         }, {
-            "mDataProp": "CountryId",
+            "mDataProp": "PostalCode",
             "aTargets": [4]
         }, {
-            "mDataProp": "PostalCode",
+            "mDataProp": "Phone1",
             "aTargets": [5]
         }, {
-            "mDataProp": "Phone1",
+            "mDataProp": "EMail",
             "aTargets": [6]
         }, {
             "mDataProp": "AddressType",

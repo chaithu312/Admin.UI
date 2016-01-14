@@ -33,7 +33,7 @@
         $scope.contact = null;
         $scope.contact = { AddressType: null, ShortName: null, Company: null, FirstName: null, LastName: null, Phone1: null, Phone2: null, Fax: null, Email: null, CountryId: null, PostalCode: null, Division: null, City: null, Address1: null, Address2: null, Address3: null, Address1Label: "Address Line 1", Address2Label: "Address Line 2", isAddress3Visible: true, CountryCode: null, Id: null };
 
-       
+        $scope.contact.Id = 0;
         //HTTP REQUEST BELOW
         $("#veil").show();
         $("#feedLoading").show();
@@ -120,7 +120,8 @@
                             $scope.message = str;
                         }
                         else {
-                            $scope.States = JSON.parse(data);
+                            
+                            $scope.States = JSON.parse(data) ;
                             $scope.bindAddressBook(selectedAddress);
                         }
                     }).error(function (data, status, headers, config) {

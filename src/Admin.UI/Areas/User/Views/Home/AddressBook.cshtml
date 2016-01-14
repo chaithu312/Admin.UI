@@ -85,7 +85,7 @@
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Phone 1</label>
 
         <div class="col-sm-9">
-            <input type="number" ng-minlength="10" name="phone1" id="phone1" data-ng-model="contact.Phone1" placeholder="Enter Phone Number" class="col-xs-10 col-sm-5" required />
+            <input type="number" ng-minlength="10" ng-maxlength="15" name="phone1" id="phone1" data-ng-model="contact.Phone1" placeholder="Enter Phone Number" class="col-xs-10 col-sm-5" required />
             <span class="help-inline col-xs-12 col-sm-7" data-ng-show="AddressBook.phone1.$error.required && submitted">
                 Phone 1 is required.
             </span>
