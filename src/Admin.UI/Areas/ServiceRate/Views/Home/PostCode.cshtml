@@ -5,7 +5,7 @@
 
 <form name="PostCodeForm" data-ng-submit="submitPostCodeForm()" data-ng-controller="PostController" class="form-horizontal" role="form" novalidate>
     <div class="pull-right tableTools-container">
-        <a class="btn-new-mail" href="/ServiceRate/ViewStates">
+        <a class="btn-new-mail" href="/ServiceRate/ViewPostCode">
             <span class="btn btn-purple no-border">
                 <i class="ace-icon fa  bigger-130"></i>
                 <span class="bigger-110">View Post Codes</span>
@@ -53,7 +53,7 @@
     <div class="form-group">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Class</label>
         <div class="col-sm-9">
-            <select name="PostClass" id="PostClass" data-ng-model="PostCode.Class" ng-init="PostCode.Class='S'">
+            <select name="PostClass" class="col-xs-10 col-sm-5" id="PostClass" data-ng-model="PostCode.Class" ng-init="PostCode.Class='S'">
                 <option selected="selected" value="S">STANDARD</option>
                 <option value="U">UNIQUE</option>
                 <option value="P">PO BOX ONLY</option>
@@ -62,12 +62,12 @@
         </div>
     </div>
 
-    <div class="form-group" ng-class="{ 'has-error':PostCodeForm.City.$invalid && submitted }">
+    <div class="form-group" ng-class="{ 'has-error':PostCodeForm.CityName.$invalid && submitted }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">City Name</label>
 
         <div class="col-sm-9">
-            <input type="text" name="City" id="City" ng-model="PostCode.City" class="col-xs-10 col-sm-5" required placeholder="Enter City Name" />
-            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PostCodeForm.City.$error.required && submitted">
+            <input type="text" name="CityName" id="CityName" ng-model="PostCode.CityName" class="col-xs-10 col-sm-5" required placeholder="Enter City Name" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PostCodeForm.CityName.$error.required && submitted">
                 City Name  is required.
             </span>
         </div>
@@ -76,7 +76,7 @@
     <div class="form-group">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">City Type</label>
         <div class="col-sm-9">
-            <select name="CityType" id="CityType" data-ng-model="PostCode.CityType" ng-init="PostCode.CityType='D'">
+            <select name="CityType" class="col-xs-10 col-sm-5" id="CityType" data-ng-model="PostCode.CityType" ng-init="PostCode.CityType='D'">
                 <option selected="selected" value="D">DEFAULT</option>
                 <option value="A">ACCEPTED</option>
                 <option value="N">NOT ACCEPTED</option>
@@ -94,7 +94,7 @@
     <div class="form-group">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">County FIPS</label>
         <div class="col-sm-9">
-            <input type="text" name="CountyFIPS" id="CountyFIPS" ng-model="PostCode.CountyFIPS" class="col-xs-10 col-sm-5" placeholder="Country FIPS" />
+            <input type="text" name="CountryFIPS" id="CountryFIPS" ng-model="PostCode.CountryFIPS" class="col-xs-10 col-sm-5" placeholder="Country FIPS" />
         </div>
     </div>
 
@@ -108,7 +108,7 @@
     <div class="form-group">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Time Zone</label>
         <div class="col-sm-9">
-            <select name="TimeZone" id="TimeZone" data-ng-model="PostCode.TimeZone" ng-init="PostCode.TimeZone='0'">
+            <select name="TimeZone" class="col-xs-10 col-sm-5" id="TimeZone" data-ng-model="PostCode.TimeZone" ng-init="PostCode.TimeZone='0'">
                 <option selected="selected" value="0">None</option>
                 <option value="-11">Samoa (UTC-11)</option>
                 <option value="-10">Hawaii (UTC-10)</option>
@@ -129,7 +129,7 @@
     <div class="form-group">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Daylight Savings Time</label>
         <div class="col-sm-9">
-            <input type="checkbox" id="DaylightSavings" data-ng-model="PostCode.isDaylightSavings" />
+            <input type="checkbox" id="DaylightSavings" data-ng-model="PostCode.DaylightSavingsTime" />
         </div>
     </div>
 
@@ -155,51 +155,43 @@
     </div>
 
     <div class="form-group">
-        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Saturday Delivery</label>
-        <div class="col-sm-9">
-            <input type="checkbox" id="SaturdayDelivery" data-ng-model="PostCode.isSaturdayDelivery" />
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+
+        </label>
+        <div class="col-sm-6">
+
+            <div class="col-sm-4">
+                <label>Earliest Delivery Time</label>
+                <div>
+                    <input type="text" class="col-sm-3 shippingTimepicker" data-ng-model="PostCode.EarliestDeliveryTime" data-format="hh:mm" id="timepicker1" name="timepicker">
+                    <span class="input-group-addon col-sm-3">
+                        <i class="fa fa-clock-o bigger-110"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <label>Last Pickup Order</label>
+                <div>
+                    <input type="text" class="col-sm-3 shippingTimepicker" data-ng-model="PostCode.LastPickupOrder" data-format="hh:mm" id="timepicker2" name="timepicker2">
+                    <span class="input-group-addon col-sm-3">
+                        <i class="fa fa-clock-o bigger-110"></i>
+                    </span>
+
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <label>Last Pickup</label>
+                <div>
+                    <input type="text" class="col-sm-3 shippingTimepicker" data-ng-model="PostCode.LastPickup" data-format="hh:mm" id="timepicker3" name="timepicker3">
+                    <span class="input-group-addon col-sm-3">
+                        <i class="fa fa-clock-o bigger-110"></i>
+                    </span>
+
+                </div>
+            </div>
+
         </div>
     </div>
-
-    <div class="form-group">
-                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
-                       
-                    </label>
-                    <div class="col-sm-6">
-
-                          <div class="col-sm-4">
-                              <label>Earliest Delivery Time</label>
-                               <div>
-                                   <input type="text" class="col-sm-3" data-ng-model="PostCode.EarliestDeliveryTime" data-format="hh:mm" id="timepicker2" name="timepicker1">
-                                   <span class="input-group-addon col-sm-3">
-                                       <i class="fa fa-clock-o bigger-110"></i>
-                                   </span>
-
-                               </div>
-                          </div>
-                        <div class="col-sm-4">
-                            <label>Last Pickup Order</label>
-                            <div>
-                                <input type="text" class="col-sm-3" data-ng-model="PostCode.LastPickupOrder" data-format="hh:mm" id="timepicker2" name="timepicker2">
-                                <span class="input-group-addon col-sm-3">
-                                    <i class="fa fa-clock-o bigger-110"></i>
-                                </span>
-
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <label>Last Pickup</label>
-                            <div>
-                                <input type="text" class="col-sm-3" data-ng-model="PostCode.LastPickup" data-format="hh:mm" id="timepicker3" name="timepicker3">
-                                <span class="input-group-addon col-sm-3">
-                                    <i class="fa fa-clock-o bigger-110"></i>
-                                </span>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
     <div class="space-4"></div>
     <div class="form-group">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
@@ -210,19 +202,19 @@
             <div class="col-sm-4">
                 <label>Saturday Delivery</label>
                 <div>
-                    <input type="checkbox" id="SaturdayDevlivery" data-ng-model="PostCode.isSaturdayDelivery" />
+                    <input type="checkbox" id="SaturdayDevlivery" data-ng-model="PostCode.SaturdayDelivery" />
                 </div>
             </div>
             <div class="col-sm-4">
                 <label>Pickup</label>
                 <div>
-                    <input type="checkbox" id="Pickup" data-ng-model="PostCode.isPickup" />
+                    <input type="checkbox" id="Pickup" data-ng-model="PostCode.Pickup" />
                 </div>
             </div>
             <div class="col-sm-4">
                 <label>Delivery</label>
                 <div>
-                    <input type="checkbox" id="Delivery" data-ng-model="PostCode.isDelivery" />
+                    <input type="checkbox" id="Delivery" data-ng-model="PostCode.Delivery" />
                 </div>
             </div>
 

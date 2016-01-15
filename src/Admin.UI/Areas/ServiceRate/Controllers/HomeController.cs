@@ -22,8 +22,10 @@ namespace Admin.UI.ServiceRateArea
 	[Area("ServiceRate")]
 	public class HomeController : Controller
 	{
-		List<Country> countries = null;
-		List<State> states = null;
+		private readonly List<Country> countries = null;
+		private readonly List<State> states = null;
+		private readonly List<PostCode> postCode = null;
+		private readonly List<ZoneUS> zoneUS = null;
 		public HomeController()
 		{
 			countries = new List<Country>();
@@ -31,8 +33,23 @@ namespace Admin.UI.ServiceRateArea
 			countries.Add(new Country() { Id = 2, Name = "Aland Islands", ISOCode = "AX", TopLevelDomain = "AX", Delivery = "1", DialingCode = "358", Membership = "1", Status = "1", SecurityCharge = "1", TimeZone = "Eastern Time (US & Canada)" });
 
 			states = new List<State>();
-			states.Add(new State() { Id = 1, Country = "840", Name = "ALABAMA", Code = "AL", FIPS = "01", AdditionalDays = "0", TimeZone = "Eastern Time (US & Canada)", Status = "0"});
-			states.Add(new State() { Id = 2, Country = "840", Name = "ALASKA", Code = "AK", FIPS = "02", AdditionalDays = "1", TimeZone = "Alaska", Status = "0",  });
+			states.Add(new State() { Id = 1, Country = "840", Name = "ALABAMA", Code = "AL", FIPS = "01", AdditionalDays = "0", TimeZone = "Eastern Time (US & Canada)", Status = "0" });
+			states.Add(new State() { Id = 2, Country = "840", Name = "ALASKA", Code = "AK", FIPS = "02", AdditionalDays = "1", TimeZone = "Alaska", Status = "0", });
+
+
+			postCode = new List<PostCode>();
+
+			postCode.Add(new PostCode() { Id = 1, Country = "840", State = "1", PostalCode = "99812", CityName = "Juneau", CityType = "A", CountryName = "Juneau",Class="U",TimeZone="-9",AdditionalDays="1",SaturdayDelivery=true,Pickup=true,Delivery=true,AreaCode="907",CountryFIPS="FIPS1",DaylightSavingsTime=true,EarliestDeliveryTime="12:34",LastPickup= "12:34", LastPickupOrder = "12:34",Latitude="23,56'",Longitude = "23,56'", Status = "0" });
+
+			postCode.Add(new PostCode() { Id =2, Country = "840", State = "2", PostalCode = "99812", CityName = "State of Alaska", CityType = "N", CountryName = "Juneau", Class = "U", TimeZone = "-9", AdditionalDays = "2", SaturdayDelivery = true, Pickup = true, Delivery = true, AreaCode = "907", CountryFIPS = "FIPS1", DaylightSavingsTime = true, EarliestDeliveryTime = "12:34", LastPickup = "12:34", LastPickupOrder = "12:34", Latitude = "23,56'", Longitude = "23,56'", Status = "0" });
+
+			zoneUS = new List<ZoneUS>();
+
+			zoneUS.Add(new ZoneUS() { Id = 1, OriginZipLower = "12345", OriginZipUpper = "67891", DestinationZipLower = "12345", DestinationZipUpper = "67890", Zone = "10", Created = DateTime.Now.ToString() });
+
+			zoneUS.Add(new ZoneUS() { Id = 2, OriginZipLower = "12345", OriginZipUpper = "67891", DestinationZipLower = "12345", DestinationZipUpper = "67890", Zone = "11",Created=DateTime.Now.ToString() });
+			
+			
 		}
 		public IActionResult Index()
 		{
@@ -57,16 +74,44 @@ namespace Admin.UI.ServiceRateArea
 			return View();
 		}
 
+		public IActionResult ZoneUS()
+		{
+			return View();
+		}
+
+		public IActionResult Zone()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public IActionResult Zone([FromBody] Zone zone)
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public JsonResult ZoneUS([FromBody]ZoneUS zoneUS)
+		{
+			return Json(null);
+		}
+
+		[HttpPost]
+		public IActionResult PostCode([FromBody]PostCode postCode)
+		{
+			return Json(null);
+		}
+
 		[HttpPost]
 		public IActionResult Country([FromBody]Country country)
 		{
-            return View();
+			return Json(null);
 		}
 
 		[HttpPost]
 		public IActionResult State([FromBody]State state)
 		{
-			return View();
+			return Json(null);
 		}
 
 		public IActionResult ViewCountries()
@@ -76,6 +121,18 @@ namespace Admin.UI.ServiceRateArea
 		}
 
 		public IActionResult ViewStates()
+		{
+			ViewBag.User = HttpContext.Session.GetString("User");
+			return View();
+		}
+
+		public IActionResult ViewPostCode()
+		{
+			ViewBag.User = HttpContext.Session.GetString("User");
+			return View();
+		}
+
+		public IActionResult ViewZoneUS()
 		{
 			ViewBag.User = HttpContext.Session.GetString("User");
 			return View();
@@ -107,6 +164,32 @@ namespace Admin.UI.ServiceRateArea
 			}
 		}
 
+		[HttpGet]
+		public JsonResult GetAllPostCodes()
+		{
+			try
+			{
+				return Json(postCode);
+			}
+			catch (Exception ex)
+			{
+				return Json(ex.Message);
+			}
+		}
+
+		[HttpGet]
+		public JsonResult GetAllZoneUS()
+		{
+			try
+			{
+				return Json(zoneUS);
+			}
+			catch (Exception ex)
+			{
+				return Json(ex.Message);
+			}
+		}
+		
 		public JsonResult DeleteCountryById(string id)
 		{
 			countries.RemoveAll(x => x.Id == Convert.ToInt64(id));
@@ -117,6 +200,18 @@ namespace Admin.UI.ServiceRateArea
 		{
 			states.RemoveAll(x => x.Id == Convert.ToInt64(id));
 			return Json(states);
+		}
+
+		public JsonResult DeletePostById(string id)
+		{
+			postCode.RemoveAll(x => x.Id == Convert.ToInt64(id));
+			return Json(postCode);
+		}
+
+		public JsonResult DeleteZoneById(string id)
+		{
+			zoneUS.RemoveAll(x => x.Id == Convert.ToInt64(id));
+			return Json(zoneUS);
 		}
 
 		[HttpPost]

@@ -1467,7 +1467,7 @@
           "lib/dnx451/Microsoft.Dnx.Runtime.Abstractions.dll": {}
         }
       },
-      "Microsoft.Extensions.DependencyInjection.Abstractions/1.0.0-rc2-15855": {
+      "Microsoft.Extensions.DependencyInjection.Abstractions/1.0.0-rc2-15864": {
         "type": "package",
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -3636,7 +3636,7 @@
           "lib/dnx451/Microsoft.Dnx.Runtime.Abstractions.dll": {}
         }
       },
-      "Microsoft.Extensions.DependencyInjection.Abstractions/1.0.0-rc2-15855": {
+      "Microsoft.Extensions.DependencyInjection.Abstractions/1.0.0-rc2-15864": {
         "type": "package",
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -5805,7 +5805,7 @@
           "lib/dnx451/Microsoft.Dnx.Runtime.Abstractions.dll": {}
         }
       },
-      "Microsoft.Extensions.DependencyInjection.Abstractions/1.0.0-rc2-15855": {
+      "Microsoft.Extensions.DependencyInjection.Abstractions/1.0.0-rc2-15864": {
         "type": "package",
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -7591,10 +7591,10 @@
         "Microsoft.Dnx.Runtime.Abstractions.nuspec"
       ]
     },
-    "Microsoft.Extensions.DependencyInjection.Abstractions/1.0.0-rc2-15855": {
+    "Microsoft.Extensions.DependencyInjection.Abstractions/1.0.0-rc2-15864": {
       "type": "package",
       "serviceable": true,
-      "sha512": "AFA8FOpgWr9O1faM+Ujj6Ko194zXoaVevl1DDFaHmuWHpp9Cg6XPL4+w+eof2JhKyKc4xePDinrdSI2C1eyVnw==",
+      "sha512": "IGyrS9+9iV+kxUpni+kbexOQCs+6V9/aPUTsoKYZYHMXviUVHtdHg+uW3m5zxeot1eirIsdOuHfFLYvqYkRA6g==",
       "files": [
         "lib/dotnet5.4/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
         "lib/dotnet5.4/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
@@ -7602,8 +7602,8 @@
         "lib/net451/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
         "lib/netcore50/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
         "lib/netcore50/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
-        "Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0-rc2-15855.nupkg",
-        "Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0-rc2-15855.nupkg.sha512",
+        "Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0-rc2-15864.nupkg",
+        "Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0-rc2-15864.nupkg.sha512",
         "Microsoft.Extensions.DependencyInjection.Abstractions.nuspec"
       ]
     },

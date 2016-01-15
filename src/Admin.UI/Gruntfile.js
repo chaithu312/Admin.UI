@@ -64,10 +64,14 @@
                         'Areas/ServiceRate/Assets/js/StateController.js',
                         'Areas/ServiceRate/Assets/js/ViewStateController.js',
                         'Areas/ServiceRate/Assets/js/PostController.js',
+                        'Areas/ServiceRate/Assets/js/ViewPostCodeController.js',
                         'Areas/ServiceRate/Assets/js/AgentsController.js',
                         'Areas/ServiceRate/Assets/js/ViewAgentsController.js',
                         'Areas/ServiceRate/Assets/js/AgentServiceController.js',
-                        'Areas/ServiceRate/Assets/js/ViewAgentServiceController.js'
+                        'Areas/ServiceRate/Assets/js/ViewAgentServiceController.js',
+                        'Areas/ServiceRate/Assets/js/ZoneUSController.js',
+                        'Areas/ServiceRate/Assets/js/ViewZoneUSController.js',
+                        'Areas/ServiceRate/Assets/js/ZoneController.js',
                     ],
                     'wwwroot/assets/js/DataTable.js': [
                         'Assets/ace/js/dataTables/jquery.dataTables.js',

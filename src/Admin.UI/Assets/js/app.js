@@ -220,6 +220,14 @@ $('#timepicker2').timepicker({
     $(this).prev().focus();
 });
 
+$('.shippingTimepicker').timepicker({
+    minuteStep: 1,
+    showSeconds: false,
+    showMeridian: false
+}).next().on(ace.click_event, function () {
+    $(this).prev().focus();
+});
+
 //or change it into a date range picker
 $('.input-daterange').datepicker({ autoclose: true });
 

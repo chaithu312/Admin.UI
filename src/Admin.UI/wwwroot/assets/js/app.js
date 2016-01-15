@@ -220,6 +220,14 @@ $('#timepicker2').timepicker({
     $(this).prev().focus();
 });
 
+$('.shippingTimepicker').timepicker({
+    minuteStep: 1,
+    showSeconds: false,
+    showMeridian: false
+}).next().on(ace.click_event, function () {
+    $(this).prev().focus();
+});
+
 //or change it into a date range picker
 $('.input-daterange').datepicker({ autoclose: true });
 
@@ -2604,45 +2612,47 @@ $('[data-rel=popover]').popover({ container: 'body' });
                     }
                     else {
                         $scope.States = JSON.parse(data);
+                        //Editing of country working here
+                        if ($location.absUrl().split("?").length > 1) {
+                            $("#veil").show();
+                            $("#feedLoading").show();
+                            var Id = $location.absUrl().split("/");
+                            var editdata = Id[5];
+                            var editrow = editdata.split("?");
+                            $http({
+                                method: 'GET',
+                                url: '/ServiceRate/Home/GetAllPostCodes',
+                                headers: {
+                                    'RequestVerificationToken': $scope.antiForgeryToken
+                                }
+                            }).success(function (data, status, headers, config) {
+                                $scope.message = '';
+                                if (data.success == false) {
+                                    var str = '';
+                                    for (var error in data.errors) {
+                                        str += data.errors[error] + '\n';
+                                    }
+                                    $scope.message = str;
+                                }
+                                else {
+                                    var selectedData = $filter('filter')(data, function (d) { return d.Id == editrow[1] })[0];
+                                    $scope.bindPostData(selectedData);
+                                    $("#veil").hide();
+                                    $("#feedLoading").hide();
+                                }
+                            }).error(function (data, status, headers, config) {
+                                $scope.message = 'Unexpected Error';
+                            });
+                        }
+                        //End Editing
                         $("#veil").hide();
                         $("#feedLoading").hide();
                     }
-                }).error(function (data, status, headers, config) {
+                })
+                    .error(function (data, status, headers, config) {
                     $scope.message = 'Unexpected Error';
                 });
-                //Editing of country working here
-                if ($location.absUrl().split("?").length > 1) {
-                    $("#veil").show();
-                    $("#feedLoading").show();
-                    var Id = $location.absUrl().split("/");
-                    var editdata = Id[5];
-                    var editrow = editdata.split("?");
-                    $http({
-                        method: 'GET',
-                        url: '/ServiceRate/Home/GetAllStates',
-                        headers: {
-                            'RequestVerificationToken': $scope.antiForgeryToken
-                        }
-                    }).success(function (data, status, headers, config) {
-                        $scope.message = '';
-                        if (data.success == false) {
-                            var str = '';
-                            for (var error in data.errors) {
-                                str += data.errors[error] + '\n';
-                            }
-                            $scope.message = str;
-                        }
-                        else {
-                            var selectedData = $filter('filter')(data, function (d) { return d.Id == editrow[1] })[0];
-                            $scope.bindData(selectedData);
-                            $("#veil").hide();
-                            $("#feedLoading").hide();
-                        }
-                    }).error(function (data, status, headers, config) {
-                        $scope.message = 'Unexpected Error';
-                    });
-                }
-                //End Editing
+               
                 $("#veil").hide();
                 $("#feedLoading").hide();
             }
@@ -2665,9 +2675,9 @@ $('[data-rel=popover]').popover({ container: 'body' });
                 //$("#veil").show();
                 //$("#feedLoading").show();
                 $http({
-                    url: '/ServiceRate/State',
+                    url: '/ServiceRate/PostCode',
                     method: "POST",
-                    data: JSON.stringify($scope.State),
+                    data: JSON.stringify($scope.PostCode),
                     contentType: "application/json;",
                     dataType: "json"
                 })
@@ -2690,24 +2700,240 @@ $('[data-rel=popover]').popover({ container: 'body' });
                     });
             }
         }
-        $scope.bindData = function (state) {
-            $scope.State.Id = state.Id;
-            $scope.State.Country = state.Country;
-            $scope.State.Name = state.Name;
-            $scope.State.Code = state.Code;
-            $scope.State.TimeZone = state.TimeZone;
-            $scope.State.FIPS = state.FIPS;
-            $scope.State.AdditionalDays = state.AdditionalDays;
-            $scope.State.Status = state.Status;
+        $scope.bindPostData = function (post) {
+            $scope.PostCode.Id = post.Id;
+            $scope.PostCode.Country = post.Country;
+            $scope.PostCode.State = post.State;
+            $scope.PostCode.PostCode = post.PostalCode;
+            $scope.PostCode.CityName = post.CityName;
+            $scope.PostCode.CityType = post.CityType;
+            $scope.PostCode.CountryName = post.CountryName;
+            $scope.PostCode.CountryFIPS = post.CountryFIPS;
+            $scope.PostCode.Class = post.Class;
+            $scope.PostCode.TimeZone = post.TimeZone;
+            $scope.PostCode.DaylightSavingsTime = post.DaylightSavingsTime;
+            $scope.PostCode.EarliestDeliveryTime = post.EarliestDeliveryTime;
+            $scope.PostCode.AreaCode = post.AreaCode;
+            $scope.PostCode.SaturdayDelivery = post.SaturdayDelivery;
+            $scope.PostCode.Pickup = post.Pickup;
+            $scope.PostCode.Delivery = post.Delivery;
+            $scope.PostCode.LastPickup = post.LastPickup;
+            $scope.PostCode.LastPickupOrder = post.LastPickupOrder;
+            $scope.PostCode.Latitude = post.Latitude;
+            $scope.PostCode.Longitude = post.Longitude;
+            $scope.PostCode.AdditionalDays = post.AdditionalDays;
+            $scope.PostCode.Status = post.Status;
             $scope.$apply();
-            $("#Delivery").find('option[value=' + state.Delivery+ ']').attr('selected', 'selected');
-            $("#Membership").find('option[value=' + state.Membership + ']').attr('selected', 'selected');
-            $("#Country").find('option[value=' + state.Country + ']').attr('selected', 'selected');
-            $("#TimeZone").find('option[value=' + state.TimeZone + ']').attr('selected', 'selected');
-            $("#Status").find('option[value=' + state.Status+ ']').attr('selected', 'selected');
-            $("#SecurityCharge").find('option[value=' + state.SecurityCharge + ']').attr('selected', 'selected');
+            $("#Country").find('option[value=' + post.Country + ']').attr('selected', 'selected');
+            $("#ddlState").find('option[value=' + post.State + ']').attr('selected', 'selected');
+            $("#PostClass").find('option[value=' + post.Class + ']').attr('selected', 'selected');
+            $("#CityType").find('option[value=' + post.CityType + ']').attr('selected', 'selected');
+            $("#SecurityCharge").find('option[value=' + post.SecurityCharge + ']').attr('selected', 'selected');
         }
     })})();
+(function () {
+    var validationApp = angular.module('mainApp');
+    // create angular controller
+    validationApp.controller('ViewPostCodeController', function ($scope, $http, $window) {
+
+        $http({
+            method: 'GET',
+            url: '/User/Home/Division',
+            headers: {
+                'RequestVerificationToken': $scope.antiForgeryToken
+            }
+        }).success(function (data, status, headers, config) {
+            $scope.message = '';
+            if (data.success == false) {
+                var str = '';
+                for (var error in data.errors) {
+                    str += data.errors[error] + '\n';
+                }
+                $scope.message = str;
+            }
+            else {
+               
+                $scope.States = JSON.parse(data);
+                $("#veil").hide();
+                $("#feedLoading").hide();
+            }
+        }).error(function (data, status, headers, config) {
+            $scope.message = 'Unexpected Error';
+        });
+
+        $scope.GetAllPostCodes = function () {
+            $scope.columnDefs = [
+                {
+                    "mDataProp": "State",
+                    "aTargets": [0]
+                },
+            {
+                "mDataProp": "CityName",
+                "aTargets": [1]
+            }, {
+                "mDataProp": "CityType",
+                "aTargets": [2]
+            }, {
+                "mDataProp": "CountryName",
+                "aTargets": [3]
+            }, {
+                "mDataProp": "PostalCode",
+                "aTargets": [4]
+            },
+             {
+                "mDataProp": "Class",
+                "aTargets": [5]
+             },
+             {
+                 "mDataProp": "AreaCode",
+                 "aTargets": [6]
+             },
+             {
+                 "mDataProp": "TimeZone",
+                 "aTargets": [7]
+             },
+             {
+                 "mDataProp": "AdditionalDays",
+                 "aTargets": [8]
+             },
+             {
+                 "mDataProp": "SaturdayDelivery",
+                 "aTargets": [9]
+             },
+            {
+                "mDataProp": "Pickup",
+                "aTargets": [10]
+            },
+            {
+                "mDataProp": "Delivery",
+                "aTargets": [11]
+            }
+            , {
+                "mDataProp": "Detail",
+                "aTargets": [12]
+            }];
+
+            $scope.overrideOptions = {
+                "bStateSave": true,
+                "iCookieDuration": 2419200,
+                /* 1 month */
+                "bJQueryUI": true,
+                "bPaginate": false,
+                "bLengthChange": false,
+                "bFilter": true,
+                "bInfo": true,
+                "bDestroy": true
+            };
+            $http({
+                method: 'GET',
+                url: '/ServiceRate/Home/GetAllPostCodes',
+                //data: $scope.SelectedCountry.CountryCode,
+                //params: { countryId: $scope.contact.CountryId },
+                headers: {
+                    'RequestVerificationToken': $scope.antiForgeryToken
+                }
+            }).success(function (data, status, headers, config) {
+                $scope.message = '';
+                if (data.success == false) {
+                    var str = '';
+                    for (var error in data.errors) {
+                        str += data.errors[error] + '\n';
+                    }
+                    $scope.message = str;
+                    bootbox.dialog({
+                        message: str,
+                        buttons: {
+                            "success": {
+                                "label": "OK",
+                                "className": "btn-sm btn-primary"
+                            }
+                        }
+                    });
+                }
+                else {
+
+                    var lim = data.length;
+                    for (var i = 0; i < lim; i++) {
+                        data[i].Detail = '<div class=' + '"hidden-sm hidden-xs btn-gro/up"' + '><button i type="button"  class="btn btn-xs btn-info" onclick="angular.element(this).scope().editForm(' + data[i].Id + ')"><i class="ace-icon fa fa-pencil bigger-120"></i></button><button type="button" class="btn btn-xs btn-danger"' + ' onclick="angular.element(this).scope().deleteForm(' + data[i].Id + ')" ><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div>';
+                        data[i].SaturdayDelivery = data[i].SaturdayDelivery == true ? "YES" : "NO";
+                        data[i].Pickup = data[i].Pickup == true ? "AVAILABLE" : "UN-AVAILABLE";
+                        data[i].Delivery = data[i].Delivery == true ? "AVAILABLE" : "UN-AVAILABLE";
+                        //var dta = $filter('filter')($scope.States, function (d) { return d.Id == data[i].State })[0];
+                        //data[i].State = $filter('filter')($scope.States, function (d) { return d.Id == data[i].State })[0].StateName;
+                    }
+
+                    $scope.datasrc = data;
+                    $("#veil").hide();
+                    $("#feedLoading").hide();
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.message = 'Unexpected Error';
+            });
+        }
+     
+        console.log('deleting country');
+        $scope.deleteForm = function (Id) {
+            bootbox.confirm({
+                size: 'small',
+                message: "Are you sure want to delete record#? " + Id,
+                callback: function (result) {
+                    if (result === false) {
+                    } else {
+                        $http({
+                            method: 'GET',
+                            url: '/ServiceRate/Home/DeletePostById',
+                            params: { id: Id },
+                            headers: {
+                                'RequestVerificationToken': $scope.antiForgeryToken
+                            }
+                        }).success(function (data, status, headers, config) {
+                            $("#veil").show();
+                            $("#feedLoading").show();
+                            $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                                $('td:eq(2)', nRow).bind('click', function () {
+                                    $scope.$apply(function () {
+                                        $scope.someClickHandler(aData);
+                                    });
+                                });
+                                return nRow;
+                            };
+
+                            $scope.someClickHandler = function (info) {
+                                $scope.message = 'clicked: ' + info.price;
+                            };
+                            $scope.GetAllPostCodes();
+                            $scope.message = '';
+                        }).error(function (data, status, headers, config) {
+                            $scope.message = 'Unexpected Error';
+                        });
+                    }
+                }
+            })
+        }
+        $scope.editForm = function (Id) {
+            var url = "http://" + $window.location.host + "/ServiceRate/PostCode/?" + Id;
+            $window.location.href = url;
+        }
+
+        $("#veil").show();
+        $("#feedLoading").show();
+        $scope.message = '';
+        $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            $('td:eq(2)', nRow).bind('click', function () {
+                $scope.$apply(function () {
+                    $scope.someClickHandler(aData);
+                });
+            });
+            return nRow;
+        };
+
+        $scope.someClickHandler = function (info) {
+            $scope.message = 'clicked: ' + info.price;
+        };
+        $scope.GetAllPostCodes();
+
+    });
+})();
 (function () {
     var app = angular.module('mainApp');
 
@@ -3408,3 +3634,311 @@ $('[data-rel=popover]').popover({ container: 'body' });
         });
     });
 })();
+(function () {
+    var app = angular.module('mainApp');
+   
+    app.controller('ZoneUSController', function ($scope, $http, $location, $filter) {
+        $scope.ZoneUS = {};
+        //Editing of country working here
+        if ($location.absUrl().split("?").length > 1) {
+            $("#veil").show();
+            $("#feedLoading").show();
+            var Id = $location.absUrl().split("/");
+            var editdata = Id[5];
+            var editrow = editdata.split("?");
+            $http({
+                method: 'GET',
+                url: '/ServiceRate/Home/GetAllZoneUS',
+                headers: {
+                    'RequestVerificationToken': $scope.antiForgeryToken
+                }
+            }).success(function (data, status, headers, config) {
+                $scope.message = '';
+                if (data.success == false) {
+                    var str = '';
+                    for (var error in data.errors) {
+                        str += data.errors[error] + '\n';
+                    }
+                    $scope.message = str;
+                }
+                else {
+                    var selectedData = $filter('filter')(data, function (d) { return d.Id == editrow[1] })[0];
+                    $scope.bindZoneData(selectedData);
+                    $("#veil").hide();
+                    $("#feedLoading").hide();
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.message = 'Unexpected Error';
+            });
+        }
+        //End Editing
+      
+        $scope.submitZoneUSForm = function ()
+        {
+            if ($scope.ZoneUSForm.$valid) {
+                //$("#veil").show();
+                //$("#feedLoading").show();
+                $http({
+                    url: '/ServiceRate/ZoneUS',
+                    method: "POST",
+                    data: JSON.stringify($scope.ZoneUS),
+                    contentType: "application/json;",
+                    dataType: "json"
+                })
+                    .success(function (data, status, headers, config) {
+                        $("#veil").hide();
+                        $("#feedLoading").hide();
+                        $scope.message = data;
+                    }).error(function (data, status, headers, config) {
+                        $("#veil").hide();
+                        $("#feedLoading").hide();
+                        bootbox.dialog({
+                            message: data,
+                            buttons: {
+                                "success": {
+                                    "label": "OK",
+                                    "className": "btn-sm btn-primary"
+                                }
+                            }
+                        });
+                    });
+            }
+        }
+        $scope.bindZoneData = function (zone) {
+            $scope.ZoneUS.Id = zone.Id;
+            $scope.ZoneUS.OriginZipLower = zone.OriginZipLower;
+            $scope.ZoneUS.OriginZipUpper = zone.OriginZipUpper;
+            $scope.ZoneUS.DestinationZipLower = zone.DestinationZipLower;
+            $scope.ZoneUS.DestinationZipUpper = zone.DestinationZipUpper;
+            $scope.ZoneUS.Zone = zone.Zone;
+            $scope.$apply();
+        }
+    })})();
+(function () {
+    var validationApp = angular.module('mainApp');
+    // create angular controller
+    validationApp.controller('ViewZoneUSController', function ($scope, $http, $window) {
+
+        $scope.GetAllPostCodes = function () {
+            $scope.columnDefs = [
+                {
+                    "mDataProp": "OriginZipLower",
+                    "aTargets": [0]
+                },
+            {
+                "mDataProp": "DestinationZipLower",
+                "aTargets": [1]
+            }, {
+                "mDataProp": "Zone",
+                "aTargets": [2]
+            },
+            {
+                "mDataProp": "Created",
+                "aTargets": [3]
+            }, {
+                "mDataProp": "Detail",
+                "aTargets": [4]
+            }];
+
+            $scope.overrideOptions = {
+                "bStateSave": true,
+                "iCookieDuration": 2419200,
+                /* 1 month */
+                "bJQueryUI": true,
+                "bPaginate": false,
+                "bLengthChange": false,
+                "bFilter": true,
+                "bInfo": true,
+                "bDestroy": true
+            };
+            $http({
+                method: 'GET',
+                url: '/ServiceRate/Home/GetAllZoneUS',
+                //data: $scope.SelectedCountry.CountryCode,
+                //params: { countryId: $scope.contact.CountryId },
+                headers: {
+                    'RequestVerificationToken': $scope.antiForgeryToken
+                }
+            }).success(function (data, status, headers, config) {
+                $scope.message = '';
+                if (data.success == false) {
+                    var str = '';
+                    for (var error in data.errors) {
+                        str += data.errors[error] + '\n';
+                    }
+                    $scope.message = str;
+                    bootbox.dialog({
+                        message: str,
+                        buttons: {
+                            "success": {
+                                "label": "OK",
+                                "className": "btn-sm btn-primary"
+                            }
+                        }
+                    });
+                }
+                else {
+
+                    var lim = data.length;
+                    for (var i = 0; i < lim; i++) {
+                        data[i].Detail = '<div class=' + '"hidden-sm hidden-xs btn-gro/up"' + '><button i type="button"  class="btn btn-xs btn-info" onclick="angular.element(this).scope().editForm(' + data[i].Id + ')"><i class="ace-icon fa fa-pencil bigger-120"></i></button><button type="button" class="btn btn-xs btn-danger"' + ' onclick="angular.element(this).scope().deleteForm(' + data[i].Id + ')" ><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div>';
+                        //data[i].SaturdayDelivery = data[i].SaturdayDelivery == true ? "YES" : "NO";
+                        //data[i].Pickup = data[i].Pickup == true ? "AVAILABLE" : "UN-AVAILABLE";
+                        //data[i].Delivery = data[i].Delivery == true ? "AVAILABLE" : "UN-AVAILABLE";
+                        //var dta = $filter('filter')($scope.States, function (d) { return d.Id == data[i].State })[0];
+                        //data[i].State = $filter('filter')($scope.States, function (d) { return d.Id == data[i].State })[0].StateName;
+                    }
+
+                    $scope.datasrc = data;
+                    $("#veil").hide();
+                    $("#feedLoading").hide();
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.message = 'Unexpected Error';
+            });
+        }
+
+        console.log('deleting country');
+        $scope.deleteForm = function (Id) {
+            bootbox.confirm({
+                size: 'small',
+                message: "Are you sure want to delete record#? " + Id,
+                callback: function (result) {
+                    if (result === false) {
+                    } else {
+                        $http({
+                            method: 'GET',
+                            url: '/ServiceRate/Home/DeleteZoneById',
+                            params: { id: Id },
+                            headers: {
+                                'RequestVerificationToken': $scope.antiForgeryToken
+                            }
+                        }).success(function (data, status, headers, config) {
+                            $("#veil").show();
+                            $("#feedLoading").show();
+                            $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                                $('td:eq(2)', nRow).bind('click', function () {
+                                    $scope.$apply(function () {
+                                        $scope.someClickHandler(aData);
+                                    });
+                                });
+                                return nRow;
+                            };
+
+                            $scope.someClickHandler = function (info) {
+                                $scope.message = 'clicked: ' + info.price;
+                            };
+                            $scope.GetAllPostCodes();
+                            $scope.message = '';
+                        }).error(function (data, status, headers, config) {
+                            $scope.message = 'Unexpected Error';
+                        });
+                    }
+                }
+            })
+        }
+        $scope.editForm = function (Id) {
+            var url = "http://" + $window.location.host + "/ServiceRate/ZoneUS/?" + Id;
+            $window.location.href = url;
+        }
+
+        $("#veil").show();
+        $("#feedLoading").show();
+        $scope.message = '';
+        $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            $('td:eq(2)', nRow).bind('click', function () {
+                $scope.$apply(function () {
+                    $scope.someClickHandler(aData);
+                });
+            });
+            return nRow;
+        };
+
+        $scope.someClickHandler = function (info) {
+            $scope.message = 'clicked: ' + info.price;
+        };
+        $scope.GetAllPostCodes();
+
+    });
+})();
+(function () {
+    var app = angular.module('mainApp');
+   
+    app.controller('ZoneController', function ($scope, $http, $location, $filter) {
+
+        $http({
+            method: 'GET',
+            url: '/User/Home/Country',
+            // data: $scope.person,
+            headers: {
+                'RequestVerificationToken': $scope.antiForgeryToken
+            }
+        }).success(function (data, status, headers, config) {
+            $scope.message = '';
+            if (data.success == false) {
+                var str = '';
+                for (var error in data.errors) {
+                    str += data.errors[error] + '\n';
+                }
+                $scope.message = str;
+            }
+            else {
+                $scope.CountryOrigin = (JSON.parse(data));
+                $scope.CountryDestination = (JSON.parse(data));
+                $("#veil").hide();
+                $("#feedLoading").hide();
+            }
+        }).error(function (data, status, headers, config) {
+            bootbox.dialog({
+                message: "Country URL is invalid!",
+                buttons: {
+                    "success": {
+                        "label": "OK",
+                        "className": "btn-sm btn-primary"
+                    }
+                }
+            });
+        });
+      
+      
+        $scope.submitZoneForm = function ()
+        {
+            if ($scope.ZoneForm.$valid) {
+                //$("#veil").show();
+                //$("#feedLoading").show();
+                $http({
+                    url: '/ServiceRate/Zone',
+                    method: "POST",
+                    data: JSON.stringify($scope.Zone),
+                    contentType: "application/json;",
+                    dataType: "json"
+                })
+                    .success(function (data, status, headers, config) {
+                        $("#veil").hide();
+                        $("#feedLoading").hide();
+                        $scope.message = data;
+                    }).error(function (data, status, headers, config) {
+                        $("#veil").hide();
+                        $("#feedLoading").hide();
+                        bootbox.dialog({
+                            message: data,
+                            buttons: {
+                                "success": {
+                                    "label": "OK",
+                                    "className": "btn-sm btn-primary"
+                                }
+                            }
+                        });
+                    });
+            }
+        }
+        $scope.bindZoneData = function (zone) {
+            $scope.ZoneUS.Id = zone.Id;
+            $scope.ZoneUS.OriginZipLower = zone.OriginZipLower;
+            $scope.ZoneUS.OriginZipUpper = zone.OriginZipUpper;
+            $scope.ZoneUS.DestinationZipLower = zone.DestinationZipLower;
+            $scope.ZoneUS.DestinationZipUpper = zone.DestinationZipUpper;
+            $scope.ZoneUS.Zone = zone.Zone;
+            $scope.$apply();
+        }
+    })})();
