@@ -42,8 +42,8 @@ namespace Admin.UI.Controllers
                 new Navigation { Id = 18, Title = "State", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewStates" },
                 new Navigation { Id = 19, Title = "Postal Code", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewPostCode" },
 				new Navigation { Id = 20, Title = "Zone US", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewZoneUS" },
-
-
+				new Navigation { Id = 20, Title = "Zone", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewZone" },
+				new Navigation { Id = 20, Title = "FSC", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewFSC" },
 
 			};
         }
