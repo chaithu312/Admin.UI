@@ -26,8 +26,12 @@ namespace Admin.UI.ServiceRateArea
 		private readonly List<State> states = null;
 		private readonly List<PostCode> postCode = null;
 		private readonly List<ZoneUS> zoneUS = null;
+		private readonly List<Zone> zone = null;
+		private readonly List<FSC> fsc= null;
 		public HomeController()
 		{
+			#region Services & Rating Setting->Location
+
 			countries = new List<Country>();
 			countries.Add(new Country() { Id = 1, Name = "Afghanistan", ISOCode = "AF", TopLevelDomain = "AF", Delivery = "1", DialingCode = "93", Membership = "2", Status = "1", SecurityCharge = "1", TimeZone = "Eastern Time (US & Canada)" });
 			countries.Add(new Country() { Id = 2, Name = "Aland Islands", ISOCode = "AX", TopLevelDomain = "AX", Delivery = "1", DialingCode = "358", Membership = "1", Status = "1", SecurityCharge = "1", TimeZone = "Eastern Time (US & Canada)" });
@@ -42,14 +46,27 @@ namespace Admin.UI.ServiceRateArea
 			postCode.Add(new PostCode() { Id = 1, Country = "840", State = "1", PostalCode = "99812", CityName = "Juneau", CityType = "A", CountryName = "Juneau",Class="U",TimeZone="-9",AdditionalDays="1",SaturdayDelivery=true,Pickup=true,Delivery=true,AreaCode="907",CountryFIPS="FIPS1",DaylightSavingsTime=true,EarliestDeliveryTime="12:34",LastPickup= "12:34", LastPickupOrder = "12:34",Latitude="23,56'",Longitude = "23,56'", Status = "0" });
 
 			postCode.Add(new PostCode() { Id =2, Country = "840", State = "2", PostalCode = "99812", CityName = "State of Alaska", CityType = "N", CountryName = "Juneau", Class = "U", TimeZone = "-9", AdditionalDays = "2", SaturdayDelivery = true, Pickup = true, Delivery = true, AreaCode = "907", CountryFIPS = "FIPS1", DaylightSavingsTime = true, EarliestDeliveryTime = "12:34", LastPickup = "12:34", LastPickupOrder = "12:34", Latitude = "23,56'", Longitude = "23,56'", Status = "0" });
+			#endregion
 
+			#region Zone Setting
 			zoneUS = new List<ZoneUS>();
 
 			zoneUS.Add(new ZoneUS() { Id = 1, OriginZipLower = "12345", OriginZipUpper = "67891", DestinationZipLower = "12345", DestinationZipUpper = "67890", Zone = "10", Created = DateTime.Now.ToString() });
 
-			zoneUS.Add(new ZoneUS() { Id = 2, OriginZipLower = "12345", OriginZipUpper = "67891", DestinationZipLower = "12345", DestinationZipUpper = "67890", Zone = "11",Created=DateTime.Now.ToString() });
-			
-			
+			zoneUS.Add(new ZoneUS() { Id = 2, OriginZipLower = "12345", OriginZipUpper = "67891", DestinationZipLower = "12345", DestinationZipUpper = "67890", Zone = "11", Created = DateTime.Now.ToString() });
+
+			zone = new List<Areas.ServiceRate.Models.Zone>();
+			zone.Add(new Zone() { Id = 1, Service = "1", DestinationCountry = "840", OriginCountry = "840", TransitTime = "12:23", ZoneUS = "12", Created = DateTime.Now.ToString() });
+
+			zone.Add(new Zone() { Id = 2, Service = "2", DestinationCountry = "840", OriginCountry = "840", TransitTime = "12:50", ZoneUS = "12",Created=DateTime.Now.ToString() });
+			#endregion Zone Setting
+
+			#region Rates & Discount
+
+			fsc = new List<Areas.ServiceRate.Models.FSC>();
+			fsc.Add(new FSC() { Id = 1, Service = "1",EffectiveDate= DateTime.Now.ToString("MM-dd-yyyy"), FSCValue="2.33",Created=DateTime.Now.ToString() });
+			fsc.Add(new FSC() { Id = 2, Service = "2", EffectiveDate = DateTime.Now.ToString("MM-dd-yyyy"), FSCValue = "2.35", Created = DateTime.Now.ToString() });
+			#endregion
 		}
 		public IActionResult Index()
 		{
@@ -74,18 +91,13 @@ namespace Admin.UI.ServiceRateArea
 			return View();
 		}
 
-		public IActionResult ZoneUS()
-		{
-			return View();
-		}
-
-		public IActionResult Zone()
-		{
-			return View();
-		}
-
 		[HttpPost]
-		public IActionResult Zone([FromBody] Zone zone)
+		public IActionResult PostCode([FromBody]PostCode postCode)
+		{
+			return Json(null);
+		}
+
+		public IActionResult ZoneUS()
 		{
 			return View();
 		}
@@ -96,8 +108,24 @@ namespace Admin.UI.ServiceRateArea
 			return Json(null);
 		}
 
+		public IActionResult Zone()
+		{
+			return View();
+		}
+
 		[HttpPost]
-		public IActionResult PostCode([FromBody]PostCode postCode)
+		public IActionResult Zone([FromBody] Zone zone)
+		{
+			return Json(null);
+		}
+
+		public IActionResult FSC()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public IActionResult FSC([FromBody]FSC fsc)
 		{
 			return Json(null);
 		}
@@ -133,6 +161,18 @@ namespace Admin.UI.ServiceRateArea
 		}
 
 		public IActionResult ViewZoneUS()
+		{
+			ViewBag.User = HttpContext.Session.GetString("User");
+			return View();
+		}
+
+		public IActionResult ViewZone()
+		{
+			ViewBag.User = HttpContext.Session.GetString("User");
+			return View();
+		}
+
+		public IActionResult ViewFSC()
 		{
 			ViewBag.User = HttpContext.Session.GetString("User");
 			return View();
@@ -189,7 +229,33 @@ namespace Admin.UI.ServiceRateArea
 				return Json(ex.Message);
 			}
 		}
-		
+
+		[HttpGet]
+		public JsonResult GetAllZone()
+		{
+			try
+			{
+				return Json(zone);
+			}
+			catch (Exception ex)
+			{
+				return Json(ex.Message);
+			}
+		}
+
+		[HttpGet]
+		public JsonResult GetAllFSC()
+		{
+			try
+			{
+				return Json(fsc);
+			}
+			catch (Exception ex)
+			{
+				return Json(ex.Message);
+			}
+		}
+
 		public JsonResult DeleteCountryById(string id)
 		{
 			countries.RemoveAll(x => x.Id == Convert.ToInt64(id));
@@ -208,10 +274,22 @@ namespace Admin.UI.ServiceRateArea
 			return Json(postCode);
 		}
 
-		public JsonResult DeleteZoneById(string id)
+		public JsonResult DeleteZoneUSById(string id)
 		{
 			zoneUS.RemoveAll(x => x.Id == Convert.ToInt64(id));
 			return Json(zoneUS);
+		}
+
+		public JsonResult DeleteZoneById(string id)
+		{
+			zone.RemoveAll(x => x.Id == Convert.ToInt64(id));
+			return Json(zone);
+		}
+
+		public JsonResult DeleteFSCById(string id)
+		{
+			fsc.RemoveAll(x => x.Id == Convert.ToInt64(id));
+			return Json(fsc);
 		}
 
 		[HttpPost]

@@ -5,22 +5,38 @@
 
 <form name="ZoneForm" data-ng-submit="submitZoneForm()" data-ng-controller="ZoneController" class="form-horizontal" role="form" novalidate>
     <div class="pull-right tableTools-container">
-        <a class="btn-new-mail" href="/ServiceRate/ViewZoneUS">
+        <a class="btn-new-mail" href="/ServiceRate/ViewZone">
             <span class="btn btn-purple no-border">
                 <i class="ace-icon fa  bigger-130"></i>
-                <span class="bigger-110">View Post Codes</span>
+                <span class="bigger-110">View Zone</span>
             </span>
         </a>
     </div>
     <div class="clearfix">
         <div class="pull-right tableTools-container"></div>
     </div>
+    <div class="form-group" ng-class="{ 'has-error':ZoneForm.Service.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Service</label>
+
+        <div class="col-sm-9">
+            <select name="Service" class="col-xs-10 col-sm-5" id="Service" data-ng-model="Zone.Service" required>
+                <option value='' selected>Please Choose</option>
+                <option value="1">Service1</option>
+                <option value="2">Service2</option>
+                <option value="3">Service3</option>
+                <option value="4">Service4</option>
+            </select>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="ZoneForm.Service.$error.required && submitted">
+                Service  is required.
+            </span>
+        </div>
+    </div>
     <div class="form-group" ng-class="{ 'has-error':ZoneForm.OriginCountry.$invalid && submitted }">
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Origin Country</label>
 
         <div class="col-sm-9">
             <select id="OriginCountry" class="col-xs-10 col-sm-5" data-ng-model="Zone.OriginCountry" name="OriginCountry"
-                    data-ng-options="country.Id as country.Name for country in CountryOrigin track by country.Id" data-ng-change="GetValue()" required>
+                    data-ng-options="country.Id as country.Name for country in CountryOrigin track by country.Id" required>
                 <option value='' selected>Please Choose</option>
             </select>
             <span class="help-inline col-xs-12 col-sm-7" data-ng-show="ZoneForm.OriginCountry.$error.required && submitted">
@@ -58,30 +74,10 @@
         <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Transit Time</label>
 
         <div class="col-sm-9">
-            <select name="TransitTime" id="TransitTime" data-ng-model="Zone.TransitTime">
-                <option value='' selected>Please Choose</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-
-            </select>
+            <input type="text" class="col-sm-1 shippingTimepicker" data-ng-model="Zone.TransitTime" data-format="hh:mm" id="TransitTime" name="TransitTime">
+            <span class="input-group-addon col-sm-3">
+                <i class="fa fa-clock-o bigger-110"></i>
+            </span>
             <span class="help-inline col-xs-12 col-sm-7" data-ng-show="ZoneForm.TransitTime.$error.required && submitted">
                 Transit Time  is required.
             </span>

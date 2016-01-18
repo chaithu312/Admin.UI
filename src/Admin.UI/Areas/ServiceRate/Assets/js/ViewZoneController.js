@@ -1,27 +1,31 @@
 ﻿(function () {
     var validationApp = angular.module('mainApp');
     // create angular controller
-    validationApp.controller('ViewZoneUSController', function ($scope, $http, $window) {
+    validationApp.controller('ViewZoneController', function ($scope, $http, $window) {
 
         $scope.GetAllPostCodes = function () {
             $scope.columnDefs = [
                 {
-                    "mDataProp": "OriginZipLower",
+                    "mDataProp": "OriginCountry",
                     "aTargets": [0]
                 },
             {
-                "mDataProp": "DestinationZipLower",
+                "mDataProp": "DestinationCountry",
                 "aTargets": [1]
             }, {
-                "mDataProp": "Zone",
+                "mDataProp": "ZoneUS",
                 "aTargets": [2]
             },
             {
-                "mDataProp": "Created",
+                "mDataProp": "TransitTime",
                 "aTargets": [3]
+            },
+            {
+                "mDataProp": "Created",
+                "aTargets": [4]
             }, {
                 "mDataProp": "Detail",
-                "aTargets": [4]
+                "aTargets": [5]
             }];
 
             $scope.overrideOptions = {
@@ -37,7 +41,7 @@
             };
             $http({
                 method: 'GET',
-                url: '/ServiceRate/Home/GetAllZoneUS',
+                url: '/ServiceRate/Home/GetAllZone',
                 //data: $scope.SelectedCountry.CountryCode,
                 //params: { countryId: $scope.contact.CountryId },
                 headers: {
@@ -92,7 +96,7 @@
                     } else {
                         $http({
                             method: 'GET',
-                            url: '/ServiceRate/Home/DeleteZoneUSById',
+                            url: '/ServiceRate/Home/DeleteZoneById',
                             params: { id: Id },
                             headers: {
                                 'RequestVerificationToken': $scope.antiForgeryToken
@@ -122,7 +126,7 @@
             })
         }
         $scope.editForm = function (Id) {
-            var url = "http://" + $window.location.host + "/ServiceRate/ZoneUS/?" + Id;
+            var url = "http://" + $window.location.host + "/ServiceRate/Zone/?" + Id;
             $window.location.href = url;
         }
 

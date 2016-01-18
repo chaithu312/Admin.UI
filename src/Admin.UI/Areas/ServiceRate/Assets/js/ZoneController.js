@@ -2,7 +2,7 @@
     var app = angular.module('mainApp');
    
     app.controller('ZoneController', function ($scope, $http, $location, $filter) {
-
+        $scope.Zone = {};
         $http({
             method: 'GET',
             url: '/User/Home/Country',
@@ -22,6 +22,41 @@
             else {
                 $scope.CountryOrigin = (JSON.parse(data));
                 $scope.CountryDestination = (JSON.parse(data));
+
+                //Editing of country working here
+                if ($location.absUrl().split("?").length > 1) {
+                    $("#veil").show();
+                    $("#feedLoading").show();
+                    var Id = $location.absUrl().split("/");
+                    var editdata = Id[5];
+                    var editrow = editdata.split("?");
+                    $http({
+                        method: 'GET',
+                        url: '/ServiceRate/Home/GetAllZone',
+                        headers: {
+                            'RequestVerificationToken': $scope.antiForgeryToken
+                        }
+                    }).success(function (data, status, headers, config) {
+                        $scope.message = '';
+                        if (data.success == false) {
+                            var str = '';
+                            for (var error in data.errors) {
+                                str += data.errors[error] + '\n';
+                            }
+                            $scope.message = str;
+                        }
+                        else {
+                            var selectedData = $filter('filter')(data, function (d) { return d.Id == editrow[1] })[0];
+                            $scope.bindZoneData(selectedData);
+                            $("#veil").hide();
+                            $("#feedLoading").hide();
+                        }
+                    }).error(function (data, status, headers, config) {
+                        $scope.message = 'Unexpected Error';
+                    });
+                }
+                //End Editing
+
                 $("#veil").hide();
                 $("#feedLoading").hide();
             }
@@ -36,6 +71,8 @@
                 }
             });
         });
+
+      
       
       
         $scope.submitZoneForm = function ()
@@ -70,12 +107,14 @@
             }
         }
         $scope.bindZoneData = function (zone) {
-            $scope.ZoneUS.Id = zone.Id;
-            $scope.ZoneUS.OriginZipLower = zone.OriginZipLower;
-            $scope.ZoneUS.OriginZipUpper = zone.OriginZipUpper;
-            $scope.ZoneUS.DestinationZipLower = zone.DestinationZipLower;
-            $scope.ZoneUS.DestinationZipUpper = zone.DestinationZipUpper;
-            $scope.ZoneUS.Zone = zone.Zone;
+            $scope.Zone.Id = zone.Id;
+            $scope.Zone.Service = zone.Service;
+            $scope.Zone.OriginCountry = zone.OriginCountry;
+            $scope.Zone.DestinationCountry = zone.DestinationCountry;
+            $scope.Zone.ZoneUS = zone.ZoneUS;
+            $scope.Zone.TransitTime = zone.TransitTime;
             $scope.$apply();
+            $("#OriginCountry").find('option[value=' + zone.OriginCountry + ']').attr('selected', 'selected');
+            $("#DestinationCountry").find('option[value=' + zone.DestinationCountry+ ']').attr('selected', 'selected');
         }
     })})();

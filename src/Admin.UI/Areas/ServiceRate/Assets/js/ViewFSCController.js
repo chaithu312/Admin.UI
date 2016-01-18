@@ -1,25 +1,26 @@
 ﻿(function () {
     var validationApp = angular.module('mainApp');
     // create angular controller
-    validationApp.controller('ViewZoneUSController', function ($scope, $http, $window) {
+    validationApp.controller('ViewFSCController', function ($scope, $http, $window) {
 
         $scope.GetAllPostCodes = function () {
             $scope.columnDefs = [
                 {
-                    "mDataProp": "OriginZipLower",
+                    "mDataProp": "Service",
                     "aTargets": [0]
                 },
             {
-                "mDataProp": "DestinationZipLower",
+                "mDataProp": "FSCValue",
                 "aTargets": [1]
             }, {
-                "mDataProp": "Zone",
+                "mDataProp": "EffectiveDate",
                 "aTargets": [2]
             },
             {
                 "mDataProp": "Created",
                 "aTargets": [3]
-            }, {
+            },
+             {
                 "mDataProp": "Detail",
                 "aTargets": [4]
             }];
@@ -37,7 +38,7 @@
             };
             $http({
                 method: 'GET',
-                url: '/ServiceRate/Home/GetAllZoneUS',
+                url: '/ServiceRate/Home/GetAllFSC',
                 //data: $scope.SelectedCountry.CountryCode,
                 //params: { countryId: $scope.contact.CountryId },
                 headers: {
@@ -92,7 +93,7 @@
                     } else {
                         $http({
                             method: 'GET',
-                            url: '/ServiceRate/Home/DeleteZoneUSById',
+                            url: '/ServiceRate/Home/DeleteFSCById',
                             params: { id: Id },
                             headers: {
                                 'RequestVerificationToken': $scope.antiForgeryToken
@@ -122,7 +123,7 @@
             })
         }
         $scope.editForm = function (Id) {
-            var url = "http://" + $window.location.host + "/ServiceRate/ZoneUS/?" + Id;
+            var url = "http://" + $window.location.host + "/ServiceRate/FSC/?" + Id;
             $window.location.href = url;
         }
 

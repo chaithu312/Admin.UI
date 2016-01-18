@@ -5,14 +5,12 @@ using System.Threading.Tasks;
 
 namespace Admin.UI.Areas.ServiceRate.Models
 {
-    public class Zone
+    public class FSC
     {
-		public long Id { get; set; }
+		public int Id { get; set; }
 		public string Service { get; set; }
-		public string OriginCountry { get; set; }
-		public string DestinationCountry { get; set; }
-		public string ZoneUS { get; set; }
-		public string TransitTime { get; set; }
+		public string FSCValue { get; set; }
+		public string EffectiveDate { get; set; }
 		public string Created { get; set; }
 	}
 }
