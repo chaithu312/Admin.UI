@@ -130,6 +130,17 @@ namespace Admin.UI.ServiceRateArea
 			return Json(null);
 		}
 
+		public IActionResult Discount()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public JsonResult Discount([FromBody]Discount discount)
+		{
+			return Json(null);
+		}
+
 		[HttpPost]
 		public IActionResult Country([FromBody]Country country)
 		{
@@ -173,6 +184,12 @@ namespace Admin.UI.ServiceRateArea
 		}
 
 		public IActionResult ViewFSC()
+		{
+			ViewBag.User = HttpContext.Session.GetString("User");
+			return View();
+		}
+
+		public IActionResult ViewDiscount()
 		{
 			ViewBag.User = HttpContext.Session.GetString("User");
 			return View();

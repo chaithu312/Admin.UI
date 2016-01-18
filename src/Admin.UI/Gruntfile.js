@@ -75,6 +75,8 @@
                         'Areas/ServiceRate/Assets/js/ViewZoneController.js',
                         'Areas/ServiceRate/Assets/js/FSCController.js',
                         'Areas/ServiceRate/Assets/js/ViewFSCController.js',
+                        'Areas/ServiceRate/Assets/js/DiscountController.js',
+                        'Areas/ServiceRate/Assets/js/ViewDiscountController.js'
                     ],
                     'wwwroot/assets/js/DataTable.js': [
                         'Assets/ace/js/dataTables/jquery.dataTables.js',
