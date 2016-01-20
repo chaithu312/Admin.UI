@@ -76,7 +76,10 @@
                         'Areas/ServiceRate/Assets/js/FSCController.js',
                         'Areas/ServiceRate/Assets/js/ViewFSCController.js',
                         'Areas/ServiceRate/Assets/js/DiscountController.js',
-                        'Areas/ServiceRate/Assets/js/ViewDiscountController.js'
+                        'Areas/ServiceRate/Assets/js/ViewDiscountController.js',
+                        'Areas/Finance/Assets/js/InvoiceMessageController.js',
+                        'Areas/Finance/Assets/js/ViewInvoiceMessageController.js',
+                        'Areas/Finance/Assets/js/PaymentController.js',
                     ],
                     'wwwroot/assets/js/DataTable.js': [
                         'Assets/ace/js/dataTables/jquery.dataTables.js',

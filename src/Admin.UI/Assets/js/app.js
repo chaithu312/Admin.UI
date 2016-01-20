@@ -139,6 +139,24 @@
         }
     });
 
+    //app.factory('getQueryStringValue', function ($window) {
+    //        passString: function (param) {
+    //            var locationSearch = $window.location.search;
+    //            var sURLVariables = locationSearch.split(/[&||?]/);
+    //            var res = null;
+    //            for (var i = 0; i < sURLVariables.length; i += 1) {
+    //                var paramName = sURLVariables[i],
+    //                    sParameterName = (paramName || '').split('=');
+
+    //                if (sParameterName[0] === param) {
+    //                    res = sParameterName[1];
+    //                    break;
+    //                }
+    //            }
+    //            return res;
+    //        }
+    //});
+
     var vendor = function ($http) {
         var vendor = {};
         vendor.data = function () {
@@ -156,6 +174,26 @@
         return virtualDirURL;
     }
     app.factory("virtualDir", virtualDir);
+
+    app.factory('getQueryStringValue', function ($window) {
+        return {
+            getValue: function (keyToMatch) {
+                var locationSearch = $window.location.search;
+                var sURLVariables = locationSearch.split(/[&||?]/);
+                var res = null;
+                for (var i = 0; i < sURLVariables.length; i += 1) {
+                    var paramName = sURLVariables[i],
+                        sParameterName = (paramName || '').split('=');
+
+                    if (sParameterName[0] === keyToMatch) {
+                        res = sParameterName[1];
+                        break;
+                    }
+                }
+                return res;
+            }
+        }
+    });
 })();
 
 //-- Navigation Controller for left navigation
