@@ -177,6 +177,17 @@
             }
         }
     });
+    app.factory('ShipOSFactory', function ($http) {
+
+        var ShipOSFactory = {};
+        ShipOSFactory.GetServices = function () {
+            return $http.get("/Freight/Services");
+        }
+        ShipOSFactory.ProcessedTypes = function () {
+            return $http.get("/Freight/ProcessedTypes");
+        }
+        return ShipOSFactory;
+    });
 })();
 
 //-- Navigation Controller for left navigation
@@ -258,5 +269,3 @@ $('input[name=date-range-picker]').daterangepicker({
 });
 
 $('[data-rel=popover]').popover({ container: 'body' });
-
-

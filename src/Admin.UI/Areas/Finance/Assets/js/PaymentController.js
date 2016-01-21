@@ -1,7 +1,7 @@
 ﻿(function () {
     var app = angular.module('mainApp');
    
-    app.controller('PaymentController', function ($scope, $http, $location, $window, $filter, getQueryStringValue) {
+    app.controller('PaymentController', function ($scope, $http, $filter, getQueryStringValue) {
         $scope.Payment = {};
         $scope.CreditVisible = false;
         if (getQueryStringValue.getValue("opt") != null && getQueryStringValue.getValue("opt")==="credit")

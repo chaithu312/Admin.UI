@@ -44,7 +44,9 @@ namespace Admin.UI.Controllers
 				new Navigation { Id = 20, Title = "Zone US", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewZoneUS" },
 				new Navigation { Id = 20, Title = "Zone", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewZone" },
 				new Navigation { Id = 20, Title = "FSC", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewFSC" },
-
+				new Navigation { Id = 20, Title = "Invoice Message", ParentId = 4, Type = "", NavURL = "/Finance/ViewInvoiceMessage" },
+				new Navigation { Id = 20, Title = "Payment", ParentId = 4, Type = "", NavURL = "/Finance/Payment" },
+				new Navigation { Id = 20, Title = "Freight Request", ParentId = 4, Type = "", NavURL = "/Freight/FreightRequests" },
 			};
         }
     }

@@ -80,6 +80,8 @@
                         'Areas/Finance/Assets/js/InvoiceMessageController.js',
                         'Areas/Finance/Assets/js/ViewInvoiceMessageController.js',
                         'Areas/Finance/Assets/js/PaymentController.js',
+                        'Areas/Freight/Assets/js/FreightRequestsController.js',
+                        'Areas/Freight/Assets/js/ViewFreightRequestsController.js',
                     ],
                     'wwwroot/assets/js/DataTable.js': [
                         'Assets/ace/js/dataTables/jquery.dataTables.js',
