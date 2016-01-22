@@ -17,7 +17,7 @@ namespace Admin.UI.Controllers
             new Navigation { Id = 1, Title = "Dashboard", ParentId = 0, Type = "", NavURL = "/Index" },
                 new Navigation { Id = 2, Title = "Shipments ", ParentId = 0, Type = "", NavURL = "/Shipment" },
                 new Navigation { Id = 3, Title = "User", ParentId = 0, Type = "", NavURL = "/User" } ,
-                new Navigation { Id = 4, Title = "Service & Rate", ParentId = 0, Type = "", NavURL = "/ServiceRate" } ,
+                
 
                 //Child Navigation
 
@@ -35,17 +35,33 @@ namespace Admin.UI.Controllers
 
                 new Navigation { Id = 14, Title = "Home", ParentId = 1, Type = "", NavURL = "/home/Dashboard" },
 
+                //new Navigation { Id = 4, Title = "Service & Rate", ParentId = 0, Type = "", NavURL = "/ServiceRate" } ,
+                new Navigation { Id = 23, Title = "Agents", ParentId = 0, Type = "", NavURL = "/ServiceRate/ViewRoutes" },
+                new Navigation { Id = 15, Title = "Agents", ParentId = 23, Type = "", NavURL = "/ServiceRate/ViewRoutes" },
+                new Navigation { Id = 16, Title = "Agent Service ", ParentId = 23, Type = "", NavURL = "/ServiceRate/ViewAgentService" },
 
-                new Navigation { Id = 15, Title = "Agents", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewAgents" },
-                new Navigation { Id = 16, Title = "Agent Service ", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewAgentService" },
-                new Navigation { Id = 17, Title = "Country", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewCountries" },
-                new Navigation { Id = 18, Title = "State", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewStates" },
-                new Navigation { Id = 19, Title = "Postal Code", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewPostCode" },
-				new Navigation { Id = 20, Title = "Zone US", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewZoneUS" },
-				new Navigation { Id = 20, Title = "Zone", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewZone" },
-				new Navigation { Id = 20, Title = "FSC", ParentId = 4, Type = "", NavURL = "/ServiceRate/ViewFSC" },
+                new Navigation { Id = 27, Title = "Routing", ParentId = 0, Type = "", NavURL = "/ServiceRate/ViewRoutes" },
+                new Navigation { Id = 28, Title = "Route Definations", ParentId = 27, Type = "", NavURL = "/ServiceRate/ViewRoutes" },
+                new Navigation { Id = 29, Title = "Route Selections", ParentId = 27, Type = "", NavURL = "/ServiceRate/RouteSelections" },
+                new Navigation { Id = 30, Title = "US Post Code Sets", ParentId = 27, Type = "", NavURL = "/ServiceRate/USPostCodes" },
+                new Navigation { Id = 31, Title = "Country Sets", ParentId = 27, Type = "", NavURL = "/ServiceRate/CountrySets" },
 
-			};
+
+                new Navigation { Id = 24, Title = "Locations", ParentId = 0, Type = "", NavURL = "/ServiceRate/ViewRoutes" },
+                new Navigation { Id = 17, Title = "Country", ParentId = 24, Type = "", NavURL = "/ServiceRate/ViewCountries" },
+                new Navigation { Id = 18, Title = "State", ParentId = 24, Type = "", NavURL = "/ServiceRate/ViewStates" },
+                new Navigation { Id = 19, Title = "Postal Code", ParentId = 24, Type = "", NavURL = "/ServiceRate/ViewPostCode" },
+
+                new Navigation { Id = 25, Title = "Zone Setting", ParentId = 0, Type = "", NavURL = "/ServiceRate/ViewRoutes" },
+                new Navigation { Id = 20, Title = "Zone US", ParentId = 25, Type = "", NavURL = "/ServiceRate/ViewZoneUS" },
+				new Navigation { Id = 21, Title = "Zone", ParentId = 25, Type = "", NavURL = "/ServiceRate/ViewZone" },
+
+                new Navigation { Id = 26, Title = "Rate & Setting", ParentId = 0, Type = "", NavURL = "/ServiceRate/ViewRoutes" },
+                new Navigation { Id = 22, Title = "Discount", ParentId = 26, Type = "", NavURL = "/ServiceRate/Discount" },
+                new Navigation { Id = 22, Title = "Agents FSC Values", ParentId = 26, Type = "", NavURL = "/ServiceRate/ViewFSC" },
+                
+
+            };
         }
     }
 }

@@ -386,5 +386,80 @@ namespace Admin.UI.ServiceRateArea
 		{
 			return View();
 		}
-	}
-}
+
+        [HttpGet]
+        public IActionResult Routes()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult Routes([FromBody]Routes agents)
+        {
+            try
+            {
+                if (agents != null)
+                {
+
+                    string result = "Success";
+                    return Json(result);
+                }
+                else
+                    return Json("Check required fields");
+
+            }
+            catch (Exception ex)
+
+            {
+                return Json(ex.Message);
+            }
+        }
+
+
+        [HttpGet]
+        public IActionResult ViewRoutes()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult RouteSelections()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ViewRouteSelections()
+        {
+            return View();
+        }
+
+
+        [HttpGet]
+        public IActionResult CodeSets()
+        {
+            return View();
+        }
+
+
+
+        [HttpGet]
+        public IActionResult USPostCodes()
+        {
+            return View();
+
+        }
+
+
+        [HttpGet]
+        public IActionResult CountrySets()
+        {
+            return View();
+
+
+        }
+
+
+
+        }
+    }

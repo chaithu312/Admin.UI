@@ -38,7 +38,7 @@
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-beta8",
     "Microsoft.Owin": "3.0.1",
     "Microsoft.Owin.Security.OAuth": "3.0.0",
-    "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc2-15855",
+    
     "Microsoft.AspNet.Session": "1.0.0-beta8",
     "Microsoft.AspNet.Http": "1.0.0-beta8"
   },
