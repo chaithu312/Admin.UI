@@ -59,7 +59,18 @@ namespace Admin.UI.Controllers
                 new Navigation { Id = 26, Title = "Rate & Setting", ParentId = 0, Type = "", NavURL = "/ServiceRate/ViewRoutes" },
                 new Navigation { Id = 22, Title = "Discount", ParentId = 26, Type = "", NavURL = "/ServiceRate/Discount" },
                 new Navigation { Id = 22, Title = "Agents FSC Values", ParentId = 26, Type = "", NavURL = "/ServiceRate/ViewFSC" },
+
+
+                new Navigation { Id = 32, Title = "Finance", ParentId = 0, Type = "", NavURL = "/Finance/ViewInvoiceMessage" },
+                new Navigation { Id = 33, Title = "Invoice Message", ParentId = 32, Type = "", NavURL = "/Finance/ViewInvoiceMessage" },
                 
+                new Navigation { Id = 34, Title = "Payment", ParentId = 32, Type = "", NavURL = "/Finance/Payment" },
+
+
+                new Navigation { Id = 35, Title = "Freight", ParentId = 0, Type = "", NavURL = "/Freight/ViewRoutes" },
+                new Navigation { Id = 36, Title = "Freight Requests", ParentId = 35, Type = "", NavURL = "/Freight/ViewFreightRequests" },
+                
+
 
             };
         }
