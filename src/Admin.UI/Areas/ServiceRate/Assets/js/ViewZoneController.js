@@ -70,11 +70,6 @@
                     var lim = data.length;
                     for (var i = 0; i < lim; i++) {
                         data[i].Detail = '<div class=' + '"hidden-sm hidden-xs btn-gro/up"' + '><button i type="button"  class="btn btn-xs btn-info" onclick="angular.element(this).scope().editForm(' + data[i].Id + ')"><i class="ace-icon fa fa-pencil bigger-120"></i></button><button type="button" class="btn btn-xs btn-danger"' + ' onclick="angular.element(this).scope().deleteForm(' + data[i].Id + ')" ><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div>';
-                        //data[i].SaturdayDelivery = data[i].SaturdayDelivery == true ? "YES" : "NO";
-                        //data[i].Pickup = data[i].Pickup == true ? "AVAILABLE" : "UN-AVAILABLE";
-                        //data[i].Delivery = data[i].Delivery == true ? "AVAILABLE" : "UN-AVAILABLE";
-                        //var dta = $filter('filter')($scope.States, function (d) { return d.Id == data[i].State })[0];
-                        //data[i].State = $filter('filter')($scope.States, function (d) { return d.Id == data[i].State })[0].StateName;
                     }
 
                     $scope.datasrc = data;

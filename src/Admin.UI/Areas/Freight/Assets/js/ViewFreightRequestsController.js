@@ -1,84 +1,30 @@
 ﻿(function () {
     var validationApp = angular.module('mainApp');
     // create angular controller
-    validationApp.controller('ViewPostCodeController', function ($scope, $http, $window) {
-
-        $http({
-            method: 'GET',
-            url: '/User/Home/Division',
-            headers: {
-                'RequestVerificationToken': $scope.antiForgeryToken
-            }
-        }).success(function (data, status, headers, config) {
-            $scope.message = '';
-            if (data.success == false) {
-                var str = '';
-                for (var error in data.errors) {
-                    str += data.errors[error] + '\n';
-                }
-                $scope.message = str;
-            }
-            else {
-               
-                $scope.States = JSON.parse(data);
-                $("#veil").hide();
-                $("#feedLoading").hide();
-            }
-        }).error(function (data, status, headers, config) {
-            $scope.message = 'Unexpected Error';
-        });
-
-        $scope.GetAllPostCodes = function () {
+    validationApp.controller('ViewFreightRequestsController', function ($scope, $http, $window, $filter, ShipOSFactory) {
+        $scope.Services = {};
+        $scope.ProcessTypes = {};
+        $scope.GetAllData = function () {
             $scope.columnDefs = [
                 {
-                    "mDataProp": "State",
+                    "mDataProp": "TrackingNumber",
                     "aTargets": [0]
                 },
             {
-                "mDataProp": "CityName",
+                "mDataProp": "Service",
                 "aTargets": [1]
             }, {
-                "mDataProp": "CityType",
+                "mDataProp": "ContactName",
                 "aTargets": [2]
-            }, {
-                "mDataProp": "CountryName",
-                "aTargets": [3]
-            }, {
-                "mDataProp": "PostalCode",
-                "aTargets": [4]
             },
              {
-                "mDataProp": "Class",
-                "aTargets": [5]
+                 "mDataProp": "ProcessedType",
+                 "aTargets": [3]
              },
              {
-                 "mDataProp": "AreaCode",
-                 "aTargets": [6]
-             },
-             {
-                 "mDataProp": "TimeZone",
-                 "aTargets": [7]
-             },
-             {
-                 "mDataProp": "AdditionalDays",
-                 "aTargets": [8]
-             },
-             {
-                 "mDataProp": "SaturdayDelivery",
-                 "aTargets": [9]
-             },
-            {
-                "mDataProp": "Pickup",
-                "aTargets": [10]
-            },
-            {
-                "mDataProp": "Delivery",
-                "aTargets": [11]
-            }
-            , {
-                "mDataProp": "Detail",
-                "aTargets": [12]
-            }];
+                 "mDataProp": "Detail",
+                 "aTargets": [4]
+             }];
 
             $scope.overrideOptions = {
                 "bStateSave": true,
@@ -93,7 +39,7 @@
             };
             $http({
                 method: 'GET',
-                url: '/ServiceRate/Home/GetAllPostCodes',
+                url: '/Freight/GetAllFreightRequests',
                 //data: $scope.SelectedCountry.CountryCode,
                 //params: { countryId: $scope.contact.CountryId },
                 headers: {
@@ -118,13 +64,11 @@
                     });
                 }
                 else {
-
                     var lim = data.length;
                     for (var i = 0; i < lim; i++) {
                         data[i].Detail = '<div class=' + '"hidden-sm hidden-xs btn-gro/up"' + '><button i type="button"  class="btn btn-xs btn-info" onclick="angular.element(this).scope().editForm(' + data[i].Id + ')"><i class="ace-icon fa fa-pencil bigger-120"></i></button><button type="button" class="btn btn-xs btn-danger"' + ' onclick="angular.element(this).scope().deleteForm(' + data[i].Id + ')" ><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div>';
-                        data[i].SaturdayDelivery = data[i].SaturdayDelivery == true ? "YES" : "NO";
-                        data[i].Pickup = data[i].Pickup == true ? "AVAILABLE" : "UN-AVAILABLE";
-                        data[i].Delivery = data[i].Delivery == true ? "AVAILABLE" : "UN-AVAILABLE";
+                        //data[i].Service = $filter('filter')($scope.Services, function (d) { return d.Id == Number(data[i].Service) })[0].Name;
+                        //data[i].ProcessedType = $filter('filter')($scope.ProcessTypes, function (d) { return d.Id == Number(data[i].ProcessedType) })[0].Name;
                     }
 
                     $scope.datasrc = data;
@@ -135,7 +79,19 @@
                 $scope.message = 'Unexpected Error';
             });
         }
-     
+        ShipOSFactory.GetServices().success(function (services) {
+            $scope.Services = services;
+
+        }).error(function (error) {
+            $scope.message = 'Unable to load service data: ' + error.message;
+        });
+
+        ShipOSFactory.ProcessedTypes().success(function (services) {
+            $scope.ProcessTypes = services;
+
+        }).error(function (error) {
+            $scope.message = 'Unable to load Process Types data: ' + error.message;
+        });
         console.log('deleting country');
         $scope.deleteForm = function (Id) {
             bootbox.confirm({
@@ -146,7 +102,7 @@
                     } else {
                         $http({
                             method: 'GET',
-                            url: '/ServiceRate/Home/DeletePostById',
+                            url: '/Freight/DeleteFreightRequestById',
                             params: { id: Id },
                             headers: {
                                 'RequestVerificationToken': $scope.antiForgeryToken
@@ -166,7 +122,7 @@
                             $scope.someClickHandler = function (info) {
                                 $scope.message = 'clicked: ' + info.price;
                             };
-                            $scope.GetAllPostCodes();
+                            $scope.GetAllData();
                             $scope.message = '';
                         }).error(function (data, status, headers, config) {
                             $scope.message = 'Unexpected Error';
@@ -176,12 +132,12 @@
             })
         }
         $scope.editForm = function (Id) {
-            var url = "http://" + $window.location.host + "/ServiceRate/PostCode/?" + Id;
+            var url = "http://" + $window.location.host + "/Freight/FreightRequests/?" + Id;
             $window.location.href = url;
         }
 
-        $("#veil").show();
-        $("#feedLoading").show();
+        //$("#veil").show();
+        //$("#feedLoading").show();
         $scope.message = '';
         $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             $('td:eq(2)', nRow).bind('click', function () {
@@ -195,7 +151,7 @@
         $scope.someClickHandler = function (info) {
             $scope.message = 'clicked: ' + info.price;
         };
-        $scope.GetAllPostCodes();
+        $scope.GetAllData();
 
     });
 })();

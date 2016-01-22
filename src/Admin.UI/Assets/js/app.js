@@ -139,23 +139,6 @@
         }
     });
 
-    //app.factory('getQueryStringValue', function ($window) {
-    //        passString: function (param) {
-    //            var locationSearch = $window.location.search;
-    //            var sURLVariables = locationSearch.split(/[&||?]/);
-    //            var res = null;
-    //            for (var i = 0; i < sURLVariables.length; i += 1) {
-    //                var paramName = sURLVariables[i],
-    //                    sParameterName = (paramName || '').split('=');
-
-    //                if (sParameterName[0] === param) {
-    //                    res = sParameterName[1];
-    //                    break;
-    //                }
-    //            }
-    //            return res;
-    //        }
-    //});
 
     var vendor = function ($http) {
         var vendor = {};
@@ -193,6 +176,17 @@
                 return res;
             }
         }
+    });
+    app.factory('ShipOSFactory', function ($http) {
+
+        var ShipOSFactory = {};
+        ShipOSFactory.GetServices = function () {
+            return $http.get("/Freight/Services");
+        }
+        ShipOSFactory.ProcessedTypes = function () {
+            return $http.get("/Freight/ProcessedTypes");
+        }
+        return ShipOSFactory;
     });
 })();
 
@@ -275,5 +269,3 @@ $('input[name=date-range-picker]').daterangepicker({
 });
 
 $('[data-rel=popover]').popover({ container: 'body' });
-
-
