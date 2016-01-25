@@ -21,10 +21,12 @@ namespace Admin.UI.Controllers
 
                 //Child Navigation
 
-                //new Navigation { Id = 5, Title = "AWB with Price", ParentId = 2, Type = "", NavURL = "/Shipment/AWBwithPrice" },
+                new Navigation { Id = 5, Title = "AWB with Price", ParentId = 2, Type = "", NavURL = "/Shipment/AWBwithPrice" },
                 new Navigation { Id = 6, Title = "Pickup Request ", ParentId = 2, Type = "", NavURL = "/Shipment/PickUpRequest" },
+                new Navigation { Id = 51, Title = "Supply Order", ParentId = 2, Type = "", NavURL = "/Shipment/SupplyOrder" },
+                new Navigation { Id = 52, Title = "Supply Material", ParentId = 2, Type = "", NavURL = "/Shipment/ViewSupplyMaterial" },
                 new Navigation { Id = 7, Title = "View Pickup", ParentId = 2, Type = "", NavURL = "/Shipment/ViewPickup" },
-                //new Navigation { Id = 8, Title = "Tracking", ParentId = 2, Type = "", NavURL = "/Shipment/Tracking" } ,
+                new Navigation { Id = 8, Title = "Tracking", ParentId = 2, Type = "", NavURL = "/Shipment/Tracking" } ,
                 new Navigation { Id = 8, Title = "Vendor Setting", ParentId = 2, Type = "", NavURL = "/Shipment/VendorSetting" } ,
                 new Navigation { Id = 9, Title = "Shipments", ParentId = 2, Type = "", NavURL = "/Shipment/Shipments" } ,
 

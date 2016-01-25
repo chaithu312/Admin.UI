@@ -1,0 +1,198 @@
+﻿@{
+
+    Layout = "~/Views/shared/_layout.cshtml";
+}
+
+<form name="SupplyOrder" data-ng-submit="sendForm()" data-ng-controller="SupplyOrderController" class="form-horizontal" novalidate>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+            Address
+        </label>
+
+        <div class="col-sm-9">
+
+            <select id="AddressType" class="col-xs-10 col-sm-5" data-ng-model="SupplyOrder.AddressType" name="AddressType"
+                    data-ng-options="address.Id as address.ShortName for address in Address track by address.Id" data-ng-change="GetAddressValue()">
+                <option value='' disabled selected>Please Choose</option>
+            </select>
+            @*&nbsp; <i ngValidationResult="SupplyOrder.$errors.AddressType"><label></label></i>*@
+        </div>
+    </div>
+    <div ng-if="SupplyOrder.AddressType == 0" class="form-group" ng-class="{ 'has-error':SupplyOrder.addressCaption.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+            Address Caption
+        </label>
+
+        <div class="col-sm-9">
+            <input type="text" class="col-xs-10 col-sm-5" placeholder="Enter Address Caption" id="addressCaption" name="addressCaption" data-ng-model="SupplyOrder.AddressCaption" required>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="SupplyOrder.addressCaption.$error.required && submitted">
+                Address Caption is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':SupplyOrder.contactName.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">  Contact Name</label>
+
+        <div class="col-sm-9">
+
+            <input type="text" class="col-xs-10 col-sm-5" id="contactName" name="contactName" data-ng-model="SupplyOrder.ContactName" required placeholder="Enter Contact Name">
+
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="SupplyOrder.contactName.$error.required && submitted">
+                Contact Name is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':SupplyOrder.phone.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+            Phone
+        </label>
+
+        <div class="col-sm-9">
+            <input type="number" ng-minlength="10" ng-maxlength="15" class="col-xs-10 col-sm-5" placeholder="Enter Phone" id="phone" name="phone" data-ng-model="SupplyOrder.Phone" required>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="SupplyOrder.phone.$error.required && submitted">
+                Phone is required.
+            </span>
+            @*<span class="help-inline col-xs-12 col-sm-7" data-ng-show="SupplyOrder.phone.$error.minlength || submitted">
+                    Phone should be min 10 digit.
+                </span>*@
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="SupplyOrder.phone.$invalid && submitted">
+            </span>
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group" ng-class="{ 'has-error':SupplyOrder.addressLine1.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+            Address Line 1
+        </label>
+
+        <!-- #section:plugins/input.masked-input -->
+        <div class="col-sm-9">
+            <input type="text" class="col-xs-10 col-sm-5" placeholder="Enter Address" id="addressLine1" name="addressLine1" data-ng-model="SupplyOrder.Address1" ng-disabled="SupplyOrder.isDisabled" required>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="SupplyOrder.addressLine1.$error.required && submitted">
+                Address line1  is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':SupplyOrder.addressLine2.$invalid }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+            Address Line 2
+        </label>
+        <div class="col-sm-9">
+
+            <input type="text" class="col-xs-10 col-sm-5" placeholder="" id="addressLine2" name="addressLine2" data-ng-model="SupplyOrder.Address2">
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="SupplyOrder.addressLine2.$error.required">
+                Address line2  is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':SupplyOrder.city.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+            City
+        </label>
+        <!-- #section:plugins/input.masked-input -->
+        <div class="col-sm-9">
+            <input type="text" class="col-xs-10 col-sm-5" placeholder="Enter City" id="city" name="city" data-ng-model="SupplyOrder.City" ng-disabled="SupplyOrder.isDisabled" required>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="SupplyOrder.city.$error.required && submitted">
+                city  is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':SupplyOrder.CountryId.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+            Country
+        </label>
+        <!-- #section:plugins/input.masked-input -->
+        <div class="col-sm-9">
+            <select id="CountryId" class="col-xs-10 col-sm-5" data-ng-model="SupplyOrder.CountryId" name="CountryId"
+                    data-ng-options="country.Id as country.Name for country in Country track by country.Id" data-ng-change="GetValue()" ng-disabled="SupplyOrder.isDisabled" required>
+                <option value='' disabled selected>Please Choose</option>
+            </select>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="SupplyOrder.CountryId.$error.required  && submitted">
+                CountryId is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':SupplyOrder.Division.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+            Division
+        </label>
+        <!-- #section:plugins/input.masked-input -->
+        <div class="col-sm-9">
+
+            <select id="Division" class="col-xs-10 col-sm-5" data-ng-model="SupplyOrder.Division" name="Division"
+                    data-ng-options="state.Id as state.Name for state in States track by state.Id" ng-disabled="SupplyOrder.isDisabled" required>
+                <option value='' disabled selected>Please Choose</option>
+            </select>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="SupplyOrder.Division.$error.required && submitted">
+                Division  is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':SupplyOrder.zipCode.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+            Postal Code
+        </label>
+        <!-- #section:plugins/input.masked-input -->
+        <div class="col-sm-9">
+            <input type="text" class="col-xs-10 col-sm-5" placeholder="Enter Postal Code" id="zipCode" name="zipCode" data-ng-model="SupplyOrder.ZipCode" ng-disabled="SupplyOrder.isDisabled" required>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="SupplyOrder.zipCode.$error.required && submitted">
+                Postal Code  is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" >
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">  Deliver To</label>
+
+        <div class="col-sm-9">
+
+            <input type="text" class="col-xs-10 col-sm-5" id="deliverto" name="deliverto" data-ng-model="SupplyOrder.deliverto"  placeholder="Enter deliver to">
+
+            <span class="help-inline col-xs-12 col-sm-7" >
+                
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Notes</label>
+        <!-- #section:plugins/input.masked-input -->
+        <div class="col-sm-9">
+            <textarea placeholder="Enter notes" id="form-field-8" class="col-xs-10 col-sm-5" data-ng-model="SupplyOrder.notes"></textarea>
+            <span class="help-inline col-xs-12 col-sm-7">
+                
+            </span>
+        </div>
+    </div>
+
+   
+  
+
+    <div class="clearfix form-actions">
+        <div class="col-md-offset-3 col-md-9">
+            <button ng-click="submitted=true" type="submit" class="btn btn-info" >
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                Save
+            </button>
+
+            &nbsp; &nbsp; &nbsp;
+            <button type="reset" class="btn">
+                <i class="ace-icon fa fa-undo bigger-110"></i>
+                Reset
+            </button>
+        </div>
+    </div>
+    <div id="errorMessages" ng-hide="" class="error" style="visibility:hidden">{{message}}</div>
+    <input type="hidden" ng-model="SupplyOrder.Id" />
+</form>

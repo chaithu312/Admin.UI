@@ -79,6 +79,13 @@
         }
     })
 
+    app.directive('username', function () {
+        return {
+            restrict: 'E',
+            templateUrl: '/User/GetUserName'
+        }
+    })
+
     app.directive('toggleSidebar', function () {
         return {
             restrict: 'E',

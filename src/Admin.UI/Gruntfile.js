@@ -53,6 +53,9 @@
                         'Areas/User/Assets/js/UserController.js',
                         'Areas/User/Assets/js/LoginController.js',
                         'Areas/Shipment/Assets/js/PickupRequestController.js',
+                        'Areas/Shipment/Assets/js/SupplyOrderController.js',
+                        'Areas/Shipment/Assets/js/SupplyMaterialController.js',
+                        'Areas/Shipment/Assets/js/ViewSupplyMaterialController.js',
                         'Areas/Shipment/Assets/js/TrackingRequestController.js',
                         'Areas/User/Assets/js/AddressBookController.js',
                         'Areas/User/Assets/js/ViewAddressController.js',
@@ -82,6 +85,7 @@
                         'Areas/Finance/Assets/js/PaymentController.js',
                         'Areas/Freight/Assets/js/FreightRequestsController.js',
                         'Areas/Freight/Assets/js/ViewFreightRequestsController.js',
+                        
                     ],
                     'wwwroot/assets/js/DataTable.js': [
                         'Assets/ace/js/dataTables/jquery.dataTables.js',
