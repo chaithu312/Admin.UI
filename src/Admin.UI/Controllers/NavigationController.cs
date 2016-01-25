@@ -57,12 +57,15 @@ namespace Admin.UI.Controllers
 				new Navigation { Id = 21, Title = "Int. Service Zones", ParentId = 25, Type = "", NavURL = "/ServiceRate/ViewZone" },
 				new Navigation { Id = 22, Title = "Int. Agent Zones", ParentId = 25, Type = "", NavURL = "/ServiceRate/ViewZone?agent=true" },
 
-				new Navigation { Id = 26, Title = "Rate & Setting", ParentId = 0, Type = "", NavURL = "/ServiceRate/ViewRoutes" },
-                new Navigation { Id = 23, Title = "Discount", ParentId = 26, Type = "", NavURL = "/ServiceRate/Discount" },
-                new Navigation { Id = 24, Title = "Agents FSC Values", ParentId = 26, Type = "", NavURL = "/ServiceRate/ViewFSC" },
+				new Navigation { Id = 261, Title = "Rate & Setting", ParentId = 0, Type = "", NavURL = "/ServiceRate/ViewRoutes" },
+                new Navigation { Id = 231, Title = "Discount", ParentId = 261, Type = "", NavURL = "/ServiceRate/Discount" },
+                new Navigation { Id = 241, Title = "Fuel Surcharges", ParentId = 261, Type = "", NavURL = "/ServiceRate/ViewFSC" },
+				new Navigation { Id = 251, Title = "Agent FSC Values", ParentId = 261, Type = "", NavURL = "/ServiceRate/ViewFSC?agent=true" },
+				
 
 
-                new Navigation { Id = 32, Title = "Finance", ParentId = 0, Type = "", NavURL = "/Finance/ViewInvoiceMessage" },
+
+				new Navigation { Id = 32, Title = "Finance", ParentId = 0, Type = "", NavURL = "/Finance/ViewInvoiceMessage" },
                 new Navigation { Id = 25, Title = "Invoice Message", ParentId = 32, Type = "", NavURL = "/Finance/ViewInvoiceMessage" },
                 
                 new Navigation { Id = 26, Title = "Payment", ParentId = 32, Type = "", NavURL = "/Finance/Payment" },
