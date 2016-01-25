@@ -1,7 +1,17 @@
 ﻿(function () {
     var app = angular.module('mainApp');
    
-    app.controller('ZoneController', function ($scope, $http, $location, $filter) {
+    app.controller('ZoneController', function ($scope, $http, $location, $filter, getQueryStringValue) {
+
+        $scope.isAgentOn = false;
+
+        if (getQueryStringValue.getValue("agent") != null && getQueryStringValue.getValue("agent") === "true") {
+            $scope.isAgentOn = true;
+            $scope.url = "/ServiceRate/ViewZone?agent=true";
+        }
+        else
+            $scope.url = "/ServiceRate/ViewZone";
+
         $scope.Zone = {};
         $http({
             method: 'GET',
@@ -22,14 +32,13 @@
             else {
                 $scope.CountryOrigin = (JSON.parse(data));
                 $scope.CountryDestination = (JSON.parse(data));
-
                 //Editing of country working here
-                if ($location.absUrl().split("?").length > 1) {
+                //if ($location.absUrl().split("?").length > 1) {
+                var id = getQueryStringValue.getValue("id");
+                if (id != null && Number(id)!=0) {
                     $("#veil").show();
                     $("#feedLoading").show();
-                    var Id = $location.absUrl().split("/");
-                    var editdata = Id[5];
-                    var editrow = editdata.split("?");
+                   
                     $http({
                         method: 'GET',
                         url: '/ServiceRate/Home/GetAllZone',
@@ -46,7 +55,7 @@
                             $scope.message = str;
                         }
                         else {
-                            var selectedData = $filter('filter')(data, function (d) { return d.Id == editrow[1] })[0];
+                            var selectedData = $filter('filter')(data, function (d) { return d.Id == Number(id) })[0];
                             $scope.bindZoneData(selectedData);
                             $("#veil").hide();
                             $("#feedLoading").hide();
@@ -72,9 +81,6 @@
             });
         });
 
-      
-      
-      
         $scope.submitZoneForm = function ()
         {
             if ($scope.ZoneForm.$valid) {

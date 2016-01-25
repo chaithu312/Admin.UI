@@ -53,32 +53,27 @@ namespace Admin.UI.Controllers
                 new Navigation { Id = 19, Title = "Postal Code", ParentId = 24, Type = "", NavURL = "/ServiceRate/ViewPostCode" },
 
                 new Navigation { Id = 25, Title = "Zone Setting", ParentId = 0, Type = "", NavURL = "/ServiceRate/ViewRoutes" },
-                new Navigation { Id = 20, Title = "Zone US", ParentId = 25, Type = "", NavURL = "/ServiceRate/ViewZoneUS" },
-				new Navigation { Id = 21, Title = "Zone", ParentId = 25, Type = "", NavURL = "/ServiceRate/ViewZone" },
+                new Navigation { Id = 20, Title = "	Dom.Service Zones", ParentId = 25, Type = "", NavURL = "/ServiceRate/ViewZoneUS" },
+				new Navigation { Id = 21, Title = "Int. Service Zones", ParentId = 25, Type = "", NavURL = "/ServiceRate/ViewZone" },
+				new Navigation { Id = 22, Title = "Int. Agent Zones", ParentId = 25, Type = "", NavURL = "/ServiceRate/ViewZone?agent=true" },
 
-                new Navigation { Id = 26, Title = "Rate & Setting", ParentId = 0, Type = "", NavURL = "/ServiceRate/ViewRoutes" },
-                new Navigation { Id = 22, Title = "Discount", ParentId = 26, Type = "", NavURL = "/ServiceRate/Discount" },
-                new Navigation { Id = 22, Title = "Agents FSC Values", ParentId = 26, Type = "", NavURL = "/ServiceRate/ViewFSC" },
+				new Navigation { Id = 26, Title = "Rate & Setting", ParentId = 0, Type = "", NavURL = "/ServiceRate/ViewRoutes" },
+                new Navigation { Id = 23, Title = "Discount", ParentId = 26, Type = "", NavURL = "/ServiceRate/Discount" },
+                new Navigation { Id = 24, Title = "Agents FSC Values", ParentId = 26, Type = "", NavURL = "/ServiceRate/ViewFSC" },
 
 
                 new Navigation { Id = 32, Title = "Finance", ParentId = 0, Type = "", NavURL = "/Finance/ViewInvoiceMessage" },
-                new Navigation { Id = 33, Title = "Invoice Message", ParentId = 32, Type = "", NavURL = "/Finance/ViewInvoiceMessage" },
+                new Navigation { Id = 25, Title = "Invoice Message", ParentId = 32, Type = "", NavURL = "/Finance/ViewInvoiceMessage" },
                 
-                new Navigation { Id = 34, Title = "Payment", ParentId = 32, Type = "", NavURL = "/Finance/Payment" },
-
-
-                new Navigation { Id = 35, Title = "Freight", ParentId = 0, Type = "", NavURL = "/Freight/ViewRoutes" },
-                new Navigation { Id = 36, Title = "Freight Requests", ParentId = 35, Type = "", NavURL = "/Freight/ViewFreightRequests" },
-				new Navigation { Id = 37, Title = "Cost Items", ParentId = 35, Type = "", NavURL = "/Freight/ViewFreightCostItem" },
-				new Navigation { Id = 38, Title = "Canned Messages", ParentId = 35, Type = "", NavURL = "/Freight/ViewFreightMessage" },
-				new Navigation { Id = 39, Title = "Mail Signatures", ParentId = 35, Type = "", NavURL = "/Freight/ViewFreightSignature" },
-
-
-
-
-
-
-
+                new Navigation { Id = 26, Title = "Payment", ParentId = 32, Type = "", NavURL = "/Finance/Payment" },
+				new Navigation { Id = 27, Title = "Create Credit Memos", ParentId = 32, Type = "", NavURL = "/Finance/Payment?op=credit" },
+				
+				new Navigation { Id = 36, Title = "Freight", ParentId = 0, Type = "", NavURL = "/Freight/ViewRoutes" },
+                new Navigation { Id = 28, Title = "Freight Requests", ParentId = 36, Type = "", NavURL = "/Freight/ViewFreightRequests" },
+				new Navigation { Id = 29, Title = "Cost Items", ParentId = 36, Type = "", NavURL = "/Freight/ViewFreightCostItem" },
+				new Navigation { Id = 30, Title = "Canned Messages", ParentId = 36, Type = "", NavURL = "/Freight/ViewFreightMessage" },
+				new Navigation { Id = 31, Title = "Mail Signatures", ParentId = 36, Type = "", NavURL = "/Freight/ViewFreightSignature" },
+				
 			};
         }
     }
