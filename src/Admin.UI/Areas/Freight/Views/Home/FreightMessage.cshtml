@@ -1,0 +1,56 @@
+﻿@{
+
+    Layout = "~/Views/shared/_layout.cshtml";
+}
+
+<form name="MessageForm" data-ng-submit="submitMessageForm()" data-ng-controller="MessageController" class="form-horizontal" role="form" novalidate>
+    <div class="pull-right tableTools-container">
+        <a class="btn-new-mail" href="/Freight/ViewFreightMessage">
+            <span class="btn btn-purple no-border">
+                <i class="ace-icon fa  bigger-130"></i>
+                <span class="bigger-110">View Messages</span>
+            </span>
+        </a>
+    </div>
+    
+    <div class="clearfix">
+        <div class="pull-right tableTools-container"></div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':MessageForm.Description.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Description</label>
+        <div class="col-sm-9">
+            <input type="text" name="Description" id="Description" ng-model="Message.Description" class="col-xs-10 col-sm-5" required placeholder="Description" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="MessageForm.Description.$error.required && submitted">
+                Description is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':MessageForm.MessageText.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Message</label>
+        <div class="col-sm-9">
+            <div>YOU CAN USE $NAME$ AS WILDCARD FOR CONTACT NAME</div>
+            <input type="text" name="MessageText" id="MessageText" ng-model="Message.MessageText" class="col-xs-10 col-sm-5" required placeholder="Message" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="MessageForm.MessageText.$error.required && submitted">
+                Message is required.
+            </span>
+        </div>
+    </div>
+    
+    <div class="clearfix form-actions">
+        <div class="col-md-offset-3 col-md-9">
+            <button type="submit" class="btn btn-info" ng-click="submitted=true">
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                Save
+            </button>
+
+            &nbsp; &nbsp; &nbsp;
+            <button type="reset" class="btn">
+                <i class="ace-icon fa fa-undo bigger-110"></i>
+                Reset
+            </button>
+        </div>
+    </div>
+    <div id="errorMessages" class="error">{{message}}</div>
+</form>

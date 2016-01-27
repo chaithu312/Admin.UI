@@ -71,10 +71,17 @@ namespace Admin.UI.Controllers
 
                 new Navigation { Id = 35, Title = "Freight", ParentId = 0, Type = "", NavURL = "/Freight/ViewRoutes" },
                 new Navigation { Id = 36, Title = "Freight Requests", ParentId = 35, Type = "", NavURL = "/Freight/ViewFreightRequests" },
-                
+				new Navigation { Id = 37, Title = "Cost Items", ParentId = 35, Type = "", NavURL = "/Freight/ViewFreightCostItem" },
+				new Navigation { Id = 38, Title = "Canned Messages", ParentId = 35, Type = "", NavURL = "/Freight/ViewFreightMessage" },
+				new Navigation { Id = 39, Title = "Mail Signatures", ParentId = 35, Type = "", NavURL = "/Freight/ViewFreightSignature" },
 
 
-            };
+
+
+
+
+
+			};
         }
     }
 }

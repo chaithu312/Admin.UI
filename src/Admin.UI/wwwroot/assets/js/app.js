@@ -5674,3 +5674,677 @@ $('[data-rel=popover]').popover({ container: 'body' });
 
     });
 })();
+(function () {
+    var app = angular.module('mainApp');
+   
+    app.controller('CostItemsController', function ($scope, $http, $location, $filter) {
+        $scope.CostItems = {};
+        //Editing of country working here
+        if ($location.absUrl().split("?").length > 1) {
+            $("#veil").show();
+            $("#feedLoading").show();
+            var Id = $location.absUrl().split("/");
+            var editdata = Id[5];
+            var editrow = editdata.split("?");
+            $http({
+                method: 'GET',
+                url: '/Freight/GetAllCostItems',
+                headers: {
+                    'RequestVerificationToken': $scope.antiForgeryToken
+                }
+            }).success(function (data, status, headers, config) {
+                $scope.message = '';
+                if (data.success == false) {
+                    var str = '';
+                    for (var error in data.errors) {
+                        str += data.errors[error] + '\n';
+                    }
+                    $scope.message = str;
+                }
+                else {
+                    var selectedData = $filter('filter')(data, function (d) { return d.Id == editrow[1] })[0];
+                    $scope.bindFreightData(selectedData);
+                    $("#veil").hide();
+                    $("#feedLoading").hide();
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.message = 'Unexpected Error';
+            });
+        }
+        //End Editing
+
+        $scope.submitCostItemsForm = function ()
+        {
+            if ($scope.CostItemsForm.$valid) {
+                //$("#veil").show();
+                //$("#feedLoading").show();
+                $http({
+                    url: '/Freight/FreightCostItem',
+                    method: "POST",
+                    data: JSON.stringify($scope.CostItems),
+                    contentType: "application/json;",
+                    dataType: "json"
+                })
+                    .success(function (data, status, headers, config) {
+                        if (data == "Success") {
+                            $scope.message = $scope.CostItems.Id > 0 ? "Cost Item updated successfully!" : "New Cost Item added!"
+                            bootbox.dialog({
+                                message: $scope.message,
+                                buttons: {
+                                    "success": {
+                                        "label": "OK",
+                                        "className": "btn-sm btn-primary",
+                                        callback: function () {
+                                            window.location.href = "/Freight/ViewFreightCostItem";
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }).error(function (data, status, headers, config) {
+                        $("#veil").hide();
+                        $("#feedLoading").hide();
+                        bootbox.dialog({
+                            message: data,
+                            buttons: {
+                                "success": {
+                                    "label": "OK",
+                                    "className": "btn-sm btn-primary"
+                                }
+                            }
+                        });
+                    });
+            }
+        }
+        $scope.bindFreightData = function (filtered) {
+            $scope.CostItems.Id = filtered.Id;
+            $scope.CostItems.ServiceName = filtered.ServiceName;
+            $scope.$apply();
+        }
+    })})();
+(function () {
+    var validationApp = angular.module('mainApp');
+    // create angular controller
+    validationApp.controller('ViewCostItemsController', function ($scope, $http, $window, $filter, ShipOSFactory) {
+        $scope.GetAllData = function () {
+            $scope.columnDefs = [
+                {
+                    "mDataProp": "ServiceName",
+                    "aTargets": [0]
+                },
+             {
+                 "mDataProp": "Created",
+                 "aTargets": [1]
+             },
+             {
+                 "mDataProp": "Detail",
+                 "aTargets": [2]
+             }];
+
+            $scope.overrideOptions = {
+                "bStateSave": true,
+                "iCookieDuration": 2419200,
+                /* 1 month */
+                "bJQueryUI": true,
+                "bPaginate": false,
+                "bLengthChange": false,
+                "bFilter": true,
+                "bInfo": true,
+                "bDestroy": true
+            };
+            $http({
+                method: 'GET',
+                url: '/Freight/GetAllCostItems',
+                //data: $scope.SelectedCountry.CountryCode,
+                //params: { countryId: $scope.contact.CountryId },
+                headers: {
+                    'RequestVerificationToken': $scope.antiForgeryToken
+                }
+            }).success(function (data, status, headers, config) {
+                $scope.message = '';
+                if (data.success == false) {
+                    var str = '';
+                    for (var error in data.errors) {
+                        str += data.errors[error] + '\n';
+                    }
+                    $scope.message = str;
+                    bootbox.dialog({
+                        message: str,
+                        buttons: {
+                            "success": {
+                                "label": "OK",
+                                "className": "btn-sm btn-primary"
+                            }
+                        }
+                    });
+                }
+                else {
+                    var lim = data.length;
+                    for (var i = 0; i < lim; i++) {
+                        data[i].Detail = '<div class=' + '"hidden-sm hidden-xs btn-gro/up"' + '><button i type="button"  class="btn btn-xs btn-info" onclick="angular.element(this).scope().editForm(' + data[i].Id + ')"><i class="ace-icon fa fa-pencil bigger-120"></i></button><button type="button" class="btn btn-xs btn-danger"' + ' onclick="angular.element(this).scope().deleteForm(' + data[i].Id + ')" ><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div>';
+                        //data[i].Service = $filter('filter')($scope.Services, function (d) { return d.Id == Number(data[i].Service) })[0].Name;
+                        //data[i].ProcessedType = $filter('filter')($scope.ProcessTypes, function (d) { return d.Id == Number(data[i].ProcessedType) })[0].Name;
+                    }
+
+                    $scope.datasrc = data;
+                    $("#veil").hide();
+                    $("#feedLoading").hide();
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.message = 'Unexpected Error';
+            });
+        }
+       
+        console.log('deleting country');
+        $scope.deleteForm = function (Id) {
+            bootbox.confirm({
+                size: 'small',
+                message: "Are you sure want to delete record#? " + Id,
+                callback: function (result) {
+                    if (result === false) {
+                    } else {
+                        $http({
+                            method: 'GET',
+                            url: '/Freight/DeleteCostItemById',
+                            params: { id: Id },
+                            headers: {
+                                'RequestVerificationToken': $scope.antiForgeryToken
+                            }
+                        }).success(function (data, status, headers, config) {
+                            $("#veil").show();
+                            $("#feedLoading").show();
+                            $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                                $('td:eq(2)', nRow).bind('click', function () {
+                                    $scope.$apply(function () {
+                                        $scope.someClickHandler(aData);
+                                    });
+                                });
+                                return nRow;
+                            };
+
+                            $scope.someClickHandler = function (info) {
+                                $scope.message = 'clicked: ' + info.price;
+                            };
+                            $scope.GetAllData();
+                            $scope.message = '';
+                        }).error(function (data, status, headers, config) {
+                            $scope.message = 'Unexpected Error';
+                        });
+                    }
+                }
+            })
+        }
+        $scope.editForm = function (Id) {
+            var url = "http://" + $window.location.host + "/Freight/FreightCostItem/?" + Id;
+            $window.location.href = url;
+        }
+
+        //$("#veil").show();
+        //$("#feedLoading").show();
+        $scope.message = '';
+        $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            $('td:eq(2)', nRow).bind('click', function () {
+                $scope.$apply(function () {
+                    $scope.someClickHandler(aData);
+                });
+            });
+            return nRow;
+        };
+
+        $scope.someClickHandler = function (info) {
+            $scope.message = 'clicked: ' + info.price;
+        };
+        $scope.GetAllData();
+
+    });
+})();
+(function () {
+    var app = angular.module('mainApp');
+   
+    app.controller('MessageController', function ($scope, $http, $location, $filter) {
+        $scope.Message = {};
+        //Editing of country working here
+        if ($location.absUrl().split("?").length > 1) {
+            $("#veil").show();
+            $("#feedLoading").show();
+            var Id = $location.absUrl().split("/");
+            var editdata = Id[5];
+            var editrow = editdata.split("?");
+            $http({
+                method: 'GET',
+                url: '/Freight/GetAllMessages',
+                headers: {
+                    'RequestVerificationToken': $scope.antiForgeryToken
+                }
+            }).success(function (data, status, headers, config) {
+                $scope.message = '';
+                if (data.success == false) {
+                    var str = '';
+                    for (var error in data.errors) {
+                        str += data.errors[error] + '\n';
+                    }
+                    $scope.message = str;
+                }
+                else {
+                    var selectedData = $filter('filter')(data, function (d) { return d.Id == editrow[1] })[0];
+                    $scope.bindFreightData(selectedData);
+                    $("#veil").hide();
+                    $("#feedLoading").hide();
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.message = 'Unexpected Error';
+            });
+        }
+        //End Editing
+
+        $scope.submitMessageForm = function ()
+        {
+            if ($scope.MessageForm.$valid) {
+                //$("#veil").show();
+                //$("#feedLoading").show();
+                $http({
+                    url: '/Freight/FreightMessage',
+                    method: "POST",
+                    data: JSON.stringify($scope.Message),
+                    contentType: "application/json;",
+                    dataType: "json"
+                })
+                    .success(function (data, status, headers, config) {
+                        if (data == "Success") {
+                            $scope.message = $scope.Message.Id > 0 ? "Message updated successfully!" : "New Message added!"
+                            bootbox.dialog({
+                                message: $scope.message,
+                                buttons: {
+                                    "success": {
+                                        "label": "OK",
+                                        "className": "btn-sm btn-primary",
+                                        callback: function () {
+                                            window.location.href = "/Freight/ViewFreightMessage";
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }).error(function (data, status, headers, config) {
+                        $("#veil").hide();
+                        $("#feedLoading").hide();
+                        bootbox.dialog({
+                            message: data,
+                            buttons: {
+                                "success": {
+                                    "label": "OK",
+                                    "className": "btn-sm btn-primary"
+                                }
+                            }
+                        });
+                    });
+            }
+        }
+        $scope.bindFreightData = function (filtered) {
+            $scope.Message.Id = filtered.Id;
+            $scope.Message.Description = filtered.Description;
+            $scope.Message.MessageText = filtered.MessageText;
+            $scope.$apply();
+        }
+    })})();
+(function () {
+    var validationApp = angular.module('mainApp');
+    // create angular controller
+    validationApp.controller('ViewMessageController', function ($scope, $http, $window, $filter, ShipOSFactory) {
+        $scope.GetAllData = function () {
+            $scope.columnDefs = [
+                {
+                    "mDataProp": "Description",
+                    "aTargets": [0]
+                },
+             {
+                 "mDataProp": "Created",
+                 "aTargets": [1]
+             },
+             {
+                 "mDataProp": "Detail",
+                 "aTargets": [2]
+             }];
+
+            $scope.overrideOptions = {
+                "bStateSave": true,
+                "iCookieDuration": 2419200,
+                /* 1 month */
+                "bJQueryUI": true,
+                "bPaginate": false,
+                "bLengthChange": false,
+                "bFilter": true,
+                "bInfo": true,
+                "bDestroy": true
+            };
+            $http({
+                method: 'GET',
+                url: '/Freight/GetAllMessages',
+                headers: {
+                    'RequestVerificationToken': $scope.antiForgeryToken
+                }
+            }).success(function (data, status, headers, config) {
+                $scope.message = '';
+                if (data.success == false) {
+                    var str = '';
+                    for (var error in data.errors) {
+                        str += data.errors[error] + '\n';
+                    }
+                    $scope.message = str;
+                    bootbox.dialog({
+                        message: str,
+                        buttons: {
+                            "success": {
+                                "label": "OK",
+                                "className": "btn-sm btn-primary"
+                            }
+                        }
+                    });
+                }
+                else {
+                    var lim = data.length;
+                    for (var i = 0; i < lim; i++) {
+                        data[i].Detail = '<div class=' + '"hidden-sm hidden-xs btn-gro/up"' + '><button i type="button"  class="btn btn-xs btn-info" onclick="angular.element(this).scope().editForm(' + data[i].Id + ')"><i class="ace-icon fa fa-pencil bigger-120"></i></button><button type="button" class="btn btn-xs btn-danger"' + ' onclick="angular.element(this).scope().deleteForm(' + data[i].Id + ')" ><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div>';
+                        //data[i].Service = $filter('filter')($scope.Services, function (d) { return d.Id == Number(data[i].Service) })[0].Name;
+                        //data[i].ProcessedType = $filter('filter')($scope.ProcessTypes, function (d) { return d.Id == Number(data[i].ProcessedType) })[0].Name;
+                    }
+
+                    $scope.datasrc = data;
+                    $("#veil").hide();
+                    $("#feedLoading").hide();
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.message = 'Unexpected Error';
+            });
+        }
+       
+        console.log('deleting country');
+        $scope.deleteForm = function (Id) {
+            bootbox.confirm({
+                size: 'small',
+                message: "Are you sure want to delete record#? " + Id,
+                callback: function (result) {
+                    if (result === false) {
+                    } else {
+                        $http({
+                            method: 'GET',
+                            url: '/Freight/DeleteMessageById',
+                            params: { id: Id },
+                            headers: {
+                                'RequestVerificationToken': $scope.antiForgeryToken
+                            }
+                        }).success(function (data, status, headers, config) {
+                            $("#veil").show();
+                            $("#feedLoading").show();
+                            $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                                $('td:eq(2)', nRow).bind('click', function () {
+                                    $scope.$apply(function () {
+                                        $scope.someClickHandler(aData);
+                                    });
+                                });
+                                return nRow;
+                            };
+
+                            $scope.someClickHandler = function (info) {
+                                $scope.message = 'clicked: ' + info.price;
+                            };
+                            $scope.GetAllData();
+                            $scope.message = '';
+                        }).error(function (data, status, headers, config) {
+                            $scope.message = 'Unexpected Error';
+                        });
+                    }
+                }
+            })
+        }
+        $scope.editForm = function (Id) {
+            var url = "http://" + $window.location.host + "/Freight/FreightMessage/?" + Id;
+            $window.location.href = url;
+        }
+
+        //$("#veil").show();
+        //$("#feedLoading").show();
+        $scope.message = '';
+        $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            $('td:eq(2)', nRow).bind('click', function () {
+                $scope.$apply(function () {
+                    $scope.someClickHandler(aData);
+                });
+            });
+            return nRow;
+        };
+
+        $scope.someClickHandler = function (info) {
+            $scope.message = 'clicked: ' + info.price;
+        };
+        $scope.GetAllData();
+
+    });
+})();
+(function () {
+    var app = angular.module('mainApp');
+   
+    app.controller('SignatureController', function ($scope, $http, $location, $filter) {
+        $scope.Signature = {};
+        //Editing of country working here
+        if ($location.absUrl().split("?").length > 1) {
+            $("#veil").show();
+            $("#feedLoading").show();
+            var Id = $location.absUrl().split("/");
+            var editdata = Id[5];
+            var editrow = editdata.split("?");
+            $http({
+                method: 'GET',
+                url: '/Freight/GetAllSignatures',
+                headers: {
+                    'RequestVerificationToken': $scope.antiForgeryToken
+                }
+            }).success(function (data, status, headers, config) {
+                $scope.message = '';
+                if (data.success == false) {
+                    var str = '';
+                    for (var error in data.errors) {
+                        str += data.errors[error] + '\n';
+                    }
+                    $scope.message = str;
+                }
+                else {
+                    var selectedData = $filter('filter')(data, function (d) { return d.Id == editrow[1] })[0];
+                    $scope.bindFreightData(selectedData);
+                    $("#veil").hide();
+                    $("#feedLoading").hide();
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.message = 'Unexpected Error';
+            });
+        }
+        //End Editing
+
+        $scope.submitSignatureForm = function ()
+        {
+            if ($scope.SignatureForm.$valid) {
+                //$("#veil").show();
+                //$("#feedLoading").show();
+                $http({
+                    url: '/Freight/FreightSignature',
+                    method: "POST",
+                    data: JSON.stringify($scope.Signature),
+                    contentType: "application/json;",
+                    dataType: "json"
+                })
+                    .success(function (data, status, headers, config) {
+                        if (data == "Success") {
+                            $scope.message = $scope.Signature.Id > 0 ? "Signature updated successfully!" : "New Signature added!"
+                            bootbox.dialog({
+                                message: $scope.message,
+                                buttons: {
+                                    "success": {
+                                        "label": "OK",
+                                        "className": "btn-sm btn-primary",
+                                        callback: function () {
+                                            window.location.href = "/Freight/ViewFreightSignature";
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }).error(function (data, status, headers, config) {
+                        $("#veil").hide();
+                        $("#feedLoading").hide();
+                        bootbox.dialog({
+                            message: data,
+                            buttons: {
+                                "success": {
+                                    "label": "OK",
+                                    "className": "btn-sm btn-primary"
+                                }
+                            }
+                        });
+                    });
+            }
+        }
+        $scope.bindFreightData = function (filtered) {
+            $scope.Signature.Id = filtered.Id;
+            $scope.Signature.Caption = filtered.Caption;
+            $scope.Signature.SignatureText = filtered.SignatureText;
+            $scope.$apply();
+        }
+    })})();
+(function () {
+    var validationApp = angular.module('mainApp');
+    // create angular controller
+    validationApp.controller('ViewSignatureController', function ($scope, $http, $window, $filter, ShipOSFactory) {
+        $scope.GetAllData = function () {
+            $scope.columnDefs = [
+                {
+                    "mDataProp": "Caption",
+                    "aTargets": [0]
+                },
+                 {
+                     "mDataProp": "SignatureText",
+                     "aTargets": [1]
+                 },
+             {
+                 "mDataProp": "Created",
+                 "aTargets": [2]
+             },
+             {
+                 "mDataProp": "Detail",
+                 "aTargets": [3]
+             }];
+
+            $scope.overrideOptions = {
+                "bStateSave": true,
+                "iCookieDuration": 2419200,
+                /* 1 month */
+                "bJQueryUI": true,
+                "bPaginate": false,
+                "bLengthChange": false,
+                "bFilter": true,
+                "bInfo": true,
+                "bDestroy": true
+            };
+            $http({
+                method: 'GET',
+                url: '/Freight/GetAllSignatures',
+                headers: {
+                    'RequestVerificationToken': $scope.antiForgeryToken
+                }
+            }).success(function (data, status, headers, config) {
+                $scope.message = '';
+                if (data.success == false) {
+                    var str = '';
+                    for (var error in data.errors) {
+                        str += data.errors[error] + '\n';
+                    }
+                    $scope.message = str;
+                    bootbox.dialog({
+                        message: str,
+                        buttons: {
+                            "success": {
+                                "label": "OK",
+                                "className": "btn-sm btn-primary"
+                            }
+                        }
+                    });
+                }
+                else {
+                    var lim = data.length;
+                    for (var i = 0; i < lim; i++) {
+                        data[i].Detail = '<div class=' + '"hidden-sm hidden-xs btn-gro/up"' + '><button i type="button"  class="btn btn-xs btn-info" onclick="angular.element(this).scope().editForm(' + data[i].Id + ')"><i class="ace-icon fa fa-pencil bigger-120"></i></button><button type="button" class="btn btn-xs btn-danger"' + ' onclick="angular.element(this).scope().deleteForm(' + data[i].Id + ')" ><i class="ace-icon fa fa-trash-o bigger-120"></i></button></div>';
+                        //data[i].Service = $filter('filter')($scope.Services, function (d) { return d.Id == Number(data[i].Service) })[0].Name;
+                        //data[i].ProcessedType = $filter('filter')($scope.ProcessTypes, function (d) { return d.Id == Number(data[i].ProcessedType) })[0].Name;
+                    }
+
+                    $scope.datasrc = data;
+                    $("#veil").hide();
+                    $("#feedLoading").hide();
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.message = 'Unexpected Error';
+            });
+        }
+       
+        console.log('deleting country');
+        $scope.deleteForm = function (Id) {
+            bootbox.confirm({
+                size: 'small',
+                message: "Are you sure want to delete record#? " + Id,
+                callback: function (result) {
+                    if (result === false) {
+                    } else {
+                        $http({
+                            method: 'GET',
+                            url: '/Freight/DeleteSignatureById',
+                            params: { id: Id },
+                            headers: {
+                                'RequestVerificationToken': $scope.antiForgeryToken
+                            }
+                        }).success(function (data, status, headers, config) {
+                            $("#veil").show();
+                            $("#feedLoading").show();
+                            $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                                $('td:eq(2)', nRow).bind('click', function () {
+                                    $scope.$apply(function () {
+                                        $scope.someClickHandler(aData);
+                                    });
+                                });
+                                return nRow;
+                            };
+
+                            $scope.someClickHandler = function (info) {
+                                $scope.message = 'clicked: ' + info.price;
+                            };
+                            $scope.GetAllData();
+                            $scope.message = '';
+                        }).error(function (data, status, headers, config) {
+                            $scope.message = 'Unexpected Error';
+                        });
+                    }
+                }
+            })
+        }
+        $scope.editForm = function (Id) {
+            var url = "http://" + $window.location.host + "/Freight/FreightSignature/?" + Id;
+            $window.location.href = url;
+        }
+
+        //$("#veil").show();
+        //$("#feedLoading").show();
+        $scope.message = '';
+        $scope.myCallback = function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            $('td:eq(2)', nRow).bind('click', function () {
+                $scope.$apply(function () {
+                    $scope.someClickHandler(aData);
+                });
+            });
+            return nRow;
+        };
+
+        $scope.someClickHandler = function (info) {
+            $scope.message = 'clicked: ' + info.price;
+        };
+        $scope.GetAllData();
+
+    });
+})();
