@@ -4487,7 +4487,17 @@ $('[data-rel=popover]').popover({ container: 'body' });
 (function () {
     var app = angular.module('mainApp');
    
-    app.controller('ZoneController', function ($scope, $http, $location, $filter) {
+    app.controller('ZoneController', function ($scope, $http, $location, $filter, getQueryStringValue) {
+
+        $scope.isAgentOn = false;
+
+        if (getQueryStringValue.getValue("agent") != null && getQueryStringValue.getValue("agent") === "true") {
+            $scope.isAgentOn = true;
+            $scope.url = "/ServiceRate/ViewZone?agent=true";
+        }
+        else
+            $scope.url = "/ServiceRate/ViewZone";
+
         $scope.Zone = {};
         $http({
             method: 'GET',
@@ -4508,14 +4518,13 @@ $('[data-rel=popover]').popover({ container: 'body' });
             else {
                 $scope.CountryOrigin = (JSON.parse(data));
                 $scope.CountryDestination = (JSON.parse(data));
-
                 //Editing of country working here
-                if ($location.absUrl().split("?").length > 1) {
+                //if ($location.absUrl().split("?").length > 1) {
+                var id = getQueryStringValue.getValue("id");
+                if (id != null && Number(id)!=0) {
                     $("#veil").show();
                     $("#feedLoading").show();
-                    var Id = $location.absUrl().split("/");
-                    var editdata = Id[5];
-                    var editrow = editdata.split("?");
+                   
                     $http({
                         method: 'GET',
                         url: '/ServiceRate/Home/GetAllZone',
@@ -4532,7 +4541,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                             $scope.message = str;
                         }
                         else {
-                            var selectedData = $filter('filter')(data, function (d) { return d.Id == editrow[1] })[0];
+                            var selectedData = $filter('filter')(data, function (d) { return d.Id == Number(id) })[0];
                             $scope.bindZoneData(selectedData);
                             $("#veil").hide();
                             $("#feedLoading").hide();
@@ -4558,9 +4567,6 @@ $('[data-rel=popover]').popover({ container: 'body' });
             });
         });
 
-      
-      
-      
         $scope.submitZoneForm = function ()
         {
             if ($scope.ZoneForm.$valid) {
@@ -4607,7 +4613,15 @@ $('[data-rel=popover]').popover({ container: 'body' });
 (function () {
     var validationApp = angular.module('mainApp');
     // create angular controller
-    validationApp.controller('ViewZoneController', function ($scope, $http, $window) {
+    validationApp.controller('ViewZoneController', function ($scope, $http, $window, getQueryStringValue) {
+        $scope.isAgentOn = false;
+
+        if (getQueryStringValue.getValue("agent") != null && getQueryStringValue.getValue("agent") === "true") {
+            $scope.isAgentOn=true;
+            $scope.url = "/ServiceRate/Zone?agent=true";
+        }
+        else
+            $scope.url = "/ServiceRate/Zone";
 
         $scope.GetAllPostCodes = function () {
             $scope.columnDefs = [
@@ -4727,7 +4741,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
             })
         }
         $scope.editForm = function (Id) {
-            var url = "http://" + $window.location.host + "/ServiceRate/Zone/?" + Id;
+            var appenturl=$scope.isAgentOn==true?"&agent=true":"";
+            var url = "http://" + $window.location.host + "/ServiceRate/Zone?id=" + Id + appenturl;
             $window.location.href = url;
         }
 
@@ -4747,21 +4762,26 @@ $('[data-rel=popover]').popover({ container: 'body' });
             $scope.message = 'clicked: ' + info.price;
         };
         $scope.GetAllPostCodes();
-
+        $scope.message = $scope.url;
     });
 })();
 (function () {
     var app = angular.module('mainApp');
    
-    app.controller('FSCController', function ($scope, $http, $location, $filter) {
+    app.controller('FSCController', function ($scope, $http, $location, $filter, getQueryStringValue) {
         $scope.FSC = {};
+        if (getQueryStringValue.getValue("agent") != null && getQueryStringValue.getValue("agent") === "true") {
+            $scope.isAgentOn = true;
+            $scope.url = "/ServiceRate/ViewFSC?agent=true";
+        }
+        else
+            $scope.url = "/ServiceRate/ViewFSC";
+
+        var id = getQueryStringValue.getValue("id");
         //Editing of country working here
-        if ($location.absUrl().split("?").length > 1) {
+        if (id != null && Number(id) != 0) {
             $("#veil").show();
             $("#feedLoading").show();
-            var Id = $location.absUrl().split("/");
-            var editdata = Id[5];
-            var editrow = editdata.split("?");
             $http({
                 method: 'GET',
                 url: '/ServiceRate/Home/GetAllFSC',
@@ -4778,7 +4798,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
                     $scope.message = str;
                 }
                 else {
-                    var selectedData = $filter('filter')(data, function (d) { return d.Id == editrow[1] })[0];
+                    var selectedData = $filter('filter')(data, function (d) { return d.Id == Number(id) })[0];
                     $scope.bindFSCData(selectedData);
                     $("#veil").hide();
                     $("#feedLoading").hide();
@@ -4832,7 +4852,16 @@ $('[data-rel=popover]').popover({ container: 'body' });
 (function () {
     var validationApp = angular.module('mainApp');
     // create angular controller
-    validationApp.controller('ViewFSCController', function ($scope, $http, $window) {
+    validationApp.controller('ViewFSCController', function ($scope, $http, $window, getQueryStringValue) {
+
+        $scope.isAgentOn = false;
+
+        if (getQueryStringValue.getValue("agent") != null && getQueryStringValue.getValue("agent") === "true") {
+            $scope.isAgentOn = true;
+            $scope.url = "/ServiceRate/FSC?agent=true";
+        }
+        else
+            $scope.url = "/ServiceRate/FSC";
 
         $scope.GetAllPostCodes = function () {
             $scope.columnDefs = [
@@ -4949,7 +4978,8 @@ $('[data-rel=popover]').popover({ container: 'body' });
             })
         }
         $scope.editForm = function (Id) {
-            var url = "http://" + $window.location.host + "/ServiceRate/FSC/?" + Id;
+            var appenturl = $scope.isAgentOn == true ? "&agent=true" : "";
+            var url = "http://" + $window.location.host + "/ServiceRate/FSC?id=" + Id+appenturl;
             $window.location.href = url;
         }
 
@@ -5371,7 +5401,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
     app.controller('PaymentController', function ($scope, $http, $filter, getQueryStringValue) {
         $scope.Payment = {};
         $scope.CreditVisible = false;
-        if (getQueryStringValue.getValue("opt") != null && getQueryStringValue.getValue("opt")==="credit")
+        if (getQueryStringValue.getValue("op") != null && getQueryStringValue.getValue("op")==="credit")
         {
             $scope.CreditVisible = true;
         }

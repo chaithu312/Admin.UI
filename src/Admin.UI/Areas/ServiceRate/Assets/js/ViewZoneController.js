@@ -1,7 +1,15 @@
 ﻿(function () {
     var validationApp = angular.module('mainApp');
     // create angular controller
-    validationApp.controller('ViewZoneController', function ($scope, $http, $window) {
+    validationApp.controller('ViewZoneController', function ($scope, $http, $window, getQueryStringValue) {
+        $scope.isAgentOn = false;
+
+        if (getQueryStringValue.getValue("agent") != null && getQueryStringValue.getValue("agent") === "true") {
+            $scope.isAgentOn=true;
+            $scope.url = "/ServiceRate/Zone?agent=true";
+        }
+        else
+            $scope.url = "/ServiceRate/Zone";
 
         $scope.GetAllPostCodes = function () {
             $scope.columnDefs = [
@@ -121,7 +129,8 @@
             })
         }
         $scope.editForm = function (Id) {
-            var url = "http://" + $window.location.host + "/ServiceRate/Zone/?" + Id;
+            var appenturl=$scope.isAgentOn==true?"&agent=true":"";
+            var url = "http://" + $window.location.host + "/ServiceRate/Zone?id=" + Id + appenturl;
             $window.location.href = url;
         }
 
@@ -141,6 +150,6 @@
             $scope.message = 'clicked: ' + info.price;
         };
         $scope.GetAllPostCodes();
-
+        $scope.message = $scope.url;
     });
 })();

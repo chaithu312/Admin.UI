@@ -4,7 +4,7 @@
     app.controller('PaymentController', function ($scope, $http, $filter, getQueryStringValue) {
         $scope.Payment = {};
         $scope.CreditVisible = false;
-        if (getQueryStringValue.getValue("opt") != null && getQueryStringValue.getValue("opt")==="credit")
+        if (getQueryStringValue.getValue("op") != null && getQueryStringValue.getValue("op")==="credit")
         {
             $scope.CreditVisible = true;
         }
