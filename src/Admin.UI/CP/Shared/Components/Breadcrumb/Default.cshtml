@@ -1,0 +1,19 @@
+﻿@model Admin.UI.CP.Shared.Components.Breadcrumb.ViewModel
+
+<ol class="breadcrumb">
+    @foreach (var item in Model.Items)
+    {
+        var className = !item.ShowLink ? "active" : null;
+        <li class="@className">
+            <i class="fa fa-@item.IconClassName"></i> 
+            @if (item.ShowLink)
+            {
+                <a href="@item.TargetUrl">@item.Text</a>
+            }
+            else
+            {
+                @item.Text
+            }
+        </li>
+    }
+</ol>

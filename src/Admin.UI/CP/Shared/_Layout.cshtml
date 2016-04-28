@@ -1,0 +1,144 @@
+﻿@using System.Threading.Tasks
+@using Admin.UI.Utility
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>Dashboard - Ace Admin</title>
+
+    <meta name="description" content="overview &amp; stats" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="stylesheet" href="~/assets/css/global.min.css" class="main-stylesheet" />
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/jquery-ui/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+</head>
+
+<body class="no-skin">
+
+    @await Html.PartialAsync("_NavbarPartial")
+    <div class="main-container" id="main-container">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('main-container', 'fixed');
+            } catch (e) {
+            }
+        </script>
+
+        @Component.Invoke(nameof(Admin.UI.CP.Shared.Components.Menu))
+        <div class="main-content">
+            <div class="main-content-inner">
+                <!-- #section:basics/content.breadcrumbs -->
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <script type="text/javascript">
+                        try {
+                            ace.settings.check('breadcrumbs', 'fixed');
+                        } catch (e) {
+                        }
+                    </script>
+
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="ace-icon fa fa-home home-icon"></i>
+                            <a href="#">Home</a>
+                        </li>
+                        <li class="active">Dashboard</li>
+                    </ul><!-- /.breadcrumb -->
+                    <!-- #section:basics/content.searchbox -->
+                    <div class="nav-search" id="nav-search">
+
+                        <span class="input-icon">
+                            <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                            <i class="ace-icon fa fa-search nav-search-icon"></i>
+                        </span>
+                    </div><!-- /.nav-search -->
+                    <!-- /section:basics/content.searchbox -->
+                </div>
+
+                <!-- /section:basics/content.breadcrumbs -->
+                <div id="AlertBox" class="clearfix">
+                    @Html.RenderMessages()
+                </div>
+                <div class="page-content">
+                    @RenderBody()
+                </div>
+            </div>
+        </div><!-- /.main-content -->
+
+        <div class="footer">
+            <div class="footer-inner">
+                <!-- #section:basics/footer -->
+                <div class="footer-content">
+                    <span class="bigger-120">
+                        <span class="blue bolder">Ace</span>
+                        Application &copy; 2013-2014
+                    </span>
+
+                    &nbsp; &nbsp;
+                    <span class="action-buttons">
+                        <a href="#">
+                            <i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
+                        </a>
+
+                        <a href="#">
+                            <i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
+                        </a>
+
+                        <a href="#">
+                            <i class="ace-icon fa fa-rss-square orange bigger-150"></i>
+                        </a>
+                    </span>
+                </div>
+
+                <!-- /section:basics/footer -->
+            </div>
+        </div>
+
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+            <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+        </a>
+    </div><!-- /.main-container -->
+    <!-- basic scripts -->
+
+    <script src="~/lib/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/bootbox/bootbox.js"></script>
+    <script src="~/assets/js/bootstrap.datetime.min.js"></script>
+    <script src="~/assets/js/fuelux.min.js"></script>
+
+    <!-- <![endif]-->
+    <!--[if IE]>
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='/assets/js/jquery1x.js'>" + "<" + "/script>");
+        </script>
+    <![endif]-->
+    <script type="text/javascript">
+        if ('ontouchstart' in document.documentElement) document.write("<script src='/assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+
+    <!-- page specific plugin scripts -->
+    <!--[if lte IE 8]>
+        <script src="~/assets/js/excanvas.js"></script>
+    <![endif]-->
+
+    <script src="~/assets/js/jquery.easypiechart.min.js"></script>
+    <script src="~/assets/js/jquery.sparkline.min.js"></script>
+    <script src="~/assets/js/jquery.flot.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="~/assets/js/ace.min.js"></script>
+
+    <!-- inline scripts related to this page -->
+    <!-- the following scripts are used in demo only for onpage help and you don't need them -->
+
+    <script type="text/javascript"> ace.vars['base'] = '..'; </script>
+</body>
+</html>

@@ -1,0 +1,311 @@
+﻿@model Admin.UI.CP.Pickup.Models.PickupRequestModel
+@using ShipOS.Utility.Common.Enumerations
+
+<link href="~/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet" />
+<form asp-controller="Pickup" asp-action="Index" id="PickupForm" antiforgery="false" method="post" class="form-horizontal" role="form">
+    <div class="hr hr-24"></div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="widget-box">
+                <div class="widget-header">
+                    <h4 class="widget-title">Address</h4>
+                </div>
+
+                <div class="widget-body">
+                    <div class="widget-main">
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 control-label " asp-for="AddressCaption"></label>
+                            <input asp-for="AddressCaption" type="text" placeholder="Enter Address Name">
+
+                            <span asp-validation-for="AddressCaption" class="error-text"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3  control-label " asp-for="ContactName"></label>
+                            <input asp-for="ContactName" type="text" placeholder="Enter Contact Name">
+                            <span asp-validation-for="ContactName" class="error-text"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3  control-label " asp-for="CompanyName"></label>
+                            <input asp-for="CompanyName" type="text" placeholder="Enter Company Name">
+
+                            <span asp-validation-for="CompanyName" class="error-text"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3  control-label " asp-for="Email"></label>
+                            <input asp-for="Email" type="text" placeholder="Enter Email ">
+
+                            <span asp-validation-for="Email" class="error-text"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3  control-label " asp-for="Phone"></label>
+                            <input asp-for="Phone" type="text" placeholder="Enter Phone">
+
+                            <span asp-validation-for="Phone" class="error-text"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3  control-label " asp-for="Address1"></label>
+                            <input asp-for="Address1" type="text" placeholder="Enter Address1 Name">
+
+                            <span asp-validation-for="Address1" class="error-text"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3  control-label " asp-for="Address2"></label>
+                            <input asp-for="Address2" type="text" placeholder="Enter Address3 Name">
+
+                            <span asp-validation-for="Address2" class="error-text"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3  control-label " asp-for="Address3"></label>
+                            <input asp-for="Address3" type="text" placeholder="Enter Address3 Name">
+
+                            <span asp-validation-for="Address3" class="error-text"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3  control-label " asp-for="City"></label>
+                            <input asp-for="City" type="text" placeholder="Enter City Name">
+
+                            <span asp-validation-for="City" class="error-text"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3  control-label " asp-for="State"></label>
+                            <select asp-for="State" class="chosen-select" id="form-field-select-3" data-placeholder="Choose a State...">
+                                <option value=""> </option>
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                            </select>
+
+                            <span asp-validation-for="State" class="error-text"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3  control-label " asp-for="PostalCode"></label>
+                            <input asp-for="PostalCode" type="text" placeholder="Enter Postal Code">
+
+                            <span asp-validation-for="PostalCode" class="error-text"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6">
+            <div class="widget-box">
+                <div class="widget-header">
+                    <h4 class="widget-title"> Service Information</h4>
+                </div>
+
+                <div class="widget-body">
+                    <div class="widget-main">
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3  control-label " asp-for="PickupFrom"></label>
+                            <input asp-for="PickupFrom" type="text" placeholder="Enter PickupFrom Name">
+
+                            <span asp-validation-for="PickupFrom" class="error-text"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3  control-label " asp-for="Destination"></label>
+                            <input asp-for="Destination" type="text" placeholder="Enter Pickup Date Name">
+
+                            <span asp-validation-for="Destination" class="error-text"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3  control-label " asp-for="PickupDate"></label>
+                            <input asp-for="PickupDate" class="date-picker" type="text" data-format="mm/dd/yyyy" placeholder="Enter Pickup Date">
+
+                            <span asp-validation-for="PickupDate" class="error-text"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3  control-label " asp-for="ReadyTime"></label>
+                            <div class="input-group bootstrap-timepicker">
+                                <input asp-for="ReadyTime" type="text" value="" placeholder="Enter Ready Time">
+                            </div>
+
+                            <span asp-validation-for="ReadyTime" class="error-text"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3  control-label " asp-for="AvailableUntil"></label>
+                            <div class="input-group bootstrap-timepicker">
+                                <input asp-for="AvailableUntil" type="text" placeholder="Enter Available Until">
+                            </div>
+
+                            <span asp-validation-for="AvailableUntil" class="error-text"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3  control-label " asp-for="Instructions"></label>
+                            <textarea asp-for="Instructions" type="text" placeholder="Enter Instructions"></textarea>
+                        </div>
+
+                        <span asp-validation-for="Instructions" class="error-text"></span>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.span -->
+    </div><!-- /.row -->
+
+    <div class="row">
+
+        <div class="col-xs-12">
+            <div class="widget-box">
+                <div class="widget-header">
+                    <h4 class="widget-title"> Service Information</h4>
+                </div>
+
+                <div class="widget-body">
+                    <div class="widget-main">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="width-20">
+                                        <label>Contents</label>
+                                    </th>
+                                    <th>
+                                        <label>Reference</label>
+                                    </th>
+                                    <th>
+                                        <label>ParcelType</label>
+                                    </th>
+                                    <th>
+                                        <label>width</label>
+                                    </th>
+                                    <th>
+                                        <label>Height</label>
+                                    </th>
+                                    <th>
+                                        <label>Length</label>
+                                    </th>
+                                    <th>
+                                        <label>Weight</label>
+                                    </th>
+                                    <th>
+                                        <label>ItemCount</label>
+                                    </th>
+
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr id="0" class="rowToClone">
+                                    <td>
+                                        <Textarea asp-for="Parcels[0].Contents" type="text" class="width-100 form-control text-center"></Textarea>
+                                        <span asp-validation-for="Parcels[0].Contents" class="error-text col-sm-10 pull-right"></span>
+                                    </td>
+
+                                    <td>
+                                        <input asp-for="Parcels[0].Reference" type="text" class="form-control text-center ">
+                                        <span asp-validation-for="Parcels[0].Reference" class="error-text col-sm-10 pull-right"></span>
+                                    </td>
+
+                                    <td>
+                                        <select asp-for="Parcels[0].PackageType" class="chosen-select" asp-items="Html.GetEnumSelectList<ParcelType>();"> </select>
+                                        <span asp-validation-for="Parcels[0].PackageType" class="error-text col-sm-10 pull-right"></span>
+                                    </td>
+
+                                    <td>
+                                        <input asp-for="Parcels[0].Width" type="text" placeholder="Inches" class="form-control text-center">
+                                        <span asp-validation-for="Parcels[0].Width" class="error-text col-sm-10 pull-right"></span>
+                                    </td>
+
+                                    <td>
+                                        <input asp-for="Parcels[0].Length" type="text" placeholder="Inches" class="form-control text-center">
+                                        <span asp-validation-for="Parcels[0].Length" class="error-text col-sm-10 pull-right"></span>
+                                    </td>
+
+                                    <td>
+                                        <input asp-for="Parcels[0].Weight" type="text" placeholder="LBS" class="form-control text-center">
+                                        <span asp-validation-for="Parcels[0].Weight" class="error-text col-sm-10 pull-right"></span>
+                                    </td>
+
+                                    <td>
+                                        <input asp-for="Parcels[0].Height" type="text" placeholder="Inches" class="form-control text-center">
+                                        <span asp-validation-for="Parcels[0].Height" class="error-text col-sm-10 pull-right"></span>
+                                    </td>
+
+                                    <td>
+                                        <input asp-for="Parcels[0].ItemCount" type="text" class="form-control text-center ">
+                                        <span asp-validation-for="Parcels[0].ItemCount" class="error-text col-sm-10 pull-right"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="pull-right col-xs-4">
+                            <button class="btn btn-danger btn-remove width-10" type="button">
+                                <i class="ace-icon fa fa fa-truck fa"></i>Remove
+                            </button>
+
+                            <button class="btn btn-success btn-add width-10" type="button">
+                                <i class="ace-icon fa fa fa-truck fa"></i>Add More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("SaveReset")
+</form>
