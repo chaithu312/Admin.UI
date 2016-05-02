@@ -1,0 +1,134 @@
+﻿@{
+
+    Layout = "~/Views/shared/_layout.cshtml";
+}
+
+<form name="Routes" data-ng-submit="submitForm()" data-ng-controller="RoutesController" class="form-horizontal" role="form" novalidate>
+
+    <div class="pull-right tableTools-container">
+        <a class="btn-new-mail" href="/ServiceRate/ViewRoutes">
+            <span class="btn btn-purple no-border">
+                <i class="ace-icon fa  bigger-130"></i>
+                <span class="bigger-110">View Routes   </span>
+            </span>
+        </a>
+    </div>
+    <div class="clearfix">
+        <div class="pull-right tableTools-container"></div>
+    </div>
+
+
+    <div class="form-group" ng-class="{ 'has-error':Routes.LabelCode.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+            Route Label Code
+        </label>
+
+        <div class="col-sm-9">
+            <input type="text" name="LabelCode" id="LabelCode" ng-model="model.LabelCode" class="col-xs-10 col-sm-5" ng-minlength="3" required placeholder="Enter Label Code" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="Routes.LabelCode.$error.required && submitted">
+                Label Code is required.
+            </span>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="Routes.LabelCode.$error.minlength && submitted">
+                Label Code should be min 3 character.
+            </span>
+        </div>
+    </div>
+
+
+
+    <div class="form-group" ng-class="{ 'has-error':Routes.Descriptions.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+            Route Descriptions
+        </label>
+
+        <div class="col-sm-9">
+            <input type="text" name="Descriptions" id="Descriptions" ng-model="model.Descriptions" class="col-xs-10 col-sm-5" ng-minlength="3" required placeholder="Enter Descriptions" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="Routes.Descriptions.$error.required && submitted">
+                Descriptions is required.
+            </span>
+            
+        </div>
+    </div>
+
+
+    <div class="form-group" ng-class="{ 'has-error':Routes.Agents.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Pickup Agent</label>
+
+        <div class="col-sm-9">
+
+            <select id="Agents" class="col-xs-10 col-sm-5" data-ng-model="model.AgentName" name="Agents"
+                    data-ng-options="agent.Id as agent.Name for agent in Agents track by agent.Id"  required>
+                <option value='' disabled selected>Please Choose</option>
+            </select>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="Routes.Agents.$error.required && submitted">
+               Agent Name is required.
+            </span>
+        </div>
+        
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':Routes.DAgents.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Domestic Agent</label>
+
+        <div class="col-sm-9">
+
+            <select id="DAgents" class="col-xs-10 col-sm-5" data-ng-model="model.DAgentName" name="DAgents"
+                    data-ng-options="dagent.Id as dagent.Name for dagent in DAgents track by dagent.Id" required>
+                <option value='' disabled selected>Please Choose</option>
+            </select>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="Routes.DAgents.$error.required && submitted">
+               Domestic Agent Name is required.
+            </span>
+        </div>
+
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':Routes.IAgents.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">International Agent</label>
+
+        <div class="col-sm-9">
+
+            <select id="IAgents" class="col-xs-10 col-sm-5" data-ng-model="model.IAgentName" name="IAgents"
+                    data-ng-options="iagent.Id as iagent.Name for iagent in IAgents track by iagent.Id" required>
+                <option value='' disabled selected>Please Choose</option>
+            </select>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="Routes.IAgents.$error.required && submitted">
+                International Agent Name is required.
+            </span>
+        </div>
+
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':Routes.Manifest.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Manifest  Creation</label>
+
+        <div class="col-sm-9">
+
+            <input type="checkbox" name="checkbox" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="Routes.Manifest.$error.required && submitted">
+                Manifest Creation is required.
+            </span>
+        </div>
+
+    </div>
+
+
+
+    <hr />
+
+    <div class="clearfix form-actions">
+        <div class="col-md-offset-3 col-md-9">
+            <button type="submit" class="btn btn-info" ng-click="submitted=true">
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                Save
+            </button>
+
+            &nbsp; &nbsp; &nbsp;
+            <button type="reset" class="btn">
+                <i class="ace-icon fa fa-undo bigger-110"></i>
+                Reset
+            </button>
+        </div>
+    </div>
+    <div id="errorMessages" class="error">{{message}}</div>
+</form>

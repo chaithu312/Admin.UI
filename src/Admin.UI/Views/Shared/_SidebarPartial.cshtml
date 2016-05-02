@@ -1,0 +1,67 @@
+﻿<div id="sidebar" class="sidebar responsive" auto-active="">
+    <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+        <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+            <a class="btn btn-success" asp-controller="Home" asp-action="Index2">
+                <i class="ace-icon fa fa-signal"></i>
+            </a>
+
+            <button class="btn btn-info">
+                <i class="ace-icon fa fa-pencil"></i>
+            </button>
+
+            <button class="btn btn-warning">
+                <i class="ace-icon fa fa-users"></i>
+            </button>
+
+            <button class="btn btn-danger">
+                <i class="ace-icon fa fa-cogs"></i>
+            </button>
+        </div>
+
+        <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+            <span class="btn btn-success"></span>
+
+            <span class="btn btn-info"></span>
+
+            <span class="btn btn-warning"></span>
+
+            <span class="btn btn-danger"></span>
+        </div>
+    </div>
+
+    <ul class="nav nav-list" ng-controller="navsController" ng-init="init()">
+
+        <li data-ng-if="nav.ParentId == 0" ng-repeat="nav in navs" ng-class="{'open':isOpen('{{nav.NavURL}}')}">
+            <a href="{{nav.NavURL}}" class="dropdown-toggle">
+                <i class="menu-icon fa fa-list"></i>
+                <span class="menu-text"> {{nav.Title}} </span>
+
+                <b class="arrow fa fa-angle-down" ng-if=""></b>
+            </a>
+
+            <ul class="submenu">
+                <li data-ng-repeat="child in navs" data-ng-if="child.ParentId == nav.Id" ng-class="{'active':isActive('{{child.NavURL}}')}">
+                    <a href="{{child.NavURL}}" >
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        {{child.Title}}
+                    </a>
+
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        <li data-ng-repeat="subchild in navs" data-ng-if="subchild.ParentId == child.Id" ng-class="{'active':isActive('{{subchild.NavURL}}')}">
+                            <a href="{{subchild.NavURL}}">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                {{subchild.Title}}
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <sidebar-minimize></sidebar-minimize>
+</div>

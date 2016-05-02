@@ -1,0 +1,41 @@
+﻿@{
+
+    Layout = "~/Views/shared/_layout.cshtml";
+}
+
+<div class="col-sm-7" ng-controller="UserController">
+    <div class="widget-box">
+        <div class="widget-header">
+            <h4 class="widget-title">Find User</h4>
+        </div>
+        <div class="widget-body">
+            <div class="widget-main">
+                <form novalidate name="frmLogin">
+                    <div style="color:red">{{message}}</div>
+
+                    <div>
+                        <label for="form-field-mask-1" class="col-sm-3">
+                            User Name
+                        </label>
+
+                        <div class="input-group col-sm-8">
+                            <input id="userName" class="form-control" name="userName" type="email" data-ng-model="person.userName" required ng-unique validate-email />
+                            <span class="error" data-ng-show="mainForm.userName.$error.required"></span>
+                            <span class="error" data-ng-show="mainForm.userName.$error.unique">Username already exists.</span>
+                            <span class="error" data-ng-show="mainForm.userName.$error.invalid">Invalid! it should be a valid email</span>
+                        </div>
+                    </div>
+
+                    <div class="clearfix form-actions" style="margin-bottom:0px;">
+                        <div class="text-right">
+                            <button type="button" class="btn btn-info" ng-click="LoginData(User)">
+                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                Find User
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

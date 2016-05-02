@@ -1,0 +1,109 @@
+﻿@{
+
+    Layout = "~/Views/shared/_layout.cshtml";
+}
+
+<form name="SupplyMaterial" data-ng-submit="sendForm()" data-ng-controller="SupplyMaterialController" class="form-horizontal" novalidate>
+
+    <div class="pull-right tableTools-container">
+        <a class="btn-new-mail" href="/Shipment/ViewSupplyMaterial">
+            <span class="btn btn-purple no-border">
+                <i class="ace-icon fa  bigger-130"></i>
+                <span class="bigger-110">View Supply Material</span>
+            </span>
+        </a>
+    </div>
+
+    <div class="clearfix">
+        <div class="pull-right tableTools-container"></div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':SupplyMaterial.name.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Name</label>
+
+        <div class="col-sm-9">
+
+            <input type="text" class="col-xs-10 col-sm-5" id="name" name="name" data-ng-model="Model.Name" required placeholder="Enter Name">
+
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="SupplyMaterial.name.$error.required && submitted">
+                Name is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':SupplyMaterial.imageurl.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+            Image URL
+        </label>
+
+        <div class="col-sm-9">
+            
+            <input type="file"  class="col-xs-10 col-sm-5" placeholder="Choose file" id="imageurl" name="imageurl" data-ng-model="Model.imageurl" >
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="SupplyMaterial.imageurl.$error.required && submitted">
+                Image URL is required.
+            </span>
+         
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="SupplyMaterial.imageurl.$invalid && submitted">
+            </span>
+        </div>
+    </div>
+
+
+    <div class="form-group" ng-class="{ 'has-error':SupplyMaterial.Sequence.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+            Sequence
+        </label>
+        <!-- #section:plugins/input.masked-input -->
+        <div class="col-sm-9">
+            <select id="Sequence" class="col-xs-10 col-sm-5" data-ng-model="Model.Sequence" name="Sequence" required>
+                   
+                <option value='' disabled selected>Please Choose</option>
+                <option value="1">0..10..20..30..40..50..60..70..80..90..100..150..200..250</option>
+                <option value="2">0..25..50..75..100..150..200..250..300..500</option>
+                <option value="3">0..50..100..150..200..250..300..350..400..450..500..600..700...800..900..1000</option>
+                <option value="4">0..100..200..300..400..500..600..700..800..900..1000</option>
+                <option value="5">0..200..400..600..800..1000</option>
+            </select>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="SupplyMaterial.Sequence.$error.required  && submitted">
+                Sequence is required.
+            </span>
+        </div>
+    </div>
+
+    
+
+    <div class="form-group" ng-class="{ 'has-error':SupplyMaterial.Unit.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+            Unit
+        </label>
+        <!-- #section:plugins/input.masked-input -->
+        <div class="col-sm-9">
+            <input type="text" class="col-xs-10 col-sm-5" placeholder="Enter Unit" id="Unit" name="Unit" data-ng-model="Model.Unit" required>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="SupplyMaterial.Unit.$error.required && submitted">
+                Unit  is required.
+            </span>
+        </div>
+    </div>
+
+   
+
+
+
+
+    <div class="clearfix form-actions">
+        <div class="col-md-offset-3 col-md-9">
+            <button ng-click="submitted=true" type="submit" class="btn btn-info" >
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                Save
+            </button>
+
+            &nbsp; &nbsp; &nbsp;
+            <button type="reset" class="btn">
+                <i class="ace-icon fa fa-undo bigger-110"></i>
+                Reset
+            </button>
+        </div>
+    </div>
+    <div id="errorMessages" ng-hide="" class="error" style="visibility:hidden">{{message}}</div>
+    <input type="hidden" ng-model="Model.Id" />
+</form>

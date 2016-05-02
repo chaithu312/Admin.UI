@@ -1,0 +1,238 @@
+﻿@{
+
+    Layout = "~/Views/shared/_layout.cshtml";
+}
+
+<form name="PostCodeForm" data-ng-submit="submitPostCodeForm()" data-ng-controller="PostController" class="form-horizontal" role="form" novalidate>
+    <div class="pull-right tableTools-container">
+        <a class="btn-new-mail" href="/ServiceRate/ViewPostCode">
+            <span class="btn btn-purple no-border">
+                <i class="ace-icon fa  bigger-130"></i>
+                <span class="bigger-110">View Post Codes</span>
+            </span>
+        </a>
+    </div>
+    <div class="clearfix">
+        <div class="pull-right tableTools-container"></div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':PostCodeForm.Country.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Country</label>
+
+        <div class="col-sm-9">
+            <select id="Country" class="col-xs-10 col-sm-5" data-ng-model="PostCode.Country" name="Country"
+                    data-ng-options="country.Id as country.Name for country in Country track by country.Id" data-ng-change="GetValue()" required>
+                <option value='' selected>Please Choose</option>
+            </select>
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PostCodeForm.Country.$error.required && submitted">
+                Country is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">State</label>
+        <div class="col-sm-9">
+            <select id="ddlState" class="col-xs-10 col-sm-5" data-ng-model="PostCode.State" name="ddlState"
+                    data-ng-options="state.Name as state.Name for state in States track by state.Id">
+                <option value='' selected>Please Choose</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':PostCodeForm.PostCode.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Post Code</label>
+        <div class="col-sm-9">
+            <input type="text" name="PostCode" id="PostCode" ng-model="PostCode.PostCode" class="col-xs-10 col-sm-5" placeholder="Post Code" required />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PostCodeForm.PostCode.$error.required && submitted">
+                Post Code is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Class</label>
+        <div class="col-sm-9">
+            <select name="PostClass" class="col-xs-10 col-sm-5" id="PostClass" data-ng-model="PostCode.Class" ng-init="PostCode.Class='S'">
+                <option selected="selected" value="S">STANDARD</option>
+                <option value="U">UNIQUE</option>
+                <option value="P">PO BOX ONLY</option>
+                <option value="M">MILITARY</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error':PostCodeForm.CityName.$invalid && submitted }">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">City Name</label>
+
+        <div class="col-sm-9">
+            <input type="text" name="CityName" id="CityName" ng-model="PostCode.CityName" class="col-xs-10 col-sm-5" required placeholder="Enter City Name" />
+            <span class="help-inline col-xs-12 col-sm-7" data-ng-show="PostCodeForm.CityName.$error.required && submitted">
+                City Name  is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">City Type</label>
+        <div class="col-sm-9">
+            <select name="CityType" class="col-xs-10 col-sm-5" id="CityType" data-ng-model="PostCode.CityType" ng-init="PostCode.CityType='D'">
+                <option selected="selected" value="D">DEFAULT</option>
+                <option value="A">ACCEPTED</option>
+                <option value="N">NOT ACCEPTED</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Country Name</label>
+        <div class="col-sm-9">
+            <input type="text" name="CountryName" id="CountryName" ng-model="PostCode.CountryName" class="col-xs-10 col-sm-5" placeholder="Country Name" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">County FIPS</label>
+        <div class="col-sm-9">
+            <input type="text" name="CountryFIPS" id="CountryFIPS" ng-model="PostCode.CountryFIPS" class="col-xs-10 col-sm-5" placeholder="Country FIPS" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">AreaCode</label>
+        <div class="col-sm-9">
+            <input type="text" name="AreaCode" id="AreaCode" ng-model="PostCode.AreaCode" class="col-xs-10 col-sm-5" placeholder="Area Code" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Time Zone</label>
+        <div class="col-sm-9">
+            <select name="TimeZone" class="col-xs-10 col-sm-5" id="TimeZone" data-ng-model="PostCode.TimeZone" ng-init="PostCode.TimeZone='0'">
+                <option selected="selected" value="0">None</option>
+                <option value="-11">Samoa (UTC-11)</option>
+                <option value="-10">Hawaii (UTC-10)</option>
+                <option value="-9">Alaska (UTC-9)</option>
+                <option value="-8">Pacific (UTC-8)</option>
+                <option value="-7">Mountain (UTC-7)</option>
+                <option value="-6">Central (UTC-6)</option>
+                <option value="-5">Eastern (UTC-5)</option>
+                <option value="-4">Atlantic (UTC-4)</option>
+                <option value="9">UTC+9</option>
+                <option value="10">UTC+10</option>
+                <option value="11">UTC+11</option>
+                <option value="12">UTC+12</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Daylight Savings Time</label>
+        <div class="col-sm-9">
+            <input type="checkbox" id="DaylightSavings" data-ng-model="PostCode.DaylightSavingsTime" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Latitude</label>
+        <div class="col-sm-9">
+            <input type="text" name="Latitude" id="Latitude" ng-model="PostCode.Latitude" class="col-xs-10 col-sm-5" placeholder="Latitude" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Longitude</label>
+        <div class="col-sm-9">
+            <input type="text" name="Longitude" id="Longitude" ng-model="PostCode.Longitude" class="col-xs-10 col-sm-5" placeholder="Longitude" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Additional Days</label>
+        <div class="col-sm-9">
+            <input type="text" name="AdditionalDays" id="AdditionalDays" ng-model="PostCode.AdditionalDays" class="col-xs-10 col-sm-5" placeholder="Additional Days" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+
+        </label>
+        <div class="col-sm-6">
+
+            <div class="col-sm-4">
+                <label>Earliest Delivery Time</label>
+                <div>
+                    <input type="text" class="col-sm-3 shippingTimepicker" data-ng-model="PostCode.EarliestDeliveryTime" data-format="hh:mm" id="timepicker1" name="timepicker">
+                    <span class="input-group-addon col-sm-3">
+                        <i class="fa fa-clock-o bigger-110"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <label>Last Pickup Order</label>
+                <div>
+                    <input type="text" class="col-sm-3 shippingTimepicker" data-ng-model="PostCode.LastPickupOrder" data-format="hh:mm" id="timepicker2" name="timepicker2">
+                    <span class="input-group-addon col-sm-3">
+                        <i class="fa fa-clock-o bigger-110"></i>
+                    </span>
+
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <label>Last Pickup</label>
+                <div>
+                    <input type="text" class="col-sm-3 shippingTimepicker" data-ng-model="PostCode.LastPickup" data-format="hh:mm" id="timepicker3" name="timepicker3">
+                    <span class="input-group-addon col-sm-3">
+                        <i class="fa fa-clock-o bigger-110"></i>
+                    </span>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="space-4"></div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+
+        </label>
+        <div class="col-sm-6">
+
+            <div class="col-sm-4">
+                <label>Saturday Delivery</label>
+                <div>
+                    <input type="checkbox" id="SaturdayDevlivery" data-ng-model="PostCode.SaturdayDelivery" />
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <label>Pickup</label>
+                <div>
+                    <input type="checkbox" id="Pickup" data-ng-model="PostCode.Pickup" />
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <label>Delivery</label>
+                <div>
+                    <input type="checkbox" id="Delivery" data-ng-model="PostCode.Delivery" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="clearfix form-actions">
+        <div class="col-md-offset-3 col-md-9">
+            <button type="submit" class="btn btn-info" ng-click="submitted=true">
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                Save
+            </button>
+
+            &nbsp; &nbsp; &nbsp;
+            <button type="reset" class="btn">
+                <i class="ace-icon fa fa-undo bigger-110"></i>
+                Reset
+            </button>
+        </div>
+    </div>
+    <div id="errorMessages" class="error">{{message}}</div>
+</form>
