@@ -1,15 +1,16 @@
-﻿$(document).ready(function () {
-    $(function () {
+﻿$(function () {
+        var rowcount = $(".rowToClone").length - 1;
+
         $('#PickupDate').datepicker({
             daysOfWeekDisabled: [0, 6],
             autoclose: true,
             todayHighlight: true,
-            startDate: '+0d',
-            endDate: '+7d',
             todayBtn: 'true'
         });
 
-        $("#PickupDate").datepicker("setDate", '2016-07-25');
+        
+     
+    
 
         $('#ReadyTime').timepicker({
             minuteStep: 10,
@@ -25,24 +26,56 @@
 
         $(document).on('click', '.btn-add', function (e) {
             e.preventDefault();
+            alert('#' + rowcount);
 
-            var controlForm = $(this).closest('table'),
-                currentRow = $(this).parents('tr:first'),
+            var controlForm = $('.table'),
+                currentRow = $('#0'),
                 newRow = $(currentRow.clone()).appendTo(controlForm);
+            rowcount++;
 
-            var test = $(currentRow.clone());
-            alert(test.html());
+            //new name to
+            newRow.find('input').each(function () {
+                var newName = '';
+                var newId = $(this).attr('id').replace("0", rowcount);
+                if ($(this).attr('name') !== undefined)
+                    newName = $(this).attr('name').replace("0", rowcount);
+                $(this).attr('id', newId);
+                $(this).attr('name', newName);
+            });
+
+            newRow.find('textarea').each(function () {
+                var newId = $(this).attr('id').replace("0", rowcount);
+                if ($(this).attr('name') !== undefined)
+                    var newName = $(this).attr('name').replace("0", rowcount);
+                $(this).attr('id', newId);
+                $(this).attr('name', newName);
+            });
+
+            newRow.find('select').each(function () {
+                var newId = $(this).attr('id').replace("0", rowcount);
+                if ($(this).attr('name') !== undefined)
+                    var newName = $(this).attr('name').replace("0", rowcount);
+                $(this).attr('id', newId);
+                $(this).attr('name', newName);
+            });
+
+            newRow.find('span').each(function () {
+                if ($(this).attr('data-valmsg-for') != undefined) {
+                    var newValMessageFor = $(this).attr('data-valmsg-for').replace("0", rowcount);
+                    $(this).attr('data-valmsg-for', newValMessageFor);
+                }
+            });
 
             newRow.find('input').val('');
-            controlForm.find('tr:not(:last) .btn-add')
-                .removeClass('btn-add').addClass('btn-remove')
-                .removeClass('btn-success').addClass('btn-danger')
-                .html('<i class="ace-icon fa fa fa-truck fa"></i>Remove');
         }).on('click', '.btn-remove', function (e) {
-            $(this).parents('tr:first').remove();
-
-            e.preventDefault();
+            var rowcount = $(".rowToClone").length - 1;
+            if (rowcount !== 0) {
+                $('#0').remove();
+                rowcount--;
+                e.preventDefault();
+                return false;
+            }
             return false;
         });
     });
-});
+

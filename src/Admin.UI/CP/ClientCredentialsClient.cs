@@ -3,22 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 
 namespace Admin.UI.CP
 {
-    public class ClientCredentialsClient : HttpClient
+    public class OAuthClient : HttpClient
     {
-        public ClientCredentialsClient(List<Configuration.ApiSetting> settings, string name)
+        public OAuthClient(ClaimsPrincipal user, List<Configuration.ApiSetting> settings, string name)
             : base()
         {
             var setting = settings.FirstOrDefault(s => s.Name == name);
-            if (settings == null)
-                return;
+            var token = string.Empty;
 
-            BaseAddress = new Uri(setting.Uri);
+            if (setting != null)
+            {
+                switch (setting.FlowType)
+                {
+                    case Admin.UI.Configuration.FlowTypes.ClientCredentials:
+                        token = setting.Token;
+                        break;
+
+                    case Admin.UI.Configuration.FlowTypes.ResourceOwner:
+                        token = user.Claims.First(c => c.Type == IdentityModel.JwtClaimTypes.ReferenceTokenId).Value;
+                        break;
+
+                    case Admin.UI.Configuration.FlowTypes.AuthorizationCode:
+                    case Admin.UI.Configuration.FlowTypes.Implicit:
+                        throw new NotImplementedException();
+                }
+
+                BaseAddress = new Uri(setting.Uri);
+            }
             DefaultRequestHeaders.Accept.Clear();
             DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", setting.Token);
+            DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
     }
 }

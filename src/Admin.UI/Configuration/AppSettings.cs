@@ -27,6 +27,16 @@ namespace Admin.UI.Configuration
 
         public string Uri { get; set; }
 
+        public FlowTypes FlowType { get; set; }
+
         public string Token { get; set; }
+    }
+
+    public enum FlowTypes
+    {
+        ClientCredentials,
+        ResourceOwner,
+        Implicit,
+        AuthorizationCode
     }
 }

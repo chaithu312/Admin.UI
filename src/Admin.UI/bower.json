@@ -9,6 +9,8 @@
     "jquery-ui": "1.11.4",
     "bootbox": "4.4.0",
     "Font-Awesome": "4.6.1",
-    "datatables-bootstrap": "1.0.0"
+    "DataTables": "1.10.11",
+    "datatables-tabletools": "2.2.4",
+    "datatables-colvis": "1.1.2"
   }
 }

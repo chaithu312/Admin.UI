@@ -28,8 +28,14 @@ namespace Admin.UI.CP
             public const string Settings_Locations = "/settings/location";
             public const string Settings_countrysets = "/settings/countrysets";
 
-            public const string Shipments = "/shipments";
-            public const string Shipments_Pickup = "/shipping/pickup";
+            public const string PickupList = "/Pickup/All";
+            public const string PickupData = "/Pickup/GetData";
+            public const string Pickup = "/Pickup/{id}";
+
+            public const string ShipmentList = "/Shipment/All";
+            public const string ShipmentData = "/Shipment/GetData";
+            public const string Shipment = "/Shipment/{id}";
+
             public const string Shipments_AWB = "/shipment/All";
             public const string Shipments_New = "/shipment/";
 
