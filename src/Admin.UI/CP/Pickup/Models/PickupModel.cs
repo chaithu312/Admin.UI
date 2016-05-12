@@ -85,8 +85,22 @@ namespace Admin.UI.CP.Pickup.Models
         public string Destination { get; set; }
         public string Instructions { get; set; }
         public string Notifications { get; set; }
+
         public string ConfirmationNumber { get; set; }
         public string Status { get; set; }
+
+        public bool IsUpdate
+        {
+            get { return (PickupId > 0); }
+        }
+
+        public bool IsNonDHL
+        {
+            get
+            {
+                return (Agent != 1);
+            }
+        }
 
         public List<Parcel> Parcels { get; set; }
     }
@@ -101,23 +115,23 @@ namespace Admin.UI.CP.Pickup.Models
         public ParcelType? PackageType { get; set; }
 
         [Required(ErrorMessage = "Required")]
-        [Range(0.5, 9999, ErrorMessage = "< 0.5 inches")]
+        [Range(0.5, 9999, ErrorMessage = "Should be >= 1")]
         public decimal Height { get; set; }
 
         [Required(ErrorMessage = "Required")]
-        [Range(0.5, 9999, ErrorMessage = "Weight must be greater than 0.00")]
+        [Range(0.5, 9999, ErrorMessage = "Should be >= 1")]
         public decimal Weight { get; set; }
 
         [Required(ErrorMessage = "Required")]
-        [Range(0.5, 9999, ErrorMessage = "< 0.5 inches")]
+        [Range(0.5, 9999, ErrorMessage = "Should be >= 1")]
         public decimal Width { get; set; }
 
         [Required(ErrorMessage = "Required")]
-        [Range(0.5, 9999, ErrorMessage = "< 0.5 inches")]
+        [Range(0.5, 9999, ErrorMessage = "Should be >= 1")]
         public decimal Length { get; set; }
 
         [Required(ErrorMessage = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "At least one")]
+        [Range(1, int.MaxValue, ErrorMessage = "Should be >= 1")]
         public short ItemCount { get; set; }
 
         public bool IsLarge { get; set; }

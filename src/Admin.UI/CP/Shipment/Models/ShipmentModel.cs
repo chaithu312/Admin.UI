@@ -1,72 +1,66 @@
 ﻿using Admin.UI.CP.Pickup.Models;
-
+using ShipOS.Utility.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Admin.UI.CP.Shipment.Models
 {
-    public class ShipmentModel
+    public class ShipmentModel : IValidatableObject
     {
+        public long ShipmentId { get; set; }
+
         public int Agent { get; set; }
         public long AccountId { get; set; }
         public long UserId { get; set; }
 
-        [Required]
-        public DateTime ShipTimestamp { get; set; }
+        [Required(ErrorMessage = "Shipment Date is Required")]
+        [Display(Name = "Shipment Date")]
+        public DateTime ShipmentDate { get; set; }
 
         public DateTime DeliveryDate { get; set; }
 
-        [Required]
         public Billing Billing { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Recipient is Required")]
         public Address Recipient { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Shipper is Required")]
         public Address Shipper { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Parcels are Required")]
         public List<Parcel> Parcels { get; set; }
-
-        [Required]
-        public string PartnerTransactionId { get; set; }
 
         public CollectionOnDelivery CollectionOnDelivery { get; set; }
 
-        public InsuranceModel InsuranceModel { get; set; }
+        public List<InsuranceModel> Insurance { get; set; }
 
-        public string ConfirmationNumber { get; set; }
+        public string TrackingNumber { get; set; }
 
         public bool IsInternational => Shipper.CountryCode != Recipient.CountryCode;
 
         // Contents in Database
 
-        public List<Content> CommodityDetails { get; set; }
-
-        public decimal DeclaredValue { get; set; }
+        public List<Content> Contents { get; set; }
 
         public bool IsDocument { get; set; }
 
-        public string LabelSize { get; set; }
-
-        public string LabelType { get; set; }
-
         public string Comments { get; set; }
-
-        public string ShipmentChargeType { get; set; }
-
-        public long ShipmentId { get; set; }
 
         public bool Status { get; set; }
 
+        public string ShipmentChargeType { get; set; }
+
+        public byte Unit { get; set; }
+
         public bool HoldOff { get; set; }
-    }
 
-    public class LabelImage
-    {
-        public string OutputFormat { get; set; }
-
-        public byte[] OutputByteArray { get; set; }
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (IsInternational && this.Contents.IsNullOrEmpty())
+            {
+                yield return new ValidationResult("Commodity Details are required for international shipping", new List<string>() { "Commodity Details" });
+            }
+        }
     }
 }

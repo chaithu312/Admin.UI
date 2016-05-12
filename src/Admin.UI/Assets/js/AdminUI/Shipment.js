@@ -1,8 +1,8 @@
 ﻿$(document).ready(function () {
-    pickup.init();
+    Shipment.init();
 });
 
-var pickup = function () {
+var Shipment = function () {
     var rowcount;
     return {
         init: function () {
@@ -11,33 +11,9 @@ var pickup = function () {
             self.bindevents();
         },
         bindevents: function () {
-            $('#PickupDate').datepicker({
-                format: 'mm/dd/yyyy',
-                autoclose: false,
-                todayHighlight: false,
-                todayBtn: 'false',
-                pickTime: false
-
-            });
-
-            $('#ReadyTime').timepicker({
-                template: 'dropdown',
-                minuteStep: 10,
-                showSeconds: false,
-                showMeridian: false,
-                defaultTime: '11:42 PM'
-            });
-
-            $('#AvailableUntil').timepicker({
-                template: 'dropdown',
-                minuteStep: 10,
-                showSeconds: false,
-                showMeridian: false
-            });
-
             $(document).on('click', '.btn-add-parcel', function (e) {
                 e.preventDefault();
-                var controlForm = $('.table'),
+                var controlForm = this.find("table:first"),
                     currentRow = $('#0'),
                     newRow = $(currentRow.clone()).appendTo(controlForm);
                 rowcount++;
@@ -83,7 +59,6 @@ var pickup = function () {
                     $(this).attr('data-valmsg-for', newValMessageFor);
                 }
             });
-
         }
     };
 }();

@@ -1669,7 +1669,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
     validationApp.controller('ViewAddressController', function ($scope,$window, $http) {
 
         $scope.myName = function (name) {
-            alert('Hello ' + name);
+            
         }
 
         console.log('deleting ');
@@ -1811,7 +1811,7 @@ $('[data-rel=popover]').popover({ container: 'body' });
         }
 
         $("#btndelete").on("click", function () {
-            alert("The paragraph was clicked.");
+            
         });
         $("#veil").show();
         $("#feedLoading").show();

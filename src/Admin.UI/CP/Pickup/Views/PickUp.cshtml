@@ -15,69 +15,69 @@
 
                         <div class="form-group">
                             <label class="col-xs-12 col-sm-3 control-label " asp-for="AddressCaption"></label>
-                            <input asp-for="AddressCaption" type="text" placeholder="Enter Address Name">
+                            <input asp-for="AddressCaption" type="text" class="input-large" placeholder="Enter Address Name">
 
                             <span asp-validation-for="AddressCaption" class="error-text"></span>
                         </div>
 
                         <div class="form-group">
                             <label class="col-xs-12 col-sm-3  control-label " asp-for="ContactName"></label>
-                            <input asp-for="ContactName" type="text" placeholder="Enter Contact Name">
+                            <input asp-for="ContactName" type="text" class="input-large" placeholder="Enter Contact Name">
                             <span asp-validation-for="ContactName" class="error-text"></span>
                         </div>
 
                         <div class="form-group">
                             <label class="col-xs-12 col-sm-3  control-label " asp-for="CompanyName"></label>
-                            <input asp-for="CompanyName" type="text" placeholder="Enter Company Name">
+                            <input asp-for="CompanyName" type="text" class="input-large" placeholder="Enter Company Name">
 
                             <span asp-validation-for="CompanyName" class="error-text"></span>
                         </div>
 
                         <div class="form-group">
                             <label class="col-xs-12 col-sm-3  control-label " asp-for="Email"></label>
-                            <input asp-for="Email" type="text" placeholder="Enter Email ">
+                            <input asp-for="Email" type="text" class="input-large" placeholder="Enter Email ">
 
                             <span asp-validation-for="Email" class="error-text"></span>
                         </div>
 
                         <div class="form-group">
                             <label class="col-xs-12 col-sm-3  control-label " asp-for="Phone"></label>
-                            <input asp-for="Phone" type="text" placeholder="Enter Phone">
+                            <input asp-for="Phone" type="text" class="input-large" placeholder="Enter Phone">
 
                             <span asp-validation-for="Phone" class="error-text"></span>
                         </div>
 
                         <div class="form-group">
                             <label class="col-xs-12 col-sm-3  control-label " asp-for="Address1"></label>
-                            <input asp-for="Address1" type="text" placeholder="Enter Address1 Name">
+                            <input asp-for="Address1" type="text" class="input-large" placeholder="Enter Address1 Name">
 
                             <span asp-validation-for="Address1" class="error-text"></span>
                         </div>
 
                         <div class="form-group">
                             <label class="col-xs-12 col-sm-3  control-label " asp-for="Address2"></label>
-                            <input asp-for="Address2" type="text" placeholder="Enter Address3 Name">
+                            <input asp-for="Address2" type="text" class="input-large" placeholder="Enter Address3 Name">
 
                             <span asp-validation-for="Address2" class="error-text"></span>
                         </div>
 
                         <div class="form-group">
                             <label class="col-xs-12 col-sm-3  control-label " asp-for="Address3"></label>
-                            <input asp-for="Address3" type="text" placeholder="Enter Address3 Name">
+                            <input asp-for="Address3" type="text" class="input-large" placeholder="Enter Address3 Name">
 
                             <span asp-validation-for="Address3" class="error-text"></span>
                         </div>
 
                         <div class="form-group">
                             <label class="col-xs-12 col-sm-3  control-label " asp-for="City"></label>
-                            <input asp-for="City" type="text" placeholder="Enter City Name">
+                            <input asp-for="City" type="text" class="input-large" placeholder="Enter City Name">
 
                             <span asp-validation-for="City" class="error-text"></span>
                         </div>
 
                         <div class="form-group">
                             <label class="col-xs-12 col-sm-3  control-label " asp-for="Division"></label>
-                            <select asp-for="Division" class="chosen-select" id="form-field-select-3" data-placeholder="Choose a State...">
+                            <select asp-for="Division" class="chosen-select input-large" id="form-field-select-3" data-placeholder="Choose a State...">
                                 <option value=""> </option>
                                 <option value="AL">Alabama</option>
                                 <option value="AK">Alaska</option>
@@ -136,7 +136,7 @@
 
                         <div class="form-group">
                             <label class="col-xs-12 col-sm-3  control-label " asp-for="PostalCode"></label>
-                            <input asp-for="PostalCode" type="text" placeholder="Enter Postal Code">
+                            <input asp-for="PostalCode" class="input-large" type="text" placeholder="Enter Postal Code">
 
                             <span asp-validation-for="PostalCode" class="error-text"></span>
                         </div>
@@ -151,26 +151,50 @@
                     <h4 class="widget-title"> Service Information</h4>
                 </div>
 
+             
+
                 <div class="widget-body">
                     <div class="widget-main">
+                        <input type="hidden" asp-for="PickupId" />
+                        
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3  control-label " asp-for="Agent"></label>
+                            <select asp-for="Agent" type="text" readonly='@Model.IsUpdate'   class="chosen-select input-large" data-placeholder="Choose a Carrier...">
+                                <option value="1">DHL</option>
+                                <option value="2">Endicia</option>
+                                <option value="3">UPS</option>
+                            </select>
+
+                            <span asp-validation-for="Agent" class="error-text"></span>
+                        </div>
 
                         <div class="form-group">
                             <label class="col-xs-12 col-sm-3  control-label " asp-for="PickupFrom"></label>
-                            <input asp-for="PickupFrom" type="text" placeholder="Enter PickupFrom Name">
+                            <select asp-for="PickupFrom" class="chosen-select input-large" type="text" placeholder="Enter Pickup From">
+                                <option value="Front Door">Front Door</option>
+                                <option value="Back Door">Back Door</option>
+                                <option value="Side Door">Side Door</option>
+                                <option value="Knock on">Knock on</option>
+                                <option value="Door/Ring Bell Mail Room">Door/Ring Bell Mail Room</option>
+                                <option value="Office">Office</option>
+                                <option value="Reception">Reception</option>
+                                <option value="In/At Mailbox">In/At Mailbox</option>
+                            </select>
 
                             <span asp-validation-for="PickupFrom" class="error-text"></span>
                         </div>
 
                         <div class="form-group">
                             <label class="col-xs-12 col-sm-3  control-label " asp-for="Destination"></label>
-                            <input asp-for="Destination" type="text" placeholder="Enter Pickup Date Name">
+                            <input asp-for="Destination" class="input-large" type="text" placeholder="Enter Pickup Date Name">
 
                             <span asp-validation-for="Destination" class="error-text"></span>
                         </div>
 
                         <div class="form-group">
                             <label class="col-xs-12 col-sm-3  control-label " asp-for="PickupDate"></label>
-                            <input asp-for="PickupDate" class="date-picker" value="2012-06-15 14:45" type="text" data-format="mm/dd/yyyy" placeholder="Enter Pickup Date">
+                            <input asp-for="PickupDate" class="date-picker input-large" type="text" data-date-format="mm/dd/yyyy" placeholder="Enter Pickup Date">
 
                             <span asp-validation-for="PickupDate" class="error-text"></span>
                         </div>
@@ -178,7 +202,7 @@
                         <div class="form-group">
                             <label class="col-xs-12 col-sm-3  control-label " asp-for="ReadyTime"></label>
                             <div class="input-group bootstrap-timepicker">
-                                <input asp-for="ReadyTime" type="text" data-format="hh:mm:ss" placeholder="Enter Ready Time">
+                                <input asp-for="ReadyTime" type="text" class="input-large" data-format="hh:mm:ss" placeholder="Enter Ready Time">
                             </div>
 
                             <span asp-validation-for="ReadyTime" class="error-text"></span>
@@ -187,18 +211,20 @@
                         <div class="form-group">
                             <label class="col-xs-12 col-sm-3  control-label " asp-for="AvailableUntil"></label>
                             <div class="input-group bootstrap-timepicker">
-                                <input asp-for="AvailableUntil" type="text" placeholder="Enter Available Until">
+                                <input asp-for="AvailableUntil" type="text" class="input-large" placeholder="Enter Available Until">
                             </div>
-
                             <span asp-validation-for="AvailableUntil" class="error-text"></span>
                         </div>
 
                         <div class="form-group">
                             <label class="col-xs-12 col-sm-3  control-label " asp-for="Instructions"></label>
-                            <textarea asp-for="Instructions" type="text" placeholder="Enter Instructions"></textarea>
+                            <textarea asp-for="Instructions" type="text" class="input-xlarge" placeholder="Enter Instructions"></textarea>
                         </div>
 
-                        <span asp-validation-for="Instructions" class="error-text"></span>
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3  control-label " asp-for="ConfirmationNumber"></label>
+                            <input asp-for="ConfirmationNumber" type="text" readonly class="input-xlarge" placeholder="Enter Instructions" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -210,7 +236,7 @@
         <div class="col-xs-12">
             <div class="widget-box">
                 <div class="widget-header">
-                    <h4 class="widget-title"> Service Information</h4>
+                    <h4 class="widget-title">Package Information</h4>
                 </div>
 
                 <div class="widget-body">
@@ -242,8 +268,6 @@
                                     <th>
                                         <label>ItemCount</label>
                                     </th>
-
-                                    <th></th>
                                 </tr>
                             </thead>
 
@@ -254,54 +278,54 @@
 
                                     <tr id="0" class="rowToClone">
                                         <td>
-                                            <Textarea asp-for="Parcels[index].Contents" type="text" class="width-100 form-control text-center"></Textarea>
-                                            <span asp-validation-for="Parcels[index].Contents" class="error-text col-sm-10 pull-right"></span>
+                                            <Textarea asp-for="Parcels[index].Contents" type="text" class="width-100 form-control"></Textarea>
+                                            <span asp-validation-for="Parcels[index].Contents" class="error-text col-sm-12 pull-right"></span>
                                         </td>
 
                                         <td>
-                                            <input asp-for="Parcels[index].ReferenceId" type="text" class="form-control text-center ">
-                                            <span asp-validation-for="Parcels[index].ReferenceId" class="error-text col-sm-10 pull-right"></span>
+                                            <input asp-for="Parcels[index].ReferenceId" type="text" class="form-control">
+                                            <span asp-validation-for="Parcels[index].ReferenceId" class="error-text col-sm-12 pull-right"></span>
                                         </td>
 
                                         <td>
                                             <select asp-for="Parcels[index].PackageType" class="chosen-select" asp-items="Html.GetEnumSelectList<ParcelType>();"> </select>
-                                            <span asp-validation-for="Parcels[index].PackageType" class="error-text col-sm-10 pull-right"></span>
+                                            <span asp-validation-for="Parcels[index].PackageType" class="error-text col-sm-12 pull-right"></span>
                                         </td>
 
                                         <td>
-                                            <input asp-for="Parcels[index].Width" type="text" placeholder="Inches" class="form-control text-center">
-                                            <span asp-validation-for="Parcels[index].Width" class="error-text col-sm-10 pull-right"></span>
+                                            <input asp-for="Parcels[index].Width" type="text" placeholder="Inches" class="form-control">
+                                            <span asp-validation-for="Parcels[index].Width" class="error-text col-sm-12 pull-right"></span>
                                         </td>
 
                                         <td>
-                                            <input asp-for="Parcels[index].Length" type="text" placeholder="Inches" class="form-control text-center">
-                                            <span asp-validation-for="Parcels[index].Length" class="error-text col-sm-10 pull-right"></span>
+                                            <input asp-for="Parcels[index].Length" type="text" placeholder="Inches" class="form-control">
+                                            <span asp-validation-for="Parcels[index].Length" class="error-text col-sm-12 pull-right"></span>
                                         </td>
 
                                         <td>
-                                            <input asp-for="Parcels[index].Weight" type="text" placeholder="LBS" class="form-control text-center">
-                                            <span asp-validation-for="Parcels[index].Weight" class="error-text col-sm-10 pull-right"></span>
+                                            <input asp-for="Parcels[index].Weight" type="text" placeholder="LBS" class="form-control">
+                                            <span asp-validation-for="Parcels[index].Weight" class="error-text col-sm-12 pull-right"></span>
                                         </td>
 
                                         <td>
-                                            <input asp-for="Parcels[index].Height" type="text" placeholder="Inches" class="form-control text-center">
-                                            <span asp-validation-for="Parcels[index].Height" class="error-text col-sm-10 pull-right"></span>
+                                            <input asp-for="Parcels[index].Height" type="text" placeholder="Inches" class="form-control">
+                                            <span asp-validation-for="Parcels[index].Height" class="error-text col-sm-12 pull-right"></span>
                                         </td>
 
                                         <td>
-                                            <input asp-for="Parcels[index].ItemCount" type="text" class="form-control text-center ">
-                                            <span asp-validation-for="Parcels[index].ItemCount" class="error-text col-sm-10 pull-right"></span>
+                                            <input asp-for="Parcels[index].ItemCount" type="text" class="form-control">
+                                            <span asp-validation-for="Parcels[index].ItemCount" class="error-text col-sm-12 pull-right"></span>
                                         </td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
                         <div class="pull-right col-xs-4">
-                            <button class="btn btn-danger btn-remove width-10" type="button">
+                            <button class="btn btn-danger btn-remove-parcel width-10" type="button">
                                 <i class="ace-icon fa fa fa-truck fa"></i>Remove
                             </button>
-
-                            <button class="btn btn-success btn-add width-10" type="button">
+                            
+                            <button class="btn btn-success btn-add-parcel width-10"   type="button">
                                 <i class="ace-icon fa fa fa-truck fa"></i>Add More
                             </button>
                         </div>
@@ -311,6 +335,14 @@
         </div>
     </div>
 
+
+
     @await Html.PartialAsync("SaveReset")
 </form>
 <script src="~/assets/js/pickup.js"></script>
+<script>
+    $(function () {
+        if ('@(Model.IsNonDHL)' == 'True')
+            $("#btnSave").attr("disabled", "disabled");
+    });
+</script>

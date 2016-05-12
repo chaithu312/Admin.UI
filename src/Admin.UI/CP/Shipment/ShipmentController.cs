@@ -29,9 +29,9 @@ namespace Admin.UI.CP.Shipment
 
         [HttpGet]
         [Route(Constants.RoutePaths.ShipmentList)]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> GetAll()
         {
-            return View();
+             return View("Index");
         }
 
         [HttpGet]
@@ -59,7 +59,7 @@ namespace Admin.UI.CP.Shipment
         [Route(Constants.RoutePaths.Shipment)]
         public async Task<IActionResult> Index(long id)
         {
-            var shipmentModel = new ShipmentModel();
+            var shipmentModel = new ShipmentModel() { Parcels = new List<Parcel>(), Contents = new List<Models.Content>() };
 
             if (id != 0)
             {
@@ -78,6 +78,9 @@ namespace Admin.UI.CP.Shipment
                 }
             }
 
+            if (shipmentModel.Contents?.Count == 0)
+                shipmentModel.Contents = new List<Content> { new Content() };
+
             if (shipmentModel.Parcels?.Count == 0)
                 shipmentModel.Parcels = new List<Parcel> { new Parcel() };
 
@@ -86,44 +89,78 @@ namespace Admin.UI.CP.Shipment
 
         [HttpPost]
         [Route(Constants.RoutePaths.Shipment)]
-        public IActionResult Index(ShipmentModel model)
+        public async Task<IActionResult> Index(ShipmentModel model)
         {
+            var result = default(HttpResponseMessage);
+            var response = new ShipmentResponseModel();
+
+            //If international remove commodity validation
+            if (!model.IsInternational)
+            {
+                foreach (var ms in ModelState.ToArray())
+                {
+                    if (ms.Key.StartsWith("CommodityDetails"))
+                    {
+                        ModelState.Remove(ms);
+                    }
+                }
+                model.Contents = null;
+            }
+
             if (!ModelState.IsValid)
             {
-                var allErrors = ModelState.Values.SelectMany(v => v.Errors);
-
-                foreach (var error in allErrors)
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
                 {
                     this.ShowMessage(AlertMessageType.Error, error.ErrorMessage, true);
                 }
-                //this.ShowMessage(AlertMessageType.Error, "Error occured", true);
+                if (model.Contents == null)
+                    model.Contents = new List<Models.Content>();
                 return View("Shipment", model);
             }
+
+            using (var client = new OAuthClient(User, _apiSettings.Value, "Shipping"))
+            {
+                try
+                {
+                    if (model.ShipmentId == 0)
+                        result = await client.PostAsJsonAsync<ShipmentModel>($"Shipment/", model);
+                    else
+                        result = await client.PutAsJsonAsync<ShipmentModel>($"Shipment/", model);
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        response = result.Content.ReadAsAsync<ShipmentResponseModel>().Result;
+                        if (response.Status == ShipOS.Utility.Common.Enumerations.Status.APIRequestStatus.Success)
+                        {
+                            this.ShowMessage(AlertMessageType.Success, string.Format("Shipment scheduled with AWB {0}", response.AirwayBillNumber), true);
+                            RedirectToAction("Index", new { id = 0 });
+                        }
+                        else
+                        {
+                            var errorList = string.Empty;
+                            if (response.ErrorMessage != null)
+                                foreach (var error in response.ErrorMessage)
+                                {
+                                    errorList += string.Format("</br><b>Code:</b>{0} <b>Description:</b>{1}", error.Code, error.Description);
+                                }
+                            this.ShowMessage(AlertMessageType.Error, errorList, true);
+                        }
+                    }
+                    else
+                        this.ShowMessage(AlertMessageType.Error, result.Content.ReadAsStringAsync().Result, true);
+                }
+                catch (Exception ex)
+                {
+                    this.ShowMessage(AlertMessageType.Error, ex.Message + "Internal Server Error", true);
+                }
+            }
+
             this.ShowMessage(AlertMessageType.Success, "Successfully Saved", true);
             RedirectToAction("Index");
 
+            if (model.Contents == null)
+                model.Contents = new List<Models.Content>();
             return View("Shipment", model);
         }
-
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[Route("Shipping/Pickup/Ajax")]
-        //public JsonResult Index(PickupRequestModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        var allErrors = ModelState.Values.SelectMany(v => v.Errors);
-
-        //        foreach (var error in allErrors)
-        //        {
-        //            this.ShowMessage(AlertMessageType.Error, error.ErrorMessage, true);
-        //        }
-        //        //this.ShowMessage(AlertMessageType.Error, "Error occured", true);
-        //        return new JsonResult(allErrors);
-        //    }
-        //    this.ShowMessage(AlertMessageType.Success, "Successfully Saved", true);
-
-        //    return new JsonResult("saved");
-        //}
     }
 }

@@ -2,25 +2,25 @@
     //initiate dataTables plugin
 
     var columns = [
-        { data: null, width: 120 },
-        { data: "Shipper.ContactName", width: 120 },
-        { data: "Recipient.ContactName", width: 120 },
-        { data: "ShipTimestamp", width: 90 },
-        { data: null, width: 150 },
+        { data: "ConfirmationNumber", width: 120 },
+        { data: "AccountId", width: 120 },
+        { data: "Shipper", width: 120, render: function (data) { return data.ContactName + "</br>" + data.CompanyName + "</br>" + data.Address1 + ' ' + data.Address2 + "</br>" + data.City + "</br>" + data.DivisionCode + "</br>" + data.CountryCode + "</br>" + data.PostalCode + "</br>" + data.Email; } },
+        { data: "Recipient", width: 120, render: function (data) { return data.ContactName + "</br>" + data.CompanyName + "</br>" + data.Address1 + ' ' + data.Address2 + "</br>" + data.City + "</br>" + data.DivisionCode + "</br>" + data.CountryCode + "</br>" + data.PostalCode + "</br>" + data.Email; } },
+        { data: "ShipTimestamp", width: 150 },
        { data: null, width: 120 },
         { data: null, width: 120 },
         { data: null, width: 150 },
-         { data: null, width: 150 }
+         { data: "Status", width: 150 }
 
     ];
 
     var listUrl = "/Shipment/GetData";
-    var sortBy = columns.map((el) => el.data).indexOf("ReadyTime");
+   // var sortBy = columns.map((el) => el.data).indexOf("ShipTimestamp");
     var sortDir = "desc";
 
     var oTable1 = $("#dynamic-table").DataTable({
         ajax: { url: listUrl, dataSrc: "" },
-        order: [[sortBy, sortDir]],
+       // order: [[sortBy, sortDir]],
 
         pageLength: 25,
         columns: columns

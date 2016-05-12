@@ -299,10 +299,10 @@
           "lib/net451/Microsoft.AspNet.Diagnostics.Abstractions.dll": {}
         }
       },
-      "Microsoft.AspNet.FileProviders.Abstractions/1.0.0-rc2-15915": {
+      "Microsoft.AspNet.FileProviders.Abstractions/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "1.0.0-rc2-15961"
+          "Microsoft.Extensions.Primitives": "1.0.0-rc1-final"
         },
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -315,42 +315,6 @@
         },
         "runtime": {
           "lib/net451/Microsoft.AspNet.FileProviders.Abstractions.dll": {}
-        }
-      },
-      "Microsoft.AspNet.FileProviders.Composite/1.0.0-rc2-15877": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNet.FileProviders.Abstractions": "1.0.0-rc2-15877"
-        },
-        "frameworkAssemblies": [
-          "Microsoft.CSharp",
-          "mscorlib",
-          "System",
-          "System.Core"
-        ],
-        "compile": {
-          "lib/net451/Microsoft.AspNet.FileProviders.Composite.dll": {}
-        },
-        "runtime": {
-          "lib/net451/Microsoft.AspNet.FileProviders.Composite.dll": {}
-        }
-      },
-      "Microsoft.AspNet.FileProviders.Embedded/1.0.0-rc2-15915": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNet.FileProviders.Abstractions": "1.0.0-rc2-15915"
-        },
-        "frameworkAssemblies": [
-          "Microsoft.CSharp",
-          "mscorlib",
-          "System",
-          "System.Core"
-        ],
-        "compile": {
-          "lib/net451/Microsoft.AspNet.FileProviders.Embedded.dll": {}
-        },
-        "runtime": {
-          "lib/net451/Microsoft.AspNet.FileProviders.Embedded.dll": {}
         }
       },
       "Microsoft.AspNet.FileProviders.Physical/1.0.0-rc1-final": {
@@ -1617,7 +1581,7 @@
           "lib/net451/Microsoft.Extensions.PlatformAbstractions.dll": {}
         }
       },
-      "Microsoft.Extensions.Primitives/1.0.0-rc2-15967": {
+      "Microsoft.Extensions.Primitives/1.0.0-rc1-final": {
         "type": "package",
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -1850,14 +1814,14 @@
           "lib/net451/Serilog.Extensions.Logging.dll": {}
         }
       },
-      "ShipOS.Caching/1.0.0.40": {
+      "ShipOS.Caching/1.0.0-beta-225": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Caching.Memory": "1.0.0-rc1-final",
           "Microsoft.Extensions.Caching.Redis": "1.0.0-rc1-final",
           "Newtonsoft.Json": "8.0.3",
-          "ShipOS.Security": "1.0.0.31",
-          "ShipOS.Utility": "1.0.0.62"
+          "ShipOS.Security": "1.0.0-beta-225",
+          "ShipOS.Utility": "1.0.0-beta-225"
         },
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -1872,7 +1836,7 @@
           "lib/dnx46/ShipOS.Caching.dll": {}
         }
       },
-      "ShipOS.Data/1.0.0.54": {
+      "ShipOS.Data/1.0.0-beta-225": {
         "type": "package",
         "dependencies": {
           "Dapper.Contrib": "1.43.0",
@@ -1880,7 +1844,7 @@
           "Microsoft.Extensions.Configuration.FileProviderExtensions": "1.0.0-rc1-final",
           "Microsoft.Extensions.Configuration.Json": "1.0.0-rc1-final",
           "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
-          "ShipOS.Utility": "1.0.0.62"
+          "ShipOS.Utility": "1.0.0-beta-225"
         },
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -1895,7 +1859,7 @@
           "lib/dnx46/ShipOS.Data.dll": {}
         }
       },
-      "ShipOS.Logging/1.0.0.44": {
+      "ShipOS.Logging/1.0.0-beta-225": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
@@ -1918,7 +1882,7 @@
           "lib/dnx46/ShipOS.Logging.dll": {}
         }
       },
-      "ShipOS.Messaging/1.0.0.28": {
+      "ShipOS.Messaging/1.0.0-beta-225": {
         "type": "package",
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -1933,7 +1897,7 @@
           "lib/dnx46/ShipOS.Messaging.dll": {}
         }
       },
-      "ShipOS.Security/1.0.0.31": {
+      "ShipOS.Security/1.0.0-beta-225": {
         "type": "package",
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -1948,15 +1912,15 @@
           "lib/dnx46/ShipOS.Security.dll": {}
         }
       },
-      "ShipOS.Service/1.0.0.28": {
+      "ShipOS.Service/1.0.0-beta-225": {
         "type": "package",
         "dependencies": {
-          "ShipOS.Caching": "1.0.0.40",
-          "ShipOS.Data": "1.0.0.54",
-          "ShipOS.Logging": "1.0.0.44",
-          "ShipOS.Messaging": "1.0.0.28",
-          "ShipOS.Security": "1.0.0.31",
-          "ShipOS.Utility": "1.0.0.62"
+          "ShipOS.Caching": "1.0.0-beta-225",
+          "ShipOS.Data": "1.0.0-beta-225",
+          "ShipOS.Logging": "1.0.0-beta-225",
+          "ShipOS.Messaging": "1.0.0-beta-225",
+          "ShipOS.Security": "1.0.0-beta-225",
+          "ShipOS.Utility": "1.0.0-beta-225"
         },
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -1971,7 +1935,7 @@
           "lib/dnx46/ShipOS.Service.dll": {}
         }
       },
-      "ShipOS.Utility/1.0.0.62": {
+      "ShipOS.Utility/1.0.0-beta-225": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNet.Http.Abstractions": "1.0.0-rc1-final",
@@ -2570,10 +2534,10 @@
           "lib/net451/Microsoft.AspNet.Diagnostics.Abstractions.dll": {}
         }
       },
-      "Microsoft.AspNet.FileProviders.Abstractions/1.0.0-rc2-15915": {
+      "Microsoft.AspNet.FileProviders.Abstractions/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "1.0.0-rc2-15961"
+          "Microsoft.Extensions.Primitives": "1.0.0-rc1-final"
         },
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -2586,42 +2550,6 @@
         },
         "runtime": {
           "lib/net451/Microsoft.AspNet.FileProviders.Abstractions.dll": {}
-        }
-      },
-      "Microsoft.AspNet.FileProviders.Composite/1.0.0-rc2-15877": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNet.FileProviders.Abstractions": "1.0.0-rc2-15877"
-        },
-        "frameworkAssemblies": [
-          "Microsoft.CSharp",
-          "mscorlib",
-          "System",
-          "System.Core"
-        ],
-        "compile": {
-          "lib/net451/Microsoft.AspNet.FileProviders.Composite.dll": {}
-        },
-        "runtime": {
-          "lib/net451/Microsoft.AspNet.FileProviders.Composite.dll": {}
-        }
-      },
-      "Microsoft.AspNet.FileProviders.Embedded/1.0.0-rc2-15915": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNet.FileProviders.Abstractions": "1.0.0-rc2-15915"
-        },
-        "frameworkAssemblies": [
-          "Microsoft.CSharp",
-          "mscorlib",
-          "System",
-          "System.Core"
-        ],
-        "compile": {
-          "lib/net451/Microsoft.AspNet.FileProviders.Embedded.dll": {}
-        },
-        "runtime": {
-          "lib/net451/Microsoft.AspNet.FileProviders.Embedded.dll": {}
         }
       },
       "Microsoft.AspNet.FileProviders.Physical/1.0.0-rc1-final": {
@@ -3891,7 +3819,7 @@
           "lib/net451/Microsoft.Extensions.PlatformAbstractions.dll": {}
         }
       },
-      "Microsoft.Extensions.Primitives/1.0.0-rc2-15967": {
+      "Microsoft.Extensions.Primitives/1.0.0-rc1-final": {
         "type": "package",
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -4124,14 +4052,14 @@
           "lib/net451/Serilog.Extensions.Logging.dll": {}
         }
       },
-      "ShipOS.Caching/1.0.0.40": {
+      "ShipOS.Caching/1.0.0-beta-225": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Caching.Memory": "1.0.0-rc1-final",
           "Microsoft.Extensions.Caching.Redis": "1.0.0-rc1-final",
           "Newtonsoft.Json": "8.0.3",
-          "ShipOS.Security": "1.0.0.31",
-          "ShipOS.Utility": "1.0.0.62"
+          "ShipOS.Security": "1.0.0-beta-225",
+          "ShipOS.Utility": "1.0.0-beta-225"
         },
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -4146,7 +4074,7 @@
           "lib/dnx46/ShipOS.Caching.dll": {}
         }
       },
-      "ShipOS.Data/1.0.0.54": {
+      "ShipOS.Data/1.0.0-beta-225": {
         "type": "package",
         "dependencies": {
           "Dapper.Contrib": "1.43.0",
@@ -4154,7 +4082,7 @@
           "Microsoft.Extensions.Configuration.FileProviderExtensions": "1.0.0-rc1-final",
           "Microsoft.Extensions.Configuration.Json": "1.0.0-rc1-final",
           "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
-          "ShipOS.Utility": "1.0.0.62"
+          "ShipOS.Utility": "1.0.0-beta-225"
         },
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -4169,7 +4097,7 @@
           "lib/dnx46/ShipOS.Data.dll": {}
         }
       },
-      "ShipOS.Logging/1.0.0.44": {
+      "ShipOS.Logging/1.0.0-beta-225": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
@@ -4192,7 +4120,7 @@
           "lib/dnx46/ShipOS.Logging.dll": {}
         }
       },
-      "ShipOS.Messaging/1.0.0.28": {
+      "ShipOS.Messaging/1.0.0-beta-225": {
         "type": "package",
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -4207,7 +4135,7 @@
           "lib/dnx46/ShipOS.Messaging.dll": {}
         }
       },
-      "ShipOS.Security/1.0.0.31": {
+      "ShipOS.Security/1.0.0-beta-225": {
         "type": "package",
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -4222,15 +4150,15 @@
           "lib/dnx46/ShipOS.Security.dll": {}
         }
       },
-      "ShipOS.Service/1.0.0.28": {
+      "ShipOS.Service/1.0.0-beta-225": {
         "type": "package",
         "dependencies": {
-          "ShipOS.Caching": "1.0.0.40",
-          "ShipOS.Data": "1.0.0.54",
-          "ShipOS.Logging": "1.0.0.44",
-          "ShipOS.Messaging": "1.0.0.28",
-          "ShipOS.Security": "1.0.0.31",
-          "ShipOS.Utility": "1.0.0.62"
+          "ShipOS.Caching": "1.0.0-beta-225",
+          "ShipOS.Data": "1.0.0-beta-225",
+          "ShipOS.Logging": "1.0.0-beta-225",
+          "ShipOS.Messaging": "1.0.0-beta-225",
+          "ShipOS.Security": "1.0.0-beta-225",
+          "ShipOS.Utility": "1.0.0-beta-225"
         },
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -4245,7 +4173,7 @@
           "lib/dnx46/ShipOS.Service.dll": {}
         }
       },
-      "ShipOS.Utility/1.0.0.62": {
+      "ShipOS.Utility/1.0.0-beta-225": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNet.Http.Abstractions": "1.0.0-rc1-final",
@@ -4844,10 +4772,10 @@
           "lib/net451/Microsoft.AspNet.Diagnostics.Abstractions.dll": {}
         }
       },
-      "Microsoft.AspNet.FileProviders.Abstractions/1.0.0-rc2-15915": {
+      "Microsoft.AspNet.FileProviders.Abstractions/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "1.0.0-rc2-15961"
+          "Microsoft.Extensions.Primitives": "1.0.0-rc1-final"
         },
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -4860,42 +4788,6 @@
         },
         "runtime": {
           "lib/net451/Microsoft.AspNet.FileProviders.Abstractions.dll": {}
-        }
-      },
-      "Microsoft.AspNet.FileProviders.Composite/1.0.0-rc2-15877": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNet.FileProviders.Abstractions": "1.0.0-rc2-15877"
-        },
-        "frameworkAssemblies": [
-          "Microsoft.CSharp",
-          "mscorlib",
-          "System",
-          "System.Core"
-        ],
-        "compile": {
-          "lib/net451/Microsoft.AspNet.FileProviders.Composite.dll": {}
-        },
-        "runtime": {
-          "lib/net451/Microsoft.AspNet.FileProviders.Composite.dll": {}
-        }
-      },
-      "Microsoft.AspNet.FileProviders.Embedded/1.0.0-rc2-15915": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNet.FileProviders.Abstractions": "1.0.0-rc2-15915"
-        },
-        "frameworkAssemblies": [
-          "Microsoft.CSharp",
-          "mscorlib",
-          "System",
-          "System.Core"
-        ],
-        "compile": {
-          "lib/net451/Microsoft.AspNet.FileProviders.Embedded.dll": {}
-        },
-        "runtime": {
-          "lib/net451/Microsoft.AspNet.FileProviders.Embedded.dll": {}
         }
       },
       "Microsoft.AspNet.FileProviders.Physical/1.0.0-rc1-final": {
@@ -6165,7 +6057,7 @@
           "lib/net451/Microsoft.Extensions.PlatformAbstractions.dll": {}
         }
       },
-      "Microsoft.Extensions.Primitives/1.0.0-rc2-15967": {
+      "Microsoft.Extensions.Primitives/1.0.0-rc1-final": {
         "type": "package",
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -6398,14 +6290,14 @@
           "lib/net451/Serilog.Extensions.Logging.dll": {}
         }
       },
-      "ShipOS.Caching/1.0.0.40": {
+      "ShipOS.Caching/1.0.0-beta-225": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Caching.Memory": "1.0.0-rc1-final",
           "Microsoft.Extensions.Caching.Redis": "1.0.0-rc1-final",
           "Newtonsoft.Json": "8.0.3",
-          "ShipOS.Security": "1.0.0.31",
-          "ShipOS.Utility": "1.0.0.62"
+          "ShipOS.Security": "1.0.0-beta-225",
+          "ShipOS.Utility": "1.0.0-beta-225"
         },
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -6420,7 +6312,7 @@
           "lib/dnx46/ShipOS.Caching.dll": {}
         }
       },
-      "ShipOS.Data/1.0.0.54": {
+      "ShipOS.Data/1.0.0-beta-225": {
         "type": "package",
         "dependencies": {
           "Dapper.Contrib": "1.43.0",
@@ -6428,7 +6320,7 @@
           "Microsoft.Extensions.Configuration.FileProviderExtensions": "1.0.0-rc1-final",
           "Microsoft.Extensions.Configuration.Json": "1.0.0-rc1-final",
           "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
-          "ShipOS.Utility": "1.0.0.62"
+          "ShipOS.Utility": "1.0.0-beta-225"
         },
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -6443,7 +6335,7 @@
           "lib/dnx46/ShipOS.Data.dll": {}
         }
       },
-      "ShipOS.Logging/1.0.0.44": {
+      "ShipOS.Logging/1.0.0-beta-225": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
@@ -6466,7 +6358,7 @@
           "lib/dnx46/ShipOS.Logging.dll": {}
         }
       },
-      "ShipOS.Messaging/1.0.0.28": {
+      "ShipOS.Messaging/1.0.0-beta-225": {
         "type": "package",
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -6481,7 +6373,7 @@
           "lib/dnx46/ShipOS.Messaging.dll": {}
         }
       },
-      "ShipOS.Security/1.0.0.31": {
+      "ShipOS.Security/1.0.0-beta-225": {
         "type": "package",
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -6496,15 +6388,15 @@
           "lib/dnx46/ShipOS.Security.dll": {}
         }
       },
-      "ShipOS.Service/1.0.0.28": {
+      "ShipOS.Service/1.0.0-beta-225": {
         "type": "package",
         "dependencies": {
-          "ShipOS.Caching": "1.0.0.40",
-          "ShipOS.Data": "1.0.0.54",
-          "ShipOS.Logging": "1.0.0.44",
-          "ShipOS.Messaging": "1.0.0.28",
-          "ShipOS.Security": "1.0.0.31",
-          "ShipOS.Utility": "1.0.0.62"
+          "ShipOS.Caching": "1.0.0-beta-225",
+          "ShipOS.Data": "1.0.0-beta-225",
+          "ShipOS.Logging": "1.0.0-beta-225",
+          "ShipOS.Messaging": "1.0.0-beta-225",
+          "ShipOS.Security": "1.0.0-beta-225",
+          "ShipOS.Utility": "1.0.0-beta-225"
         },
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -6519,7 +6411,7 @@
           "lib/dnx46/ShipOS.Service.dll": {}
         }
       },
-      "ShipOS.Utility/1.0.0.62": {
+      "ShipOS.Utility/1.0.0-beta-225": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNet.Http.Abstractions": "1.0.0-rc1-final",
@@ -7037,46 +6929,18 @@
         "Microsoft.AspNet.Diagnostics.Abstractions.nuspec"
       ]
     },
-    "Microsoft.AspNet.FileProviders.Abstractions/1.0.0-rc2-15915": {
+    "Microsoft.AspNet.FileProviders.Abstractions/1.0.0-rc1-final": {
       "type": "package",
       "serviceable": true,
-      "sha512": "yOszjmUcWLX79otpWNFhyxyGKRJfz/3E+Rt/UL5gt5yxAxzc9vP8lIxJqt1Vp274b7iZ2OL3iEPXGxX8ZN7lPQ==",
+      "sha512": "Tv6YJk78cH+gFipRNjeMpzzUg3t4BQiS0xYVlv/8gVNl4sI6ytAMYYfIbx8pCacIRH5Nx/Tw9GVn28eyw+JZfA==",
       "files": [
         "lib/dotnet5.4/Microsoft.AspNet.FileProviders.Abstractions.dll",
         "lib/dotnet5.4/Microsoft.AspNet.FileProviders.Abstractions.xml",
         "lib/net451/Microsoft.AspNet.FileProviders.Abstractions.dll",
         "lib/net451/Microsoft.AspNet.FileProviders.Abstractions.xml",
-        "Microsoft.AspNet.FileProviders.Abstractions.1.0.0-rc2-15915.nupkg",
-        "Microsoft.AspNet.FileProviders.Abstractions.1.0.0-rc2-15915.nupkg.sha512",
+        "Microsoft.AspNet.FileProviders.Abstractions.1.0.0-rc1-final.nupkg",
+        "Microsoft.AspNet.FileProviders.Abstractions.1.0.0-rc1-final.nupkg.sha512",
         "Microsoft.AspNet.FileProviders.Abstractions.nuspec"
-      ]
-    },
-    "Microsoft.AspNet.FileProviders.Composite/1.0.0-rc2-15877": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "v3/ypp7Nuv7odYq1BQqFBXPGPtpdLpR3F6iO2wCw8xii+v2+VxXFQm/3VW7vtTbYAJZ9DCy+o0IaiJntiKGr3A==",
-      "files": [
-        "lib/dotnet5.4/Microsoft.AspNet.FileProviders.Composite.dll",
-        "lib/dotnet5.4/Microsoft.AspNet.FileProviders.Composite.xml",
-        "lib/net451/Microsoft.AspNet.FileProviders.Composite.dll",
-        "lib/net451/Microsoft.AspNet.FileProviders.Composite.xml",
-        "Microsoft.AspNet.FileProviders.Composite.1.0.0-rc2-15877.nupkg",
-        "Microsoft.AspNet.FileProviders.Composite.1.0.0-rc2-15877.nupkg.sha512",
-        "Microsoft.AspNet.FileProviders.Composite.nuspec"
-      ]
-    },
-    "Microsoft.AspNet.FileProviders.Embedded/1.0.0-rc2-15915": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "xrLFOUbwN99VAmv4CS1ongb2ustUyUpUdJSWSxwyXSS+oVGcJQo9hgJiLVpP6/3Ax8YLc74myOZ3aPEJ2ZqleA==",
-      "files": [
-        "lib/dotnet5.4/Microsoft.AspNet.FileProviders.Embedded.dll",
-        "lib/dotnet5.4/Microsoft.AspNet.FileProviders.Embedded.xml",
-        "lib/net451/Microsoft.AspNet.FileProviders.Embedded.dll",
-        "lib/net451/Microsoft.AspNet.FileProviders.Embedded.xml",
-        "Microsoft.AspNet.FileProviders.Embedded.1.0.0-rc2-15915.nupkg",
-        "Microsoft.AspNet.FileProviders.Embedded.1.0.0-rc2-15915.nupkg.sha512",
-        "Microsoft.AspNet.FileProviders.Embedded.nuspec"
       ]
     },
     "Microsoft.AspNet.FileProviders.Physical/1.0.0-rc1-final": {
@@ -8169,16 +8033,19 @@
         "Microsoft.Extensions.PlatformAbstractions.nuspec"
       ]
     },
-    "Microsoft.Extensions.Primitives/1.0.0-rc2-15967": {
+    "Microsoft.Extensions.Primitives/1.0.0-rc1-final": {
       "type": "package",
       "serviceable": true,
-      "sha512": "RAEbN60WRApuF2dw4+VOy/Pt0aWkoZWhMytbx75bdQbmk1fjE8u953RuGXWiU1DH/VbSEzLqIxUtu2QU/3prZQ==",
+      "sha512": "oHWqBARJveyM7LctuqQqvsTC58hxoq0gGnHr6Qsxie71LIkZpfE21IklhSLOsqmv4QIpes/G6k1vZbAQ+cC/nw==",
       "files": [
         "lib/dotnet5.4/Microsoft.Extensions.Primitives.dll",
+        "lib/dotnet5.4/Microsoft.Extensions.Primitives.xml",
         "lib/net451/Microsoft.Extensions.Primitives.dll",
+        "lib/net451/Microsoft.Extensions.Primitives.xml",
         "lib/netcore50/Microsoft.Extensions.Primitives.dll",
-        "Microsoft.Extensions.Primitives.1.0.0-rc2-15967.nupkg",
-        "Microsoft.Extensions.Primitives.1.0.0-rc2-15967.nupkg.sha512",
+        "lib/netcore50/Microsoft.Extensions.Primitives.xml",
+        "Microsoft.Extensions.Primitives.1.0.0-rc1-final.nupkg",
+        "Microsoft.Extensions.Primitives.1.0.0-rc1-final.nupkg.sha512",
         "Microsoft.Extensions.Primitives.nuspec"
       ]
     },
@@ -8485,80 +8352,80 @@
         "Serilog.Extensions.Logging.nuspec"
       ]
     },
-    "ShipOS.Caching/1.0.0.40": {
+    "ShipOS.Caching/1.0.0-beta-225": {
       "type": "package",
-      "sha512": "29vqxdEy9pYyRM/xgmsYtC9vZwLDR1NFXg1U8WKsch+JdaGc+lTdx5lASvLq0/gHJG7PtvmamHbgfMck2cZ4Mw==",
+      "sha512": "wEJa2WP0upkcUPsdT5X/Osf7SRpClSgDCXVK8i352SEevar8TnRbAUmtuV8SMLA7wtwFK6ONfxnczMolbjSqjg==",
       "files": [
         "lib/dnx46/ShipOS.Caching.dll",
         "lib/dnx46/ShipOS.Caching.xml",
-        "ShipOS.Caching.1.0.0.40.nupkg",
-        "ShipOS.Caching.1.0.0.40.nupkg.sha512",
+        "ShipOS.Caching.1.0.0-beta-225.nupkg",
+        "ShipOS.Caching.1.0.0-beta-225.nupkg.sha512",
         "ShipOS.Caching.nuspec"
       ]
     },
-    "ShipOS.Data/1.0.0.54": {
+    "ShipOS.Data/1.0.0-beta-225": {
       "type": "package",
-      "sha512": "moJuJHQUTnqjx0UnNoI2EQtGfNi5+Bd0e5hR5VJfozS2qVoujVnc7RqjO6nGdgNPiwQPoVti9DlhvHQhZdBWNQ==",
+      "sha512": "4eevdEAVXPEBvWQDZturf2Y9Fp5Hvg68Fi92zJudriNpbh0ZqpKqQhYgpUHwfAHgdVrn8OYb5vE+ByVlAD8BXA==",
       "files": [
         "lib/dnx46/ShipOS.Data.dll",
         "lib/dnx46/ShipOS.Data.xml",
-        "ShipOS.Data.1.0.0.54.nupkg",
-        "ShipOS.Data.1.0.0.54.nupkg.sha512",
+        "ShipOS.Data.1.0.0-beta-225.nupkg",
+        "ShipOS.Data.1.0.0-beta-225.nupkg.sha512",
         "ShipOS.Data.nuspec"
       ]
     },
-    "ShipOS.Logging/1.0.0.44": {
+    "ShipOS.Logging/1.0.0-beta-225": {
       "type": "package",
-      "sha512": "41Ja/TEfY70BLTyGzd3jl/NTvt4iww3Mdcm6e4mlstni8MzwtHBmr40DXQuWyhQeA41D58rlTNH15GOTMseWxA==",
+      "sha512": "UCwlcGSesuO24xLVzhfCQg0dnIJ/cFjHG8eI7/Xy6SkTo8wjTv8mIbK9tI5yfgD3au0vQV0T209ZkK4JEoiOww==",
       "files": [
         "lib/dnx46/ShipOS.Logging.dll",
         "lib/dnx46/ShipOS.Logging.xml",
-        "ShipOS.Logging.1.0.0.44.nupkg",
-        "ShipOS.Logging.1.0.0.44.nupkg.sha512",
+        "ShipOS.Logging.1.0.0-beta-225.nupkg",
+        "ShipOS.Logging.1.0.0-beta-225.nupkg.sha512",
         "ShipOS.Logging.nuspec"
       ]
     },
-    "ShipOS.Messaging/1.0.0.28": {
+    "ShipOS.Messaging/1.0.0-beta-225": {
       "type": "package",
-      "sha512": "78+bmxZ5/TweWtreZULjbRbuh39fwhwLijquvSGpQFRAH0OkFkF7RohgK0ZretqlVDH8wzERiCMIvhXqwsPX0w==",
+      "sha512": "7gqkC01bNAHfATTEQgkkuUaKPLdy6Z7MCbYQS5Sptx15hKd1xZPJAhFVqLJw42b84OzYzD+WDcyYsJxPFT75LQ==",
       "files": [
         "lib/dnx46/ShipOS.Messaging.dll",
         "lib/dnx46/ShipOS.Messaging.xml",
-        "ShipOS.Messaging.1.0.0.28.nupkg",
-        "ShipOS.Messaging.1.0.0.28.nupkg.sha512",
+        "ShipOS.Messaging.1.0.0-beta-225.nupkg",
+        "ShipOS.Messaging.1.0.0-beta-225.nupkg.sha512",
         "ShipOS.Messaging.nuspec"
       ]
     },
-    "ShipOS.Security/1.0.0.31": {
+    "ShipOS.Security/1.0.0-beta-225": {
       "type": "package",
-      "sha512": "l0HjEQ16NgtDRJ+imwZjwVO6snIsTT7T02o6JoYQzprbbyYg3c5Oy1lISFQAUYMS7IEhiTYCQNhLQ8T1XCNNzA==",
+      "sha512": "ZzpRLhxUxT+/Zwougy/oYwvtHoIuxh6xfkFlQkKoJIHmQcAuY5DuATTtb8tsXWJiyeu3UQ9KUTaIs1/sJSKzhQ==",
       "files": [
         "lib/dnx46/ShipOS.Security.dll",
         "lib/dnx46/ShipOS.Security.xml",
-        "ShipOS.Security.1.0.0.31.nupkg",
-        "ShipOS.Security.1.0.0.31.nupkg.sha512",
+        "ShipOS.Security.1.0.0-beta-225.nupkg",
+        "ShipOS.Security.1.0.0-beta-225.nupkg.sha512",
         "ShipOS.Security.nuspec"
       ]
     },
-    "ShipOS.Service/1.0.0.28": {
+    "ShipOS.Service/1.0.0-beta-225": {
       "type": "package",
-      "sha512": "JRDvz3t0B+VakEz7T2yfxoz/57oitaH/DPZxUXE1DZXroyjWHLjeCHA928db1M6k5ovq9MvE1sqia9AilIJT2g==",
+      "sha512": "CTnXFzFmcvmxfLSXLUJZxkDMaOMNDebQzKq2qSEYaz3UdO3es1SVXYEKGO9cBW5skVrA656puTWhMN1VKqhDag==",
       "files": [
         "lib/dnx46/ShipOS.Service.dll",
         "lib/dnx46/ShipOS.Service.xml",
-        "ShipOS.Service.1.0.0.28.nupkg",
-        "ShipOS.Service.1.0.0.28.nupkg.sha512",
+        "ShipOS.Service.1.0.0-beta-225.nupkg",
+        "ShipOS.Service.1.0.0-beta-225.nupkg.sha512",
         "ShipOS.Service.nuspec"
       ]
     },
-    "ShipOS.Utility/1.0.0.62": {
+    "ShipOS.Utility/1.0.0-beta-225": {
       "type": "package",
-      "sha512": "rsg1HHaUxG/OJDkK3SEX+arnie2O6ctuzW7hV9SJL0ALruISjoJDuWBBNVMbroQmQ1YbwnaU1jQlUJWrlagLpw==",
+      "sha512": "Jh3ylLMlSCrEptIhIGoaPvzjNkYeFyRrM5hNGRDgL9oFFkfoqikr2jf/N1s+F1RKZxJ+cVsjj5OS6k2hB+v7jg==",
       "files": [
         "lib/dnx46/ShipOS.Utility.dll",
         "lib/dnx46/ShipOS.Utility.xml",
-        "ShipOS.Utility.1.0.0.62.nupkg",
-        "ShipOS.Utility.1.0.0.62.nupkg.sha512",
+        "ShipOS.Utility.1.0.0-beta-225.nupkg",
+        "ShipOS.Utility.1.0.0-beta-225.nupkg.sha512",
         "ShipOS.Utility.nuspec"
       ]
     },
@@ -9434,8 +9301,6 @@
       "Microsoft.AspNet.Server.Kestrel >= 1.0.0-rc1-final",
       "Microsoft.AspNet.Mvc >= 6.0.0-rc1-final",
       "Microsoft.AspNet.Mvc.TagHelpers >= 6.0.0-rc1-final",
-      "Microsoft.AspNet.FileProviders.Composite >= 1.0.0-rc2-15877",
-      "Microsoft.AspNet.FileProviders.Embedded >= 1.0.0-rc2-15915",
       "Microsoft.AspNet.Diagnostics >= 1.0.0-rc1-final",
       "Microsoft.AspNet.StaticFiles >= 1.0.0-rc1-final",
       "Microsoft.AspNet.Tooling.Razor >= 1.0.0-rc1-final",
@@ -9443,10 +9308,10 @@
       "Microsoft.AspNet.Authentication.Cookies >= 1.0.0-rc1-final",
       "Microsoft.AspNet.Authentication.OpenIdConnect >= 1.0.0-rc1-final",
       "Microsoft.AspNet.WebApi.Client >= 5.2.3",
-      "IdentityModel >= 1.10.0",
-      "ShipOS.Service >= 1.0.0.28",
       "Microsoft.AspNet.Session >= 1.0.0-rc1-final",
-      "Microsoft.Extensions.Caching.Memory >= 1.0.0-rc1-final"
+      "Microsoft.Extensions.Caching.Memory >= 1.0.0-rc1-final",
+      "IdentityModel >= 1.10.0",
+      "ShipOS.Service >= 1.0.0-beta-*"
     ],
     "DNX,Version=v4.6": []
   }

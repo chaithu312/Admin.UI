@@ -146,6 +146,14 @@ module.exports = function (grunt) {
                 }
             },
 
+            Pickup: {
+                files: {
+                    'wwwroot/assets/js/Pickup.js': [
+                        'Assets/js/AdminUI/pickup.js'
+                    ]
+                }
+            },
+
             ShipmentList: {
                 files: {
                     'wwwroot/assets/js/ShipmentList.js': [
@@ -154,10 +162,10 @@ module.exports = function (grunt) {
                 }
             },
 
-            Pickup: {
+            Shipment: {
                 files: {
-                    'wwwroot/assets/js/Pickup.js': [
-                        'Assets/js/AdminUI/pickup.js'
+                    'wwwroot/assets/js/Shipment.js': [
+                        'Assets/js/AdminUI/Shipment.js'
                     ]
                 }
             }

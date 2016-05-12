@@ -4,6 +4,7 @@ namespace Admin.UI.CP.Shipment.Models
 {
     public class Content
     {
+        [Required]
         public string Code { get; set; }
         public string Description { get; set; }
         public int CountryOfOrigin { get; set; }

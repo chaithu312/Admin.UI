@@ -32,10 +32,7 @@ namespace Admin.UI.CP.Shared.Components
 
             public bool IsSelected { get; set; }
 
-            public bool HasChildren
-            {
-                get { return ((this.Children != null) && (this.Children.Count > 0)); }
-            }
+            public bool HasChildren => ((this.Children != null) && (this.Children.Count > 0));
 
             public IList<ItemViewModel> Children { get; set; }
         }
@@ -61,12 +58,17 @@ namespace Admin.UI.CP.Shared.Components
             return new List<ItemViewModel>()
             {
                 new ItemViewModel() {Id = "Dashboard", TargetUrl = Constants.RoutePaths.Dashboard,IconClassName = "menu-icon fa fa-tachometer",Text = "Dashboard"},
-                new ItemViewModel() {Id = "Shipments",TargetUrl = string.Empty,IconClassName = "menu-icon fa fa-list",Text = "Shipments",
+                new ItemViewModel() {Id = "Pickup",TargetUrl = string.Empty,IconClassName = "menu-icon fa fa-list",Text = "Pickup",
                     Children = new List<ItemViewModel>()
                     {
-                        new ItemViewModel() { Id = "AWB",TargetUrl = Constants.RoutePaths.Shipments_AWB,IconClassName = "menu-icon fa fa-tag",Text = "AWB with Price",},
-                        new ItemViewModel() {Id = "Pickup",TargetUrl = Constants.RoutePaths.PickupList,IconClassName = "",Text = "Pickup Request",},
-                        new ItemViewModel() {Id = "Shipment",TargetUrl = Constants.RoutePaths.Pickup,IconClassName = "",Text = "Shipments",},
+                        new ItemViewModel() { Id = "Pickup",TargetUrl = Constants.RoutePaths.PickupList,IconClassName = "menu-icon fa fa-tag",Text = "Pickups",},
+                    }
+                },
+
+                new ItemViewModel() {Id = "Shipment",TargetUrl = string.Empty,IconClassName = "menu-icon fa fa-list",Text = "Shipments",
+                    Children = new List<ItemViewModel>()
+                    {
+                        new ItemViewModel() { Id = "Shipment",TargetUrl = Constants.RoutePaths.ShipmentList,IconClassName = "menu-icon fa fa-tag",Text = "Shipments",},
                     }
                 },
                 new ItemViewModel() {Id = "Settings",TargetUrl = String.Empty,IconClassName = "ace-icon fa fa-cog",Text = "Settings",

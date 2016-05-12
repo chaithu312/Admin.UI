@@ -42,7 +42,7 @@
                             form.submit();
                         }
                         else {
-                            if (validator.errorList != null && validator.errorList.length > 0) {
+                            if (validator.errorList !== null && validator.errorList.length > 0) {
                                 $("html,body").animate({
                                     scrollTop: $(validator.errorList[0].element).offset().top - 100
                                 }, 1000);

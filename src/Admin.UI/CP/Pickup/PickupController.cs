@@ -1,6 +1,7 @@
 ﻿using Admin.UI.CP.Pickup.Models;
 using Admin.UI.Utility;
 using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.OptionsModel;
@@ -28,9 +29,9 @@ namespace Admin.UI.CP.Pickup
 
         [HttpGet]
         [Route(Constants.RoutePaths.PickupList)]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> GetAll()
         {
-            return View();
+            return View("Index");
         }
 
         [HttpGet]
@@ -58,7 +59,10 @@ namespace Admin.UI.CP.Pickup
         [Route(Constants.RoutePaths.Pickup)]
         public async Task<IActionResult> Index(long id)
         {
-            var pickupRequestModel = new PickupModel();
+            var pickupModel = new PickupModel()
+            {
+                Parcels = new List<Parcel>()
+            };
 
             if (id != 0)
             {
@@ -68,7 +72,9 @@ namespace Admin.UI.CP.Pickup
                     {
                         var response = await client.GetAsync($"pickup/{id}");
                         response.EnsureSuccessStatusCode();
-                        pickupRequestModel = await response.Content.ReadAsAsync<PickupModel>();
+                        pickupModel = await response.Content.ReadAsAsync<PickupModel>();
+                        pickupModel.ReadyTime = Convert.ToDateTime(pickupModel.ReadyTime).ToString("hh:mm");
+                        pickupModel.AvailableUntil = Convert.ToDateTime(pickupModel.AvailableUntil).ToString("hh:mm");
                     }
                     catch (Exception ex)
                     {
@@ -77,16 +83,18 @@ namespace Admin.UI.CP.Pickup
                 }
             }
 
-            if (pickupRequestModel.Parcels?.Count == 0)
-                pickupRequestModel.Parcels = new List<Parcel> { new Parcel() };
+            if (pickupModel.Parcels?.Count == 0)
+                pickupModel.Parcels = new List<Parcel> { new Parcel() };
 
-            return View("Pickup", pickupRequestModel);
+            return View("Pickup", pickupModel);
         }
 
         [HttpPost]
         [Route(Constants.RoutePaths.Pickup)]
-        public IActionResult Index(PickupModel model)
+        public async Task<IActionResult> Index(PickupModel model)
         {
+            var response = new PickupResponseModel();
+            var result = default(HttpResponseMessage);
             if (!ModelState.IsValid)
             {
                 var allErrors = ModelState.Values.SelectMany(v => v.Errors);
@@ -95,34 +103,49 @@ namespace Admin.UI.CP.Pickup
                 {
                     this.ShowMessage(AlertMessageType.Error, error.ErrorMessage, true);
                 }
-                //this.ShowMessage(AlertMessageType.Error, "Error occured", true);
                 return View("Pickup", model);
             }
-            this.ShowMessage(AlertMessageType.Success, "Successfully Saved", true);
-            RedirectToAction("Index");
+
+            model.ReadyTime = model.PickupDate.Add(Convert.ToDateTime(model.ReadyTime).TimeOfDay).ToString();
+            model.AvailableUntil = model.PickupDate.Add(Convert.ToDateTime(model.AvailableUntil).TimeOfDay).ToString();
+
+            using (var client = new OAuthClient(User, _apiSettings.Value, "Shipping"))
+            {
+                try
+                {
+                    if (model.PickupId == 0)
+                        result = await client.PostAsJsonAsync<PickupModel>($"pickup/", model);
+                    else
+                        result = await client.PutAsJsonAsync<PickupModel>($"pickup/", model);
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        response = result.Content.ReadAsAsync<PickupResponseModel>().Result;
+                        if (response.Status == ShipOS.Utility.Common.Enumerations.Status.APIRequestStatus.Success)
+                        {
+                            this.ShowMessage(AlertMessageType.Success, string.Format("Pickup scheduled with confirmation number {0}", response.ConfirmationNumber), true);
+                            RedirectToAction("Index", new { id = 0 });
+                        }
+                        else
+                        {
+                            var errorList = string.Empty;
+                            foreach (var error in response.ErrorMessage)
+                            {
+                                errorList += string.Format("</br><b>Code:</b>{0} <b>Description:</b>{1}", error.Code, error.Description);
+                            }
+                            this.ShowMessage(AlertMessageType.Error, errorList, true);
+                        }
+                    }
+                    else
+                        this.ShowMessage(AlertMessageType.Error, result.Content.ReadAsStringAsync().Result, true);
+                }
+                catch (Exception ex)
+                {
+                    this.ShowMessage(AlertMessageType.Error, "Internal Server Error", true);
+                }
+            }
 
             return View("Pickup", model);
         }
-
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[Route("Shipping/Pickup/Ajax")]
-        //public JsonResult Index(PickupRequestModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        var allErrors = ModelState.Values.SelectMany(v => v.Errors);
-
-        //        foreach (var error in allErrors)
-        //        {
-        //            this.ShowMessage(AlertMessageType.Error, error.ErrorMessage, true);
-        //        }
-        //        //this.ShowMessage(AlertMessageType.Error, "Error occured", true);
-        //        return new JsonResult(allErrors);
-        //    }
-        //    this.ShowMessage(AlertMessageType.Success, "Successfully Saved", true);
-
-        //    return new JsonResult("saved");
-        //}
     }
 }
